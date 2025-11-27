@@ -1,0 +1,2046 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+# ===== Absolute Position Shape =====
+era:AbsolutePositionShape a sh:NodeShape ;
+    sh:targetClass era:AbsolutePosition ;
+    sh:message "3D coordinates defining absolute position in a geographic coordinate system." ;
+    
+    # X Coordinate (optional, double - easting/longitude)
+    sh:property [ 
+        sh:path era:x ;
+        sh:datatype xsd:double ;
+        sh:maxCount 1 ;
+        sh:message "An AbsolutePosition may have at most one x coordinate (double, easting or longitude value)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Y Coordinate (optional, double - northing/latitude)
+    sh:property [ 
+        sh:path era:y ;
+        sh:datatype xsd:double ;
+        sh:maxCount 1 ;
+        sh:message "An AbsolutePosition may have at most one y coordinate (double, northing or latitude value)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Z Coordinate (optional, double - elevation/altitude)
+    sh:property [ 
+        sh:path era:z ;
+        sh:datatype xsd:double ;
+        sh:maxCount 1 ;
+        sh:message "An AbsolutePosition may have at most one z coordinate (double, elevation or altitude in meters)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Adjacent Segment Profile Shape =====
+era:AdjacentSegmentProfileShape a sh:NodeShape ;
+    sh:targetClass era:AdjacentSegmentProfile ;
+    sh:message "Reference to an adjacent track segment profile, describing topology connections." ;
+    
+    # NID SP (required, unsigned integer - segment profile identifier)
+    sh:property [ 
+        sh:path era:nidSP ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AdjacentSegmentProfile must have exactly one nidSP (unsigned integer, segment profile ID)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Version (required, unsigned integer - data version)
+    sh:property [ 
+        sh:path era:version ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AdjacentSegmentProfile must have exactly one version (unsigned integer, segment profile data version)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID C (required, unsigned integer 0-1023 - country identifier)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AdjacentSegmentProfile must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Link Type (required, controlled vocabulary - connection type)
+    sh:property [ 
+        sh:path era:linkType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/link-type/pointLeft>
+            <http://data.europa.eu/949/concepts/link-type/pointRight>
+            <http://data.europa.eu/949/concepts/link-type/pointTip>
+            <http://data.europa.eu/949/concepts/link-type/simpleConnector>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property linkType must have a value from the defined SKOS concept scheme (pointLeft, pointRight, pointTip, or simpleConnector)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ATO-TS Contact Info Shape =====
+era:AtoTSContactInfoShape a sh:NodeShape ;
+    sh:targetClass era:AtoTSContactInfo ;
+    sh:message "Contact information for ATO Trackside (ATO-TS) system communication." ;
+    
+    # NID ATOTS (required, unsigned integer - ATO trackside identifier)
+    sh:property [ 
+        sh:path era:nidATOTS ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AtoTSContactInfo must have exactly one nidATOTS (unsigned integer, ATO trackside system identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SP NID C (required, unsigned integer - segment profile country ID)
+    sh:property [ 
+        sh:path era:spNidC ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AtoTSContactInfo must have exactly one spNidC (unsigned integer, segment profile country identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID SP (required, unsigned integer - segment profile identifier)
+    sh:property [ 
+        sh:path era:nidSP ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AtoTSContactInfo must have exactly one nidSP (unsigned integer, segment profile identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # ATOTS NID C (required, unsigned integer - ATO-TS country identifier)
+    sh:property [ 
+        sh:path era:atotsNidC ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AtoTSContactInfo must have exactly one atotsNidC (unsigned integer, ATO trackside country identifier)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Attitude Shape =====
+era:AttitudeShape a sh:NodeShape ;
+    sh:targetClass era:Attitude ;
+    sh:message "Spatial orientation of track segment including angles and curvature." ;
+    
+    # Azimuth (required, double 0-360 - compass bearing in degrees)
+    sh:property [ 
+        sh:path era:azimuth ;
+        sh:datatype xsd:double ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 360.0 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Attitude must have exactly one azimuth (double 0-360, compass bearing in degrees)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Pitch (required, integer 0-360 - vertical angle in degrees)
+    sh:property [ 
+        sh:path era:pitch ;
+        sh:datatype xsd:int ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 360 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Attitude must have exactly one pitch (integer 0-360, vertical inclination angle in degrees)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Roll Angle (required, integer 0-360 - banking angle in degrees)
+    sh:property [ 
+        sh:path era:rollAngle ;
+        sh:datatype xsd:int ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 360 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Attitude must have exactly one rollAngle (integer 0-360, banking/cant angle in degrees)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Curvature (required, integer - radius in meters, negative=left, positive=right)
+    sh:property [ 
+        sh:path era:curvature ;
+        sh:datatype xsd:int ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Attitude must have exactly one curvature (integer, curve radius in meters; negative=left curve, positive=right curve, 0=straight)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Axle Load Speed Profile Shape =====
+era:AxleLoadSpeedProfileShape a sh:NodeShape ;
+    sh:targetClass era:AxleLoadSpeedProfile ;
+    sh:message "Speed restriction profile based on axle load for a track segment." ;
+    
+    # Segment Section (required, track section reference)
+    sh:property [ 
+        sh:path era:segmentSection ;
+        sh:node era:SegmentSectionShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AxleLoadSpeedProfile must reference exactly one segmentSection that conforms to SegmentSectionShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Train End Applicability (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:trainEndApplicability ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/train-end-applicability/lengthDelay>
+            <http://data.europa.eu/949/concepts/train-end-applicability/noLengthDelay>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property trainEndApplicability must have a value from the defined SKOS concept scheme (lengthDelay or noLengthDelay)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Balise Group Shape =====
+era:BaliseGroupShape a sh:NodeShape ;
+    sh:targetClass era:BaliseGroup ;
+    sh:message "Group of ETCS balises functioning as a logical unit for train detection and positioning." ;
+    
+    # NID C Qualifier (required, boolean - country ID qualifier flag)
+    sh:property [ 
+        sh:path era:nidCQualifier ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each BaliseGroup must have exactly one nidCQualifier (boolean, true if country ID is qualified/linked to previous balise group)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Balise Shape =====
+era:BaliseShape a sh:NodeShape ;
+    sh:targetClass era:Balise ;
+    sh:message "Individual ETCS balise transponder providing position and data to passing trains." ;
+    
+    # N PIG (required, unsigned integer 0-7 - position in balise group)
+    sh:property [ 
+        sh:path era:n_pig ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 7 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Balise must have exactly one n_pig (unsigned integer 0-7, position in group; 0=not in group, 1-8=position within group)." ;
+        sh:severity sh:Violation ;
+    ] ;
+	
+	# Position (required, unsigned integer)
+    sh:property [ 
+        sh:path era:pos ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Balise must have exactly one pos (position as unsigned integer). The error might be because the position of the Balise on the corresponding Segment Profile is undefined" ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Contact Information Shape =====
+era:ContactInformationShape a sh:NodeShape ;
+    sh:targetClass era:ContactInformation ;
+    sh:message "Contact information for Digital Railway Traffic Authority (DRTA) system." ;
+    
+    # NID C (required, unsigned integer 0-1023 - country identifier)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ContactInformation must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID DRTA (required, unsigned integer - digital RTA identifier)
+    sh:property [ 
+        sh:path era:nidDRTA ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ContactInformation must have exactly one nidDRTA (unsigned integer, Digital Railway Traffic Authority identifier)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Current Change Shape =====
+era:CurrentChangeShape a sh:NodeShape ;
+    sh:targetClass era:CurrentChange ;
+    sh:message "Defines a change in electrical current limit at a specific position along the track." ;
+    
+    # Position (required, unsigned integer - position in meters)
+    sh:property [ 
+        sh:path era:pos ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each CurrentChange must have exactly one pos (unsigned integer, position along track in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Current Value (required, unsigned integer - maximum current in amperes)
+    sh:property [ 
+        sh:path era:currentValue ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each CurrentChange must have exactly one currentValue (unsigned integer, maximum permitted current in amperes)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Curve Change Shape =====
+era:CurveChangeShape a sh:NodeShape ;
+    sh:targetClass era:CurveChange ;
+    sh:message "Defines a change in track curvature at a specific position." ;
+    
+    # Position (required, unsigned integer - position in meters)
+    sh:property [ 
+        sh:path era:pos ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each CurveChange must have exactly one pos (unsigned integer, position along track in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Curve (required, controlled vocabulary - curve radius category)
+    sh:property [ 
+        sh:path era:curve ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/curve-radius/cr_R_7000>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_7000_4500>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_4500_2800>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_2800_2000>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_2000_1500>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_1500_1250>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_1250_1075>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_1075_925>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_925_825>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_825_725>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_725_625>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_625_525>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_525_475>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_475_425>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_425_375>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_375_325>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_325_300>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_300_275>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_275_250>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_250_225>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_225_200>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_200_175>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_175_150>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_R_150>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property curve must have a value from the defined SKOS concept scheme (curve radius categories from >7000m down to <150m)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Digital Register Handshake Acknowledgement Shape =====
+era:DigitalRegisterHandshakeAcknowledgementShape a sh:NodeShape ;
+    sh:targetClass era:DigitalRegisterHandshakeAcknowledgement ;
+    sh:message "Acknowledgement message for successful digital register handshake between train and trackside." ;
+    
+    # Track Train Header (required, message header)
+    sh:property [ 
+        sh:path era:trackTrainHeader ;
+        sh:node era:TrackTrainHeaderShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID C (required, unsigned integer 0-1023 - country identifier)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID DRTA (required, unsigned integer - DRTA identifier)
+    sh:property [ 
+        sh:path era:nidDRTA ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one nidDRTA (unsigned integer, Digital RTA identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # System Version (required, unsigned integer - protocol version)
+    sh:property [ 
+        sh:path era:systemVersion ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one systemVersion (unsigned integer, digital register protocol version)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Time Out Response (required, unsigned integer - timeout in seconds)
+    sh:property [ 
+        sh:path era:timeOutResponse ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one timeOutResponse (unsigned integer, response timeout in seconds)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Digital Register Handshake Rejection Shape =====
+era:DigitalRegisterHandshakeRejectionShape a sh:NodeShape ;
+    sh:targetClass era:DigitalRegisterHandshakeRejection ;
+    sh:message "Rejection message for digital register handshake with reason for failure." ;
+    
+    # Track Train Header (required, message header)
+    sh:property [ 
+        sh:path era:trackTrainHeader ;
+        sh:node era:TrackTrainHeaderShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DigitalRegisterHandshakeRejection must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Rejection Reason (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:rejectionReason ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/reject-reason/incompatibleSystemVersion>
+            <http://data.europa.eu/949/concepts/reject-reason/anotherDRTAInCharge>
+            <http://data.europa.eu/949/concepts/reject-reason/DRTAInChargeUnknown>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property rejectionReason must have a value from the defined SKOS concept scheme (incompatibleSystemVersion, anotherDRTAInCharge, or DRTAInChargeUnknown)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Contact Information (optional, alternative DRTA contact)
+    sh:property [ 
+        sh:path era:contactInformation ;
+        sh:node era:ContactInformationShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A DigitalRegisterHandshakeRejection may have at most one contactInformation that conforms to ContactInformationShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Digital Register Handshake Request Shape =====
+era:DigitalRegisterHandshakeRequestShape a sh:NodeShape ;
+    sh:targetClass era:DigitalRegisterHandshakeRequest ;
+    sh:message "Request message to initiate digital register communication session between train and trackside." ;
+    
+    # Track Train Header (required, message header)
+    sh:property [ 
+        sh:path era:trackTrainHeader ;
+        sh:node era:TrackTrainHeaderShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Absolute Position (required, geographic coordinates)
+    sh:property [ 
+        sh:path era:absolutePosition ;
+        sh:node era:AbsolutePositionShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one absolutePosition that conforms to AbsolutePositionShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Relative Position (required, position on track)
+    sh:property [ 
+        sh:path era:relativePos ;
+        sh:node era:RelativePositionShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one relativePos that conforms to RelativePositionShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Handing Over (required, boolean - handover flag)
+    sh:property [ 
+        sh:path era:handingOver ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one handingOver (boolean, true if handing over from another DRTA)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Digital Register Session Termination Request Shape =====
+era:DigitalRegisterSessionTerminationRequestShape a sh:NodeShape ;
+    sh:targetClass era:DigitalRegisterSessionTerminationRequest ;
+    sh:message "Request message to terminate digital register communication session." ;
+    
+    # Track Train Header (required, message header)
+    sh:property [ 
+        sh:path era:trackTrainHeader ;
+        sh:node era:TrackTrainHeaderShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DigitalRegisterSessionTerminationRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== Digital Register Session Termination Shape =====
+era:DigitalRegisterSessionTerminationShape a sh:NodeShape ;
+    sh:targetClass era:DigitalRegisterSessionTermination ;
+    sh:message "Termination confirmation message for digital register communication session with reason." ;
+    
+    # Track Train Header (required, message header)
+    sh:property [ 
+        sh:path era:trackTrainHeader ;
+        sh:node era:TrackTrainHeaderShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DigitalRegisterSessionTermination must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Termination Reason (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:terminationReason ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/termination-reason/DRTATerminationRequest>
+            <http://data.europa.eu/949/concepts/termination-reason/lastSPLeft>
+            <http://data.europa.eu/949/concepts/termination-reason/DRTAHandoverCancelled>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property terminationReason must have a value from the defined SKOS concept scheme (DRTATerminationRequest, lastSPLeft, or DRTAHandoverCancelled)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Driving Profile Shape =====
+era:DrivingProfileShape a sh:NodeShape ;
+    sh:targetClass era:DrivingProfile ;
+    sh:message "Comprehensive track profile for ATO driving including gradients, curves, speeds, voltages, and infrastructure elements." ;
+    
+    # Static Speed Profile Start (required, initial speed)
+    sh:property [ 
+        sh:path era:staticSpeedProfileStart ;
+        sh:node era:StaticSpeedProfileStartShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DrivingProfile must have exactly one staticSpeedProfileStart that conforms to StaticSpeedProfileStartShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Voltage Start (required, initial voltage system)
+    sh:property [ 
+        sh:path era:voltageStart ;
+        sh:node era:VoltageStartShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DrivingProfile must have exactly one voltageStart that conforms to VoltageStartShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Gradient Start (required, integer - initial gradient in per mille)
+    sh:property [ 
+        sh:path era:gradientStart ;
+        sh:datatype xsd:int ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DrivingProfile must have exactly one gradientStart (integer, initial track gradient in per mille)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Start Altitude (required, integer - elevation in meters)
+    sh:property [ 
+        sh:path era:startAltitude ;
+        sh:datatype xsd:int ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DrivingProfile must have exactly one startAltitude (integer, initial elevation in meters above sea level)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Curve Start (required, controlled vocabulary - initial curve radius)
+    sh:property [ 
+        sh:path era:curveStart ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/curve-radius/cr_R_7000>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_7000_4500>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_4500_2800>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_2800_2000>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_2000_1500>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_1500_1250>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_1250_1075>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_1075_925>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_925_825>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_825_725>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_725_625>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_625_525>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_525_475>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_475_425>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_425_375>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_375_325>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_325_300>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_300_275>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_275_250>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_250_225>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_225_200>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_200_175>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_175_150>
+            <http://data.europa.eu/949/concepts/curve-radius/cr_R_150>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property curveStart must have a value from the defined SKOS concept scheme (curve radius categories)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Current Start (required, unsigned integer - initial current in amperes)
+    sh:property [ 
+        sh:path era:currentStart ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DrivingProfile must have exactly one currentStart (unsigned integer, initial maximum current in amperes)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # EOA Offset (required, unsigned integer - end of authority offset in meters)
+    sh:property [ 
+        sh:path era:eoaOffset ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DrivingProfile must have exactly one eoaOffset (unsigned integer, end of authority offset in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # UTC Offset (required, controlled vocabulary - timezone offset)
+    sh:property [ 
+        sh:path era:utcOffset ;
+        sh:in (
+            # Negative offsets (UTC-14:00 to UTC-00:15)
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1400>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1345>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1330>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1315>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1300>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1245>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1230>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1215>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1200>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1145>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1130>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1115>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1100>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1045>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1030>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1015>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_1000>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0945>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0930>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0915>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0900>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0845>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0830>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0815>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0800>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0745>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0730>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0715>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0700>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0645>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0630>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0615>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0600>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0545>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0530>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0515>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0500>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0445>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0430>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0415>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0400>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0345>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0330>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0315>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0300>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0245>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0230>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0215>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0200>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0145>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0130>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0115>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0100>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0045>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0030>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Neg_0015>
+            # Zero offset
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Zero_0000>
+            # Positive offsets (UTC+00:15 to UTC+14:00)
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0015>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0030>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0045>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0100>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0115>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0130>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0145>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0200>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0215>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0230>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0245>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0300>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0315>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0330>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0345>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0400>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0415>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0430>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0445>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0500>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0515>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0530>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0545>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0600>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0615>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0630>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0645>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0700>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0715>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0730>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0745>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0800>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0815>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0830>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0845>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0900>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0915>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0930>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_0945>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1000>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1015>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1030>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1045>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1100>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1115>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1130>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1145>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1200>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1215>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1230>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1245>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1300>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1315>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1330>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1345>
+            <http://data.europa.eu/949/concepts/utc-offset/utc_Pos_1400>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property utcOffset must have a value from the defined SKOS concept scheme (UTC-14:00 to UTC+14:00 in 15-minute increments)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # ATOTS Contact Info Dir (required, boolean - direction flag)
+    sh:property [ 
+        sh:path era:atotsContactInfoDir ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DrivingProfile must have exactly one atotsContactInfoDir (boolean, ATO-TS contact information direction flag)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # === Optional Multi-Valued Properties (Profile Changes) ===
+    
+    # Static Speed Profile Changes (optional, multiple speed changes)
+    sh:property [ 
+        sh:path era:staticSpeedProfileChanges ;
+        sh:node era:StaticSpeedProfileChangeShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may have multiple staticSpeedProfileChanges." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Voltage Changes (optional, multiple voltage system changes)
+    sh:property [ 
+        sh:path era:voltageChanges ;
+        sh:node era:VoltageChangeShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may have multiple voltageChanges." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Gradient Changes (optional, multiple gradient changes)
+    sh:property [ 
+        sh:path era:gradientChanges ;
+        sh:node era:GradientChangeShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may have multiple gradientChanges." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Curve Changes (optional, multiple curvature changes)
+    sh:property [ 
+        sh:path era:curveChanges ;
+        sh:node era:CurveChangeShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may have multiple curveChanges." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Current Changes (optional, multiple current limit changes)
+    sh:property [ 
+        sh:path era:currentChanges ;
+        sh:node era:CurrentChangeShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may have multiple currentChanges." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # === Optional Infrastructure Elements ===
+    
+    # Balise Groups (optional, ETCS balises along route)
+    sh:property [ 
+        sh:path era:baliseGroups ;
+        sh:node era:BaliseGroupShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may reference multiple baliseGroups." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Tunnels (optional, tunnel sections)
+    sh:property [ 
+        sh:path era:tunnels ;
+        sh:node era:TunnelShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may reference multiple tunnels." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Unprotected Level Crossings (optional, unprotected LX locations)
+    sh:property [ 
+        sh:path era:unprotectedLXs ;
+        sh:node era:UnprotectedLXShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may reference multiple unprotectedLXs." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Timing Points (optional, operational timing locations)
+    sh:property [ 
+        sh:path era:timingPoints ;
+        sh:node era:TimingPointShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may reference multiple timingPoints." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Platform Areas (optional, station platform locations)
+    sh:property [ 
+        sh:path era:platformAreas ;
+        sh:node era:SegmentSectionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may reference multiple platformAreas." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # === Optional Braking Profiles ===
+    
+    # Axle Load Speed Profiles (optional, load-dependent speed limits)
+    sh:property [ 
+        sh:path era:axleLoadSpeedProfiles ;
+        sh:node era:AxleLoadSpeedProfileShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may have multiple axleLoadSpeedProfiles." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Permitted Braking Distances (optional, safe braking distances)
+    sh:property [ 
+        sh:path era:permittedBrakingDistances ;
+        sh:node era:PermittedBrakingDistanceShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may have multiple permittedBrakingDistances." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Limited Dynamic Brake Forces (optional, brake force limitations)
+    sh:property [ 
+        sh:path era:limitedDynamicBrakeForces ;
+        sh:node era:LimitedDynamicBrakeForceShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may have multiple limitedDynamicBrakeForces." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # === Optional Brake Inhibition Zones ===
+    
+    # Switch Off Regenerative Brakes (optional, zones where regen braking disabled)
+    sh:property [ 
+        sh:path era:switchOffRegenerativeBrakes ;
+        sh:node era:SegmentSectionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may reference multiple switchOffRegenerativeBrakes sections." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Switch Off Magnetic Shoe Brakes (optional, zones where magnetic brakes disabled)
+    sh:property [ 
+        sh:path era:switchOffMagneticShoeBrakes ;
+        sh:node era:SegmentSectionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may reference multiple switchOffMagneticShoeBrakes sections." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Switch Off Eddy Current Brake Service Brakes (optional)
+    sh:property [ 
+        sh:path era:switchOffEddyCurrentBrakeServiceBrakes ;
+        sh:node era:SegmentSectionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may reference multiple switchOffEddyCurrentBrakeServiceBrakes sections." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Switch Off Eddy Current Brake Emergency Brakes (optional)
+    sh:property [ 
+        sh:path era:switchOffEddyCurrentBrakeEmergencyBrakes ;
+        sh:node era:SegmentSectionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may reference multiple switchOffEddyCurrentBrakeEmergencyBrakes sections." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Dynamic Brake Force Inhibitions (optional, general dynamic brake restrictions)
+    sh:property [ 
+        sh:path era:dynamicBrakeForceInhibitions ;
+        sh:node era:SegmentSectionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DrivingProfile may reference multiple dynamicBrakeForceInhibitions sections." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # ATO-TS Contact Info (optional, ATO trackside contact information)
+    sh:property [ 
+        sh:path era:atotsContactInfo ;
+        sh:node era:AtoTSContactInfoShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A DrivingProfile may have at most one atotsContactInfo." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== Geometry Profile Shape =====
+era:GeometryProfileShape a sh:NodeShape ;
+    sh:targetClass era:GeometryProfile ;
+    sh:message "Geometric description of track segment including spatial orientation and coordinate points." ;
+    
+    # Attitudes (optional, spatial orientation - appears to be max 1 despite property name)
+    sh:property [ 
+        sh:path era:attitudes ;
+        sh:node era:AttitudeShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A GeometryProfile may have at most one attitudes that conforms to AttitudeShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Linear Element Coordinates (optional, multiple coordinate points)
+    sh:property [ 
+        sh:path era:linearElementCoordinates ;
+        sh:node era:LinearElementCoordinateShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A GeometryProfile may have multiple linearElementCoordinates." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Gradient Change Shape =====
+era:GradientChangeShape a sh:NodeShape ;
+    sh:targetClass era:GradientChange ;
+    sh:message "Defines a change in track gradient at a specific position." ;
+    
+    # Position (required, unsigned integer - position in meters)
+    sh:property [ 
+        sh:path era:pos ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each GradientChange must have exactly one pos (unsigned integer, position along track in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Gradient Value (required, integer - gradient in per mille)
+    sh:property [ 
+        sh:path era:gradientValue ;
+        sh:datatype xsd:int ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each GradientChange must have exactly one gradientValue (integer, new gradient in per mille; positive=uphill, negative=downhill)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Limited Dynamic Brake Force Shape =====
+era:LimitedDynamicBrakeForceShape a sh:NodeShape ;
+    sh:targetClass era:LimitedDynamicBrakeForce ;
+    sh:message "Defines a section where dynamic braking force must be limited." ;
+    
+    # Segment Section (required, where limitation applies)
+    sh:property [ 
+        sh:path era:segmentSection ;
+        sh:node era:SegmentSectionShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LimitedDynamicBrakeForce must reference exactly one segmentSection that conforms to SegmentSectionShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Dynamic Brake Force Limit (required, unsigned integer 0-3000 - in kilonewtons)
+    sh:property [ 
+        sh:path era:dynamicBrakeForceLimit ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 3000 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LimitedDynamicBrakeForce must have exactly one dynamicBrakeForceLimit (unsigned integer 0-3000, maximum brake force in kilonewtons)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Map Area Request Shape =====
+era:MapAreaRequestShape a sh:NodeShape ;
+    sh:targetClass era:MapAreaRequest ;
+    sh:message "Request for map area data from digital register based on train position and radius." ;
+    
+    # Track Train Header (required, message header)
+    sh:property [ 
+        sh:path era:trackTrainHeader ;
+        sh:node era:TrackTrainHeaderShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MapAreaRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Absolute Position (required, geographic coordinates)
+    sh:property [ 
+        sh:path era:absolutePosition ;
+        sh:node era:AbsolutePositionShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MapAreaRequest must have exactly one absolutePosition that conforms to AbsolutePositionShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Relative Position (required, position on track)
+    sh:property [ 
+        sh:path era:relativePos ;
+        sh:node era:RelativePositionShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MapAreaRequest must have exactly one relativePos that conforms to RelativePositionShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Map Area Radius (required, unsigned integer - radius in meters)
+    sh:property [ 
+        sh:path era:mapAreaRadius ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MapAreaRequest must have exactly one mapAreaRadius (unsigned integer, requested radius around position in meters)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Map Area Shape =====
+era:MapAreaShape a sh:NodeShape ;
+    sh:targetClass era:MapArea ;
+    sh:message "Response containing segment profile data for requested map area." ;
+    
+    # Track Train Header (required, message header)
+    sh:property [ 
+        sh:path era:trackTrainHeader ;
+        sh:node era:TrackTrainHeaderShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MapArea must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Segment Profile List (required, at least one profile list)
+    sh:property [ 
+        sh:path era:segmentProfileList ;
+        sh:node era:SegmentProfileListShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:message "Each MapArea must have at least one segmentProfileList that conforms to SegmentProfileListShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== OI Area Shape =====
+era:OIAreaShape a sh:NodeShape ;
+    sh:targetClass era:OIArea ;
+    sh:message "Operational Interface area containing segments and timing point mappings." ;
+    
+    # Segments (required, at least one segment)
+    sh:property [ 
+        sh:path era:segments ;
+        sh:node era:OISegmentShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:message "Each OIArea must have at least one segments that conform to OISegmentShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Timing Points Mapping (optional, timing point relationships)
+    sh:property [ 
+        sh:path era:timingPointsMapping ;
+        sh:node era:TimingPointMappingShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An OIArea may have multiple timingPointsMapping." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== OI Segment Shape =====
+era:OISegmentShape a sh:NodeShape ;
+    sh:targetClass era:OISegment ;
+    sh:message "Operational Interface segment linking linear element sections to segment profiles." ;
+    
+    # Linear Element Section (required, physical track section)
+    sh:property [ 
+        sh:path era:linearElementSection ;
+        sh:node era:LinearElementSectionShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each OISegment must reference exactly one linearElementSection that conforms to LinearElementSectionShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Segment Profile (required, profile data for this segment)
+    sh:property [ 
+        sh:path era:segmentProfile ;
+        sh:node era:SegmentProfileShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each OISegment must reference exactly one segmentProfile that conforms to SegmentProfileShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== OI Shape =====
+era:OIShape a sh:NodeShape ;
+    sh:targetClass era:OI ;
+    sh:message "Operational Interface container for all digital register communication messages and area data." ;
+    
+    # OI Areas (optional, operational interface areas)
+    sh:property [ 
+        sh:path era:oiAreas ;
+        sh:node era:OIAreaShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An OI may contain multiple oiAreas." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Map Area Requests (optional, map data requests)
+    sh:property [ 
+        sh:path era:mapAreaRequests ;
+        sh:node era:MapAreaRequestShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An OI may contain multiple mapAreaRequests." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Map Areas (optional, map data responses)
+    sh:property [ 
+        sh:path era:mapAreas ;
+        sh:node era:MapAreaShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An OI may contain multiple mapAreas." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Digital Register Handshake Requests (optional)
+    sh:property [ 
+        sh:path era:digitalRegisterHandshakeRequests ;
+        sh:node era:DigitalRegisterHandshakeRequestShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An OI may contain multiple digitalRegisterHandshakeRequests." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Digital Register Handshake Acknowledgements (optional)
+    sh:property [ 
+        sh:path era:digitalRegisterHandshakeAcknowledgements ;
+        sh:node era:DigitalRegisterHandshakeAcknowledgementShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An OI may contain multiple digitalRegisterHandshakeAcknowledgements." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Digital Register Handshake Rejections (optional)
+    sh:property [ 
+        sh:path era:digitalRegisterHandshakeRejections ;
+        sh:node era:DigitalRegisterHandshakeRejectionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An OI may contain multiple digitalRegisterHandshakeRejections." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Digital Register Session Termination Requests (optional)
+    sh:property [ 
+        sh:path era:digitalRegisterSessionTerminationRequests ;
+        sh:node era:DigitalRegisterSessionTerminationRequestShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An OI may contain multiple digitalRegisterSessionTerminationRequests." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Digital Register Session Terminations (optional)
+    sh:property [ 
+        sh:path era:digitalRegisterSessionTerminations ;
+        sh:node era:DigitalRegisterSessionTerminationShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An OI may contain multiple digitalRegisterSessionTerminations." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Segment Profile Requests (optional)
+    sh:property [ 
+        sh:path era:segmentProfileRequests ;
+        sh:node era:SegmentProfileRequestShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An OI may contain multiple segmentProfileRequests." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Segment Profile Packets (optional)
+    sh:property [ 
+        sh:path era:segmentProfilePackets ;
+        sh:node era:SegmentProfilePacketShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An OI may contain multiple segmentProfilePackets." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Permitted Braking Distance Shape =====
+era:PermittedBrakingDistanceShape a sh:NodeShape ;
+    sh:targetClass era:PermittedBrakingDistance ;
+    sh:message "Defines permitted braking distance for a track section." ;
+    
+    # Segment Section (required, where distance applies)
+    sh:property [ 
+        sh:path era:segmentSection ;
+        sh:node era:SegmentSectionShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each PermittedBrakingDistance must reference exactly one segmentSection that conforms to SegmentSectionShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # By Emergency Brake (required, boolean - emergency or service brake)
+    sh:property [ 
+        sh:path era:byEmergencyBrake ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each PermittedBrakingDistance must have exactly one byEmergencyBrake (boolean, true=emergency brake distance, false=service brake distance)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Relative Position Shape =====
+era:RelativePositionShape a sh:NodeShape ;
+    sh:targetClass era:RelativePosition ;
+    sh:message "Position on track relative to segment profile reference system." ;
+    
+    # NID SP (required, unsigned integer - segment profile identifier)
+    sh:property [ 
+        sh:path era:nidSP ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each RelativePosition must have exactly one nidSP (unsigned integer, segment profile identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Version (required, unsigned integer - segment profile version)
+    sh:property [ 
+        sh:path era:version ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each RelativePosition must have exactly one version (unsigned integer, segment profile data version)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID C (required, unsigned integer 0-1023 - country identifier)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each RelativePosition must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Position (required, unsigned integer - offset in meters)
+    sh:property [ 
+        sh:path era:pos ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each RelativePosition must have exactly one pos (unsigned integer, position offset within segment in meters)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Segment Description Shape =====
+era:SegmentDescriptionShape a sh:NodeShape ;
+    sh:targetClass era:SegmentDescription ;
+    sh:message "Complete description of track segment including geometry and driving characteristics." ;
+    
+    # Geometry Profile (optional, spatial geometry)
+    sh:property [ 
+        sh:path era:geometryProfile ;
+        sh:node era:GeometryProfileShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A SegmentDescription may have at most one geometryProfile that conforms to GeometryProfileShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Driving Profile (optional, operational characteristics)
+    sh:property [ 
+        sh:path era:drivingProfile ;
+        sh:node era:DrivingProfileShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A SegmentDescription may have at most one drivingProfile that conforms to DrivingProfileShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Segment Profile List Shape =====
+era:SegmentProfileListShape a sh:NodeShape ;
+    sh:targetClass era:SegmentProfileList ;
+    sh:message "List header identifying segment profile with country, ID, and version." ;
+    
+    # NID SP (required, unsigned integer - segment profile identifier)
+    sh:property [ 
+        sh:path era:nidSP ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SegmentProfileList must have exactly one nidSP (unsigned integer, segment profile identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID C (required, unsigned integer 0-1023 - country identifier)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SegmentProfileList must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Version (required, unsigned integer - data version)
+    sh:property [ 
+        sh:path era:version ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SegmentProfileList must have exactly one version (unsigned integer, segment profile data version)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== Segment Profile Packet Shape =====
+era:SegmentProfilePacketShape a sh:NodeShape ;
+    sh:targetClass era:SegmentProfilePacket ;
+    sh:message "Packet containing one or more segment profiles for digital register transmission." ;
+    
+    # Track Train Header (required, message header)
+    sh:property [ 
+        sh:path era:trackTrainHeader ;
+        sh:node era:TrackTrainHeaderShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SegmentProfilePacket must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Segment Profiles (required, at least one profile)
+    sh:property [ 
+        sh:path era:segmentProfiles ;
+        sh:node era:SegmentProfileShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:message "Each SegmentProfilePacket must contain at least one segmentProfiles that conform to SegmentProfileShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Segment Profile Request Shape =====
+era:SegmentProfileRequestShape a sh:NodeShape ;
+    sh:targetClass era:SegmentProfileRequest ;
+    sh:message "Request for specific segment profile data from digital register." ;
+    
+    # Track Train Header (required, message header)
+    sh:property [ 
+        sh:path era:trackTrainHeader ;
+        sh:node era:TrackTrainHeaderShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SegmentProfileRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID C (required, unsigned integer 0-1023 - country identifier)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SegmentProfileRequest must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID SP (required, unsigned integer - segment profile identifier)
+    sh:property [ 
+        sh:path era:nidSP ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SegmentProfileRequest must have exactly one nidSP (unsigned integer, requested segment profile identifier)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Segment Profile Shape =====
+era:SegmentProfileShape a sh:NodeShape ;
+    sh:targetClass era:SegmentProfile ;
+    sh:message "Complete profile for track segment including topology connections and segment description." ;
+    
+    # NID SP (required, unsigned integer - segment profile identifier)
+    sh:property [ 
+        sh:path era:nidSP ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SegmentProfile must have exactly one nidSP (unsigned integer, segment profile identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID C (required, unsigned integer 0-1023 - country identifier)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SegmentProfile must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Version (required, unsigned integer - data version)
+    sh:property [ 
+        sh:path era:version ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SegmentProfile must have exactly one version (unsigned integer, segment profile data version)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Segment Profile Length (required, unsigned integer - length in meters)
+    sh:property [ 
+        sh:path era:segmentProfileLength ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SegmentProfile must have exactly one segmentProfileLength (unsigned integer, total segment length in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Segment Description (required, profile content)
+    sh:property [ 
+        sh:path era:segmentDescription ;
+        sh:node era:SegmentDescriptionShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SegmentProfile must have exactly one segmentDescription that conforms to SegmentDescriptionShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Adjacent Segment Profiles (required, 1-4 connections)
+    sh:property [ 
+        sh:path era:adjacentSegmentProfiles ;
+        sh:node era:AdjacentSegmentProfileShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 4 ;
+        sh:message "Each SegmentProfile must have 1-4 adjacentSegmentProfiles that conform to AdjacentSegmentProfileShape (topology connections: plain line=2, points=3-4)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Segment Section Shape =====
+era:SegmentSectionShape a sh:NodeShape ;
+    sh:targetClass era:SegmentSection ;
+    sh:message "Defines a section within a segment profile using start and end positions." ;
+    
+    # Range (required, controlled vocabulary - range type)
+    sh:property [ 
+        sh:path era:range ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/range-type/rtStart>
+            <http://data.europa.eu/949/concepts/range-type/rtEnd>
+            <http://data.europa.eu/949/concepts/range-type/rtStartEnd>
+            <http://data.europa.eu/949/concepts/range-type/rtWholeSP>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property range must have a value from the defined SKOS concept scheme (rtStart, rtEnd, rtStartEnd, or rtWholeSP)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # P Start (required, unsigned integer - start position in meters)
+    sh:property [ 
+        sh:path era:pStart ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SegmentSection must have exactly one pStart (unsigned integer, section start position in meters from segment beginning)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # P End (required, unsigned integer - end position in meters)
+    sh:property [ 
+        sh:path era:pEnd ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SegmentSection must have exactly one pEnd (unsigned integer, section end position in meters from segment beginning)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Static Speed Profile Change Shape =====
+era:StaticSpeedProfileChangeShape a sh:NodeShape ;
+    sh:targetClass era:StaticSpeedProfileChange ;
+    sh:message "Defines a change in static speed limit at a specific position." ;
+    
+    # Position (required, unsigned integer - position in meters)
+    sh:property [ 
+        sh:path era:pos ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each StaticSpeedProfileChange must have exactly one pos (unsigned integer, position along track in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Speed (required, unsigned integer - speed limit in km/h)
+    sh:property [ 
+        sh:path era:speed ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each StaticSpeedProfileChange must have exactly one speed (unsigned integer, new speed limit in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Train End Applicability (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:trainEndApplicability ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/train-end-applicability/lengthDelay>
+            <http://data.europa.eu/949/concepts/train-end-applicability/noLengthDelay>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property trainEndApplicability must have a value from the defined SKOS concept scheme (lengthDelay or noLengthDelay)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Specific Static Speed Profile (optional, train-type-specific limits)
+    sh:property [ 
+        sh:path era:specificStaticSpeedProfile ;
+        sh:node era:SpecificStaticSpeedLimitShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A StaticSpeedProfileChange may have multiple specificStaticSpeedProfile entries for different train types." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Static Speed Profile Start Shape =====
+era:StaticSpeedProfileStartShape a sh:NodeShape ;
+    sh:targetClass era:StaticSpeedProfileStart ;
+    sh:message "Defines the initial static speed limit at the start of a segment profile." ;
+    
+    # Speed (required, unsigned integer - initial speed in km/h)
+    sh:property [ 
+        sh:path era:speed ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each StaticSpeedProfileStart must have exactly one speed (unsigned integer, initial speed limit in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Train End Applicability (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:trainEndApplicability ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/train-end-applicability/lengthDelay>
+            <http://data.europa.eu/949/concepts/train-end-applicability/noLengthDelay>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property trainEndApplicability must have a value from the defined SKOS concept scheme (lengthDelay or noLengthDelay)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Specific Static Speed Profile (optional, train-type-specific limits)
+    sh:property [ 
+        sh:path era:specificStaticSpeedProfile ;
+        sh:node era:SpecificStaticSpeedLimitShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A StaticSpeedProfileStart may have multiple specificStaticSpeedProfile entries for different train types." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Timing Point Mapping Shape =====
+era:TimingPointMappingShape a sh:NodeShape ;
+    sh:targetClass era:TimingPointMapping ;
+    sh:message "Maps infrastructure timing points to ATO timing points for schedule coordination." ;
+    
+    # Infrastructure Timing Point (required, reference to infrastructure timing point)
+    sh:property [ 
+        sh:path era:infraTimingPoint ;
+        sh:node era:TimingPointShape ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TimingPointMapping must reference exactly one infraTimingPoint that conforms to TimingPointShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # ATO Timing Point (required, reference to ATO timing point)
+    sh:property [ 
+        sh:path era:atoTimingPoint ;
+        sh:node era:TimingPointShape ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TimingPointMapping must reference exactly one atoTimingPoint that conforms to TimingPointShape." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== Timing Point Shape =====
+era:TimingPointShape a sh:NodeShape ;
+    sh:targetClass era:TimingPoint ;
+    sh:message "Operational timing point for schedule monitoring and ATO stopping precision." ;
+    
+    # NID TP (required, unsigned integer - timing point identifier)
+    sh:property [ 
+        sh:path era:nidTP ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TimingPoint must have exactly one nidTP (unsigned integer, timing point identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Stop Location Tolerance (required, controlled vocabulary - stopping accuracy)
+    sh:property [ 
+        sh:path era:stopLocationTolerance ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_Undefined>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_10cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_20cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_30cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_40cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_50cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_1m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_150cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_2m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_250cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_3m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_5m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_750cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_10m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_15m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_20m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_25m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_30m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_50m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_75m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_100m>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property stopLocationTolerance must have a value from the defined SKOS concept scheme (10cm to 100m tolerance levels)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Stopping Point Reach Distance (required, controlled vocabulary - approach distance)
+    sh:property [ 
+        sh:path era:stoppingPointReachDistance ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_Undefined>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_10cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_20cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_30cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_40cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_50cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_1m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_150cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_2m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_250cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_3m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_5m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_750cm>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_10m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_15m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_20m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_25m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_30m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_50m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_75m>
+            <http://data.europa.eu/949/concepts/stop-location-tolerance/T_100m>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property stoppingPointReachDistance must have a value from the defined SKOS concept scheme (distance before timing point to initiate stopping sequence)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Track Train Header Shape =====
+era:TrackTrainHeaderShape a sh:NodeShape ;
+    sh:targetClass era:TrackTrainHeader ;
+    sh:message "Message header for track-to-train and train-to-track digital register communications." ;
+    
+    # Issued At (required, dateTime - message timestamp)
+    sh:property [ 
+        sh:path era:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrackTrainHeader must have exactly one issuedAt timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Packet ID (required, unsigned integer 0-255 - message sequence number)
+    sh:property [ 
+        sh:path era:packetId ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrackTrainHeader must have exactly one packetId (unsigned integer 0-255, message sequence identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Leading OnBoard Unit ID (optional, string - onboard unit identifier)
+    sh:property [ 
+        sh:path era:leadingOnBoardUnitId ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A TrackTrainHeader may have at most one leadingOnBoardUnitId (string, identifier of leading onboard unit)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Tunnel Shape =====
+era:TunnelShape a sh:NodeShape ;
+    sh:targetClass era:Tunnel ;
+    sh:message "Tunnel section with type classification for ATO operational considerations." ;
+    
+    # Segment Section (required, tunnel location)
+    sh:property [ 
+        sh:path era:segmentSection ;
+        sh:node era:SegmentSectionShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Tunnel must reference exactly one segmentSection that conforms to SegmentSectionShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Tunnel Type (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:tunnelType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/tunnel-type/singleTrackTunnel>
+            <http://data.europa.eu/949/concepts/tunnel-type/doubleTrackTunnel>
+            <http://data.europa.eu/949/concepts/tunnel-type/wideCrossSectionTunnel>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property tunnelType must have a value from the defined SKOS concept scheme (singleTrackTunnel, doubleTrackTunnel, or wideCrossSectionTunnel)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Unprotected Level Crossing Shape =====
+era:UnprotectedLXShape a sh:NodeShape ;
+    sh:targetClass era:UnprotectedLX ;
+    sh:message "Unprotected level crossing location requiring horn/whistle warning." ;
+    
+    # P Nominal (required, unsigned integer - nominal position in meters)
+    sh:property [ 
+        sh:path era:pNominal ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each UnprotectedLX must have exactly one pNominal (unsigned integer, nominal crossing position in meters for nominal direction)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # P Reverse (required, unsigned integer - reverse position in meters)
+    sh:property [ 
+        sh:path era:pReverse ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each UnprotectedLX must have exactly one pReverse (unsigned integer, crossing position in meters for reverse direction)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Voltage Change Shape =====
+era:VoltageChangeShape a sh:NodeShape ;
+    sh:targetClass era:VoltageChange ;
+    sh:message "Defines a change in electrical power supply system at a specific position." ;
+    
+    # Position (required, unsigned integer - position in meters)
+    sh:property [ 
+        sh:path era:pos ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each VoltageChange must have exactly one pos (unsigned integer, position along track in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Voltage Type (required, controlled vocabulary - power system)
+    sh:property [ 
+        sh:path era:voltageType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtNotFitted>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtAC25kv50Hz>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtAC15kv16_7Hz>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtDC3kv>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtDC1_5kv>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtDC600v>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtDC650v>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtDC750v>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtDC850v>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property voltageType must have a value from the defined SKOS concept scheme (AC 25kV 50Hz, AC 15kV 16.7Hz, DC 3kV, DC 1.5kV, DC 750V, etc.)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID C (required, unsigned integer 0-1023 - country identifier)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each VoltageChange must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier for traction system)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Voltage Start Shape =====
+era:VoltageStartShape a sh:NodeShape ;
+    sh:targetClass era:VoltageStart ;
+    sh:message "Defines the initial electrical power supply system at the start of a segment profile." ;
+    
+    # Voltage Type (required, controlled vocabulary - power system)
+    sh:property [ 
+        sh:path era:voltageType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtNotFitted>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtAC25kv50Hz>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtAC15kv16_7Hz>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtDC3kv>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtDC1_5kv>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtDC600v>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtDC650v>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtDC750v>
+            <http://data.europa.eu/949/concepts/energy-supply-systems/vtDC850v>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property voltageType must have a value from the defined SKOS concept scheme (AC 25kV 50Hz, AC 15kV 16.7Hz, DC 3kV, DC 1.5kV, DC 750V, etc.)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID C (required, unsigned integer 0-1023 - country identifier)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each VoltageStart must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier for traction system)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+
+# Shape to check that at least one On-Board Infrastructure class exists
+era:AtLeastOneOnBoardInfrastructureClassShape a sh:NodeShape ;
+    sh:target [
+        a sh:SPARQLTarget ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            SELECT ?this
+            WHERE {
+                BIND (era:ValidationRoot as ?this)
+            }
+        """ ;
+    ] ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The data must contain at least one instance of the required On-Board Infrastructure classes (e.g., OIArea, SegmentProfile, BaliseGroup, TimingPoint, etc.). This error may indicate that the provided data significantly deviates from the expected ATO On-Board Infrastructure model as defined in the extended ERA ontology." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                FILTER NOT EXISTS {
+                    # Top-Level Container
+                    { ?instance rdf:type era:OI . }
+                    
+                    # Area and Segment Classes
+                    UNION { ?instance rdf:type era:OIArea . }
+                    UNION { ?instance rdf:type era:TimingPointMapping . }
+                    UNION { ?instance rdf:type era:OISegment . }
+                    
+                    # Segment Profile Classes
+                    UNION { ?instance rdf:type era:SegmentProfile . }
+                    UNION { ?instance rdf:type era:AdjacentSegmentProfile . }
+                    UNION { ?instance rdf:type era:SegmentDescription . }
+                    UNION { ?instance rdf:type era:SegmentSection . }
+                    
+                    # Profile Layer Classes
+                    UNION { ?instance rdf:type era:DrivingProfile . }
+                    UNION { ?instance rdf:type era:GeometryProfile . }
+                    UNION { ?instance rdf:type era:Attitude . }
+                    
+                    # Speed Profile Classes
+                    UNION { ?instance rdf:type era:StaticSpeedProfileStart . }
+                    UNION { ?instance rdf:type era:StaticSpeedProfileChange . }
+                    UNION { ?instance rdf:type era:AxleLoadSpeedProfile . }
+                    
+                    # Track Geometry Classes
+                    UNION { ?instance rdf:type era:GradientChange . }
+                    UNION { ?instance rdf:type era:CurveChange . }
+                    
+                    # Signaling and Location Classes
+                    UNION { ?instance rdf:type era:TimingPoint . }
+                    UNION { ?instance rdf:type era:BaliseGroup . }
+                    UNION { ?instance rdf:type era:Balise . }
+                    
+                    # Braking Classes
+                    UNION { ?instance rdf:type era:PermittedBrakingDistance . }
+                    UNION { ?instance rdf:type era:LimitedDynamicBrakeForce . }
+                    
+                    # Power Supply Classes
+                    UNION { ?instance rdf:type era:VoltageStart . }
+                    UNION { ?instance rdf:type era:VoltageChange . }
+                    UNION { ?instance rdf:type era:CurrentChange . }
+                    
+                    # Infrastructure Elements
+                    UNION { ?instance rdf:type era:Tunnel . }
+                    UNION { ?instance rdf:type era:UnprotectedLX . }
+                    UNION { ?instance rdf:type era:AtoTSContactInfo . }
+                    
+                    # Position Classes
+                    UNION { ?instance rdf:type era:RelativePosition . }
+                    UNION { ?instance rdf:type era:AbsolutePosition . }
+                    
+                    # Map Area Classes
+                    UNION { ?instance rdf:type era:MapAreaRequest . }
+                    UNION { ?instance rdf:type era:MapArea . }
+                    UNION { ?instance rdf:type era:SegmentProfileList . }
+                    
+                    # Segment Profile Communication Classes
+                    UNION { ?instance rdf:type era:SegmentProfileRequest . }
+                    UNION { ?instance rdf:type era:SegmentProfilePacket . }
+                    
+                    # Digital Register Handshake Classes
+                    UNION { ?instance rdf:type era:DigitalRegisterHandshakeRequest . }
+                    UNION { ?instance rdf:type era:DigitalRegisterHandshakeAcknowledgement . }
+                    UNION { ?instance rdf:type era:DigitalRegisterHandshakeRejection . }
+                    UNION { ?instance rdf:type era:ContactInformation . }
+                    
+                    # Session Termination Classes
+                    UNION { ?instance rdf:type era:DigitalRegisterSessionTerminationRequest . }
+                    UNION { ?instance rdf:type era:DigitalRegisterSessionTermination . }
+                    
+                    # Communication Header
+                    UNION { ?instance rdf:type era:TrackTrainHeader . }
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .

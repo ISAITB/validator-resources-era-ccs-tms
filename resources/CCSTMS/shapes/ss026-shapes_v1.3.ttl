@@ -1,0 +1,3388 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ===== Axle Load Restriction Shape =====
+era:AxleLoadRestrictionShape a sh:NodeShape ;
+    sh:targetClass era:AxleLoadRestriction ;
+    
+    # V_AXLELOAD (required, unsigned integer 0-127 - speed in km/h)
+    sh:property [ 
+        sh:path era:v_axleLoad ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AxleLoadRestriction must have exactly one v_axleLoad value (unsigned integer 0-127, speed in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_AXLELOADCAT (required, controlled vocabulary - axle load category)
+    sh:property [ 
+        sh:path era:m_axleLoadCat ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_A>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_HS17>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_B1>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_B2>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_C2>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_C3>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_C4>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D2>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D3>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D4>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D4XL>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_E4>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_E5>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property m_axleLoadCat must have a value from the defined SKOS concept scheme (AL_A through AL_E5)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Axle Load Selection Shape =====
+era:AxleLoadSelectionShape a sh:NodeShape ;
+    sh:targetClass era:AxleLoadSelection ;
+    
+    # D_AXLELOAD (required, unsigned integer 0-32767 - distance in meters)
+    sh:property [ 
+        sh:path era:d_axleload ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AxleLoadSelection must have exactly one d_axleload value (unsigned integer 0-32767, distance in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_AXLELOAD (required, unsigned integer 0-32767 - length in meters)
+    sh:property [ 
+        sh:path era:l_axleload ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AxleLoadSelection must have exactly one l_axleload value (unsigned integer 0-32767, length in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_FRONT (optional, boolean - applies to front of train)
+    sh:property [ 
+        sh:path era:q_front ;
+        sh:datatype xsd:boolean ;
+        sh:maxCount 1 ;
+        sh:message "An AxleLoadSelection may have at most one q_front value (boolean)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Axle Load Restrictions (optional, up to 31 allowed per ETCS spec)
+    sh:property [ 
+        sh:path era:axleLoadRestrictions ;
+        sh:node era:AxleLoadRestrictionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 31 ;
+        sh:message "An AxleLoadSelection may have at most 31 axleLoadRestrictions that conform to AxleLoadRestrictionShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Balise Packet Shape =====
+era:BalisePacketShape a sh:NodeShape ;
+    sh:targetClass era:BalisePacket ;
+    
+    # Packet ID (required, unsigned integer 0-255 - ETCS packet number)
+    sh:property [ 
+        sh:path era:packetId ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each BalisePacket must have exactly one packetId (unsigned integer 0-255, ETCS packet number)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_SCALE (required, unsigned integer 0-2 - distance scale factor)
+    sh:property [ 
+        sh:path era:q_scale ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 2 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each BalisePacket must have exactly one q_scale value (unsigned integer 0-2: 0=10cm, 1=1m, 2=10m resolution)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_DIR (optional, controlled vocabulary - validity direction)
+    sh:property [ 
+        sh:path era:q_dir ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/q-dir/reverse>
+            <http://data.europa.eu/949/concepts/q-dir/nominal>
+            <http://data.europa.eu/949/concepts/q-dir/both>
+        ) ;
+        sh:maxCount 1 ;
+        sh:message "The property q_dir may have a value from the defined SKOS concept scheme (reverse, nominal, or both)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Packet (required, can be inline or referenced)
+    sh:property [ 
+        sh:path era:packet ;
+        sh:node era:PacketShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each BalisePacket must have exactly one packet that conforms to PacketShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Correction Factor Shape =====
+era:CorrectionFactorShape a sh:NodeShape ;
+    sh:targetClass era:CorrectionFactor ;
+    
+    # M_NVKRINT (required, unsigned integer 0-31 - correction value)
+    sh:property [ 
+        sh:path era:m_nvkrint ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 31 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each CorrectionFactor must have exactly one m_nvkrint value (unsigned integer 0-31)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_NVKRINT (required, unsigned integer 0-31 - distance parameter)
+    sh:property [ 
+        sh:path era:l_nvkrint ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 31 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each CorrectionFactor must have exactly one l_nvkrint value (unsigned integer 0-31)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Country Balise Shape =====
+era:CountryBaliseShape a sh:NodeShape ;
+    sh:targetClass era:CountryBalise ;
+    
+    # NID_C (required, unsigned integer 0-1023 - country/region identity)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each CountryBalise must have exactly one nid_c (unsigned integer 0-1023, country/region identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_BG (required, unsigned integer 0-16383 - balise group identity)
+    sh:property [ 
+        sh:path era:nid_bg ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 16383 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each CountryBalise must have exactly one nid_bg (unsigned integer 0-16383, balise group identifier)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== DLM Condition Shape =====
+era:DLMConditionShape a sh:NodeShape ;
+    sh:targetClass era:DLMCondition ;
+    
+    # D_TRACKCOND (required, unsigned integer 0-32767 - distance in scaled meters)
+    sh:property [ 
+        sh:path era:d_trackcond ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DLMCondition must have exactly one d_trackcond (unsigned integer 0-32767, distance from LRBG)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_TRACKCOND (required, unsigned integer 0-32767 - length in scaled meters)
+    sh:property [ 
+        sh:path era:l_trackcond ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DLMCondition must have exactly one l_trackcond (unsigned integer 0-32767, length of condition section)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_TRACKCOND (required, unsigned integer 0-15 - track condition type)
+    sh:property [ 
+        sh:path era:m_trackcond ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 15 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DLMCondition must have exactly one m_trackcond (unsigned integer 0-15, track condition type code)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== DL Track Condition Shape =====
+era:DLTrackCondShape a sh:NodeShape ;
+    sh:targetClass era:DLTrackCond ;
+    
+    # D_TRACKCOND (required, unsigned integer 0-32767 - distance in scaled meters)
+    sh:property [ 
+        sh:path era:d_trackcond ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DLTrackCond must have exactly one d_trackcond (unsigned integer 0-32767, distance from LRBG)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_TRACKCOND (required, unsigned integer 0-32767 - length in scaled meters)
+    sh:property [ 
+        sh:path era:l_trackcond ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DLTrackCond must have exactly one l_trackcond (unsigned integer 0-32767, length of condition section)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 0 Shape =====
+era:ETCSPacket_0Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_0 ;
+    
+    # NID_VBCMK (required, unsigned integer 0-63 - virtual balise cover marker identity)
+    sh:property [ 
+        sh:path era:nid_vbcmk ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 63 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_0 must have exactly one nid_vbcmk (unsigned integer 0-63, virtual balise cover marker ID)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 131 Shape =====
+era:ETCSPacket_131Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_131 ;
+    
+    # NID_C (required, unsigned integer 0-1023 - country/region identity)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_131 must have exactly one nid_c (unsigned integer 0-1023, country/region identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_RBC (required, unsigned integer 0-16383 - RBC identity)
+    sh:property [ 
+        sh:path era:nid_rbc ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 16383 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_131 must have exactly one nid_rbc (unsigned integer 0-16383, Radio Block Centre identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # D_RBCTR (required, unsigned integer 0-32767 - distance to RBC transition in scaled meters)
+    sh:property [ 
+        sh:path era:d_rbctr ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_131 must have exactly one d_rbctr (unsigned integer 0-32767, distance to RBC transition)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_RADIO (required, string - radio network identity/phone number)
+    sh:property [ 
+        sh:path era:nid_radio ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_131 must have exactly one nid_radio (string, radio network ID or phone number)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_SLEEPSESSION (required, boolean - sleep session permitted)
+    sh:property [ 
+        sh:path era:q_sleepsession ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_131 must have exactly one q_sleepsession (boolean, whether sleep session is allowed)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 132 Shape =====
+era:ETCSPacket_132Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_132 ;
+    
+    # Q_ASPECT (required, boolean - danger aspect indicator)
+    sh:property [ 
+        sh:path era:q_aspect ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_132 must have exactly one q_aspect (boolean, stop/danger aspect indicator)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 133 Shape =====
+era:ETCSPacket_133Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_133 ;
+    
+    # NID_C (required, unsigned integer 0-1023 - country/region identity)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_133 must have exactly one nid_c (unsigned integer 0-1023, country/region identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_BG (required, unsigned integer 0-16383 - balise group identity)
+    sh:property [ 
+        sh:path era:nid_bg ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 16383 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_133 must have exactly one nid_bg (unsigned integer 0-16383, balise group identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_C_NEXT (required, unsigned integer 0-1023 - next country identity)
+    sh:property [ 
+        sh:path era:nid_c_next ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_133 must have exactly one nid_c_next (unsigned integer 0-1023, next country identifier for infill)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_RIU (required, unsigned integer 0-16383 - Radio Infill Unit identity)
+    sh:property [ 
+        sh:path era:nid_riu ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 16383 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_133 must have exactly one nid_riu (unsigned integer 0-16383, Radio Infill Unit identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # D_INFILL (required, unsigned integer 0-32767 - distance to infill location)
+    sh:property [ 
+        sh:path era:d_infill ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_133 must have exactly one d_infill (unsigned integer 0-32767, distance to infill balise group)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_RIU (required, boolean - infill balise in opposite or same direction)
+    sh:property [ 
+        sh:path era:q_riu ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_133 must have exactly one q_riu (boolean, infill direction indicator)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_RADIO (required, string - radio network identity/phone number for RIU)
+    sh:property [ 
+        sh:path era:nid_radio ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_133 must have exactly one nid_radio (string, radio network ID for contacting RIU)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 134 Shape =====
+era:ETCSPacket_134Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_134 ;
+    
+    # D_LOOP (required, unsigned integer 0-32767 - distance to loop start)
+    sh:property [ 
+        sh:path era:d_loop ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_134 must have exactly one d_loop (unsigned integer 0-32767, distance to loop start)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_LOOP (required, unsigned integer 0-32767 - length of loop)
+    sh:property [ 
+        sh:path era:l_loop ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_134 must have exactly one l_loop (unsigned integer 0-32767, length of loop)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_LOOP (required, unsigned integer 0-16383 - loop identity)
+    sh:property [ 
+        sh:path era:nid_loop ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 16383 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_134 must have exactly one nid_loop (unsigned integer 0-16383, loop identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_LOOPDIR (required, boolean - loop direction)
+    sh:property [ 
+        sh:path era:q_loopdir ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_134 must have exactly one q_loopdir (boolean, loop direction indicator)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_SSCODE (required, unsigned integer 0-15 - spread spectrum code)
+    sh:property [ 
+        sh:path era:q_sscode ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 15 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_134 must have exactly one q_sscode (unsigned integer 0-15, spread spectrum code for Euroloop)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 135 Shape =====
+era:ETCSPacket_135Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_135 ;
+    sh:message "ETCS Packet 135 - Stop if in Staff Responsible mode. This packet has no variables." .
+
+# ===== ETCS Packet 136 Shape =====
+era:ETCSPacket_136Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_136 ;
+    
+    # NID_C (required, unsigned integer 0-1023 - country/region identity)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_136 must have exactly one nid_c (unsigned integer 0-1023, country/region identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_BG (required, unsigned integer 0-16383 - balise group identity)
+    sh:property [ 
+        sh:path era:nid_bg ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 16383 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_136 must have exactly one nid_bg (unsigned integer 0-16383, balise group identifier for infill reference)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== ETCS Packet 137 Shape =====
+era:ETCSPacket_137Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_137 ;
+    sh:message "ETCS Packet 137 - Stop if in Staff Responsible (SR) mode with additional conditions." ;
+    
+    # Q_SRSTOP (required, boolean - SR stop condition qualifier)
+    sh:property [ 
+        sh:path era:q_srstop ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_137 must have exactly one q_srstop (boolean, SR stop condition)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 138 Shape =====
+era:ETCSPacket_138Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_138 ;
+    sh:message "ETCS Packet 138 - Reverse Area Information." ;
+    
+    # D_STARTREVERSE (required, unsigned integer 0-32767 - distance to reverse area start)
+    sh:property [ 
+        sh:path era:d_startreverse ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_138 must have exactly one d_startreverse (unsigned integer 0-32767, distance to reverse area start)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_REVERSEAREA (required, unsigned integer 0-32767 - length of reverse area)
+    sh:property [ 
+        sh:path era:l_reversearea ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_138 must have exactly one l_reversearea (unsigned integer 0-32767, length of reverse area)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 139 Shape =====
+era:ETCSPacket_139Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_139 ;
+    sh:message "ETCS Packet 139 - Reverse Supervision Information." ;
+    
+    # D_REVERSE (required, unsigned integer 0-32767 - distance for reverse supervision)
+    sh:property [ 
+        sh:path era:d_reverse ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_139 must have exactly one d_reverse (unsigned integer 0-32767, distance for reverse supervision)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # V_REVERSE (required, unsigned integer 0-127 - maximum reverse speed in km/h)
+    sh:property [ 
+        sh:path era:v_reverse ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_139 must have exactly one v_reverse (unsigned integer 0-127, maximum reverse speed in km/h)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 141 Shape =====
+era:ETCSPacket_141Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_141 ;
+    sh:message "ETCS Packet 141 - Default Gradient for Temporary Speed Restriction." ;
+    
+    # G_TSR (required, signed integer 0-255 - gradient value in per mille)
+    sh:property [ 
+        sh:path era:g_tsr ;
+        sh:datatype xsd:int ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_141 must have exactly one g_tsr (signed integer 0-255, gradient in per mille)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_GDIR (required, boolean - gradient direction)
+    sh:property [ 
+        sh:path era:q_gdir ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_141 must have exactly one q_gdir (boolean, gradient direction: downhill/uphill)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 145 Shape =====
+era:ETCSPacket_145Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_145 ;
+    sh:message "ETCS Packet 145 - Inhibition of Balise Group Message Consistency Reaction. This packet has no variables." .
+
+# ===== ETCS Packet 16 Shape =====
+era:ETCSPacket_16Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_16 ;
+    sh:message "ETCS Packet 16 - International Static Speed Profile." ;
+    
+    # L_SECTION (required, unsigned integer 0-32767 - length of section)
+    sh:property [ 
+        sh:path era:l_section ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_16 must have exactly one l_section (unsigned integer 0-32767, length of speed profile section)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 180 Shape =====
+era:ETCSPacket_180Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_180 ;
+    sh:message "ETCS Packet 180 - Level Crossing Information." ;
+    
+    # Q_LSSMA (required, boolean - level crossing supervision qualifier)
+    sh:property [ 
+        sh:path era:q_lssma ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_180 must have exactly one q_lssma (boolean, level crossing supervision qualifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # T_LSSMA (required, unsigned integer 0-255 - time for level crossing supervision in seconds)
+    sh:property [ 
+        sh:path era:t_lssma ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_180 must have exactly one t_lssma (unsigned integer 0-255, time in seconds)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 181 Shape =====
+era:ETCSPacket_181Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_181 ;
+    sh:message "ETCS Packet 181 - Geographical Position Information. This packet has no standard variables (contains only latitude/longitude which may be structured differently)." .
+
+# ===== ETCS Packet 254 Shape =====
+era:ETCSPacket_254Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_254 ;
+    sh:message "ETCS Packet 254 - Default Balise/Loop or RIU Information. This packet has no variables." .
+
+# ===== ETCS Packet 255 Shape =====
+era:ETCSPacket_255Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_255 ;
+    sh:message "ETCS Packet 255 - End of Information. This packet has no variables - marks end of transmission." .
+
+# ===== ETCS Packet 2 Shape =====
+era:ETCSPacket_2Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_2 ;
+    sh:message "ETCS Packet 2 - System Version Order." ;
+    
+    # ETCS M_VERSION (required, controlled vocabulary - ETCS message version)
+    sh:property [ 
+        sh:path era:etcsMVersion ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/etcs-m-versions/v1_0>
+            <http://data.europa.eu/949/concepts/etcs-m-versions/v1_1>
+            <http://data.europa.eu/949/concepts/etcs-m-versions/v2_0>
+            <http://data.europa.eu/949/concepts/etcs-m-versions/v2_1>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property etcsMVersion must have a value from the defined SKOS concept scheme (v1.0, v1.1, v2.0, or v2.1)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 39 Shape =====
+era:ETCSPacket_39Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_39 ;
+    sh:message "ETCS Packet 39 - Track Condition Change of Traction System." ;
+    
+    # D_TRACTION (required, unsigned integer 0-32767 - distance to traction change)
+    sh:property [ 
+        sh:path era:d_traction ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_39 must have exactly one d_traction (unsigned integer 0-32767, distance to traction system change)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_VOLTAGE (required, unsigned integer 0-15 - voltage/traction system type)
+    sh:property [ 
+        sh:path era:m_voltage ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 15 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_39 must have exactly one m_voltage (unsigned integer 0-15, traction system type code)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_CTRACTION (required, unsigned integer 0-1023 - country-specific traction identifier)
+    sh:property [ 
+        sh:path era:nid_ctraction ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_39 must have exactly one nid_ctraction (unsigned integer 0-1023, country-specific traction ID)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 3 Shape (National Values) =====
+era:ETCSPacket_3Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_3 ;
+    sh:message "ETCS Packet 3 - National Values - contains country-specific ETCS parameters." ;
+    
+    # NID_C (required, unsigned integer 0-1023 - country/region identity)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one nid_c (unsigned integer 0-1023, country/region identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_C_NEXT (required, unsigned integer 0-1023 - next country identity)
+    sh:property [ 
+        sh:path era:nid_c_next ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one nid_c_next (unsigned integer 0-1023, next country identifier for border crossing)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # D_VALIDNV (required, unsigned integer 0-32767 - distance where national values are valid)
+    sh:property [ 
+        sh:path era:d_validnv ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one d_validnv (unsigned integer 0-32767, validity distance for national values)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Speed-related national values
+    sh:property [ 
+        sh:path era:v_nvshunt ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one v_nvshunt (unsigned integer 0-127, national shunting speed in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:v_nvstff ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one v_nvstff (unsigned integer 0-127, national Staff Responsible speed in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:v_nvonsight ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one v_nvonsight (unsigned integer 0-127, national On Sight speed in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:v_nvunfit ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one v_nvunfit (unsigned integer 0-127, national Unfitted speed in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:v_nvrel ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one v_nvrel (unsigned integer 0-127, national release speed in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:v_nvlimsuperv ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one v_nvlimsuperv (unsigned integer 0-127, national speed limit supervision in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:v_nvsupovtrp ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one v_nvsupovtrp (unsigned integer 0-127, supervision override trip speed in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:v_nvallowovtrp ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one v_nvallowovtrp (unsigned integer 0-127, allowed override trip speed in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Distance-related national values
+    sh:property [ 
+        sh:path era:d_nvroll ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one d_nvroll (unsigned integer 0-32767, national roll-away distance)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:d_nvstff ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one d_nvstff (unsigned integer 0-32767, Staff Responsible distance)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:d_nvpotrp ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one d_nvpotrp (unsigned integer 0-32767, post-trip distance)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:d_nvovtrp ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one d_nvovtrp (unsigned integer 0-32767, override trip distance)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Adhesion-related national values
+    sh:property [ 
+        sh:path era:a_nvmaxredadh1 ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 63 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one a_nvmaxredadh1 (unsigned integer 0-63, max reduced adhesion factor 1)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:a_nvmaxredadh2 ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 63 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one a_nvmaxredadh2 (unsigned integer 0-63, max reduced adhesion factor 2)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:a_nvmaxredadh3 ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 63 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one a_nvmaxredadh3 (unsigned integer 0-63, max reduced adhesion factor 3)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:m_nvavadh ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 31 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one m_nvavadh (unsigned integer 0-31, available adhesion type)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Time-related national values
+    sh:property [ 
+        sh:path era:t_nvcontact ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one t_nvcontact (unsigned integer 0-255, max time for driver contact in seconds)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:t_nvovtrp ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one t_nvovtrp (unsigned integer 0-255, override trip time in seconds)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Boolean qualifiers
+    sh:property [ 
+        sh:path era:q_nvdriver_adhes ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one q_nvdriver_adhes (boolean, driver adhesion notification)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:q_nvkint ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one q_nvkint (boolean, kinematic integrity)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:q_nvlocacc ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 63 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one q_nvlocacc (unsigned integer 0-63, location accuracy)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:m_nvderun ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one m_nvderun (boolean, derail unit)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:q_nvemrrls ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one q_nvemrrls (boolean, emergency release)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:q_nvguiperm ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one q_nvguiperm (boolean, GUI permission)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:q_nvinhsmicperm ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one q_nvinhsmicperm (boolean, inhibit SMIC permission)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:q_nvsbfbperm ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one q_nvsbfbperm (boolean, service brake feedback permission)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [ 
+        sh:path era:q_nvsbtsmperm ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one q_nvsbtsmperm (boolean, service brake test permission)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Emergency brake confidence level
+    sh:property [ 
+        sh:path era:m_nvebcl ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 15 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_3 must have exactly one m_nvebcl (unsigned integer 0-15, emergency brake confidence level)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_NVCONTACT (required, controlled vocabulary - contact reaction)
+    sh:property [ 
+        sh:path era:mNvcontact ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/etcs-reactions-contact/trainTrip>
+            <http://data.europa.eu/949/concepts/etcs-reactions-contact/applyServiceBrake>
+            <http://data.europa.eu/949/concepts/etcs-reactions-contact/noReaction>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property mNvcontact must have a value from the defined SKOS concept scheme (trainTrip, applyServiceBrake, or noReaction)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NVKs (optional, national value correction factors)
+    sh:property [ 
+        sh:path era:nVKs ;
+        sh:node era:NVKShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "An ETCSPacket_3 may have at most one nVKs that conforms to NVKShape." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== ETCS Packet 40 Shape =====
+era:ETCSPacket_40Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_40 ;
+    sh:message "ETCS Packet 40 - Track Condition - Change of Allowed Current Consumption." ;
+    
+    # D_CURRENT (required, unsigned integer 0-32767 - distance to current limitation change)
+    sh:property [ 
+        sh:path era:d_current ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_40 must have exactly one d_current (unsigned integer 0-32767, distance to current consumption change)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_CURRENT (required, unsigned integer 0-1023 - maximum allowed current in amperes)
+    sh:property [ 
+        sh:path era:m_current ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_40 must have exactly one m_current (unsigned integer 0-1023, maximum current in amperes)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 41 Shape =====
+era:ETCSPacket_41Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_41 ;
+    sh:message "ETCS Packet 41 - Level Transition Order." ;
+    
+    # D_LEVELTR (required, unsigned integer 0-32767 - distance to level transition)
+    sh:property [ 
+        sh:path era:d_leveltr ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_41 must have exactly one d_leveltr (unsigned integer 0-32767, distance to level transition point)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_LEVELTR (required, controlled vocabulary - target ETCS level)
+    sh:property [ 
+        sh:path era:m_leveltr ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/etcs-levels/level0>
+            <http://data.europa.eu/949/concepts/etcs-levels/levelNTC>
+            <http://data.europa.eu/949/concepts/etcs-levels/level1>
+            <http://data.europa.eu/949/concepts/etcs-levels/level2>
+            <http://data.europa.eu/949/concepts/etcs-levels/level3>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property m_leveltr must have a value from the defined SKOS concept scheme (level0, level1, level2, level3, or levelNTC)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_NTC (required, unsigned integer 0-255 - National Train Control system ID)
+    sh:property [ 
+        sh:path era:nid_ntc ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_41 must have exactly one nid_ntc (unsigned integer 0-255, NTC system identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_ACKLEVELTR (required, unsigned integer 0-32767 - acknowledgement length)
+    sh:property [ 
+        sh:path era:l_ackleveltr ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_41 must have exactly one l_ackleveltr (unsigned integer 0-32767, acknowledgement length)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Level Transition With Acknowledgement (optional, up to 32 allowed)
+    sh:property [ 
+        sh:path era:levelTransitionWithAck ;
+        sh:node era:LevelTransitionWithAckShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 32 ;
+        sh:message "An ETCSPacket_41 may have at most 32 levelTransitionWithAck that conform to LevelTransitionWithAckShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 42 Shape =====
+era:ETCSPacket_42Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_42 ;
+    sh:message "ETCS Packet 42 - Session Management." ;
+    
+    # NID_C (required, unsigned integer 0-1023 - country/region identity)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_42 must have exactly one nid_c (unsigned integer 0-1023, country/region identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_RBC (required, unsigned integer 0-16383 - Radio Block Centre identity)
+    sh:property [ 
+        sh:path era:nid_rbc ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 16383 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_42 must have exactly one nid_rbc (unsigned integer 0-16383, RBC identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_RBC (required, boolean - RBC type qualifier)
+    sh:property [ 
+        sh:path era:q_rbc ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_42 must have exactly one q_rbc (boolean, RBC type: start/terminate session)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_SLEEPSESSION (required, boolean - sleep session permitted)
+    sh:property [ 
+        sh:path era:q_sleepsession ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_42 must have exactly one q_sleepsession (boolean, whether sleep session is allowed)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_RADIO (optional, string - radio network identity/phone number)
+    sh:property [ 
+        sh:path era:nid_radio ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "An ETCSPacket_42 may have at most one nid_radio (string, radio network ID or phone number for RBC)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 44 Shape =====
+era:ETCSPacket_44Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_44 ;
+    sh:message "ETCS Packet 44 - Data Used by Applications Outside the ERTMS/ETCS System." ;
+    
+    # NID_NTC (required, unsigned integer 0-255 - National Train Control system ID)
+    sh:property [ 
+        sh:path era:nid_ntc ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_44 must have exactly one nid_ntc (unsigned integer 0-255, NTC system identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_XUSER (required, unsigned integer 0-511 - external user identity)
+    sh:property [ 
+        sh:path era:nid_xuser ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 511 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_44 must have exactly one nid_xuser (unsigned integer 0-511, external user/application identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Other Data (required, base64Binary - application-specific data)
+    sh:property [ 
+        sh:path era:otherData ;
+        sh:datatype xsd:base64Binary ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_44 must have exactly one otherData (base64Binary, external system data)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 45 Shape =====
+era:ETCSPacket_45Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_45 ;
+    sh:message "ETCS Packet 45 - Radio Network Registration." ;
+    
+    # NID_MN (required, string - mobile network identity)
+    sh:property [ 
+        sh:path era:nid_mn ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_45 must have exactly one nid_mn (string, mobile network identifier for GSM-R registration)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 46 Shape =====
+era:ETCSPacket_46Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_46 ;
+    sh:message "ETCS Packet 46 - Conditional Level Transition Order." ;
+    
+    # M_LEVELTR (required, controlled vocabulary - target ETCS level)
+    sh:property [ 
+        sh:path era:m_leveltr ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/etcs-levels/level0>
+            <http://data.europa.eu/949/concepts/etcs-levels/levelNTC>
+            <http://data.europa.eu/949/concepts/etcs-levels/level1>
+            <http://data.europa.eu/949/concepts/etcs-levels/level2>
+            <http://data.europa.eu/949/concepts/etcs-levels/level3>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property m_leveltr must have a value from the defined SKOS concept scheme (level0, level1, level2, level3, or levelNTC)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_NTC (required, unsigned integer 0-255 - National Train Control system ID)
+    sh:property [ 
+        sh:path era:nid_ntc ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_46 must have exactly one nid_ntc (unsigned integer 0-255, NTC system identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Level Transitions (optional, up to 31 conditional transitions)
+    sh:property [ 
+        sh:path era:levelTransitions ;
+        sh:node era:LevelTransitionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 31 ;
+        sh:message "An ETCSPacket_46 may have at most 31 levelTransitions that conform to LevelTransitionShape." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== ETCS Packet 49 Shape =====
+era:ETCSPacket_49Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_49 ;
+    sh:message "ETCS Packet 49 - List of Balises for SH Area." ;
+    
+    # Country Balises (optional, up to 31 balise group references)
+    sh:property [ 
+        sh:path era:countryBalises ;
+        sh:node era:CountryBaliseShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 31 ;
+        sh:message "An ETCSPacket_49 may have at most 31 countryBalises that conform to CountryBaliseShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 51 Shape =====
+era:ETCSPacket_51Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_51 ;
+    sh:message "ETCS Packet 51 - Axle Load Speed Profile." ;
+    
+    # D_TRACKINIT (required, unsigned integer 0-32767 - distance to profile start)
+    sh:property [ 
+        sh:path era:d_trackinit ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_51 must have exactly one d_trackinit (unsigned integer 0-32767, distance to track description start)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_TRACKINIT (required, boolean - initial/update indicator)
+    sh:property [ 
+        sh:path era:q_trackinit ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_51 must have exactly one q_trackinit (boolean, initial or update profile)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # D_AXLELOAD (required, unsigned integer 0-32767 - distance to axle load start)
+    sh:property [ 
+        sh:path era:d_axleload ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_51 must have exactly one d_axleload (unsigned integer 0-32767, distance to axle load profile start)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_AXLELOAD (required, unsigned integer 0-32767 - length of profile)
+    sh:property [ 
+        sh:path era:l_axleload ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_51 must have exactly one l_axleload (unsigned integer 0-32767, length of axle load profile)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_FRONT (optional, boolean - applies to train front only)
+    sh:property [ 
+        sh:path era:q_front ;
+        sh:datatype xsd:boolean ;
+        sh:maxCount 1 ;
+        sh:message "An ETCSPacket_51 may have at most one q_front (boolean, applies to train front)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Axle Load Restrictions (optional, up to 31 restrictions)
+    sh:property [ 
+        sh:path era:axleLoadRestrictions ;
+        sh:node era:AxleLoadRestrictionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 31 ;
+        sh:message "An ETCSPacket_51 may have at most 31 axleLoadRestrictions that conform to AxleLoadRestrictionShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Axle Load Selections (optional, up to 31 selections)
+    sh:property [ 
+        sh:path era:axleLoadSelections ;
+        sh:node era:AxleLoadSelectionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 31 ;
+        sh:message "An ETCSPacket_51 may have at most 31 axleLoadSelections that conform to AxleLoadSelectionShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 52 Shape =====
+era:ETCSPacket_52Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_52 ;
+    sh:message "ETCS Packet 52 - Permitted Braking Distance Information." ;
+    
+    # D_TRACKINIT (required, unsigned integer 0-32767 - distance to profile start)
+    sh:property [ 
+        sh:path era:d_trackinit ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_52 must have exactly one d_trackinit (unsigned integer 0-32767, distance to track description start)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_TRACKINIT (required, boolean - initial/update indicator)
+    sh:property [ 
+        sh:path era:q_trackinit ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_52 must have exactly one q_trackinit (boolean, initial or update profile)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # PBD Selection (optional, up to 32 braking distance selections)
+    sh:property [ 
+        sh:path era:pbdSelection ;
+        sh:node era:PBDSelectionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 32 ;
+        sh:message "An ETCSPacket_52 may have at most 32 pbdSelection that conform to PBDSelectionShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 5 Shape =====
+era:ETCSPacket_5Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_5 ;
+    sh:message "ETCS Packet 5 - Linking." ;
+    
+    # Links (required, 1-33 link items for train positioning)
+    sh:property [ 
+        sh:path era:links ;
+        sh:node era:LinkItemShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 33 ;
+        sh:message "Each ETCSPacket_5 must have between 1 and 33 links that conform to LinkItemShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 65 Shape =====
+era:ETCSPacket_65Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_65 ;
+    sh:message "ETCS Packet 65 - Temporary Speed Restriction." ;
+    
+    # NID_TSR (required, unsigned integer 0-255 - TSR identity)
+    sh:property [ 
+        sh:path era:nid_tsr ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_65 must have exactly one nid_tsr (unsigned integer 0-255, temporary speed restriction identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # D_TSR (required, unsigned integer 0-32767 - distance to TSR start)
+    sh:property [ 
+        sh:path era:d_tsr ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_65 must have exactly one d_tsr (unsigned integer 0-32767, distance to TSR start)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_TSR (required, unsigned integer 0-32767 - length of TSR)
+    sh:property [ 
+        sh:path era:l_tsr ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_65 must have exactly one l_tsr (unsigned integer 0-32767, length of TSR section)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # V_TSR (required, unsigned integer 0-127 - TSR speed in km/h)
+    sh:property [ 
+        sh:path era:v_tsr ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_65 must have exactly one v_tsr (unsigned integer 0-127, temporary speed limit in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_FRONT (required, boolean - applies to train front only)
+    sh:property [ 
+        sh:path era:q_front ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_65 must have exactly one q_front (boolean, applies to train front)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 66 Shape =====
+era:ETCSPacket_66Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_66 ;
+    sh:message "ETCS Packet 66 - Temporary Speed Restriction Revocation." ;
+    
+    # NID_TSR (required, unsigned integer 0-255 - TSR identity to revoke)
+    sh:property [ 
+        sh:path era:nid_tsr ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_66 must have exactly one nid_tsr (unsigned integer 0-255, TSR identifier to revoke)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 67 Shape =====
+era:ETCSPacket_67Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_67 ;
+    sh:message "ETCS Packet 67 - Track Condition (Data Link)." ;
+    
+    # DL Track Conditions (required, 1-32 track conditions)
+    sh:property [ 
+        sh:path era:dlTrackConditions ;
+        sh:node era:DLTrackCondShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 32 ;
+        sh:message "Each ETCSPacket_67 must have between 1 and 32 dlTrackConditions that conform to DLTrackCondShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 68 Shape =====
+era:ETCSPacket_68Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_68 ;
+    sh:message "ETCS Packet 68 - Track Condition (Big Metal Masses)." ;
+    
+    # D_TRACKINIT (required, unsigned integer 0-32767 - distance to track description start)
+    sh:property [ 
+        sh:path era:d_trackinit ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_68 must have exactly one d_trackinit (unsigned integer 0-32767, distance to track description start)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_TRACKINIT (required, boolean - initial/update indicator)
+    sh:property [ 
+        sh:path era:q_trackinit ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_68 must have exactly one q_trackinit (boolean, initial or update description)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Track Condition Selection (optional, up to 32 conditions)
+    sh:property [ 
+        sh:path era:trackCondSelection ;
+        sh:node era:DLMConditionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 32 ;
+        sh:message "An ETCSPacket_68 may have at most 32 trackCondSelection that conform to DLMConditionShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 69 Shape =====
+era:ETCSPacket_69Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_69 ;
+    sh:message "ETCS Packet 69 - Track Condition Station Platforms." ;
+    
+    # D_TRACKINIT (required, unsigned integer 0-32767 - distance to track description start)
+    sh:property [ 
+        sh:path era:d_trackinit ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_69 must have exactly one d_trackinit (unsigned integer 0-32767, distance to track description start)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_TRACKINIT (required, boolean - initial/update indicator)
+    sh:property [ 
+        sh:path era:q_trackinit ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_69 must have exactly one q_trackinit (boolean, initial or update description)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Track Condition Platform Selection (optional, up to 32 platform conditions)
+    sh:property [ 
+        sh:path era:trackCondPlatformSelection ;
+        sh:node era:TCSPConditionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 32 ;
+        sh:message "An ETCSPacket_69 may have at most 32 trackCondPlatformSelection that conform to TCSPConditionShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 6 Shape =====
+era:ETCSPacket_6Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_6 ;
+    sh:message "ETCS Packet 6 - Virtual Balise Cover Order." ;
+    
+    # NID_C (required, unsigned integer 0-1023 - country/region identity)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_6 must have exactly one nid_c (unsigned integer 0-1023, country/region identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_VBCMK (required, unsigned integer 0-63 - virtual balise cover marker identity)
+    sh:property [ 
+        sh:path era:nid_vbcmk ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 63 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_6 must have exactly one nid_vbcmk (unsigned integer 0-63, virtual balise cover marker ID)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_VBCO (required, boolean - virtual balise cover order)
+    sh:property [ 
+        sh:path era:q_vbco ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_6 must have exactly one q_vbco (boolean, set/remove virtual balise cover)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # T_VBC (required, unsigned integer 0-255 - time for virtual balise cover in seconds)
+    sh:property [ 
+        sh:path era:t_vbc ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_6 must have exactly one t_vbc (unsigned integer 0-255, time for virtual balise cover in seconds)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== ETCS Packet 70 Shape =====
+era:ETCSPacket_70Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_70 ;
+    sh:message "ETCS Packet 70 - Route Suitability Data." ;
+    
+    # D_TRACKINIT (required, unsigned integer 0-32767 - distance to track description start)
+    sh:property [ 
+        sh:path era:d_trackinit ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_70 must have exactly one d_trackinit (unsigned integer 0-32767, distance to track description start)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_TRACKINIT (required, boolean - initial/update indicator)
+    sh:property [ 
+        sh:path era:q_trackinit ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_70 must have exactly one q_trackinit (boolean, initial or update description)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Route Suitabilities (optional, up to 32 route suitability definitions)
+    sh:property [ 
+        sh:path era:routeSuitabilities ;
+        sh:node era:RouteSuitabilityShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 32 ;
+        sh:message "An ETCSPacket_70 may have at most 32 routeSuitabilities that conform to RouteSuitabilityShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 71 Shape =====
+era:ETCSPacket_71Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_71 ;
+    sh:message "ETCS Packet 71 - Adhesion Factor." ;
+    
+    # D_ADHESION (required, unsigned integer 0-32767 - distance to adhesion change)
+    sh:property [ 
+        sh:path era:d_adhesion ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_71 must have exactly one d_adhesion (unsigned integer 0-32767, distance to adhesion factor change)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_ADHESION (required, unsigned integer 0-32767 - length of adhesion section)
+    sh:property [ 
+        sh:path era:l_adhesion ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_71 must have exactly one l_adhesion (unsigned integer 0-32767, length of adhesion section)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_ADHESION (required, boolean - adhesion factor qualifier)
+    sh:property [ 
+        sh:path era:m_adhesion ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_71 must have exactly one m_adhesion (boolean, slippery rail indicator)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 72 Shape =====
+era:ETCSPacket_72Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_72 ;
+    sh:message "ETCS Packet 72 - Plain Text Message." ;
+    
+    # L_TEXT (required, unsigned integer 0-225 - length of text in bytes)
+    sh:property [ 
+        sh:path era:l_text ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 225 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_72 must have exactly one l_text (unsigned integer 0-225, text length in bytes)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # X_TEXT (required, string - plain text message content)
+    sh:property [ 
+        sh:path era:x_text ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_72 must have exactly one x_text (string, message text content)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Text Message Configuration (required, can be inline or referenced)
+    sh:property [ 
+        sh:path era:textMessageConfig ;
+        sh:node era:TextMessageConfigShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_72 must have exactly one textMessageConfig that conforms to TextMessageConfigShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 76 Shape =====
+era:ETCSPacket_76Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_76 ;
+    sh:message "ETCS Packet 76 - Plain Text Message with Confirmation." ;
+    
+    # Q_TEXT (required, unsigned integer 0-225 - text qualifier/priority)
+    sh:property [ 
+        sh:path era:q_text ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 225 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_76 must have exactly one q_text (unsigned integer 0-225, text priority/acknowledgement requirement)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Text Message Configuration (required, can be inline or referenced)
+    sh:property [ 
+        sh:path era:textMessageConfig ;
+        sh:node era:TextMessageConfigShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_76 must have exactly one textMessageConfig that conforms to TextMessageConfigShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 79 Shape =====
+era:ETCSPacket_79Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_79 ;
+    sh:message "ETCS Packet 79 - Geographical Position Information." ;
+    
+    # Geographic Position Items (required, 1-32 position references)
+    sh:property [ 
+        sh:path era:geoPosItems ;
+        sh:node era:GeoPosItemShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 32 ;
+        sh:message "Each ETCSPacket_79 must have between 1 and 32 geoPosItems that conform to GeoPosItemShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 80 Shape =====
+era:ETCSPacket_80Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_80 ;
+    sh:message "ETCS Packet 80 - Mode Profile." ;
+    
+    # Mode Profiles (required, 1-32 mode profile items)
+    sh:property [ 
+        sh:path era:modeProfiles ;
+        sh:node era:ModeProfileItemShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 32 ;
+        sh:message "Each ETCSPacket_80 must have between 1 and 32 modeProfiles that conform to ModeProfileItemShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 88 Shape =====
+era:ETCSPacket_88Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_88 ;
+    sh:message "ETCS Packet 88 - Level Crossing Information." ;
+    
+    # NID_LX (required, unsigned integer 0-255 - level crossing identity)
+    sh:property [ 
+        sh:path era:nid_lx ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_88 must have exactly one nid_lx (unsigned integer 0-255, level crossing identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # D_LX (required, unsigned integer 0-32767 - distance to level crossing)
+    sh:property [ 
+        sh:path era:d_lx ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_88 must have exactly one d_lx (unsigned integer 0-32767, distance to level crossing)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_LX (required, unsigned integer 0-32767 - length of level crossing)
+    sh:property [ 
+        sh:path era:l_lx ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_88 must have exactly one l_lx (unsigned integer 0-32767, length of level crossing)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_LXSTATUS (required, boolean - level crossing status qualifier)
+    sh:property [ 
+        sh:path era:q_lxstatus ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_88 must have exactly one q_lxstatus (boolean, whether status information follows)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Level Crossing Status (optional, detailed status information)
+    sh:property [ 
+        sh:path era:lx_Status ;
+        sh:node era:LXStatusShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "An ETCSPacket_88 may have at most one lx_Status that conforms to LXStatusShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Packet 90 Shape =====
+era:ETCSPacket_90Shape a sh:NodeShape ;
+    sh:targetClass era:ETCSPacket_90 ;
+    sh:message "ETCS Packet 90 - Track Ahead Free Up to Level 2/3 Transition Location." ;
+    
+    # NID_C (required, unsigned integer 0-1023 - country/region identity)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_90 must have exactly one nid_c (unsigned integer 0-1023, country/region identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_BG (required, unsigned integer 0-16383 - balise group identity at transition)
+    sh:property [ 
+        sh:path era:nid_bg ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 16383 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSPacket_90 must have exactly one nid_bg (unsigned integer 0-16383, balise group at L2/L3 transition)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Geographic Position Item Shape =====
+era:GeoPosItemShape a sh:NodeShape ;
+    sh:targetClass era:GeoPosItem ;
+    
+    # NID_C (required, unsigned integer 0-1023 - country/region identity)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each GeoPosItem must have exactly one nid_c (unsigned integer 0-1023, country/region identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_BG (required, unsigned integer 0-16383 - balise group identity)
+    sh:property [ 
+        sh:path era:nid_bg ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 16383 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each GeoPosItem must have exactly one nid_bg (unsigned integer 0-16383, balise group identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # D_POSOFF (required, unsigned integer 0-32767 - position offset)
+    sh:property [ 
+        sh:path era:d_posoff ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each GeoPosItem must have exactly one d_posoff (unsigned integer 0-32767, position offset from balise group)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_MPOSITION (required, boolean - position type qualifier)
+    sh:property [ 
+        sh:path era:q_mposition ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each GeoPosItem must have exactly one q_mposition (boolean, geographic position resolution)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_POSITION (required, unsigned integer 0-16777215 - geographic position value)
+    sh:property [ 
+        sh:path era:m_position ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 16777215 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each GeoPosItem must have exactly one m_position (unsigned integer 0-16777215, latitude/longitude coordinate)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Level Crossing Status Shape =====
+era:LXStatusShape a sh:NodeShape ;
+    sh:targetClass era:LXStatus ;
+    
+    # Q_STOPLX (required, boolean - stop at level crossing qualifier)
+    sh:property [ 
+        sh:path era:q_stoplx ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LXStatus must have exactly one q_stoplx (boolean, whether stop is required at LX)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # V_LX (required, unsigned integer 0-127 - permitted speed at level crossing in km/h)
+    sh:property [ 
+        sh:path era:v_lx ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LXStatus must have exactly one v_lx (unsigned integer 0-127, permitted speed at LX in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_STOPLX (required, unsigned integer 0-32767 - distance to stop at level crossing)
+    sh:property [ 
+        sh:path era:l_stoplx ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LXStatus must have exactly one l_stoplx (unsigned integer 0-32767, stopping distance at LX)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Level Transition Shape =====
+era:LevelTransitionShape a sh:NodeShape ;
+    sh:targetClass era:LevelTransition ;
+    
+    # M_LEVELTR (required, controlled vocabulary - target ETCS level)
+    sh:property [ 
+        sh:path era:m_leveltr ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/etcs-levels/level0>
+            <http://data.europa.eu/949/concepts/etcs-levels/levelNTC>
+            <http://data.europa.eu/949/concepts/etcs-levels/level1>
+            <http://data.europa.eu/949/concepts/etcs-levels/level2>
+            <http://data.europa.eu/949/concepts/etcs-levels/level3>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property m_leveltr must have a value from the defined SKOS concept scheme (level0, level1, level2, level3, or levelNTC)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_NTC (required, unsigned integer 0-255 - National Train Control system ID)
+    sh:property [ 
+        sh:path era:nid_ntc ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LevelTransition must have exactly one nid_ntc (unsigned integer 0-255, NTC system identifier)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+# ===== Level Transition With Acknowledgement Shape =====
+era:LevelTransitionWithAckShape a sh:NodeShape ;
+    sh:targetClass era:LevelTransitionWithAck ;
+    
+    # M_LEVELTR (required, controlled vocabulary - target ETCS level)
+    sh:property [ 
+        sh:path era:m_leveltr ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/etcs-levels/level0>
+            <http://data.europa.eu/949/concepts/etcs-levels/levelNTC>
+            <http://data.europa.eu/949/concepts/etcs-levels/level1>
+            <http://data.europa.eu/949/concepts/etcs-levels/level2>
+            <http://data.europa.eu/949/concepts/etcs-levels/level3>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property m_leveltr must have a value from the defined SKOS concept scheme (level0, level1, level2, level3, or levelNTC)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_NTC (required, unsigned integer 0-255 - National Train Control system ID)
+    sh:property [ 
+        sh:path era:nid_ntc ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LevelTransitionWithAck must have exactly one nid_ntc (unsigned integer 0-255, NTC system identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_ACKLEVELTR (required, unsigned integer 0-32767 - acknowledgement length)
+    sh:property [ 
+        sh:path era:l_ackleveltr ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LevelTransitionWithAck must have exactly one l_ackleveltr (unsigned integer 0-32767, distance where driver must acknowledge)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Link Item Shape =====
+era:LinkItemShape a sh:NodeShape ;
+    sh:targetClass era:LinkItem ;
+    
+    # D_LINK (required, unsigned integer 0-32767 - distance to linked balise group)
+    sh:property [ 
+        sh:path era:d_link ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinkItem must have exactly one d_link (unsigned integer 0-32767, distance to linked balise group)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_C (required, unsigned integer 0-1023 - country/region identity)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinkItem must have exactly one nid_c (unsigned integer 0-1023, country/region identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_BG (required, unsigned integer 0-16383 - balise group identity)
+    sh:property [ 
+        sh:path era:nid_bg ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 16383 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinkItem must have exactly one nid_bg (unsigned integer 0-16383, expected balise group identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_LINKORIENTATION (required, boolean - link orientation)
+    sh:property [ 
+        sh:path era:q_linkorientation ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinkItem must have exactly one q_linkorientation (boolean, balise group orientation: nominal/reverse)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_LOCACC (required, unsigned integer 0-63 - location accuracy)
+    sh:property [ 
+        sh:path era:q_locacc ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 63 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinkItem must have exactly one q_locacc (unsigned integer 0-63, confidence level for link distance)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_LINKREACTION (required, controlled vocabulary - reaction if link fails)
+    sh:property [ 
+        sh:path era:q_linkreaction ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/etcs-reactions-contact/trainTrip>
+            <http://data.europa.eu/949/concepts/etcs-reactions-contact/applyServiceBrake>
+            <http://data.europa.eu/949/concepts/etcs-reactions-contact/noReaction>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property q_linkreaction must have a value from the defined SKOS concept scheme (trainTrip, applyServiceBrake, or noReaction)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Mode Profile Item Shape =====
+era:ModeProfileItemShape a sh:NodeShape ;
+    sh:targetClass era:ModeProfileItem ;
+    
+    # D_MAMODE (required, unsigned integer 0-32767 - distance to mode profile start)
+    sh:property [ 
+        sh:path era:d_mamode ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ModeProfileItem must have exactly one d_mamode (unsigned integer 0-32767, distance to mode profile start)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_MAMODE (required, unsigned integer 0-32767 - length of mode profile section)
+    sh:property [ 
+        sh:path era:l_mamode ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ModeProfileItem must have exactly one l_mamode (unsigned integer 0-32767, length of mode restriction)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_MAMODE (required, controlled vocabulary - mode restriction type)
+    sh:property [ 
+        sh:path era:m_mamode ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/ma-mode/onSight>
+            <http://data.europa.eu/949/concepts/ma-mode/shunting>
+            <http://data.europa.eu/949/concepts/ma-mode/limitedSupervision>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property m_mamode must have a value from the defined SKOS concept scheme (onSight, shunting, or limitedSupervision)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # V_MAMODE (required, unsigned integer 0-127 - maximum speed in mode in km/h)
+    sh:property [ 
+        sh:path era:v_mamode ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ModeProfileItem must have exactly one v_mamode (unsigned integer 0-127, maximum speed in this mode in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_MAMODE (required, boolean - mode qualifier)
+    sh:property [ 
+        sh:path era:q_mamode ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ModeProfileItem must have exactly one q_mamode (boolean, mode restriction qualifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_ACKMAMODE (required, unsigned integer 0-32767 - acknowledgement length)
+    sh:property [ 
+        sh:path era:l_ackmamode ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ModeProfileItem must have exactly one l_ackmamode (unsigned integer 0-32767, distance where driver must acknowledge mode)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== NVK (National Value K - Braking Curves) Shape =====
+era:NVKShape a sh:NodeShape ;
+    sh:targetClass era:NVK ;
+    
+    # M_NVKRINT (required, unsigned integer 0-31 - correction value)
+    sh:property [ 
+        sh:path era:m_nvkrint ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 31 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NVK must have exactly one m_nvkrint (unsigned integer 0-31, kinematic correction factor)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_NVKRINT (required, unsigned integer 0-31 - distance parameter)
+    sh:property [ 
+        sh:path era:l_nvkrint ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 31 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NVK must have exactly one l_nvkrint (unsigned integer 0-31, distance parameter for correction)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_NVKTINT (required, unsigned integer 0-31 - time interval parameter)
+    sh:property [ 
+        sh:path era:m_nvktint ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 31 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NVK must have exactly one m_nvktint (unsigned integer 0-31, time interval for kinematic calculations)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NVK Items (required, 1-32 braking curve parameters)
+    sh:property [ 
+        sh:path era:nvkItems ;
+        sh:node era:NVKItemShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 32 ;
+        sh:message "Each NVK must have between 1 and 32 nvkItems that conform to NVKItemShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Correction Factors (optional, up to 31 correction factors)
+    sh:property [ 
+        sh:path era:correctionFactors ;
+        sh:node era:CorrectionFactorShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 31 ;
+        sh:message "An NVK may have at most 31 correctionFactors that conform to CorrectionFactorShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== NVK Item Shape =====
+era:NVKItemShape a sh:NodeShape ;
+    sh:targetClass era:NVKItem ;
+    
+    # Q_NVKVINTSET (required, controlled vocabulary - train category for braking curves)
+    sh:property [ 
+        sh:path era:q_nvkvintset ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/kv-type/freightTrains>
+            <http://data.europa.eu/949/concepts/kv-type/conventionalPassengerTrains>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property q_nvkvintset must have a value from the defined SKOS concept scheme (freightTrains or conventionalPassengerTrains)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_NVKVINT (required, unsigned integer 0-127 - kinematic value 1)
+    sh:property [ 
+        sh:path era:m_nvkvint ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NVKItem must have exactly one m_nvkvint (unsigned integer 0-127, kinematic braking curve parameter 1)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_NVKVINT_2 (required, unsigned integer 0-127 - kinematic value 2)
+    sh:property [ 
+        sh:path era:m_nvkvint_2 ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NVKItem must have exactly one m_nvkvint_2 (unsigned integer 0-127, kinematic braking curve parameter 2)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # V_NVKVINT (required, unsigned integer 0-127 - speed for kinematic calculation in km/h)
+    sh:property [ 
+        sh:path era:v_nvkvint ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NVKItem must have exactly one v_nvkvint (unsigned integer 0-127, speed for braking curve in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # A_NVP12 (required, unsigned integer 0-63 - acceleration between phases 1 and 2)
+    sh:property [ 
+        sh:path era:a_nvp12 ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 63 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NVKItem must have exactly one a_nvp12 (unsigned integer 0-63, acceleration between brake phases 1-2)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # A_NVP23 (required, unsigned integer 0-63 - acceleration between phases 2 and 3)
+    sh:property [ 
+        sh:path era:a_nvp23 ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 63 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NVKItem must have exactly one a_nvp23 (unsigned integer 0-63, acceleration between brake phases 2-3)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NVK Sub Items (optional, up to 31 sub-items for speed-dependent curves)
+    sh:property [ 
+        sh:path era:nvkSubItems ;
+        sh:node era:NVKSubItemShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 31 ;
+        sh:message "An NVKItem may have at most 31 nvkSubItems that conform to NVKSubItemShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== NVK Sub Item Shape =====
+era:NVKSubItemShape a sh:NodeShape ;
+    sh:targetClass era:NVKSubItem ;
+    
+    # V_NVKVINT (required, unsigned integer 0-127 - speed for kinematic calculation in km/h)
+    sh:property [ 
+        sh:path era:v_nvkvint ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NVKSubItem must have exactly one v_nvkvint (unsigned integer 0-127, speed for braking curve in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_NVKVINT (required, unsigned integer 0-127 - kinematic value 1)
+    sh:property [ 
+        sh:path era:m_nvkvint ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NVKSubItem must have exactly one m_nvkvint (unsigned integer 0-127, kinematic braking parameter 1)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_NVKVINT_2 (required, unsigned integer 0-127 - kinematic value 2)
+    sh:property [ 
+        sh:path era:m_nvkvint_2 ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 127 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NVKSubItem must have exactly one m_nvkvint_2 (unsigned integer 0-127, kinematic braking parameter 2)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== PBD Selection Shape =====
+era:PBDSelectionShape a sh:NodeShape ;
+    sh:targetClass era:PBDSelection ;
+    
+    # D_PBD (required, unsigned integer 0-32767 - distance to permitted braking distance start)
+    sh:property [ 
+        sh:path era:d_pbd ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each PBDSelection must have exactly one d_pbd (unsigned integer 0-32767, distance to PBD start)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_GDIR (required, boolean - gradient direction)
+    sh:property [ 
+        sh:path era:q_gdir ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each PBDSelection must have exactly one q_gdir (boolean, gradient direction: downhill/uphill)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # G_PBDSR (required, unsigned integer 0-255 - gradient for speed restriction in per mille)
+    sh:property [ 
+        sh:path era:g_pbdsr ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each PBDSelection must have exactly one g_pbdsr (unsigned integer 0-255, gradient in per mille)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_PBDSR (required, boolean - PBD speed restriction qualifier)
+    sh:property [ 
+        sh:path era:q_pbdsr ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each PBDSelection must have exactly one q_pbdsr (boolean, whether speed restriction follows)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # D_PBDSR (required, unsigned integer 0-32767 - distance to PBD speed restriction)
+    sh:property [ 
+        sh:path era:d_pbdsr ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each PBDSelection must have exactly one d_pbdsr (unsigned integer 0-32767, distance to speed restriction)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_PBDSR (required, unsigned integer 0-32767 - length of PBD speed restriction)
+    sh:property [ 
+        sh:path era:l_pbdsr ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each PBDSelection must have exactly one l_pbdsr (unsigned integer 0-32767, length of speed restriction)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Packet Shape (Discriminator Union) =====
+era:PacketShape a sh:NodeShape ;
+    sh:targetClass era:Packet ;
+    sh:message "A Packet must contain exactly one ETCS packet type (packets 0-255)." ;
+    
+    # Each Packet instance must have exactly ONE of the packet types
+    sh:xone (
+        [ sh:path era:packet_0 ;
+          sh:node era:ETCSPacket_0Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_0 (Position Report)." ]
+        
+        [ sh:path era:packet_2 ;
+          sh:node era:ETCSPacket_2Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_2 (System Version Order)." ]
+        
+        [ sh:path era:packet_3 ;
+          sh:node era:ETCSPacket_3Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_3 (National Values)." ]
+        
+        [ sh:path era:packet_5 ;
+          sh:node era:ETCSPacket_5Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_5 (Linking)." ]
+        
+        [ sh:path era:packet_6 ;
+          sh:node era:ETCSPacket_6Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_6 (Virtual Balise Cover Order)." ]
+        
+        [ sh:path era:packet_16 ;
+          sh:node era:ETCSPacket_16Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_16 (International Static Speed Profile)." ]
+        
+        [ sh:path era:packet_39 ;
+          sh:node era:ETCSPacket_39Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_39 (Track Condition Change of Traction System)." ]
+        
+        [ sh:path era:packet_40 ;
+          sh:node era:ETCSPacket_40Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_40 (Track Condition Change of Current)." ]
+        
+        [ sh:path era:packet_41 ;
+          sh:node era:ETCSPacket_41Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_41 (Level Transition Order)." ]
+        
+        [ sh:path era:packet_42 ;
+          sh:node era:ETCSPacket_42Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_42 (Session Management)." ]
+        
+        [ sh:path era:packet_44 ;
+          sh:node era:ETCSPacket_44Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_44 (Data for External Applications)." ]
+        
+        [ sh:path era:packet_45 ;
+          sh:node era:ETCSPacket_45Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_45 (Radio Network Registration)." ]
+        
+        [ sh:path era:packet_46 ;
+          sh:node era:ETCSPacket_46Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_46 (Conditional Level Transition Order)." ]
+        
+        [ sh:path era:packet_49 ;
+          sh:node era:ETCSPacket_49Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_49 (List of Balises for SH Area)." ]
+        
+        [ sh:path era:packet_51 ;
+          sh:node era:ETCSPacket_51Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_51 (Axle Load Speed Profile)." ]
+        
+        [ sh:path era:packet_52 ;
+          sh:node era:ETCSPacket_52Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_52 (Permitted Braking Distance Information)." ]
+        
+        [ sh:path era:packet_65 ;
+          sh:node era:ETCSPacket_65Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_65 (Temporary Speed Restriction)." ]
+        
+        [ sh:path era:packet_66 ;
+          sh:node era:ETCSPacket_66Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_66 (TSR Revocation)." ]
+        
+        [ sh:path era:packet_67 ;
+          sh:node era:ETCSPacket_67Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_67 (Track Condition)." ]
+        
+        [ sh:path era:packet_68 ;
+          sh:node era:ETCSPacket_68Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_68 (Track Condition Big Metal Masses)." ]
+        
+        [ sh:path era:packet_69 ;
+          sh:node era:ETCSPacket_69Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_69 (Track Condition Station Platforms)." ]
+        
+        [ sh:path era:packet_70 ;
+          sh:node era:ETCSPacket_70Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_70 (Route Suitability Data)." ]
+        
+        [ sh:path era:packet_71 ;
+          sh:node era:ETCSPacket_71Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_71 (Adhesion Factor)." ]
+        
+        [ sh:path era:packet_72 ;
+          sh:node era:ETCSPacket_72Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_72 (Plain Text Message)." ]
+        
+        [ sh:path era:packet_76 ;
+          sh:node era:ETCSPacket_76Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_76 (Plain Text Message with Confirmation)." ]
+        
+        [ sh:path era:packet_79 ;
+          sh:node era:ETCSPacket_79Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_79 (Geographical Position Information)." ]
+        
+        [ sh:path era:packet_80 ;
+          sh:node era:ETCSPacket_80Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_80 (Mode Profile)." ]
+        
+        [ sh:path era:packet_88 ;
+          sh:node era:ETCSPacket_88Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_88 (Level Crossing Information)." ]
+        
+        [ sh:path era:packet_90 ;
+          sh:node era:ETCSPacket_90Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_90 (Track Ahead Free)." ]
+        
+        [ sh:path era:packet_131 ;
+          sh:node era:ETCSPacket_131Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_131 (RBC Transition Order)." ]
+        
+        [ sh:path era:packet_132 ;
+          sh:node era:ETCSPacket_132Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_132 (Danger for Shunting Information)." ]
+        
+        [ sh:path era:packet_133 ;
+          sh:node era:ETCSPacket_133Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_133 (Radio Infill Area Information)." ]
+        
+        [ sh:path era:packet_134 ;
+          sh:node era:ETCSPacket_134Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_134 (Reverse Supervision Information)." ]
+        
+        [ sh:path era:packet_135 ;
+          sh:node era:ETCSPacket_135Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_135 (Stop if in SR Mode)." ]
+        
+        [ sh:path era:packet_136 ;
+          sh:node era:ETCSPacket_136Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_136 (Infill Location Reference)." ]
+        
+        [ sh:path era:packet_137 ;
+          sh:node era:ETCSPacket_137Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_137 (Stop if in SR Mode with Conditions)." ]
+        
+        [ sh:path era:packet_138 ;
+          sh:node era:ETCSPacket_138Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_138 (Reverse Area Information)." ]
+        
+        [ sh:path era:packet_139 ;
+          sh:node era:ETCSPacket_139Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_139 (Reverse Supervision Information)." ]
+        
+        [ sh:path era:packet_141 ;
+          sh:node era:ETCSPacket_141Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_141 (Default Gradient for TSR)." ]
+        
+        [ sh:path era:packet_145 ;
+          sh:node era:ETCSPacket_145Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_145 (Inhibition of Balise Group Message Consistency)." ]
+        
+        [ sh:path era:packet_180 ;
+          sh:node era:ETCSPacket_180Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_180 (Level Crossing Information)." ]
+        
+        [ sh:path era:packet_181 ;
+          sh:node era:ETCSPacket_181Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_181 (Geographical Position Information)." ]
+        
+        [ sh:path era:packet_254 ;
+          sh:node era:ETCSPacket_254Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_254 (Default Balise/Loop/RIU Information)." ]
+        
+        [ sh:path era:packet_255 ;
+          sh:node era:ETCSPacket_255Shape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Packet contains ETCSPacket_255 (End of Information)." ]
+    ) .
+	
+# ===== Route Suitability Shape =====
+era:RouteSuitabilityShape a sh:NodeShape ;
+    sh:targetClass era:RouteSuitability ;
+    sh:message "Defines route compatibility characteristics for ETCS train suitability checking." ;
+    
+    # Q Suitability (required, controlled vocabulary - suitability qualifier type)
+    sh:property [ 
+        sh:path era:q_suitability ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/q-suitability/loadingGuage>
+            <http://data.europa.eu/949/concepts/q-suitability/maxAxleLoad>
+            <http://data.europa.eu/949/concepts/q-suitability/tractionSystem>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property q_suitability must have a value from the defined SKOS concept scheme (loadingGuage, maxAxleLoad, or tractionSystem)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # D Suitability (required, unsigned integer 0-32767 - distance parameter)
+    sh:property [ 
+        sh:path era:d_suitability ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each RouteSuitability must have exactly one d_suitability (unsigned integer 0-32767, distance parameter in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M Voltage (required, unsigned integer 0-15 - voltage identifier)
+    sh:property [ 
+        sh:path era:m_voltage ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 15 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each RouteSuitability must have exactly one m_voltage (unsigned integer 0-15, ETCS voltage system identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID C Traction (required, unsigned integer 0-1023 - traction system identifier)
+    sh:property [ 
+        sh:path era:nid_ctraction ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each RouteSuitability must have exactly one nid_ctraction (unsigned integer 0-1023, ETCS traction system country identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M Axle Load Category (optional, controlled vocabulary)
+    sh:property [ 
+        sh:path era:m_axleLoadCat ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_A>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_HS17>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_B1>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_B2>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_C2>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_C3>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_C4>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D2>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D3>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D4>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D4XL>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_E4>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_E5>
+        ) ;
+        sh:maxCount 1 ;
+        sh:message "The property m_axleLoadCat must have a value from the defined SKOS concept scheme (AL_A through AL_E5)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M Line Gauge (optional, controlled vocabulary - loading gauge profile)
+    sh:property [ 
+        sh:path era:m_lineGauge ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/loading-gauge-type/g1>
+            <http://data.europa.eu/949/concepts/loading-gauge-type/gA>
+            <http://data.europa.eu/949/concepts/loading-gauge-type/gB>
+            <http://data.europa.eu/949/concepts/loading-gauge-type/gC>
+        ) ;
+        sh:maxCount 1 ;
+        sh:message "The property m_lineGauge must have a value from the defined SKOS concept scheme (g1, gA, gB, or gC)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== TCSP Condition (Track Condition Station Platform) Shape =====
+era:TCSPConditionShape a sh:NodeShape ;
+    sh:targetClass era:TCSPCondition ;
+    
+    # D_TRACKCOND (required, unsigned integer 0-32767 - distance to platform start)
+    sh:property [ 
+        sh:path era:d_trackcond ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TCSPCondition must have exactly one d_trackcond (unsigned integer 0-32767, distance to platform start)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_TRACKCOND (required, unsigned integer 0-32767 - length of platform)
+    sh:property [ 
+        sh:path era:l_trackcond ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TCSPCondition must have exactly one l_trackcond (unsigned integer 0-32767, length of platform section)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_PLATFORM (required, unsigned integer 0-15 - platform height code)
+    sh:property [ 
+        sh:path era:m_platform ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 15 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TCSPCondition must have exactly one m_platform (unsigned integer 0-15, platform height category)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_PLATFORM (required, controlled vocabulary - platform position)
+    sh:property [ 
+        sh:path era:q_platform ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/platform-position/ppLeft>
+            <http://data.europa.eu/949/concepts/platform-position/ppRight>
+            <http://data.europa.eu/949/concepts/platform-position/ppBoth>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property q_platform must have a value from the defined SKOS concept scheme (ppLeft, ppRight, or ppBoth)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== Text Message Configuration Shape =====
+era:TextMessageConfigShape a sh:NodeShape ;
+    sh:targetClass era:TextMessageConfig ;
+    sh:message "Configuration for displaying text messages to drivers (used in Packets 72 and 76)." ;
+    
+    # NID_C (required, unsigned integer 0-1023 - country/region identity)
+    sh:property [ 
+        sh:path era:nid_c ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TextMessageConfig must have exactly one nid_c (unsigned integer 0-1023, country/region identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_RBC (required, unsigned integer 0-16383 - Radio Block Centre identity)
+    sh:property [ 
+        sh:path era:nid_rbc ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 16383 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TextMessageConfig must have exactly one nid_rbc (unsigned integer 0-16383, RBC identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_TEXTMESSAGE (required, unsigned integer 0-255 - text message identity)
+    sh:property [ 
+        sh:path era:nid_textmessage ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TextMessageConfig must have exactly one nid_textmessage (unsigned integer 0-255, unique message identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_TEXTCLASS (required, controlled vocabulary - message importance class)
+    sh:property [ 
+        sh:path era:q_textclass ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/text-class/auxiliary>
+            <http://data.europa.eu/949/concepts/text-class/important>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property q_textclass must have a value from the defined SKOS concept scheme (auxiliary or important)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_TEXTCONFIRM (required, unsigned integer 0-3 - confirmation requirement level)
+    sh:property [ 
+        sh:path era:q_textconfirm ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 3 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TextMessageConfig must have exactly one q_textconfirm (unsigned integer 0-3: 0=no ack, 1=ack required, 2=ack with timestamp, 3=special)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_TEXTDISPLAY (required, boolean - display trigger qualifier)
+    sh:property [ 
+        sh:path era:q_textdisplay ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TextMessageConfig must have exactly one q_textdisplay (boolean, display based on geographical or time trigger)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # D_TEXTDISPLAY (required, unsigned integer 0-32767 - distance to display trigger)
+    sh:property [ 
+        sh:path era:d_textdisplay ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TextMessageConfig must have exactly one d_textdisplay (unsigned integer 0-32767, distance where message should appear)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # L_TEXTDISPLAY (required, unsigned integer 0-32767 - length/duration of display)
+    sh:property [ 
+        sh:path era:l_textdisplay ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32767 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TextMessageConfig must have exactly one l_textdisplay (unsigned integer 0-32767, display distance or duration)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # T_TEXTDISPLAY (required, unsigned integer 0-1023 - time for text display in seconds)
+    sh:property [ 
+        sh:path era:t_textdisplay ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TextMessageConfig must have exactly one t_textdisplay (unsigned integer 0-1023, time to display message in seconds)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_MODETEXTDISPLAY (required, controlled vocabulary - display in specific mode)
+    sh:property [ 
+        sh:path era:m_modetextdisplay ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_fullSupervision>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_onSight>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_staffResponsible>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_unfitted>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare1>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_standBy>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_trip>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_postTrip>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare2>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare3>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare4>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_limitedSupervision>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare5>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_reversing>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_notLimitedByMode>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property m_modetextdisplay must have a value from the defined SKOS concept scheme (ETCS operating modes)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_MODETEXTDISPLAY - Warning for reserved/spare values
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "WARNING: The m_modetextdisplay value appears to be one of the reserved (spare) values in accordance with ETCS Subset-026 v3.6.0. Reserved values (DOM_spare, DOM_spare1, DOM_spare2, DOM_spare3, DOM_spare4, DOM_spare5) are not assigned specific meanings and should only be used for future extensions or special purposes." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                $this era:m_modetextdisplay ?mode .
+                
+                FILTER (
+                    ?mode = <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare> ||
+                    ?mode = <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare1> ||
+                    ?mode = <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare2> ||
+                    ?mode = <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare3> ||
+                    ?mode = <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare4> ||
+                    ?mode = <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare5>
+                )
+            }
+        """ ;
+        sh:severity sh:Warning ;
+    ] ;
+    
+    # M_LEVELTEXTDISPLAY (required, controlled vocabulary - display in specific level)
+    sh:property [ 
+        sh:path era:m_leveltextdisplay ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/display-operating-level/DOL_level0>
+            <http://data.europa.eu/949/concepts/display-operating-level/DOL_levelNTC>
+            <http://data.europa.eu/949/concepts/display-operating-level/DOL_level1>
+            <http://data.europa.eu/949/concepts/display-operating-level/DOL_level2>
+            <http://data.europa.eu/949/concepts/display-operating-level/DOL_level3>
+            <http://data.europa.eu/949/concepts/display-operating-level/DOL_notLimited>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property m_leveltextdisplay must have a value from the defined SKOS concept scheme (ETCS levels)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_NTC (required, unsigned integer 0-255 - National Train Control system ID)
+    sh:property [ 
+        sh:path era:nid_ntc ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TextMessageConfig must have exactly one nid_ntc (unsigned integer 0-255, NTC system identifier for level display filter)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_MODETEXTDISPLAY_E (required, controlled vocabulary - end display mode condition)
+    sh:property [ 
+        sh:path era:m_modetextdisplay_e ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_fullSupervision>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_onSight>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_staffResponsible>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_unfitted>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare1>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_standBy>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_trip>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_postTrip>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare2>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare3>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare4>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_limitedSupervision>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare5>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_reversing>
+            <http://data.europa.eu/949/concepts/display-operating-mode/DOM_notLimitedByMode>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property m_modetextdisplay_e must have a value from the defined SKOS concept scheme (mode when display ends)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_MODETEXTDISPLAY_E - Warning for reserved/spare values
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "WARNING: The m_modetextdisplay_e value appears to be one of the reserved (spare) values in accordance with ETCS Subset-026 v3.6.0. Reserved values (DOM_spare, DOM_spare1, DOM_spare2, DOM_spare3, DOM_spare4, DOM_spare5) are not assigned specific meanings and should only be used for future extensions or special purposes." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                $this era:m_modetextdisplay_e ?mode .
+                
+                FILTER (
+                    ?mode = <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare> ||
+                    ?mode = <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare1> ||
+                    ?mode = <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare2> ||
+                    ?mode = <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare3> ||
+                    ?mode = <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare4> ||
+                    ?mode = <http://data.europa.eu/949/concepts/display-operating-mode/DOM_spare5>
+                )
+            }
+        """ ;
+        sh:severity sh:Warning ;
+    ] ;
+    
+    # M_LEVELTEXTDISPLAY_E (required, controlled vocabulary - end display level condition)
+    sh:property [ 
+        sh:path era:m_leveltextdisplay_e ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/display-operating-level/DOL_level0>
+            <http://data.europa.eu/949/concepts/display-operating-level/DOL_levelNTC>
+            <http://data.europa.eu/949/concepts/display-operating-level/DOL_level1>
+            <http://data.europa.eu/949/concepts/display-operating-level/DOL_level2>
+            <http://data.europa.eu/949/concepts/display-operating-level/DOL_level3>
+            <http://data.europa.eu/949/concepts/display-operating-level/DOL_notLimited>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property m_leveltextdisplay_e must have a value from the defined SKOS concept scheme (level when display ends)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # NID_NTC_E (required, unsigned integer 0-255 - NTC system ID for end condition)
+    sh:property [ 
+        sh:path era:nid_ntc_e ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TextMessageConfig must have exactly one nid_ntc_e (unsigned integer 0-255, NTC identifier for end display filter)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_CONFTEXTDISPLAY (optional, boolean - confirm text display qualifier)
+    sh:property [ 
+        sh:path era:q_conftextdisplay ;
+        sh:datatype xsd:boolean ;
+        sh:maxCount 1 ;
+        sh:message "A TextMessageConfig may have at most one q_conftextdisplay (boolean, whether confirmation affects display)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_TEXTREPORT (optional, boolean - report text acknowledgement to RBC)
+    sh:property [ 
+        sh:path era:q_textreport ;
+        sh:datatype xsd:boolean ;
+        sh:maxCount 1 ;
+        sh:message "A TextMessageConfig may have at most one q_textreport (boolean, whether to report acknowledgement to RBC)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+
+# Shape to check that at least one ETCS Balise Packet class exists
+era:AtLeastOneETCSBalisePacketClassShape a sh:NodeShape ;
+    sh:target [
+        a sh:SPARQLTarget ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            SELECT ?this
+            WHERE {
+                BIND (era:ValidationRoot as ?this)
+            }
+        """ ;
+    ] ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The data must contain at least one instance of the required ETCS Balise Packet classes (e.g., BalisePacket, Packet). This error may indicate that the provided data significantly deviates from the expected ETCS balise packet structure as defined in the extended ERA Ontology & ERA UNISIG SUBSET-026-7 specifications." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                FILTER NOT EXISTS {
+                    # ETCS Balise Packet Classes
+                    { ?instance rdf:type era:BalisePacket . }
+                    UNION { ?instance rdf:type era:Packet . }
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .

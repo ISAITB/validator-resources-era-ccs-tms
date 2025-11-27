@@ -1,0 +1,850 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ===== Balise Group Shape =====
+era:BaliseGroupShape a sh:NodeShape ;
+    sh:targetClass era:BaliseGroup ;
+    
+    # Q_UPDOWN (required, boolean - uplink/downlink capability)
+    sh:property [ 
+        sh:path era:q_updown ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each BaliseGroup must have exactly one q_updown value (boolean indicating uplink/downlink capability)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Q_LINK (required, boolean - linking information)
+    sh:property [ 
+        sh:path era:q_link ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each BaliseGroup must have exactly one q_link value (boolean indicating linking information)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # ETCS M_VERSION (required, controlled vocabulary - ETCS message version)
+    sh:property [ 
+        sh:path era:etcsMVersion ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/etcs-m-versions/v1_0>
+            <http://data.europa.eu/949/concepts/etcs-m-versions/v1_1>
+            <http://data.europa.eu/949/concepts/etcs-m-versions/v2_0>
+            <http://data.europa.eu/949/concepts/etcs-m-versions/v2_1>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property etcsMVersion must have a value from the defined SKOS concept scheme (v1.0, v1.1, v2.0, or v2.1)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Balise Shape =====
+era:BaliseShape a sh:NodeShape ;
+    sh:targetClass era:Balise ;
+    
+    # Design Type (required, string - manufacturer/model identifier)
+    sh:property [ 
+        sh:path era:designType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Balise must have exactly one designType (string identifying manufacturer/model)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Balise Mounting System (required, string)
+    sh:property [ 
+        sh:path era:baliseMountingSystem ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Balise must have exactly one baliseMountingSystem (string describing mounting method)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Sleeper Fastening (required, string - attachment method to sleeper)
+    sh:property [ 
+        sh:path era:sleeperFastening ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Balise must have exactly one sleeperFastening (string describing attachment method)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Fixed (required, boolean - fixed vs switchable balise)
+    sh:property [ 
+        sh:path era:fixed ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Balise must have exactly one fixed value (boolean: true for fixed, false for switchable)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Standard Size (required, boolean)
+    sh:property [ 
+        sh:path era:standardSize ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Balise must have exactly one standardSize value (boolean indicating standard dimensions)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Vertically Oriented (required, boolean)
+    sh:property [ 
+        sh:path era:verticallyOriented ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Balise must have exactly one verticallyOriented value (boolean indicating mounting orientation)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # N_PIG (required, unsigned integer 0-7 - position in group)
+    sh:property [ 
+        sh:path era:n_pig ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 7 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Balise must have exactly one n_pig value (unsigned integer 0-7, position in balise group)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_MCOUNT (required, unsigned integer 0-255 - message count)
+    sh:property [ 
+        sh:path era:m_mcount ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 255 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Balise must have exactly one m_mcount value (unsigned integer 0-255, message counter)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # M_DUP (required, controlled vocabulary - duplication indicator)
+    sh:property [ 
+        sh:path era:m_dup ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/duplication-type/noDuplicates>
+            <http://data.europa.eu/949/concepts/duplication-type/duplicateNextBalise>
+            <http://data.europa.eu/949/concepts/duplication-type/duplicatePreviousBalise>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property m_dup must have a value from the defined SKOS concept scheme (noDuplicates, duplicateNextBalise, or duplicatePreviousBalise)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Telegram (required, base64Binary - encoded balise telegram data)
+    sh:property [ 
+        sh:path era:telegram ;
+        sh:datatype xsd:base64Binary ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Balise must have exactly one telegram (base64Binary encoded ETCS data)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Telegram Checksum (required, string - verification checksum)
+    sh:property [ 
+        sh:path era:telegramChecksum ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Balise must have exactly one telegramChecksum (string for data verification)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # ETCS Packets (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:etcsPackets ;
+        sh:node era:BalisePacketShape ;
+        sh:message "Balise etcsPackets must conform to BalisePacketShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Buffer Stop Shape =====
+era:BufferStopShape a sh:NodeShape ;
+    sh:targetClass era:BufferStop ;
+    
+    # Buffer Stop Type (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:bsType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/buffer-stop-type/friction>
+            <http://data.europa.eu/949/concepts/buffer-stop-type/hydraulic>
+            <http://data.europa.eu/949/concepts/buffer-stop-type/fixated>
+            <http://data.europa.eu/949/concepts/buffer-stop-type/other>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property bsType must have a value from the defined SKOS concept scheme (friction, hydraulic, fixated, or other)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Danger Points (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:dangerPoints ;
+        sh:node era:DangerPointShape ;
+		sh:nodeKind sh:IRI ;
+        sh:message "BufferStop dangerPoints must conform to DangerPointShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+	
+    sh:property [ 
+        sh:path era:linearElementSections ;
+        sh:node era:LinearElementSectionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+		sh:minCount 1 ;
+        sh:message "BufferStop dangerPoints must conform to DangerPointShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Crossing Shape =====
+era:CrossingShape a sh:NodeShape ;
+    sh:targetClass era:Crossing ;
+    
+    # Fouling Points (required, one or more)
+    sh:property [ 
+        sh:path era:foulingPoints ;
+        sh:node era:FoulingPointShape ;
+		sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:message "Each Crossing must have at least one foulingPoints that conform to FoulingPointShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Danger Point Shape =====
+era:DangerPointShape a sh:NodeShape ;
+    sh:targetClass era:DangerPoint ;
+    
+    # Name (required, string)
+    sh:property [ 
+        sh:path era:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DangerPoint must have exactly one name (string)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Topological Coordinate (required, can be inline or referenced)
+    sh:property [ 
+        sh:path era:topologicalCoordinate ;
+        sh:node era:TopologicalCoordinateShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DangerPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Engineering Shape =====
+era:ETCSEngineeringShape a sh:NodeShape ;
+    sh:targetClass era:ETCSEngineering ;
+    
+    # Engineering Areas (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:engAreas ;
+        sh:node era:EngAreaShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "ETCSEngineering engAreas must conform to EngAreaShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Location Accuracy Areas (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:locationAccuracyAreas ;
+        sh:node era:LocationAccuracyAreaShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "ETCSEngineering locationAccuracyAreas must conform to LocationAccuracyAreaShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Kilometer Areas (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:kmAreas ;
+        sh:node era:KmAreaShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "ETCSEngineering kmAreas must conform to KmAreaShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Engineering Area Shape =====
+era:EngAreaShape a sh:NodeShape ;
+    sh:targetClass era:EngArea ;
+    
+    # Default Sleepers Type (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:defaultSleepersType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/sleepers-type/unknownSleepersType>
+            <http://data.europa.eu/949/concepts/sleepers-type/composite>
+            <http://data.europa.eu/949/concepts/sleepers-type/concrete>
+            <http://data.europa.eu/949/concepts/sleepers-type/steel>
+            <http://data.europa.eu/949/concepts/sleepers-type/wood>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property defaultSleepersType must have a value from the defined SKOS concept scheme (composite, concrete, steel, wood, or unknown)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Balises (optional)
+    sh:property [ 
+        sh:path era:balises ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An EngArea may have at most one balises property pointing to an RDF list." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Balise Groups (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:baliseGroups ;
+        sh:node era:BaliseGroupShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "EngArea baliseGroups must conform to BaliseGroupShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Buffer Stops (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:bufferStops ;
+        sh:node era:BufferStopShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "EngArea bufferStops must conform to BufferStopShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Switches (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:switches ;
+        sh:node era:SwitchShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "EngArea switches must conform to SwitchShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Crossings (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:crossings ;
+        sh:node era:CrossingShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "EngArea crossings must conform to CrossingShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Level Crossings (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:levelCrossings ;
+        sh:node era:LevelCrossingShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "EngArea levelCrossings must conform to LevelCrossingShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Danger Points (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:dangerPoints ;
+        sh:node era:DangerPointShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "EngArea dangerPoints must conform to DangerPointShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Fouling Points (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:foulingPoints ;
+        sh:node era:FoulingPointShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "EngArea foulingPoints must conform to FoulingPointShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Sleepers (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:sleepers ;
+        sh:node era:SleepersShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "EngArea sleepers must conform to SleepersShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Track Usage Paths (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:trackUsagePaths ;
+        sh:node era:TrackUsagePathShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "EngArea trackUsagePaths must conform to TrackUsagePathShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Fouling Point Shape =====
+era:FoulingPointShape a sh:NodeShape ;
+    sh:targetClass era:FoulingPoint ;
+    
+    # Name (optional, string)
+    sh:property [ 
+        sh:path era:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A FoulingPoint may have at most one name (string)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Topological Coordinate (required, can be inline or referenced)
+    sh:property [ 
+        sh:path era:topologicalCoordinate ;
+        sh:node era:TopologicalCoordinateShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each FoulingPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Kilometric Post Shape =====
+era:KilometricPostShape a sh:NodeShape ;
+    sh:targetClass era:KilometricPost ;
+    
+    # Position (required, unsigned integer)
+    sh:property [ 
+        sh:path era:pos ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each KilometricPost must have exactly one pos (position as unsigned integer)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Kilometer (required, double - kilometer value)
+    sh:property [ 
+        sh:path era:kilometer ;
+        sh:datatype xsd:double ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each KilometricPost must have exactly one kilometer value (double)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Kilometer Post Name (optional, string)
+    sh:property [ 
+        sh:path era:kmPostName ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A KilometricPost may have at most one kmPostName (string)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Kilometer Area Shape =====
+era:KmAreaShape a sh:NodeShape ;
+    sh:targetClass era:KmArea ;
+    
+    # Linear Element Kilometer (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:linearElementKm ;
+        sh:node era:LinearElementKmShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "KmArea linearElementKm must conform to LinearElementKmShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Level Crossing Shape =====
+era:LevelCrossingShape a sh:NodeShape ;
+    sh:targetClass era:LevelCrossing ;
+    
+    # Danger Points (required, one or more)
+    sh:property [ 
+        sh:path era:dangerPoints ;
+        sh:node era:DangerPointShape ;
+		sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:message "Each LevelCrossing must have at least one dangerPoints that conform to DangerPointShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Linear Element Accuracy Profile Shape =====
+era:LinearElementAccuracyProfileShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementAccuracyProfile ;
+    
+    # Offset Accuracies (optional, RDF list)
+    sh:property [ 
+        sh:path era:offsetAccuracies ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A LinearElementAccuracyProfile may have at most one offsetAccuracies property pointing to an RDF list." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate all offsetAccuracies list items are OffsetAccuracy instances
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "All items in the offsetAccuracies list must be instances of era:OffsetAccuracy that conform to OffsetAccuracyShape." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:offsetAccuracies ?list .
+                ?list rdf:rest*/rdf:first ?item .
+                
+                FILTER NOT EXISTS { ?item a era:OffsetAccuracy }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Linear Element Kilometer Shape =====
+era:LinearElementKmShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementKm ;
+    
+    # Linear Element (required, can be inline or referenced)
+    sh:property [ 
+        sh:path era:linearElement ;
+        sh:class era:LinearElement ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinearElementKm must have exactly one linearElement that conforms to LinearElementShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Kilometric Posts (optional, RDF list)
+    sh:property [ 
+        sh:path era:kilometricPosts ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A LinearElementKm may have at most one kilometricPosts property pointing to an RDF list." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate all kilometricPosts list items are KilometricPost instances
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "All items in the kilometricPosts list must be instances of era:KilometricPost that conform to KilometricPostShape." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:kilometricPosts ?list .
+                ?list rdf:rest*/rdf:first ?item .
+                
+                FILTER NOT EXISTS { ?item a era:KilometricPost }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Location Accuracy Area Shape =====
+era:LocationAccuracyAreaShape a sh:NodeShape ;
+    sh:targetClass era:LocationAccuracyArea ;
+    
+    # Accuracy Profiles (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:accuracyProfiles ;
+        sh:node era:LinearElementAccuracyProfileShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "LocationAccuracyArea accuracyProfiles must conform to LinearElementAccuracyProfileShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Offset Accuracy Shape =====
+era:OffsetAccuracyShape a sh:NodeShape ;
+    sh:targetClass era:OffsetAccuracy ;
+    
+    # Offset (required, unsigned integer - position in meters)
+    sh:property [ 
+        sh:path era:offset ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each OffsetAccuracy must have exactly one offset (unsigned integer, in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Accuracy (required, unsigned integer - accuracy value in meters)
+    sh:property [ 
+        sh:path era:accuracy ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each OffsetAccuracy must have exactly one accuracy value (unsigned integer, in meters)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Sleepers Shape =====
+era:SleepersShape a sh:NodeShape ;
+    sh:targetClass era:Sleepers ;
+    
+    # Sleepers Type (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:sleepersType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/sleepers-type/unknownSleepersType>
+            <http://data.europa.eu/949/concepts/sleepers-type/composite>
+            <http://data.europa.eu/949/concepts/sleepers-type/concrete>
+            <http://data.europa.eu/949/concepts/sleepers-type/steel>
+            <http://data.europa.eu/949/concepts/sleepers-type/wood>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property sleepersType must have a value from the defined SKOS concept scheme (composite, concrete, steel, wood, or unknown)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Linear Element Section (required, one or more)
+    sh:property [ 
+        sh:path era:linearElementSection ;
+        sh:node era:LinearElementSectionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:message "Each Sleepers must have at least one linearElementSection that conform to LinearElementSectionShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Switch Shape =====
+era:SwitchShape a sh:NodeShape ;
+    sh:targetClass era:Switch ;
+    
+    # Blade Length (required, double - length in meters)
+    sh:property [ 
+        sh:path era:bladeLength ;
+        sh:datatype xsd:double ;
+        sh:minExclusive 0.0 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Switch must have exactly one bladeLength (double > 0, in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Tip Shift (required, double - lateral displacement in meters)
+    sh:property [ 
+        sh:path era:tipShift ;
+        sh:datatype xsd:double ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Switch must have exactly one tipShift value (double, in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Fouling Points (required, one or more)
+    sh:property [ 
+        sh:path era:foulingPoints ;
+        sh:node era:FoulingPointShape ;
+		sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:message "Each Switch must have at least one foulingPoints that conform to FoulingPointShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Route Requires Point Left (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:routeRequiresPointLeft ;
+        sh:node era:TrackUsagePathShape ;
+		sh:nodeKind sh:IRI ;
+        sh:message "Switch routeRequiresPointLeft must conform to TrackUsagePathShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Route Requires Point Right (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:routeRequiresPointRight ;
+        sh:node era:TrackUsagePathShape ;
+		sh:nodeKind sh:IRI ;
+        sh:message "Switch routeRequiresPointRight must conform to TrackUsagePathShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Track Usage Path Shape =====
+era:TrackUsagePathShape a sh:NodeShape ;
+    sh:targetClass era:TrackUsagePath ;
+    
+    # Path Body (required, can be inline or referenced)
+    sh:property [ 
+        sh:path era:pathBody ;
+        sh:node era:NetLinearReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrackUsagePath must have exactly one pathBody that conforms to NetLinearReferenceShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Has Preceded Track Usage Path (optional, single)
+    sh:property [ 
+        sh:path era:hasPreceededTrackUsagePath ;
+        sh:node era:TrackUsagePathShape ;
+		sh:nodeKind sh:IRI ;
+        sh:maxCount 1 ;
+        sh:message "A TrackUsagePath may have at most one hasPreceededTrackUsagePath that conforms to TrackUsagePathShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Switches (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:switches ;
+        sh:class era:Switch ;
+		sh:nodeKind sh:IRI ;
+        sh:message "TrackUsagePath switches must conform to SwitchShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Derailers (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:derailers ;
+        sh:class era:Derailer ;
+		sh:nodeKind sh:IRI ;
+        sh:message "TrackUsagePath derailers must conform to DerailerShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Level Crossings (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:levelCrossings ;
+        sh:class era:LevelCrossing ;
+		sh:nodeKind sh:IRI ;
+        sh:message "TrackUsagePath levelCrossings must conform to LevelCrossingShape." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+# ===== Linear Element Section Shape =====
+era:LinearElementSectionShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementSection ;
+    
+    # On Element (required, reference to the linear element - can be inline or referenced)
+    sh:property [ 
+        sh:path era:onElement ;
+        sh:node era:LinearElementShape ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinearElementSection must have exactly one onElement that conforms to LinearElementShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Start Offset From Origin (required, double >= 0 - distance in meters from element origin)
+    sh:property [ 
+        sh:path era:startOffsetFromOrigin ;
+        sh:datatype xsd:double ;
+        sh:minInclusive 0.0 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinearElementSection must have exactly one startOffsetFromOrigin (non-negative double, in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # End Offset From Origin (required, double >= 0 - distance in meters from element origin)
+    sh:property [ 
+        sh:path era:endOffsetFromOrigin ;
+        sh:datatype xsd:double ;
+        sh:minInclusive 0.0 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinearElementSection must have exactly one endOffsetFromOrigin (non-negative double, in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Applies In Both Directions (required, boolean)
+    sh:property [ 
+        sh:path era:appliesInBothDirections ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinearElementSection must have exactly one appliesInBothDirections value (boolean)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint: startOffsetFromOrigin must be less than endOffsetFromOrigin
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The startOffsetFromOrigin must be less than endOffsetFromOrigin." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                $this era:startOffsetFromOrigin ?start ;
+                      era:endOffsetFromOrigin ?end .
+                FILTER (?start >= ?end)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+	
+# Shape to check that at least one ETCS Engineering class exists
+era:AtLeastOneETCSEngineeringClassShape a sh:NodeShape ;
+    sh:target [
+        a sh:SPARQLTarget ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            SELECT ?this
+            WHERE {
+                BIND (era:ValidationRoot as ?this)
+            }
+        """ ;
+    ] ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The data must contain at least one instance of the required ETCS Engineering classes (e.g., BufferStop, Switch, BaliseGroup, TrackUsagePath, etc.). This error may indicate that the provided data significantly deviates from the expected ETCS Engineering model as defined in the extended ERA ontology." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                FILTER NOT EXISTS {
+                    # Core Track Assets
+                    { ?instance rdf:type era:BufferStop . }
+                    UNION { ?instance rdf:type era:Switch . }
+                    UNION { ?instance rdf:type era:Crossing . }
+                    UNION { ?instance rdf:type era:LevelCrossing . }
+                    
+                    # ETCS Signaling Components
+                    UNION { ?instance rdf:type era:BaliseGroup . }
+                    UNION { ?instance rdf:type era:Balise . }
+                    
+                    # Track Components
+                    UNION { ?instance rdf:type era:Sleepers . }
+                    
+                    # Safety Points
+                    UNION { ?instance rdf:type era:DangerPoint . }
+                    UNION { ?instance rdf:type era:FoulingPoint . }
+                    
+                    # Operational Path
+                    UNION { ?instance rdf:type era:TrackUsagePath . }
+                    
+                    # Container Areas
+                    UNION { ?instance rdf:type era:EngArea . }
+                    UNION { ?instance rdf:type era:LocationAccuracyArea . }
+                    UNION { ?instance rdf:type era:KmArea . }
+                    
+                    # Accuracy and Location
+                    UNION { ?instance rdf:type era:LinearElementAccuracyProfile . }
+                    UNION { ?instance rdf:type era:OffsetAccuracy . }
+                    UNION { ?instance rdf:type era:LinearElementKm . }
+                    UNION { ?instance rdf:type era:KilometricPost . }
+                    
+                    # Top-Level Container
+                    UNION { ?instance rdf:type era:ETCSEngineering . }
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .

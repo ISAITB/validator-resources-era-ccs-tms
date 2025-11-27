@@ -1,0 +1,3718 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ===== Additional Event Time Shape =====
+era:AdditionalEventTimeShape a sh:NodeShape ;
+    sh:targetClass era:AdditionalEventTime ;
+    sh:message "Represents additional timing information for train events at stations or operational points." ;
+    
+    # Time Type (required, controlled vocabulary - type of timing event)
+    sh:property [ 
+        sh:path era:timeType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/time-type/plannedArrival>
+            <http://data.europa.eu/949/concepts/time-type/plannedDeparture>
+            <http://data.europa.eu/949/concepts/time-type/plannedMinDwellTime>
+            <http://data.europa.eu/949/concepts/time-type/publishedArrival>
+            <http://data.europa.eu/949/concepts/time-type/publishedDeparture>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property timeType must have a value from the defined SKOS concept scheme (plannedArrival, plannedDeparture, plannedMinDwellTime, publishedArrival, or publishedDeparture)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Time Value (required, dateTime - actual timestamp)
+    sh:property [ 
+        sh:path era:timeValue ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AdditionalEventTime must have exactly one timeValue (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Additional Train Data Shape =====
+era:AdditionalTrainDataShape a sh:NodeShape ;
+    sh:targetClass era:AdditionalTrainData ;
+    sh:message "Additional train performance and braking characteristics data (ETCS Train Data)." ;
+    
+    # Available Adhesion Category (required, controlled vocabulary - rail-wheel adhesion level)
+    sh:property [ 
+        sh:path era:availableAdhesionCategory ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/adhesion-category/dryRailHigh>
+            <http://data.europa.eu/949/concepts/adhesion-category/dryRailMedium>
+            <http://data.europa.eu/949/concepts/adhesion-category/dryRailLow>
+            <http://data.europa.eu/949/concepts/adhesion-category/lowAdhesion>
+            <http://data.europa.eu/949/concepts/adhesion-category/veryLowAdhesion>
+            <http://data.europa.eu/949/concepts/adhesion-category/extremelyLowAdhesion>
+            <http://data.europa.eu/949/concepts/adhesion-category/unknownAdhesion>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property availableAdhesionCategory must have a value from the defined SKOS concept scheme (dryRailHigh through extremelyLowAdhesion, or unknownAdhesion)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Available Adhesion Physical Value (required, unsigned integer - adhesion coefficient)
+    sh:property [ 
+        sh:path era:availableAdhesionPhysicalValue ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AdditionalTrainData must have exactly one availableAdhesionPhysicalValue (unsigned integer, adhesion coefficient as percentage * 100)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Max Available Tractive Effort (required, unsigned integer 0-3000 - in kN)
+    sh:property [ 
+        sh:path era:maxAvailableTractiveEffort ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 3000 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AdditionalTrainData must have exactly one maxAvailableTractiveEffort (unsigned integer 0-3000, in kilonewtons)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Max Available Tractive Power (required, unsigned integer 0-32000 - in kW)
+    sh:property [ 
+        sh:path era:maxAvailableTractivePower ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32000 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AdditionalTrainData must have exactly one maxAvailableTractivePower (unsigned integer 0-32000, in kilowatts)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Max Available Service Brake Force (required, unsigned integer 0-3000 - in kN)
+    sh:property [ 
+        sh:path era:maxAvailableServiceBrakeForce ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 3000 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AdditionalTrainData must have exactly one maxAvailableServiceBrakeForce (unsigned integer 0-3000, in kilonewtons)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Max Available Dynamic Brake Force (required, unsigned integer 0-3000 - in kN)
+    sh:property [ 
+        sh:path era:maxAvailableDynamicBrakeForce ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 3000 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AdditionalTrainData must have exactly one maxAvailableDynamicBrakeForce (unsigned integer 0-3000, in kilonewtons)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Max Available Dynamic Brake Power (required, unsigned integer 0-32000 - in kW)
+    sh:property [ 
+        sh:path era:maxAvailableDynamicBrakePower ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 32000 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AdditionalTrainData must have exactly one maxAvailableDynamicBrakePower (unsigned integer 0-32000, in kilowatts)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Electro-Pneumatic Brake State (required, controlled vocabulary - brake system active state)
+    sh:property [ 
+        sh:path era:electroPneumaticBrakeState ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/active-state/activeState>
+            <http://data.europa.eu/949/concepts/active-state/inactiveState>
+            <http://data.europa.eu/949/concepts/active-state/undefinedState>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property electroPneumaticBrakeState must have a value from the defined SKOS concept scheme (activeState, inactiveState, or undefinedState)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Regenerative Brake State (required, controlled vocabulary - brake system active state)
+    sh:property [ 
+        sh:path era:regenerativeBrakeState ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/active-state/activeState>
+            <http://data.europa.eu/949/concepts/active-state/inactiveState>
+            <http://data.europa.eu/949/concepts/active-state/undefinedState>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property regenerativeBrakeState must have a value from the defined SKOS concept scheme (activeState, inactiveState, or undefinedState)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Eddy Current Brake State (required, controlled vocabulary - brake system active state)
+    sh:property [ 
+        sh:path era:eddyCurrentBrakeState ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/active-state/activeState>
+            <http://data.europa.eu/949/concepts/active-state/inactiveState>
+            <http://data.europa.eu/949/concepts/active-state/undefinedState>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property eddyCurrentBrakeState must have a value from the defined SKOS concept scheme (activeState, inactiveState, or undefinedState)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Magnetic Shoe Brake State (required, controlled vocabulary - brake system active state)
+    sh:property [ 
+        sh:path era:magneticShoeBrakeState ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/active-state/activeState>
+            <http://data.europa.eu/949/concepts/active-state/inactiveState>
+            <http://data.europa.eu/949/concepts/active-state/undefinedState>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property magneticShoeBrakeState must have a value from the defined SKOS concept scheme (activeState, inactiveState, or undefinedState)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Adhesion Independent Brake State (required, controlled vocabulary - brake system active state)
+    sh:property [ 
+        sh:path era:adhesionIndependentBrakeState ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/active-state/activeState>
+            <http://data.europa.eu/949/concepts/active-state/inactiveState>
+            <http://data.europa.eu/949/concepts/active-state/undefinedState>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property adhesionIndependentBrakeState must have a value from the defined SKOS concept scheme (activeState, inactiveState, or undefinedState)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+# ===== DPS Groups List Shape =====
+era:DPSGroupsListShape a sh:NodeShape ;
+    sh:targetClass era:DPSGroupsList ;
+    sh:message "Container for Drive Protection Section Groups - electrical isolation sections for train power management." ;
+    
+    # DPS Groups (optional, multiple allowed)
+    sh:property [ 
+        sh:path era:dpsGroups ;
+        sh:node era:DriveProtectionSectionGroupShape ;
+		sh:nodeKind sh:IRI ;
+        sh:message "A DPSGroupsList may contain multiple dpsGroups that conform to DriveProtectionSectionGroupShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== DPS State Shape =====
+era:DPSStateShape a sh:NodeShape ;
+    sh:targetClass era:DPSState ;
+    sh:message "State of a Drive Protection Section - whether train can draw power from this electrical section." ;
+    
+    # DPS (required, reference to the Drive Protection Section)
+    sh:property [ 
+        sh:path era:dps ;
+        sh:node era:DriveProtectionSectionShape ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DPSState must reference exactly one dps (Drive Protection Section) that conforms to DriveProtectionSectionShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Current Drivability (required, controlled vocabulary - actual power draw capability)
+    sh:property [ 
+        sh:path era:currentDrivability ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/dps-drivability/full>
+            <http://data.europa.eu/949/concepts/dps-drivability/none>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property currentDrivability must have a value from the defined SKOS concept scheme (full or none)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Requested Drivability (required, controlled vocabulary - desired power draw capability)
+    sh:property [ 
+        sh:path era:requestedDrivability ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/dps-drivability/full>
+            <http://data.europa.eu/949/concepts/dps-drivability/none>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property requestedDrivability must have a value from the defined SKOS concept scheme (full or none)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Door Activity Shape =====
+era:DoorActivityShape a sh:NodeShape ;
+    sh:targetClass era:DoorActivity ;
+    sh:message "Configuration for automatic train door operation at stations." ;
+    
+    # Opening Door Side (required, controlled vocabulary - which side doors open)
+    sh:property [ 
+        sh:path era:openingDoorSide ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/door-side/doorSideLeft>
+            <http://data.europa.eu/949/concepts/door-side/doorSideRight>
+            <http://data.europa.eu/949/concepts/door-side/doorSideBoth>
+            <http://data.europa.eu/949/concepts/door-side/doorNoneSide>
+            <http://data.europa.eu/949/concepts/door-side/doorSideUnknown>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property openingDoorSide must have a value from the defined SKOS concept scheme (doorSideLeft, doorSideRight, doorSideBoth, doorNoneSide, or doorSideUnknown)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Centralised Opening (required, boolean - conductor controls all doors)
+    sh:property [ 
+        sh:path era:centralisedOpening ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DoorActivity must have exactly one centralisedOpening (boolean: true=conductor controlled, false=individual door control)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Automatic Closing (required, boolean - doors close automatically)
+    sh:property [ 
+        sh:path era:automaticClosing ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DoorActivity must have exactly one automaticClosing (boolean: true=automatic, false=manual close)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Door Data Shape =====
+era:DoorDataShape a sh:NodeShape ;
+    sh:targetClass era:DoorData ;
+    sh:message "Current state and timing information for train doors." ;
+    
+    # Door State (required, controlled vocabulary - operational status)
+    sh:property [ 
+        sh:path era:doorState ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/door-state/doorStateAvailable>
+            <http://data.europa.eu/949/concepts/door-state/doorStateBlocked>
+            <http://data.europa.eu/949/concepts/door-state/doorStateUnknown>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property doorState must have a value from the defined SKOS concept scheme (doorStateAvailable, doorStateBlocked, or doorStateUnknown)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Last Passenger Exchange Time (required, unsigned integer - seconds since last door activity)
+    sh:property [ 
+        sh:path era:lastPassengerExchangeTime ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DoorData must have exactly one lastPassengerExchangeTime (unsigned integer, seconds since last passenger exchange)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== DPS Group State Shape =====
+era:DpsGroupStateShape a sh:NodeShape ;
+    sh:targetClass era:DpsGroupState ;
+    sh:message "State of a Drive Protection Section Group at a specific time during train operation." ;
+    
+    # DPS Group (required, reference to the group)
+    sh:property [ 
+        sh:path era:dpsGroup ;
+        sh:node era:DriveProtectionSectionGroupShape ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DpsGroupState must reference exactly one dpsGroup that conforms to DriveProtectionSectionGroupShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # DPSG State (required, controlled vocabulary - group operational state)
+    sh:property [ 
+        sh:path era:dpsgState ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/dpsg-state/ready>
+            <http://data.europa.eu/949/concepts/dpsg-state/processing>
+            <http://data.europa.eu/949/concepts/dpsg-state/disturbed>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property dpsgState must have a value from the defined SKOS concept scheme (ready, processing, or disturbed)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Issued At (required, dateTime - timestamp of this state)
+    sh:property [ 
+        sh:path era:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DpsGroupState must have exactly one issuedAt timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # DPS States (optional, multiple individual section states)
+    sh:property [ 
+        sh:path era:dpsStates ;
+        sh:node era:DPSStateShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A DpsGroupState may contain multiple dpsStates that conform to DPSStateShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Operational Plan Movement (optional, associated movement plan)
+    sh:property [ 
+        sh:path era:operationalPlanMovement ;
+        sh:node era:OperationalPlanMovementShape ;
+		sh:nodeKind sh:IRI ;
+        sh:maxCount 1 ;
+        sh:message "A DpsGroupState may have at most one operationalPlanMovement that conforms to OperationalPlanMovementShape." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+# ===== ETCS Data for ATO Shape =====
+era:EtcsDataAtoShape a sh:NodeShape ;
+    sh:targetClass era:EtcsDataAto ;
+    sh:message "ETCS train data required for Automatic Train Operation (ATO) over ETCS - essential characteristics for automatic driving." ;
+    
+    # Train Length (required, unsigned integer - total length in meters)
+    sh:property [ 
+        sh:path era:trainLength ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each EtcsDataAto must have exactly one trainLength (unsigned integer, total train length in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Max Speed (required, unsigned integer - maximum permitted speed in km/h)
+    sh:property [ 
+        sh:path era:maxSpeed ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each EtcsDataAto must have exactly one maxSpeed (unsigned integer, maximum speed in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Brake Percentage (required, unsigned integer - braking percentage Lambda)
+    sh:property [ 
+        sh:path era:brakePercentage ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each EtcsDataAto must have exactly one brakePercentage (unsigned integer, Lambda braking percentage)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Brake Position (required, controlled vocabulary - brake lever position/train type)
+    sh:property [ 
+        sh:path era:brakePosition ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/brake-position/passengerTrainInP>
+            <http://data.europa.eu/949/concepts/brake-position/passengerTrainInR>
+            <http://data.europa.eu/949/concepts/brake-position/freightTrainInP>
+            <http://data.europa.eu/949/concepts/brake-position/freightTrainInG>
+            <http://data.europa.eu/949/concepts/brake-position/brakePositionUnknown>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property brakePosition must have a value from the defined SKOS concept scheme (passengerTrainInP, passengerTrainInR, freightTrainInP, freightTrainInG, or brakePositionUnknown)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Axle Load Category (required, controlled vocabulary - maximum axle load)
+    sh:property [ 
+        sh:path era:axleLoadCategory ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_A>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_HS17>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_B1>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_B2>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_C2>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_C3>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_C4>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D2>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D3>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D4>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D4XL>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_E4>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_E5>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property axleLoadCategory must have a value from the defined SKOS concept scheme (AL_A through AL_E5)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Cant Deficiency Category (required, controlled vocabulary - superelevation compensation)
+    sh:property [ 
+        sh:path era:cantDeficiencyCategory ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_Undefined>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_80mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_100mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_130mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_150mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_165mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_180mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_210mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_225mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_245mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_275mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_300mm>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property cantDeficiencyCategory must have a value from the defined SKOS concept scheme (CD_80mm through CD_300mm, or CD_Undefined)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Nominal Rotating Mass (required, unsigned integer - equivalent mass including rotation)
+    sh:property [ 
+        sh:path era:nominalRotatingMass ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each EtcsDataAto must have exactly one nominalRotatingMass (unsigned integer, equivalent rotating mass in tonnes including wheels/axles)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Other International Category (required, controlled vocabulary - international speed profile category)
+    sh:property [ 
+        sh:path era:otherInternationalCategory ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_freightTrainP>
+            <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_freightTrainG>
+            <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_passengerTrain>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property otherInternationalCategory must have a value from the defined SKOS concept scheme (SSSP_freightTrainP, SSSP_freightTrainG, or SSSP_passengerTrain)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Preconfigured Braking Model (required, unsigned integer - braking model identifier)
+    sh:property [ 
+        sh:path era:preconfiguredBrakingModel ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each EtcsDataAto must have exactly one preconfiguredBrakingModel (unsigned integer, identifier for predefined braking characteristics)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Event Estimation Shape =====
+era:EventEstimationShape a sh:NodeShape ;
+    sh:targetClass era:EventEstimation ;
+    sh:message "Estimated arrival time for a specific movement event (station stop, passing point, etc.)." ;
+    
+    # Event (required, reference to the movement event)
+    sh:property [ 
+        sh:path era:event ;
+        sh:node era:MovementEventShape ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each EventEstimation must reference exactly one event that conforms to MovementEventShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Arrival (required, dateTime - estimated arrival timestamp)
+    sh:property [ 
+        sh:path era:arrival ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each EventEstimation must have exactly one arrival timestamp (xsd:dateTime, estimated time of arrival at event location)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Event Execution Report Shape =====
+era:EventExecutionReportShape a sh:NodeShape ;
+    sh:targetClass era:EventExecutionReport ;
+    sh:message "Report documenting the execution of a specific event - must contain exactly one report type." ;
+    
+    # Each Event Execution Report must have exactly ONE of these report types
+    sh:xone (
+        [ sh:path era:arrivalReport ;
+          sh:node era:MovementEventExecutionReportShape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Event execution report contains arrival report." ]
+        
+        [ sh:path era:departureReport ;
+          sh:node era:MovementEventExecutionReportShape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Event execution report contains departure report." ]
+        
+        [ sh:path era:creationRestrictionReport ;
+          sh:node era:RestrictionEventExecutionReportShape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Event execution report contains restriction creation report." ]
+        
+        [ sh:path era:removalRestrictionReport ;
+          sh:node era:RestrictionEventExecutionReportShape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Event execution report contains restriction removal report." ]
+        
+        [ sh:path era:creationWarningMeasureReport ;
+          sh:node era:WarningMeasureEventExecutionReportShape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Event execution report contains warning measure creation report." ]
+        
+        [ sh:path era:removalWarningMeasureReport ;
+          sh:node era:WarningMeasureEventExecutionReportShape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Event execution report contains warning measure removal report." ]
+    ) .
+
+
+# ===== Event Handling Shape =====
+era:EventHandlingShape a sh:NodeShape ;
+    sh:targetClass era:EventHandling ;
+    sh:message "Records how a specific movement event was handled by the train (passed, stopped accurately, etc.)." ;
+    
+    # Event (required, reference to the movement event)
+    sh:property [ 
+        sh:path era:event ;
+        sh:node era:MovementEventShape ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each EventHandling must reference exactly one event that conforms to MovementEventShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Pass Stop Depart (required, controlled vocabulary - action taken at event)
+    sh:property [ 
+        sh:path era:passStopDepart ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/movement-event-action/passedEvent>
+            <http://data.europa.eu/949/concepts/movement-event-action/stoppedAccurateAtEvent>
+            <http://data.europa.eu/949/concepts/movement-event-action/stoppedWithOvershootAtEvent>
+            <http://data.europa.eu/949/concepts/movement-event-action/stoppedWithUndershootAtEvent>
+            <http://data.europa.eu/949/concepts/movement-event-action/departedFromEvent>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property passStopDepart must have a value from the defined SKOS concept scheme (passedEvent, stoppedAccurateAtEvent, stoppedWithOvershootAtEvent, stoppedWithUndershootAtEvent, or departedFromEvent)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Execution Response Shape =====
+era:ExecutionResponseShape a sh:NodeShape ;
+    sh:targetClass era:ExecutionResponse ;
+    sh:message "Response from train/ATO system regarding acceptance or rejection of an operational plan." ;
+    
+    # Operational Plan Reference (required, reference to the plan)
+    sh:property [ 
+        sh:path era:operationalPlanRef ;
+        sh:node era:OperationalPlanReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ExecutionResponse must reference exactly one operationalPlanRef that conforms to OperationalPlanReferenceShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Operational Plan Issued At (required, dateTime - when plan was issued)
+    sh:property [ 
+        sh:path era:operationalPlanIssuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ExecutionResponse must have exactly one operationalPlanIssuedAt timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Response Code (required, controlled vocabulary - accepted or rejected)
+    sh:property [ 
+        sh:path era:responseCode ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/response-code/accepted>
+            <http://data.europa.eu/949/concepts/response-code/rejected>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property responseCode must have a value from the defined SKOS concept scheme (accepted or rejected)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Issued At (required, dateTime - when response was generated)
+    sh:property [ 
+        sh:path era:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ExecutionResponse must have exactly one issuedAt timestamp (xsd:dateTime, when response was created)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Reject Reason (optional, string - explanation if rejected)
+    sh:property [ 
+        sh:path era:rejectReason ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "An ExecutionResponse may have at most one rejectReason (string, required if responseCode is rejected)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Movement Event Execution Report Shape =====
+era:MovementEventExecutionReportShape a sh:NodeShape ;
+    sh:targetClass era:MovementEventExecutionReport ;
+    sh:message "Report documenting the execution result of a movement event (arrival/departure at a location)." ;
+    
+    # Movement Event (required, reference to the event)
+    sh:property [ 
+        sh:path era:movementEvent ;
+        sh:node era:MovementEventShape ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MovementEventExecutionReport must reference exactly one movementEvent that conforms to MovementEventShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Operational Plan Issued At (required, dateTime - when associated plan was issued)
+    sh:property [ 
+        sh:path era:operationalPlanIssuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MovementEventExecutionReport must have exactly one operationalPlanIssuedAt timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Execution State (required, controlled vocabulary - outcome of event execution)
+    sh:property [ 
+        sh:path era:executionState ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/event-execution-state/eventCompleted>
+            <http://data.europa.eu/949/concepts/event-execution-state/eventFailed>
+            <http://data.europa.eu/949/concepts/event-execution-state/eventWarning>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property executionState must have a value from the defined SKOS concept scheme (eventCompleted, eventFailed, or eventWarning)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Issued At (required, dateTime - when report was generated)
+    sh:property [ 
+        sh:path era:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MovementEventExecutionReport must have exactly one issuedAt timestamp (xsd:dateTime, when report was created)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Failure Reason (optional, string - explanation if failed)
+    sh:property [ 
+        sh:path era:failureReason ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A MovementEventExecutionReport may have at most one failureReason (string, required if executionState is eventFailed)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Warning (optional, string - warning details if warning state)
+    sh:property [ 
+        sh:path era:warning ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A MovementEventExecutionReport may have at most one warning (string, required if executionState is eventWarning)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Movement Event Shape =====
+era:MovementEventShape a sh:NodeShape ;
+    sh:targetClass era:MovementEvent ;
+    sh:message "Defines a specific point in the train's journey (station stop, passing point, timing point, etc.)." ;
+    
+    # Position (required, reference to network location)
+    sh:property [ 
+        sh:path era:position ;
+        sh:node era:NetPointReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MovementEvent must have exactly one position that conforms to NetPointReferenceShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Scheduled Type (required, controlled vocabulary - planned event type)
+    sh:property [ 
+        sh:path era:scheduledType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/movement-event-type/pass>
+            <http://data.europa.eu/949/concepts/movement-event-type/stop>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property scheduledType must have a value from the defined SKOS concept scheme (pass or stop)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Planned Type (required, controlled vocabulary - working timetable event type)
+    sh:property [ 
+        sh:path era:plannedType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/movement-event-type/pass>
+            <http://data.europa.eu/949/concepts/movement-event-type/stop>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property plannedType must have a value from the defined SKOS concept scheme (pass or stop)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Alignment (required, controlled vocabulary - train reference point)
+    sh:property [ 
+        sh:path era:alignment ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/alignment-type/head>
+            <http://data.europa.eu/949/concepts/alignment-type/center>
+            <http://data.europa.eu/949/concepts/alignment-type/rear>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property alignment must have a value from the defined SKOS concept scheme (head, center, or rear)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Scheduled Arrival (required, dateTime - public timetable time)
+    sh:property [ 
+        sh:path era:scheduledArrival ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MovementEvent must have exactly one scheduledArrival timestamp (xsd:dateTime, public timetable time)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Scheduled Arrival Window (required, unsigned integer - tolerance in seconds)
+    sh:property [ 
+        sh:path era:scheduledArrivalWindow ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MovementEvent must have exactly one scheduledArrivalWindow (unsigned integer, acceptable arrival time deviation in seconds)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Path To Next Event (optional, RDF list of track elements)
+    sh:property [ 
+        sh:path era:pathToNextEvent ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A MovementEvent may have at most one pathToNextEvent pointing to an RDF list of track elements." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate path list items are LinearElements
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "All items in the pathToNextEvent list must be instances of era:LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:pathToNextEvent ?list .
+                ?list rdf:rest*/rdf:first ?item .
+                
+                FILTER NOT EXISTS { ?item a era:LinearElement }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Stop Description (optional, details if this is a stop)
+    sh:property [ 
+        sh:path era:stopDescription ;
+        sh:node era:StopDescriptionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A MovementEvent may have at most one stopDescription that conforms to StopDescriptionShape (required if scheduledType or plannedType is stop)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Starts After Events (optional, references to prerequisite events)
+    sh:property [ 
+        sh:path era:startsAfterEvents ;
+        sh:node era:OperationalEventRefShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A MovementEvent may reference multiple startsAfterEvents that must complete before this event starts." ;
+        sh:severity sh:Violation ;
+    ] .
+
+
+# ===== Movement Permission Shape =====
+era:MovementPermissionShape a sh:NodeShape ;
+    sh:targetClass era:MovementPermission ;
+    sh:message "Defines the permitted movement authority for a train - where it can go, how fast, and in what modes." ;
+    
+    # Path Way (required, the main permitted route)
+    sh:property [ 
+        sh:path era:pathWay ;
+        sh:node era:NetLinearReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MovementPermission must have exactly one pathWay (NetLinearReference defining the permitted route)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Risk Buffer (required, safety buffer at end of movement authority)
+    sh:property [ 
+        sh:path era:riskBuffer ;
+        sh:node era:NetLinearReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MovementPermission must have exactly one riskBuffer (NetLinearReference defining safety buffer zone)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Speeds (required, at least one speed restriction along route)
+    sh:property [ 
+        sh:path era:speeds ;
+        sh:node era:MpSpeedShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:message "Each MovementPermission must have at least one speeds profile that conforms to MpSpeedShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Movement Modes (required, at least one driving mode section)
+    sh:property [ 
+        sh:path era:movementModes ;
+        sh:node era:MpDrivingModeShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:message "Each MovementPermission must have at least one movementModes that conform to MpDrivingModeShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Risk Paths (optional, alternative conflicting routes)
+    sh:property [ 
+        sh:path era:riskPaths ;
+        sh:node era:NetLinearReferenceShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A MovementPermission may have multiple riskPaths (routes that conflict with this permission)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Movement Restriction Shape =====
+era:MovementRestrictionShape a sh:NodeShape ;
+    sh:targetClass era:MovementRestriction ;
+    sh:message "Defines a restriction on train movement (speed limit, temporary restriction, etc.)." ;
+    
+    # Restricted Path (required, where restriction applies)
+    sh:property [ 
+        sh:path era:restrictedPath ;
+        sh:node era:NetLinearReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MovementRestriction must have exactly one restrictedPath (NetLinearReference defining where restriction applies)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Specific Restriction (required, details of the restriction)
+    sh:property [ 
+        sh:path era:specificRestriction ;
+        sh:node era:SpecificMovementRestrictionShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MovementRestriction must have exactly one specificRestriction that conforms to SpecificMovementRestrictionShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== MP Driving Mode Shape =====
+era:MpDrivingModeShape a sh:NodeShape ;
+    sh:targetClass era:MpDrivingMode ;
+    sh:message "Defines the required ETCS driving mode for a specific section of the movement permission." ;
+    
+    # Path (required, where this mode applies)
+    sh:property [ 
+        sh:path era:path ;
+        sh:node era:NetLinearReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MpDrivingMode must have exactly one path (NetLinearReference defining where this driving mode applies)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Driving Mode (required, controlled vocabulary - ETCS mode)
+    sh:property [ 
+        sh:path era:drivingMode ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/onboard-operating-mode/undefined>
+            <http://data.europa.eu/949/concepts/onboard-operating-mode/onSight>
+            <http://data.europa.eu/949/concepts/onboard-operating-mode/fullSupervision>
+            <http://data.europa.eu/949/concepts/onboard-operating-mode/standBy>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property drivingMode must have a value from the defined SKOS concept scheme (fullSupervision, onSight, standBy, or undefined)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== MP Speed Shape =====
+era:MpSpeedShape a sh:NodeShape ;
+    sh:targetClass era:MpSpeed ;
+    sh:message "Defines the maximum permitted speed for a specific section of the movement permission." ;
+    
+    # Path (required, where this speed limit applies)
+    sh:property [ 
+        sh:path era:path ;
+        sh:node era:NetLinearReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MpSpeed must have exactly one path (NetLinearReference defining where this speed limit applies)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # V Max (required, unsigned integer - maximum speed in km/h)
+    sh:property [ 
+        sh:path era:vMax ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each MpSpeed must have exactly one vMax (unsigned integer, maximum permitted speed in km/h)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== OnBoard Extension Shape =====
+era:OnBoardExtensionShape a sh:NodeShape ;
+    sh:targetClass era:OnBoardExtension ;
+    sh:message "Extension data for vendor-specific or non-standard onboard systems." ;
+    
+    # Content Type (required, string - MIME type or identifier)
+    sh:property [ 
+        sh:path era:contentType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each OnBoardExtension must have exactly one contentType (string, identifies the extension data format)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Content (required, base64Binary - the extension data)
+    sh:property [ 
+        sh:path era:content ;
+        sh:datatype xsd:base64Binary ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each OnBoardExtension must have exactly one content (base64Binary, encoded extension data)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Operational Consist Shape =====
+era:OperationalConsistShape a sh:NodeShape ;
+    sh:targetClass era:OperationalConsist ;
+    sh:message "Describes the operational train consist configuration and its supported equipment." ;
+    
+    # Supported OnBoard Equipment (required, equipment capabilities)
+    sh:property [ 
+        sh:path era:supportedOnBoardEquipment ;
+        sh:node era:SupportedOnBoardEquipmentShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each OperationalConsist must have exactly one supportedOnBoardEquipment that conforms to SupportedOnBoardEquipmentShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Operational Event Reference Shape =====
+era:OperationalEventRefShape a sh:NodeShape ;
+    sh:targetClass era:OperationalEventRef ;
+    sh:message "Reference to an operational event - must be exactly one event type (movement, restriction, or warning)." ;
+    
+    # Each Operational Event Reference must have exactly ONE of these event types
+    sh:xone (
+        [ sh:path era:movementEvent ;
+          sh:node era:MovementEventShape ;
+          sh:nodeKind sh:IRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Operational event reference is a movement event." ]
+        
+        [ sh:path era:restrictionEvent ;
+          sh:node era:RestrictionEventShape ;
+          sh:nodeKind sh:IRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Operational event reference is a restriction event." ]
+        
+        [ sh:path era:warningMeasureEvent ;
+          sh:node era:WarningMeasureEventShape ;
+          sh:nodeKind sh:IRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Operational event reference is a warning measure event." ]
+    ) .
+
+# ===== Operational Plan Movement Shape =====
+era:OperationalPlanMovementShape a sh:NodeShape ;
+    sh:targetClass era:OperationalPlanMovement ;
+    sh:message "Operational plan defining train movement including route, events, restrictions, and consist." ;
+    
+    # Configuration Data Version Reference (required, string - version identifier)
+    sh:property [ 
+        sh:path era:configurationDataVersionRef ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each OperationalPlanMovement must have exactly one configurationDataVersionRef (string, identifies infrastructure data version)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Issued At (required, dateTime - when plan was created)
+    sh:property [ 
+        sh:path era:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each OperationalPlanMovement must have exactly one issuedAt timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Includes End of Journey (required, boolean - whether plan includes final destination)
+    sh:property [ 
+        sh:path era:includesEndOfJourney ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each OperationalPlanMovement must have exactly one includesEndOfJourney (boolean, true if plan includes journey end)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Movement Events (required, RDF list of at least 1 event)
+    sh:property [ 
+        sh:path era:movementEvents ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each OperationalPlanMovement must have exactly one movementEvents property pointing to an RDF list with at least 1 event." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate list has at least 1 item
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "The movementEvents list must contain at least 1 MovementEvent item." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:movementEvents ?list .
+                
+                # Check if list is empty or has no items
+                FILTER NOT EXISTS {
+                    ?list rdf:rest*/rdf:first ?item .
+                    ?item a era:MovementEvent .
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Operational Train Units (required, at least one train unit)
+    sh:property [ 
+        sh:path era:operationalTrainUnits ;
+        sh:node era:TrainUnitShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:message "Each OperationalPlanMovement must have at least one operationalTrainUnits that conform to TrainUnitShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Movement Restrictions (optional, multiple restrictions allowed)
+    sh:property [ 
+        sh:path era:movementRestrictions ;
+        sh:node era:MovementRestrictionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An OperationalPlanMovement may have multiple movementRestrictions that conform to MovementRestrictionShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+
+# ===== Operational Plan Reference Shape =====
+era:OperationalPlanReferenceShape a sh:NodeShape ;
+    sh:targetClass era:OperationalPlanReference ;
+    sh:message "Reference to an operational plan - must be exactly one plan type (movement, restriction, or warning measure)." ;
+    
+    # Each Operational Plan Reference must have exactly ONE of these plan types
+    sh:xone (
+        [ sh:path era:operationalPlanMovementRef ;
+          sh:node era:OperationalPlanMovementShape ;
+          sh:nodeKind sh:IRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Operational plan reference is a movement plan." ]
+        
+        [ sh:path era:operationalPlanRestrictionRef ;
+          sh:node era:OperationalPlanRestrictionShape ;
+          sh:nodeKind sh:IRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Operational plan reference is a restriction plan." ]
+        
+        [ sh:path era:operationalPlanWarningMeasureRef ;
+          sh:node era:OperationalPlanWarningMeasureShape ;
+          sh:nodeKind sh:IRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Operational plan reference is a warning measure plan." ]
+    ) .
+
+# ===== Operational Plan Restriction Shape =====
+era:OperationalPlanRestrictionShape a sh:NodeShape ;
+    sh:targetClass era:OperationalPlanRestriction ;
+    sh:message "Operational plan defining restrictions on train movement (TSRs, work zones, etc.)." ;
+    
+    # Configuration Data Version Reference (required, string - infrastructure version)
+    sh:property [ 
+        sh:path era:configurationDataVersionRef ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each OperationalPlanRestriction must have exactly one configurationDataVersionRef (string, identifies infrastructure data version)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Issued At (required, dateTime - when plan was created)
+    sh:property [ 
+        sh:path era:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each OperationalPlanRestriction must have exactly one issuedAt timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Restriction Events (required, at least one restriction event)
+    sh:property [ 
+        sh:path era:restrictionEvents ;
+        sh:node era:RestrictionEventShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:message "Each OperationalPlanRestriction must have at least one restrictionEvents that conform to RestrictionEventShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Operational Plan Warning Measure Shape =====
+era:OperationalPlanWarningMeasureShape a sh:NodeShape ;
+    sh:targetClass era:OperationalPlanWarningMeasure ;
+    sh:message "Operational plan defining warning measures for train operation (adhesion warnings, track conditions, etc.)." ;
+    
+    # Configuration Data Version Reference (required, string - infrastructure version)
+    sh:property [ 
+        sh:path era:configurationDataVersionRef ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each OperationalPlanWarningMeasure must have exactly one configurationDataVersionRef (string, identifies infrastructure data version)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Issued At (required, dateTime - when plan was created)
+    sh:property [ 
+        sh:path era:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each OperationalPlanWarningMeasure must have exactly one issuedAt timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Warning Measure Events (required, at least one warning event)
+    sh:property [ 
+        sh:path era:warningMeasureEvents ;
+        sh:node era:WarningMeasureEventShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:message "Each OperationalPlanWarningMeasure must have at least one warningMeasureEvents that conform to WarningMeasureEventShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Operational Traffic Plan Shape =====
+era:OperationalTrafficPlanShape a sh:NodeShape ;
+    sh:targetClass era:OperationalTrafficPlan ;
+    sh:message "Complete operational traffic plan containing all movements, restrictions, and warnings for a time period or area." ;
+    
+    # Operational Plan Movements (optional, multiple movement plans)
+    sh:property [ 
+        sh:path era:operationalPlanMovements ;
+        sh:node era:OperationalPlanMovementShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An OperationalTrafficPlan may contain multiple operationalPlanMovements that conform to OperationalPlanMovementShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Operational Plan Restrictions (optional, multiple restriction plans)
+    sh:property [ 
+        sh:path era:operationalPlanRestrictions ;
+        sh:node era:OperationalPlanRestrictionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An OperationalTrafficPlan may contain multiple operationalPlanRestrictions that conform to OperationalPlanRestrictionShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Operational Plan Warning Measures (optional, multiple warning plans)
+    sh:property [ 
+        sh:path era:operationalPlanWarningMeasures ;
+        sh:node era:OperationalPlanWarningMeasureShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "An OperationalTrafficPlan may contain multiple operationalPlanWarningMeasures that conform to OperationalPlanWarningMeasureShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Operational Train Category Shape =====
+era:OperationalTrainCategoryShape a sh:NodeShape ;
+    sh:targetClass era:OperationalTrainCategory ;
+    sh:message "Categorization of train by type and usage for operational and commercial purposes." ;
+    
+    # Train Category Type (required, controlled vocabulary - train service type)
+    sh:property [ 
+        sh:path era:trainCategoryType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/train-category-type/trainCategoryUnknown>
+            <http://data.europa.eu/949/concepts/train-category-type/highspeedTrain>
+            <http://data.europa.eu/949/concepts/train-category-type/intercity>
+            <http://data.europa.eu/949/concepts/train-category-type/interregional>
+            <http://data.europa.eu/949/concepts/train-category-type/regional>
+            <http://data.europa.eu/949/concepts/train-category-type/subUrban>
+            <http://data.europa.eu/949/concepts/train-category-type/nightTrain>
+            <http://data.europa.eu/949/concepts/train-category-type/motorRail>
+            <http://data.europa.eu/949/concepts/train-category-type/mountainTrain>
+            <http://data.europa.eu/949/concepts/train-category-type/historicTrain>
+            <http://data.europa.eu/949/concepts/train-category-type/coachGroup>
+            <http://data.europa.eu/949/concepts/train-category-type/tram>
+            <http://data.europa.eu/949/concepts/train-category-type/underground>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property trainCategoryType must have a value from the defined SKOS concept scheme (highspeedTrain, intercity, regional, subUrban, nightTrain, etc.)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Train Usage (required, controlled vocabulary - operational purpose)
+    sh:property [ 
+        sh:path era:trainUsage ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/train-usage-type/trainUsageUndefined>
+            <http://data.europa.eu/949/concepts/train-usage-type/commercialPassengerTrain>
+            <http://data.europa.eu/949/concepts/train-usage-type/commercialCargoTrain>
+            <http://data.europa.eu/949/concepts/train-usage-type/locomotiveRunningLight>
+            <http://data.europa.eu/949/concepts/train-usage-type/lightRunning>
+            <http://data.europa.eu/949/concepts/train-usage-type/notInService>
+            <http://data.europa.eu/949/concepts/train-usage-type/engineeringTrain>
+            <http://data.europa.eu/949/concepts/train-usage-type/breakdownTrain>
+            <http://data.europa.eu/949/concepts/train-usage-type/mixedTrain>
+            <http://data.europa.eu/949/concepts/train-usage-type/specialTrain>
+            <http://data.europa.eu/949/concepts/train-usage-type/otherTrain>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property trainUsage must have a value from the defined SKOS concept scheme (commercialPassengerTrain, commercialCargoTrain, engineeringTrain, etc.)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Description (optional, string - human-readable description)
+    sh:property [ 
+        sh:path era:description ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "An OperationalTrainCategory may have at most one description (string, human-readable category description)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+# ===== Physical Consist Shape =====
+era:PhysicalConsistShape a sh:NodeShape ;
+    sh:targetClass era:PhysicalConsist ;
+    sh:message "Describes the actual physical train composition including all vehicles and their current state." ;
+    
+    # EVN Identifier (required, string - European Vehicle Number)
+    sh:property [ 
+        sh:path era:evnIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each PhysicalConsist must have exactly one evnIdentifier (string, European Vehicle Number identifying the train consist)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Mass (required, unsigned integer - total train mass in tonnes)
+    sh:property [ 
+        sh:path era:mass ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each PhysicalConsist must have exactly one mass (unsigned integer, total train mass in tonnes)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Passenger Load (required, unsigned integer - total passenger count)
+    sh:property [ 
+        sh:path era:passengerLoad ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each PhysicalConsist must have exactly one passengerLoad (unsigned integer, total number of passengers on board)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Max Current Consumption (required, unsigned integer 0-1023 - in amperes)
+    sh:property [ 
+        sh:path era:maxCurrentConsuption ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1023 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each PhysicalConsist must have exactly one maxCurrentConsuption (unsigned integer 0-1023, maximum electrical current draw in amperes)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Physical Vehicles (optional, RDF list of vehicles - max 255 per ETCS spec)
+    sh:property [ 
+        sh:path era:physicalVehicles ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A PhysicalConsist may have at most one physicalVehicles property pointing to an RDF list (max 255 vehicles)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate list has max 255 vehicles
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "The physicalVehicles list must contain at most 255 vehicles (ETCS specification limit)." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:physicalVehicles ?list .
+                {
+                    SELECT $this (COUNT(?item) AS ?count)
+                    WHERE {
+                        $this era:physicalVehicles ?list .
+                        ?list rdf:rest*/rdf:first ?item .
+                    }
+                    GROUP BY $this
+                    HAVING (?count > 255)
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate all vehicles are PhysicalVehicle instances
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "All items in the physicalVehicles list must be instances of era:PhysicalVehicle that conform to PhysicalVehicleShape." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:physicalVehicles ?list .
+                ?list rdf:rest*/rdf:first ?item .
+                
+                FILTER NOT EXISTS { ?item a era:PhysicalVehicle }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Physical Train Unit Identifier Shape =====
+era:PhysicalTrainUnitIdentifierShape a sh:NodeShape ;
+    sh:targetClass era:PhysicalTrainUnitIdentifier ;
+    sh:message "Collection of identifiers used to uniquely identify a physical train unit in various systems." ;
+    
+    # Train Running Number (optional, string - operational train number)
+    sh:property [ 
+        sh:path era:trainRunningNumber ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A PhysicalTrainUnitIdentifier may have at most one trainRunningNumber (string, operational train service number)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Additional Train Running Number (optional, string - supplementary identifier)
+    sh:property [ 
+        sh:path era:additionalTrainRunningNumber ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A PhysicalTrainUnitIdentifier may have at most one additionalTrainRunningNumber (string, supplementary operational number)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # TAF TAP TSI Train ID (optional, string - standard European train ID)
+    sh:property [ 
+        sh:path era:tafTapTsiTrainID ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A PhysicalTrainUnitIdentifier may have at most one tafTapTsiTrainID (string, TAF/TAP TSI standard train identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Leading OnBoard Unit ID (optional, string - primary onboard computer ID)
+    sh:property [ 
+        sh:path era:leadingOnBoardUnitId ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A PhysicalTrainUnitIdentifier may have at most one leadingOnBoardUnitId (string, identifier of leading onboard unit)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Physical Vehicle Shape =====
+era:PhysicalVehicleShape a sh:NodeShape ;
+    sh:targetClass era:PhysicalVehicle ;
+    sh:message "Describes a single physical railway vehicle (coach, wagon, locomotive) within a train consist." ;
+    
+    # EVN Identifier (required, string - European Vehicle Number)
+    sh:property [ 
+        sh:path era:evnIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each PhysicalVehicle must have exactly one evnIdentifier (string, unique European Vehicle Number for this vehicle)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Mass (required, unsigned integer - vehicle mass in tonnes)
+    sh:property [ 
+        sh:path era:mass ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each PhysicalVehicle must have exactly one mass (unsigned integer, vehicle mass in tonnes including current load)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Passenger Load (required, unsigned integer - passenger count for this vehicle)
+    sh:property [ 
+        sh:path era:passengerLoad ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each PhysicalVehicle must have exactly one passengerLoad (unsigned integer, number of passengers in this vehicle)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Vehicle Orientation (required, controlled vocabulary - direction relative to train)
+    sh:property [ 
+        sh:path era:vehicleOrientation ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/vehicle-orientation/orientationUknown>
+            <http://data.europa.eu/949/concepts/vehicle-orientation/orientationSameAsTrainUnit>
+            <http://data.europa.eu/949/concepts/vehicle-orientation/orientationInverseToTrainUnit>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property vehicleOrientation must have a value from the defined SKOS concept scheme (orientationSameAsTrainUnit, orientationInverseToTrainUnit, or orientationUknown)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Pantographs States (optional, up to 7 pantograph states - max 7 pantographs per vehicle)
+    sh:property [ 
+        sh:path era:pantographsStates ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/pantograph-state/pantographRaised>
+            <http://data.europa.eu/949/concepts/pantograph-state/pantographLowered>
+            <http://data.europa.eu/949/concepts/pantograph-state/pantographBlocked>
+            <http://data.europa.eu/949/concepts/pantograph-state/pantographStateUnknown>
+        ) ;
+        sh:maxCount 7 ;
+        sh:message "The property pantographsStates may have up to 7 values from the defined SKOS concept scheme (pantographRaised, pantographLowered, pantographBlocked, or pantographStateUnknown)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Door Data Left (optional, RDF list of door data for left side - max 7 doors)
+    sh:property [ 
+        sh:path era:doorDataLeft ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A PhysicalVehicle may have at most one doorDataLeft property pointing to an RDF list (max 7 doors)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate left door list has max 7 items
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "The doorDataLeft list must contain at most 7 door entries (typical maximum doors per vehicle side)." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:doorDataLeft ?list .
+                {
+                    SELECT $this (COUNT(?item) AS ?count)
+                    WHERE {
+                        $this era:doorDataLeft ?list .
+                        ?list rdf:rest*/rdf:first ?item .
+                    }
+                    GROUP BY $this
+                    HAVING (?count > 7)
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate all left door items are DoorData instances
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "All items in the doorDataLeft list must be instances of era:DoorData that conform to DoorDataShape." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:doorDataLeft ?list .
+                ?list rdf:rest*/rdf:first ?item .
+                
+                FILTER NOT EXISTS { ?item a era:DoorData }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Door Data Right (optional, RDF list of door data for right side - max 7 doors)
+    sh:property [ 
+        sh:path era:doorDataRight ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A PhysicalVehicle may have at most one doorDataRight property pointing to an RDF list (max 7 doors)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate right door list has max 7 items
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "The doorDataRight list must contain at most 7 door entries (typical maximum doors per vehicle side)." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:doorDataRight ?list .
+                {
+                    SELECT $this (COUNT(?item) AS ?count)
+                    WHERE {
+                        $this era:doorDataRight ?list .
+                        ?list rdf:rest*/rdf:first ?item .
+                    }
+                    GROUP BY $this
+                    HAVING (?count > 7)
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate all right door items are DoorData instances
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "All items in the doorDataRight list must be instances of era:DoorData that conform to DoorDataShape." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:doorDataRight ?list .
+                ?list rdf:rest*/rdf:first ?item .
+                
+                FILTER NOT EXISTS { ?item a era:DoorData }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== Restricted Aspect Shape =====
+era:RestrictedAspectShape a sh:NodeShape ;
+    sh:targetClass era:RestrictedAspect ;
+    sh:message "Defines restrictions on train operation - must specify exactly one type of restriction aspect." ;
+    
+    # Each Restricted Aspect must have exactly ONE of these restriction types
+    sh:xone (
+        # Speed Restriction
+        [ sh:path era:speedRestriction ;
+          sh:node era:SpeedRestrictionShape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Restricted aspect is a speed restriction." ]
+        
+        # Maximum Adhesion Restriction
+        [ sh:path era:maxAdhesion ;
+          sh:in (
+              <http://data.europa.eu/949/concepts/adhesion-category/dryRailHigh>
+              <http://data.europa.eu/949/concepts/adhesion-category/dryRailMedium>
+              <http://data.europa.eu/949/concepts/adhesion-category/dryRailLow>
+              <http://data.europa.eu/949/concepts/adhesion-category/lowAdhesion>
+              <http://data.europa.eu/949/concepts/adhesion-category/veryLowAdhesion>
+              <http://data.europa.eu/949/concepts/adhesion-category/extremelyLowAdhesion>
+              <http://data.europa.eu/949/concepts/adhesion-category/unknownAdhesion>
+          ) ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "The property maxAdhesion must have a value from the defined SKOS concept scheme (dryRailHigh through extremelyLowAdhesion)." ]
+        
+        # Allowed Driving Modes Restriction
+        [ sh:path era:allowedDrivingModes ;
+          sh:in (
+              <http://data.europa.eu/949/concepts/onboard-operating-mode/undefined>
+              <http://data.europa.eu/949/concepts/onboard-operating-mode/onSight>
+              <http://data.europa.eu/949/concepts/onboard-operating-mode/fullSupervision>
+              <http://data.europa.eu/949/concepts/onboard-operating-mode/standBy>
+          ) ;
+          sh:message "The property allowedDrivingModes must have values from the defined SKOS concept scheme (fullSupervision, onSight, standBy, or undefined)." ]
+        
+        # Track Closure
+        [ sh:path era:trackClosure ;
+          sh:datatype xsd:boolean ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Restricted aspect is a track closure (boolean)." ]
+        
+        # Non-Stopping Restriction
+        [ sh:path era:nonStopping ;
+          sh:datatype xsd:boolean ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Restricted aspect is a non-stopping requirement (boolean)." ]
+        
+        # Operational Radio Hole
+        [ sh:path era:operationalRadioHole ;
+          sh:datatype xsd:boolean ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Restricted aspect is a radio coverage gap (boolean)." ]
+        
+        # Maximum Current Restriction
+        [ sh:path era:maxCurrent ;
+          sh:datatype xsd:unsignedInt ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Restricted aspect is a maximum current limit (unsigned integer, in amperes)." ]
+        
+        # ATO Inhibition
+        [ sh:path era:atoInhibition ;
+          sh:datatype xsd:boolean ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Restricted aspect is an ATO inhibition (boolean, prevents automatic train operation)." ]
+    ) .
+
+# ===== Restriction Area Shape =====
+era:RestrictionAreaShape a sh:NodeShape ;
+    sh:targetClass era:RestrictionArea ;
+    sh:message "Defines a geographical area where operational restrictions apply." ;
+    
+    # Linear Element Sections (required, at least one section defining the area)
+    sh:property [ 
+        sh:path era:linearElementSections ;
+        sh:node era:LinearElementSectionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:message "Each RestrictionArea must have at least one linearElementSections that conform to LinearElementSectionShape (defining where restriction applies)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Specific Restrictions (required, at least one restriction)
+    sh:property [ 
+        sh:path era:specificRestrictions ;
+        sh:node era:SpecificRestrictionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:message "Each RestrictionArea must have at least one specificRestrictions that conform to SpecificRestrictionShape (defining what restrictions apply)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Restriction Area State Shape =====
+era:RestrictionAreaStateShape a sh:NodeShape ;
+    sh:targetClass era:RestrictionAreaState ;
+    sh:message "Records the state change of a restriction area at a specific time (creation or removal)." ;
+    
+    # Restriction State (required, controlled vocabulary - created or removed)
+    sh:property [ 
+        sh:path era:restrictionState ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/restriction-state/created>
+            <http://data.europa.eu/949/concepts/restriction-state/removed>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property restrictionState must have a value from the defined SKOS concept scheme (created or removed)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Issued At (required, dateTime - when state change occurred)
+    sh:property [ 
+        sh:path era:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each RestrictionAreaState must have exactly one issuedAt timestamp (xsd:dateTime, when state change was recorded)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Restriction Area (optional, reference to the area)
+    sh:property [ 
+        sh:path era:restrictionArea ;
+        sh:node era:RestrictionAreaShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A RestrictionAreaState may reference at most one restrictionArea that conforms to RestrictionAreaShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Restriction Event (optional, associated event)
+    sh:property [ 
+        sh:path era:restrictionEvent ;
+        sh:node era:RestrictionEventShape ;
+		sh:nodeKind sh:IRI ;
+        sh:maxCount 1 ;
+        sh:message "A RestrictionAreaState may reference at most one restrictionEvent that conforms to RestrictionEventShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Restriction Event Execution Report Shape =====
+era:RestrictionEventExecutionReportShape a sh:NodeShape ;
+    sh:targetClass era:RestrictionEventExecutionReport ;
+    sh:message "Report documenting the execution result of a restriction event (creation or removal of restrictions)." ;
+    
+    # Restriction Event (required, reference to the event)
+    sh:property [ 
+        sh:path era:restrictionEvent ;
+        sh:node era:RestrictionEventShape ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each RestrictionEventExecutionReport must reference exactly one restrictionEvent that conforms to RestrictionEventShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Operational Plan Issued At (required, dateTime - when associated plan was issued)
+    sh:property [ 
+        sh:path era:operationalPlanIssuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each RestrictionEventExecutionReport must have exactly one operationalPlanIssuedAt timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Execution State (required, controlled vocabulary - outcome)
+    sh:property [ 
+        sh:path era:executionState ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/event-execution-state/eventCompleted>
+            <http://data.europa.eu/949/concepts/event-execution-state/eventFailed>
+            <http://data.europa.eu/949/concepts/event-execution-state/eventWarning>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property executionState must have a value from the defined SKOS concept scheme (eventCompleted, eventFailed, or eventWarning)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Issued At (required, dateTime - when report was generated)
+    sh:property [ 
+        sh:path era:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each RestrictionEventExecutionReport must have exactly one issuedAt timestamp (xsd:dateTime, when report was created)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Failure Reason (optional, string - explanation if failed)
+    sh:property [ 
+        sh:path era:failureReason ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A RestrictionEventExecutionReport may have at most one failureReason (string, required if executionState is eventFailed)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Warning (optional, string - warning details if warning state)
+    sh:property [ 
+        sh:path era:warning ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A RestrictionEventExecutionReport may have at most one warning (string, required if executionState is eventWarning)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Restriction Event Shape =====
+era:RestrictionEventShape a sh:NodeShape ;
+    sh:targetClass era:RestrictionEvent ;
+    sh:message "Defines a scheduled event for creating or removing operational restrictions." ;
+    
+    # Restriction Area (required, where restriction applies)
+    sh:property [ 
+        sh:path era:restrictionArea ;
+        sh:node era:RestrictionAreaShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each RestrictionEvent must reference exactly one restrictionArea that conforms to RestrictionAreaShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Creation Time (required, dateTime - when restriction becomes active)
+    sh:property [ 
+        sh:path era:creationTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each RestrictionEvent must have exactly one creationTime (xsd:dateTime, when restriction becomes active)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Removal Time (required, dateTime - when restriction is lifted)
+    sh:property [ 
+        sh:path era:removalTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each RestrictionEvent must have exactly one removalTime (xsd:dateTime, when restriction is removed)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Starts After Events (optional, prerequisite events)
+    sh:property [ 
+        sh:path era:startsAfterEvents ;
+        sh:node era:OperationalEventRefShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A RestrictionEvent may reference multiple startsAfterEvents that must complete before this restriction is activated." ;
+        sh:severity sh:Violation ;
+    ] .
+
+
+# ===== Specific Movement Restriction Shape =====
+era:SpecificMovementRestrictionShape a sh:NodeShape ;
+    sh:targetClass era:SpecificMovementRestriction ;
+    sh:message "Defines a specific type of movement restriction - must specify exactly one restriction type." ;
+    
+    # Each Specific Movement Restriction must have exactly ONE of these restriction types
+    sh:xone (
+        # Speed Restriction
+        [ sh:path era:speedRestriction ;
+          sh:node era:SpeedRestrictionShape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Specific movement restriction is a speed restriction." ]
+        
+        # Adhesion Category Restriction
+        [ sh:path era:adhesionCategory ;
+          sh:in (
+              <http://data.europa.eu/949/concepts/adhesion-category/dryRailHigh>
+              <http://data.europa.eu/949/concepts/adhesion-category/dryRailMedium>
+              <http://data.europa.eu/949/concepts/adhesion-category/dryRailLow>
+              <http://data.europa.eu/949/concepts/adhesion-category/lowAdhesion>
+              <http://data.europa.eu/949/concepts/adhesion-category/veryLowAdhesion>
+              <http://data.europa.eu/949/concepts/adhesion-category/extremelyLowAdhesion>
+              <http://data.europa.eu/949/concepts/adhesion-category/unknownAdhesion>
+          ) ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "The property adhesionCategory must have a value from the defined SKOS concept scheme (dryRailHigh through extremelyLowAdhesion)." ]
+        
+        # Maximum Current Restriction
+        [ sh:path era:maxCurrent ;
+          sh:datatype xsd:unsignedInt ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Specific movement restriction is a maximum current limit (unsigned integer, in amperes)." ]
+        
+        # ATO Inhibition
+        [ sh:path era:atoInhibition ;
+          sh:datatype xsd:boolean ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Specific movement restriction is an ATO inhibition (boolean)." ]
+        
+        # DAS Inhibition
+        [ sh:path era:dasInhibition ;
+          sh:datatype xsd:boolean ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Specific movement restriction is a Driver Advisory System inhibition (boolean)." ]
+        
+        # Excluded DPS Groups for Flank Protection
+        [ sh:path era:excludedDPSGroupsForFlankProtection ;
+          sh:node era:DPSGroupsListShape ;
+          sh:nodeKind sh:BlankNodeOrIRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Specific movement restriction is an exclusion of DPS groups for flank protection." ]
+    ) .
+
+# ===== Specific Restriction Shape =====
+era:SpecificRestrictionShape a sh:NodeShape ;
+    sh:targetClass era:SpecificRestriction ;
+    sh:message "Detailed restriction definition including what aspects are restricted and which trains are affected." ;
+    
+    # Restricted Aspects (required, at least one aspect)
+    sh:property [ 
+        sh:path era:restrictedAspects ;
+        sh:node era:RestrictedAspectShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:message "Each SpecificRestriction must have at least one restrictedAspects that conform to RestrictedAspectShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Applied To Trains (optional, which train groups this applies to)
+    sh:property [ 
+        sh:path era:appliedToTrains ;
+        sh:node era:TrainGroupSpecShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A SpecificRestriction may have at most one appliedToTrains specification (TrainGroupSpec)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Speed Restriction Shape =====
+era:SpeedRestrictionShape a sh:NodeShape ;
+    sh:targetClass era:SpeedRestriction ;
+    sh:message "Speed restriction definition with maximum permitted speed and application point." ;
+    
+    # Max Speed (required, unsigned integer - in km/h)
+    sh:property [ 
+        sh:path era:maxSpeed ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SpeedRestriction must have exactly one maxSpeed (unsigned integer, maximum permitted speed in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Restriction Ends At Train Front (required, boolean)
+    sh:property [ 
+        sh:path era:restrictionEndsAtTrainFront ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SpeedRestriction must have exactly one restrictionEndsAtTrainFront (boolean: true=ends when front passes, false=ends when rear passes)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Stop Description Shape =====
+era:StopDescriptionShape a sh:NodeShape ;
+    sh:targetClass era:StopDescription ;
+    sh:message "Detailed description of a station stop including times, doors, and train activities." ;
+    
+    # Scheduled Departure (required, dateTime)
+    sh:property [ 
+        sh:path era:scheduledDeparture ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each StopDescription must have exactly one scheduledDeparture timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Scheduled Minimum Dwell Time (required, unsigned integer - in seconds)
+    sh:property [ 
+        sh:path era:scheduledMinDwellTime ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each StopDescription must have exactly one scheduledMinDwellTime (unsigned integer, minimum stop duration in seconds)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Hold Train (required, boolean)
+    sh:property [ 
+        sh:path era:holdTrain ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each StopDescription must have exactly one holdTrain (boolean, whether train must wait for connections)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Relaxed Coupler (required, boolean)
+    sh:property [ 
+        sh:path era:relaxedCoupler ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each StopDescription must have exactly one relaxedCoupler (boolean, whether coupler tension is released during stop)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Door Activity (optional, door operation configuration)
+    sh:property [ 
+        sh:path era:doorActivity ;
+        sh:node era:DoorActivityShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A StopDescription may have at most one doorActivity that conforms to DoorActivityShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Additional Event Times (optional, up to 4 additional time specifications)
+    sh:property [ 
+        sh:path era:additionalEventTimes ;
+        sh:node era:AdditionalEventTimeShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 4 ;
+        sh:message "A StopDescription may have at most 4 additionalEventTimes that conform to AdditionalEventTimeShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Train Unit Activities (optional, RDF list)
+    sh:property [ 
+        sh:path era:trainUnitActivities ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A StopDescription may have at most one trainUnitActivities property pointing to an RDF list." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate all train unit activities list items
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "All items in the trainUnitActivities list must be instances of era:TrainUnitActivity that conform to TrainUnitActivityShape." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:trainUnitActivities ?list .
+                ?list rdf:rest*/rdf:first ?item .
+                
+                FILTER NOT EXISTS { ?item a era:TrainUnitActivity }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Supported OnBoard Equipment Shape =====
+era:SupportedOnBoardEquipmentShape a sh:NodeShape ;
+    sh:targetClass era:SupportedOnBoardEquipment ;
+    sh:message "Describes the train protection systems and ETCS capabilities supported by the train." ;
+    
+    # Train Protection Type (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:trainProtectionType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/train-protection-type/Etcs>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property trainProtectionType must have a value from the defined SKOS concept scheme (currently only Etcs is defined)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # ETCS System Versions (required, at least one version string)
+    sh:property [ 
+        sh:path era:etcsSystemVersions ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:message "Each SupportedOnBoardEquipment must have at least one etcsSystemVersions (string, ETCS baseline version)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # OnBoard Extensions (optional, vendor-specific extensions)
+    sh:property [ 
+        sh:path era:onboardExtensions ;
+        sh:node era:OnBoardExtensionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A SupportedOnBoardEquipment may have multiple onboardExtensions that conform to OnBoardExtensionShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+
+# ===== Track Occupation State Shape =====
+era:TrackOccupationStateShape a sh:NodeShape ;
+    sh:targetClass era:TrackOccupationState ;
+    sh:message "Records the occupation state of a track section by a train at a specific time." ;
+    
+    # Track Area (required, which track section is occupied)
+    sh:property [ 
+        sh:path era:trackArea ;
+        sh:node era:NetAreaReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrackOccupationState must reference exactly one trackArea that conforms to NetAreaReferenceShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Occupation State (required, controlled vocabulary - created/updated/removed)
+    sh:property [ 
+        sh:path era:occupationState ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/event-state/created>
+            <http://data.europa.eu/949/concepts/event-state/updated>
+            <http://data.europa.eu/949/concepts/event-state/removed>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property occupationState must have a value from the defined SKOS concept scheme (created, updated, or removed)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Creation Reason (required, controlled vocabulary - why occupation was created)
+    sh:property [ 
+        sh:path era:creationReason ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/occupation-reason/shorterLTrain>
+            <http://data.europa.eu/949/concepts/occupation-reason/toCommLoss>
+            <http://data.europa.eu/949/concepts/occupation-reason/systemInit>
+            <http://data.europa.eu/949/concepts/occupation-reason/ttdOccupation>
+            <http://data.europa.eu/949/concepts/occupation-reason/ttdFree>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property creationReason must have a value from the defined SKOS concept scheme (shorterLTrain, toCommLoss, systemInit, ttdOccupation, or ttdFree)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Issued At (required, dateTime - when state was recorded)
+    sh:property [ 
+        sh:path era:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrackOccupationState must have exactly one issuedAt timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Recorded Train Length (required, unsigned integer - in meters)
+    sh:property [ 
+        sh:path era:recordedTrainLength ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrackOccupationState must have exactly one recordedTrainLength (unsigned integer, train length in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Operational Plan Movement (optional, associated movement plan)
+    sh:property [ 
+        sh:path era:operationalPlanMovement ;
+        sh:node era:OperationalPlanMovementShape ;
+		sh:nodeKind sh:IRI ;
+        sh:maxCount 1 ;
+        sh:message "A TrackOccupationState may reference at most one operationalPlanMovement that conforms to OperationalPlanMovementShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Train Unit Identifier (optional, train identification)
+    sh:property [ 
+        sh:path era:trainUnitIdentifier ;
+        sh:node era:PhysicalTrainUnitIdentifierShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A TrackOccupationState may reference at most one trainUnitIdentifier that conforms to PhysicalTrainUnitIdentifierShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Associated Train Object (optional, string - train object ID)
+    sh:property [ 
+        sh:path era:associatedTrainObject ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A TrackOccupationState may have at most one associatedTrainObject (string, identifier of associated TrainObject)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Train Group Spec Shape =====
+era:TrainGroupSpecShape a sh:NodeShape ;
+    sh:targetClass era:TrainGroupSpec ;
+    sh:message "Specification defining groups of trains by their characteristics (axle load, cant deficiency, etc.)." ;
+    
+    # Axle Load Categories (optional, multiple categories allowed)
+    sh:property [ 
+        sh:path era:axleLoadCategories ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_A>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_HS17>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_B1>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_B2>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_C2>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_C3>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_C4>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D2>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D3>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D4>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D4XL>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_E4>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_E5>
+        ) ;
+        sh:message "The property axleLoadCategories must have values from the defined SKOS concept scheme (AL_A through AL_E5)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Cant Deficiency Categories (optional, multiple categories allowed)
+    sh:property [ 
+        sh:path era:cantDeficiencyCategories ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_Undefined>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_80mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_100mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_130mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_150mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_165mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_180mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_210mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_225mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_245mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_275mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_300mm>
+        ) ;
+        sh:message "The property cantDeficiencyCategories must have values from the defined SKOS concept scheme (CD_80mm through CD_300mm, or CD_Undefined)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Train Object Shape =====
+era:TrainObjectShape a sh:NodeShape ;
+    sh:targetClass era:TrainObject ;
+    sh:message "Real-time representation of a train including position, speed, characteristics, and movement authority." ;
+    
+    # Train Object Identifier (required, string - unique identifier)
+    sh:property [ 
+        sh:path era:trainObjectIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainObject must have exactly one trainObjectIdentifier (string, unique identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # OBU Identifier (required, string - onboard unit ID)
+    sh:property [ 
+        sh:path era:obuIdentifier ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainObject must have exactly one obuIdentifier (string, ETCS onboard unit identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Train Running Number (required, string - operational train number)
+    sh:property [ 
+        sh:path era:trainRunningNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainObject must have exactly one trainRunningNumber (string, operational train service number)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Train Location (required, current position on network)
+    sh:property [ 
+        sh:path era:trainLocation ;
+        sh:node era:NetLinearReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainObject must have exactly one trainLocation that conforms to NetLinearReferenceShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Train Length (required, unsigned integer - in meters)
+    sh:property [ 
+        sh:path era:trainLength ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainObject must have exactly one trainLength (unsigned integer, total train length in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Safe Train Length (required, boolean - length integrity confirmed)
+    sh:property [ 
+        sh:path era:safeTrainLength ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainObject must have exactly one safeTrainLength (boolean, true if train integrity is confirmed)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Current Speed (required, unsigned integer - in km/h)
+    sh:property [ 
+        sh:path era:currentSpeed ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainObject must have exactly one currentSpeed (unsigned integer, current speed in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # V Max Train (required, unsigned integer - maximum speed in km/h)
+    sh:property [ 
+        sh:path era:vMaxTrain ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainObject must have exactly one vMaxTrain (unsigned integer, train's maximum permitted speed in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Axle Load Category (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:axleLoadCategory ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_A>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_HS17>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_B1>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_B2>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_C2>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_C3>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_C4>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D2>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D3>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D4>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_D4XL>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_E4>
+            <http://data.europa.eu/949/concepts/load-capability-line-categories/AL_E5>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property axleLoadCategory must have a value from the defined SKOS concept scheme (AL_A through AL_E5)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Cant Deficiency Category (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:cantDeficiencyCategory ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_Undefined>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_80mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_100mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_130mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_150mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_165mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_180mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_210mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_225mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_245mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_275mm>
+            <http://data.europa.eu/949/concepts/cant-deficiencies/CD_300mm>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property cantDeficiencyCategory must have a value from the defined SKOS concept scheme (CD_80mm through CD_300mm, or CD_Undefined)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Onboard Operating Mode (required, controlled vocabulary - ETCS mode)
+    sh:property [ 
+        sh:path era:onboardOperatingMode ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/onboard-operating-mode/undefined>
+            <http://data.europa.eu/949/concepts/onboard-operating-mode/onSight>
+            <http://data.europa.eu/949/concepts/onboard-operating-mode/fullSupervision>
+            <http://data.europa.eu/949/concepts/onboard-operating-mode/standBy>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property onboardOperatingMode must have a value from the defined SKOS concept scheme (fullSupervision, onSight, standBy, or undefined)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Communication Active (required, boolean - GSM-R connection status)
+    sh:property [ 
+        sh:path era:communicationActive ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainObject must have exactly one communicationActive (boolean, true if GSM-R communication is active)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # MP Requested By Train (required, boolean - movement permission request status)
+    sh:property [ 
+        sh:path era:mpRequestedByTrain ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainObject must have exactly one mpRequestedByTrain (boolean, true if train has requested movement permission)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Movement Permission (optional, current movement authority)
+    sh:property [ 
+        sh:path era:movementPermission ;
+        sh:node era:MovementPermissionShape ;
+        sh:maxCount 1 ;
+        sh:message "A TrainObject may have at most one movementPermission that conforms to MovementPermissionShape." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+# ===== Train Unit Activity Shape =====
+era:TrainUnitActivityShape a sh:NodeShape ;
+    sh:targetClass era:TrainUnitActivity ;
+    sh:message "Describes a planned activity involving train units at a stop (joining, splitting, etc.)." ;
+    
+    # Train Unit Activity Type (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:trainUnitActivityType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/train-unit-activity-type/joinActivity>
+            <http://data.europa.eu/949/concepts/train-unit-activity-type/splitActivity>
+            <http://data.europa.eu/949/concepts/train-unit-activity-type/collectActivity>
+            <http://data.europa.eu/949/concepts/train-unit-activity-type/dropActivity>
+            <http://data.europa.eu/949/concepts/train-unit-activity-type/turnAroundActivity>
+            <http://data.europa.eu/949/concepts/train-unit-activity-type/meetActivity>
+            <http://data.europa.eu/949/concepts/train-unit-activity-type/trainReplacementActivity>
+            <http://data.europa.eu/949/concepts/train-unit-activity-type/otherActivity>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property trainUnitActivityType must have a value from the defined SKOS concept scheme (joinActivity, splitActivity, collectActivity, dropActivity, turnAroundActivity, meetActivity, trainReplacementActivity, or otherActivity)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Actual Train Unit Index (required, unsigned integer - which unit in this train)
+    sh:property [ 
+        sh:path era:actualTrainUnitIndex ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitActivity must have exactly one actualTrainUnitIndex (unsigned integer, index of train unit performing activity)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Target Train Unit Index (required, unsigned integer - which unit is target)
+    sh:property [ 
+        sh:path era:targetTrainUnitIndex ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitActivity must have exactly one targetTrainUnitIndex (unsigned integer, index of target train unit)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Train Unit Report ATO Capabilities Shape =====
+era:TrainUnitReportAtoCapabilitiesShape a sh:NodeShape ;
+    sh:targetClass era:TrainUnitReportAtoCapabilities ;
+    sh:message "Report of train unit capabilities for ATO operation including consist, mass, and ETCS data." ;
+    
+    # Train Unit Identifier (required)
+    sh:property [ 
+        sh:path era:trainUnitIdentifier ;
+        sh:node era:PhysicalTrainUnitIdentifierShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoCapabilities must reference exactly one trainUnitIdentifier that conforms to PhysicalTrainUnitIdentifierShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Issued At (required, dateTime)
+    sh:property [ 
+        sh:path era:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoCapabilities must have exactly one issuedAt timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Mass (required, unsigned integer - total mass in tonnes)
+    sh:property [ 
+        sh:path era:mass ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoCapabilities must have exactly one mass (unsigned integer, total train mass in tonnes)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Passenger Load (required, unsigned integer - passenger count)
+    sh:property [ 
+        sh:path era:passengerLoad ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoCapabilities must have exactly one passengerLoad (unsigned integer, total number of passengers)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Last Passenger Exchange Time (required, unsigned integer - in seconds)
+    sh:property [ 
+        sh:path era:lastPassengerExchangeTime ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoCapabilities must have exactly one lastPassengerExchangeTime (unsigned integer, seconds since last door operation)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Elapsed Start Passenger Exchange (required, unsigned integer - in seconds)
+    sh:property [ 
+        sh:path era:elapsedStartPassengerExchange ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoCapabilities must have exactly one elapsedStartPassengerExchange (unsigned integer, seconds elapsed since passenger exchange started)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Outside Temperature (required, integer - in degrees Celsius)
+    sh:property [ 
+        sh:path era:outsideTemperature ;
+        sh:datatype xsd:int ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoCapabilities must have exactly one outsideTemperature (integer, ambient temperature in degrees Celsius)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Physical Consists (optional, RDF list - max 255 consists)
+    sh:property [ 
+        sh:path era:physicalConsists ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A TrainUnitReportAtoCapabilities may have at most one physicalConsists property pointing to an RDF list (max 255 consists)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate physical consists list
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "The physicalConsists list must contain at most 255 consist entries." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:physicalConsists ?list .
+                {
+                    SELECT $this (COUNT(?item) AS ?count)
+                    WHERE {
+                        $this era:physicalConsists ?list .
+                        ?list rdf:rest*/rdf:first ?item .
+                    }
+                    GROUP BY $this
+                    HAVING (?count > 255)
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate all consists are PhysicalConsist instances
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "All items in the physicalConsists list must be instances of era:PhysicalConsist that conform to PhysicalConsistShape." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:physicalConsists ?list .
+                ?list rdf:rest*/rdf:first ?item .
+                
+                FILTER NOT EXISTS { ?item a era:PhysicalConsist }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # ETCS Data (optional, ETCS/ATO configuration)
+    sh:property [ 
+        sh:path era:etcsData ;
+        sh:node era:EtcsDataAtoShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A TrainUnitReportAtoCapabilities may have at most one etcsData that conforms to EtcsDataAtoShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Additional Train Data (optional, supplementary information)
+    sh:property [ 
+        sh:path era:additionalTrainData ;
+        sh:node era:AdditionalTrainDataShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A TrainUnitReportAtoCapabilities may have at most one additionalTrainData that conforms to AdditionalTrainDataShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Operational Plan Movement (optional, associated plan)
+    sh:property [ 
+        sh:path era:operationalPlanMovement ;
+        sh:node era:OperationalPlanMovementShape ;
+		sh:nodeKind sh:IRI ;
+        sh:maxCount 1 ;
+        sh:message "A TrainUnitReportAtoCapabilities may reference at most one operationalPlanMovement that conforms to OperationalPlanMovementShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Train Unit Report ATO Status Shape =====
+era:TrainUnitReportAtoStatusShape a sh:NodeShape ;
+    sh:targetClass era:TrainUnitReportAtoStatus ;
+    sh:message "Real-time status report from ATO system including position, speed, state, and event estimations." ;
+    
+    # Train Unit Identifier (required)
+    sh:property [ 
+        sh:path era:trainUnitIdentifier ;
+        sh:node era:PhysicalTrainUnitIdentifierShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoStatus must reference exactly one trainUnitIdentifier that conforms to PhysicalTrainUnitIdentifierShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Issued At (required, dateTime)
+    sh:property [ 
+        sh:path era:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoStatus must have exactly one issuedAt timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Front Position (required, train front location)
+    sh:property [ 
+        sh:path era:frontPosition ;
+        sh:node era:NetPointReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoStatus must have exactly one frontPosition that conforms to NetPointReferenceShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Train Length (required, unsigned integer - in meters)
+    sh:property [ 
+        sh:path era:trainLength ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoStatus must have exactly one trainLength (unsigned integer, in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Speed (required, unsigned integer - in km/h)
+    sh:property [ 
+        sh:path era:speed ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoStatus must have exactly one speed (unsigned integer, current speed in km/h)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # ATO State (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:atoState ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/ato-state/unknown>
+            <http://data.europa.eu/949/concepts/ato-state/CO>
+            <http://data.europa.eu/949/concepts/ato-state/NA>
+            <http://data.europa.eu/949/concepts/ato-state/AV>
+            <http://data.europa.eu/949/concepts/ato-state/RE>
+            <http://data.europa.eu/949/concepts/ato-state/EG>
+            <http://data.europa.eu/949/concepts/ato-state/DE>
+            <http://data.europa.eu/949/concepts/ato-state/FA>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property atoState must have a value from the defined SKOS concept scheme (CO, NA, AV, RE, EG, DE, FA, or unknown)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Is Moving (required, boolean)
+    sh:property [ 
+        sh:path era:isMoving ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoStatus must have exactly one isMoving (boolean, true if train is in motion)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Is Slipping (required, boolean)
+    sh:property [ 
+        sh:path era:isSlipping ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoStatus must have exactly one isSlipping (boolean, true if wheel slip detected)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Low Adhesion Reported By Driver (required, boolean)
+    sh:property [ 
+        sh:path era:lowAdhesionReportedByDriver ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoStatus must have exactly one lowAdhesionReportedByDriver (boolean, true if driver reported slippery conditions)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Operational Conditions Fulfillment (required, boolean)
+    sh:property [ 
+        sh:path era:operationalConditionsFulfillment ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoStatus must have exactly one operationalConditionsFulfillment (boolean, true if all operational conditions met)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Next Stopping Point Skip (required, boolean)
+    sh:property [ 
+        sh:path era:nextStoppingPointSkip ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoStatus must have exactly one nextStoppingPointSkip (boolean, true if next scheduled stop will be skipped)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Unable To Stop At Next Stopping Point (required, boolean)
+    sh:property [ 
+        sh:path era:unableToStopAtNextStoppingPoint ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoStatus must have exactly one unableToStopAtNextStoppingPoint (boolean, true if unable to stop as planned)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Routing Error (required, boolean)
+    sh:property [ 
+        sh:path era:routingError ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportAtoStatus must have exactly one routingError (boolean, true if train is on wrong route)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Driver ID (optional, string)
+    sh:property [ 
+        sh:path era:driverId ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A TrainUnitReportAtoStatus may have at most one driverId (string, identifier of current driver)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Event Estimations (optional, RDF list)
+    sh:property [ 
+        sh:path era:eventEstimations ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A TrainUnitReportAtoStatus may have at most one eventEstimations property pointing to an RDF list." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate event estimations list items
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "All items in the eventEstimations list must be instances of era:EventEstimation that conform to EventEstimationShape." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:eventEstimations ?list .
+                ?list rdf:rest*/rdf:first ?item .
+                
+                FILTER NOT EXISTS { ?item a era:EventEstimation }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Event Handling (optional, current event handling)
+    sh:property [ 
+        sh:path era:eventHandling ;
+        sh:node era:EventHandlingShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A TrainUnitReportAtoStatus may have at most one eventHandling that conforms to EventHandlingShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Operational Plan Movement (optional, associated plan)
+    sh:property [ 
+        sh:path era:operationalPlanMovement ;
+        sh:node era:OperationalPlanMovementShape ;
+		sh:nodeKind sh:IRI ;
+        sh:maxCount 1 ;
+        sh:message "A TrainUnitReportAtoStatus may reference at most one operationalPlanMovement that conforms to OperationalPlanMovementShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Train Unit Report PE Shape =====
+era:TrainUnitReportPEShape a sh:NodeShape ;
+    sh:targetClass era:TrainUnitReportPE ;
+    sh:message "Train unit report for Position Estimation providing current train object state." ;
+    
+    # CMD Train Object (required, train object data)
+    sh:property [ 
+        sh:path era:cmdTrainObject ;
+        sh:node era:TrainObjectShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportPE must have exactly one cmdTrainObject that conforms to TrainObjectShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Issued At (required, dateTime)
+    sh:property [ 
+        sh:path era:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnitReportPE must have exactly one issuedAt timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Operational Plan Movement (optional, associated plan)
+    sh:property [ 
+        sh:path era:operationalPlanMovement ;
+        sh:node era:OperationalPlanMovementShape ;
+		sh:nodeKind sh:IRI ;
+        sh:maxCount 1 ;
+        sh:message "A TrainUnitReportPE may reference at most one operationalPlanMovement that conforms to OperationalPlanMovementShape." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+# ===== Train Unit Shape =====
+era:TrainUnitShape a sh:NodeShape ;
+    sh:targetClass era:TrainUnit ;
+    sh:message "Defines an operational train unit including braking characteristics, consist, and categorization." ;
+    
+    # Physical Train Unit (required, identifier)
+    sh:property [ 
+        sh:path era:physicalTrainUnit ;
+        sh:node era:PhysicalTrainUnitIdentifierShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnit must reference exactly one physicalTrainUnit that conforms to PhysicalTrainUnitIdentifierShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Operational Train Category (required)
+    sh:property [ 
+        sh:path era:operationalTrainCategory ;
+        sh:node era:OperationalTrainCategoryShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnit must reference exactly one operationalTrainCategory that conforms to OperationalTrainCategoryShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Scheduled Train Length (required, unsigned integer - in meters)
+    sh:property [ 
+        sh:path era:scheduledTrainLength ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnit must have exactly one scheduledTrainLength (unsigned integer, planned train length in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Nominal Rotating Mass (required, unsigned integer - in tonnes)
+    sh:property [ 
+        sh:path era:nominalRotatingMass ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnit must have exactly one nominalRotatingMass (unsigned integer, equivalent rotating mass in tonnes)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Brake Model Type (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:brakeModelType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/brake-model-type/lambda>
+            <http://data.europa.eu/949/concepts/brake-model-type/gamma>
+            <http://data.europa.eu/949/concepts/brake-model-type/undefined>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property brakeModelType must have a value from the defined SKOS concept scheme (lambda, gamma, or undefined)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Brake Position (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:brakePosition ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/brake-position/passengerTrainInP>
+            <http://data.europa.eu/949/concepts/brake-position/passengerTrainInR>
+            <http://data.europa.eu/949/concepts/brake-position/freightTrainInP>
+            <http://data.europa.eu/949/concepts/brake-position/freightTrainInG>
+            <http://data.europa.eu/949/concepts/brake-position/brakePositionUnknown>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property brakePosition must have a value from the defined SKOS concept scheme (passengerTrainInP, passengerTrainInR, freightTrainInP, freightTrainInG, or brakePositionUnknown)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Regular Brake Weight Percentage (required, unsigned integer - Lambda percentage)
+    sh:property [ 
+        sh:path era:regularBrakeWeightPercentage ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnit must have exactly one regularBrakeWeightPercentage (unsigned integer, Lambda braking percentage for service brake)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Emergency Brake Weight Percentage (required, unsigned integer - Lambda percentage)
+    sh:property [ 
+        sh:path era:emergencyBrakeWeightPercentage ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnit must have exactly one emergencyBrakeWeightPercentage (unsigned integer, Lambda braking percentage for emergency brake)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # ATO Grade Automation (required, controlled vocabulary - GoA levels)
+    sh:property [ 
+        sh:path era:atoGradeAutomation ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/ato-grades-automation/GoAUnknown>
+            <http://data.europa.eu/949/concepts/ato-grades-automation/GoA1>
+            <http://data.europa.eu/949/concepts/ato-grades-automation/GoA2>
+            <http://data.europa.eu/949/concepts/ato-grades-automation/GoA3>
+            <http://data.europa.eu/949/concepts/ato-grades-automation/GoA4>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property atoGradeAutomation must have a value from the defined SKOS concept scheme (GoA1, GoA2, GoA3, GoA4, or GoAUnknown)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Operational Consists (required, RDF list - at least 1 consist)
+    sh:property [ 
+        sh:path era:operationalConsists ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TrainUnit must have exactly one operationalConsists property pointing to an RDF list with at least 1 consist." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate list has at least 1 item
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "The operationalConsists list must contain at least 1 OperationalConsist item." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:operationalConsists ?list .
+                
+                # Check if list is empty or has no items
+                FILTER NOT EXISTS {
+                    ?list rdf:rest*/rdf:first ?item .
+                    ?item a era:OperationalConsist .
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+# ===== Warning Area Shape =====
+era:WarningAreaShape a sh:NodeShape ;
+    sh:targetClass era:WarningArea ;
+    sh:message "Defines a geographical area where warning measures are active (low adhesion, track conditions, etc.)." ;
+    
+    # Track Area (required, where warnings apply)
+    sh:property [ 
+        sh:path era:trackArea ;
+        sh:node era:NetAreaReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each WarningArea must reference exactly one trackArea that conforms to NetAreaReferenceShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Warning Devices (required, at least one device)
+    sh:property [ 
+        sh:path era:warningDevices ;
+        sh:node era:WarningDeviceShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:message "Each WarningArea must have at least one warningDevices that conform to WarningDeviceShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Warning Area State Shape =====
+era:WarningAreaStateShape a sh:NodeShape ;
+    sh:targetClass era:WarningAreaState ;
+    sh:message "Records the state change of a warning area at a specific time (created, updated, or removed)." ;
+    
+    # Warning State (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:warningState ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/event-state/created>
+            <http://data.europa.eu/949/concepts/event-state/updated>
+            <http://data.europa.eu/949/concepts/event-state/removed>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property warningState must have a value from the defined SKOS concept scheme (created, updated, or removed)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Issued At (required, dateTime)
+    sh:property [ 
+        sh:path era:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each WarningAreaState must have exactly one issuedAt timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Warning Area (optional, reference to the area)
+    sh:property [ 
+        sh:path era:warningArea ;
+        sh:node era:WarningAreaShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A WarningAreaState may reference at most one warningArea that conforms to WarningAreaShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Warning Measure Event (optional, associated event)
+    sh:property [ 
+        sh:path era:warningMeasureEvent ;
+        sh:node era:WarningMeasureEventShape ;
+		sh:nodeKind sh:IRI ;
+        sh:maxCount 1 ;
+        sh:message "A WarningAreaState may reference at most one warningMeasureEvent that conforms to WarningMeasureEventShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Warning Device Shape =====
+era:WarningDeviceShape a sh:NodeShape ;
+    sh:targetClass era:WarningDevice ;
+    sh:message "Defines a warning device that alerts drivers to conditions (acoustic, optical, or haptic indicators)." ;
+    
+    # Device Type (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:deviceType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/device-type/acousticalIndicator>
+            <http://data.europa.eu/949/concepts/device-type/opticalIndicator>
+            <http://data.europa.eu/949/concepts/device-type/hapticIndicator>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property deviceType must have a value from the defined SKOS concept scheme (acousticalIndicator, opticalIndicator, or hapticIndicator)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Warning Measure Event Execution Report Shape =====
+era:WarningMeasureEventExecutionReportShape a sh:NodeShape ;
+    sh:targetClass era:WarningMeasureEventExecutionReport ;
+    sh:message "Report documenting the execution result of a warning measure event (creation or removal of warnings)." ;
+    
+    # Warning Measure Event (required, reference to the event)
+    sh:property [ 
+        sh:path era:warningMeasureEvent ;
+        sh:node era:WarningMeasureEventShape ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each WarningMeasureEventExecutionReport must reference exactly one warningMeasureEvent that conforms to WarningMeasureEventShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Operational Plan Issued At (required, dateTime)
+    sh:property [ 
+        sh:path era:operationalPlanIssuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each WarningMeasureEventExecutionReport must have exactly one operationalPlanIssuedAt timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Execution State (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:executionState ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/event-execution-state/eventCompleted>
+            <http://data.europa.eu/949/concepts/event-execution-state/eventFailed>
+            <http://data.europa.eu/949/concepts/event-execution-state/eventWarning>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property executionState must have a value from the defined SKOS concept scheme (eventCompleted, eventFailed, or eventWarning)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Issued At (required, dateTime)
+    sh:property [ 
+        sh:path era:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each WarningMeasureEventExecutionReport must have exactly one issuedAt timestamp (xsd:dateTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Failure Reason (optional, string)
+    sh:property [ 
+        sh:path era:failureReason ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A WarningMeasureEventExecutionReport may have at most one failureReason (string, required if executionState is eventFailed)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Warning (optional, string)
+    sh:property [ 
+        sh:path era:warning ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A WarningMeasureEventExecutionReport may have at most one warning (string, required if executionState is eventWarning)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Warning Measure Event Shape =====
+era:WarningMeasureEventShape a sh:NodeShape ;
+    sh:targetClass era:WarningMeasureEvent ;
+    sh:message "Defines a scheduled event for creating or removing warning measures." ;
+    
+    # Warning Area (required, where warning applies)
+    sh:property [ 
+        sh:path era:warningArea ;
+        sh:node era:WarningAreaShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each WarningMeasureEvent must reference exactly one warningArea that conforms to WarningAreaShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Creation Time (required, dateTime)
+    sh:property [ 
+        sh:path era:creationTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each WarningMeasureEvent must have exactly one creationTime (xsd:dateTime, when warning becomes active)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Removal Time (required, dateTime)
+    sh:property [ 
+        sh:path era:removalTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each WarningMeasureEvent must have exactly one removalTime (xsd:dateTime, when warning is removed)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Starts After Events (optional, prerequisite events)
+    sh:property [ 
+        sh:path era:startsAfterEvents ;
+        sh:node era:OperationalEventRefShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A WarningMeasureEvent may reference multiple startsAfterEvents that must complete before this warning is activated." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+
+# ===== Net Area Reference Shape =====
+era:NetAreaReferenceShape a sh:NodeShape ;
+    sh:targetClass era:NetAreaReference ;
+    
+    # Includes (required, RDF list of net linear references)
+    sh:property [ 
+        sh:path era:includes ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NetAreaReference must have exactly one includes property pointing to an RDF list." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate list has at least 1 item
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "The includes list must contain at least 1 item." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:includes ?list .
+                
+                # Count items in the list
+                {
+                    SELECT $this (COUNT(?item) AS ?count)
+                    WHERE {
+                        $this era:includes ?list .
+                        ?list rdf:rest*/rdf:first ?item .
+                    }
+                    GROUP BY $this
+                }
+                
+                # Violation if count is less than 1
+                FILTER (?count < 1)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    # SPARQL constraint to validate all list items are NetLinearReference instances
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "All items in the includes list must be instances of era:NetLinearReference that conform to NetLinearReferenceShape." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:includes ?list .
+                ?list rdf:rest*/rdf:first ?item .
+                
+                # Violation if item is not a NetLinearReference
+                FILTER NOT EXISTS { ?item a era:NetLinearReference }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Net Linear Reference Shape =====
+era:NetLinearReferenceShape a sh:NodeShape ;
+    sh:targetClass era:NetLinearReference ;
+    
+    # Starts At (required, topological coordinate - can be inline or referenced)
+    sh:property [ 
+        sh:path era:startsAt ;
+        sh:node era:TopologicalCoordinateShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NetLinearReference must have exactly one startsAt that conforms to TopologicalCoordinateShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Ends At (required, topological coordinate - can be inline or referenced)
+    sh:property [ 
+        sh:path era:endsAt ;
+        sh:node era:TopologicalCoordinateShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NetLinearReference must have exactly one endsAt that conforms to TopologicalCoordinateShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Has Sequence (optional, RDF list of linear elements)
+    sh:property [ 
+        sh:path era:hasSequence ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A NetLinearReference may have at most one hasSequence property pointing to an RDF list." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate all list items are LinearElement instances
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "All items in the hasSequence list must be instances of era:LinearElement that conform to LinearElementShape." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:hasSequence ?list .
+                ?list rdf:rest*/rdf:first ?item .
+                
+                # Violation if item is not a LinearElement
+                FILTER NOT EXISTS { ?item a era:LinearElement }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Net Point Reference Shape =====
+era:NetPointReferenceShape a sh:NodeShape ;
+    sh:targetClass era:NetPointReference ;
+    
+    # Has Topological Coordinate (required, can be inline or referenced)
+    sh:property [ 
+        sh:path era:hasTopoCoordinate ;
+        sh:node era:TopologicalCoordinateShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NetPointReference must have exactly one hasTopoCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Applies To Direction (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:appliesToDirection ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/orientations/both>
+            <http://data.europa.eu/949/concepts/orientations/same>
+            <http://data.europa.eu/949/concepts/orientations/opposite>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property appliesToDirection must have a value from the defined SKOS concept scheme (both, same, or opposite)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+	
+# ===== Topological Coordinate Shape =====
+era:TopologicalCoordinateShape a sh:NodeShape ;
+    sh:targetClass era:TopologicalCoordinate ;
+    
+    # On Linear Element (required, can be inline or referenced)
+    sh:property [ 
+        sh:path era:onLinearElement ;
+        sh:node era:LinearElementShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TopologicalCoordinate must have exactly one onLinearElement that conforms to LinearElementShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Offset From Origin (required, unsigned integer >= 0 - distance in meters from element origin)
+    sh:property [ 
+        sh:path era:offsetFromOrigin ;
+        sh:datatype xsd:positiveInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TopologicalCoordinate must have exactly one offsetFromOrigin (non-negative unsigned integer, in meters)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+
+# ===== Linear Element Shape =====
+era:LinearElementShape a sh:NodeShape ;
+    sh:targetClass era:LinearElement ;
+    
+    # Name (optional, string)
+    sh:property [ 
+        sh:path era:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A LinearElement may have at most one name (string)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Length of Net Linear Element (required, double > 0 - length in meters)
+    sh:property [ 
+        sh:path era:lengthOfNetLinearElement ;
+        sh:datatype xsd:double ;
+        sh:minInclusive 0.0 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinearElement must have exactly one lengthOfNetLinearElement (non-negative double, in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint: lengthOfNetLinearElement must be greater than 0
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The lengthOfNetLinearElement must be greater than 0 meters." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                $this era:lengthOfNetLinearElement ?len .
+                FILTER (?len <= 0)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== Net Point Reference Shape =====
+era:NetPointReferenceShape a sh:NodeShape ;
+    sh:targetClass era:NetPointReference ;
+    
+    # Has Topological Coordinate (required, can be inline or referenced)
+    sh:property [ 
+        sh:path era:hasTopoCoordinate ;
+        sh:node era:TopologicalCoordinateShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NetPointReference must have exactly one hasTopoCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Applies To Direction (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:appliesToDirection ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/orientations/both>
+            <http://data.europa.eu/949/concepts/orientations/same>
+            <http://data.europa.eu/949/concepts/orientations/opposite>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property appliesToDirection must have a value from the defined SKOS concept scheme (both, same, or opposite)." ;
+        sh:severity sh:Violation ;
+    ] .
+		
+		
+		
+# ===== Linear Element Section Shape =====
+era:LinearElementSectionShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementSection ;
+    
+    # On Element (required, reference to the linear element - can be inline or referenced)
+    sh:property [ 
+        sh:path era:onElement ;
+        sh:node era:LinearElementShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinearElementSection must have exactly one onElement that conforms to LinearElementShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Start Offset From Origin (required, double >= 0 - distance in meters from element origin)
+    sh:property [ 
+        sh:path era:startOffsetFromOrigin ;
+        sh:datatype xsd:double ;
+        sh:minInclusive 0.0 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinearElementSection must have exactly one startOffsetFromOrigin (non-negative double, in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # End Offset From Origin (required, double >= 0 - distance in meters from element origin)
+    sh:property [ 
+        sh:path era:endOffsetFromOrigin ;
+        sh:datatype xsd:double ;
+        sh:minInclusive 0.0 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinearElementSection must have exactly one endOffsetFromOrigin (non-negative double, in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Applies In Both Directions (required, boolean)
+    sh:property [ 
+        sh:path era:appliesInBothDirections ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinearElementSection must have exactly one appliesInBothDirections value (boolean)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint: startOffsetFromOrigin must be less than endOffsetFromOrigin
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The startOffsetFromOrigin must be less than endOffsetFromOrigin." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                $this era:startOffsetFromOrigin ?start ;
+                      era:endOffsetFromOrigin ?end .
+                FILTER (?start >= ?end)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+	
+# Shape to check that at least one Operational Traffic Plan class exists
+era:AtLeastOneOperationalTrafficPlanClassShape a sh:NodeShape ;
+    sh:target [
+        a sh:SPARQLTarget ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            SELECT ?this
+            WHERE {
+                BIND (era:ValidationRoot as ?this)
+            }
+        """ ;
+    ] ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The data must contain at least one instance of the required Operational Traffic Plan classes (e.g., OperationalPlanMovement, TrainUnit, MovementEvent, RestrictionEvent, etc.). This error may indicate that the provided data significantly deviates from the expected operational planning and traffic management model as defined in the extended ERA ontology." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                FILTER NOT EXISTS {
+                    # Top-Level Container
+                    { ?instance rdf:type era:OperationalTrafficPlan . }
+                    
+                    # Operational Plan Classes
+                    UNION { ?instance rdf:type era:OperationalPlanMovement . }
+                    UNION { ?instance rdf:type era:OperationalPlanRestriction . }
+                    UNION { ?instance rdf:type era:OperationalPlanWarningMeasure . }
+                    UNION { ?instance rdf:type era:OperationalPlanReference . }
+                    
+                    # Train Unit Classes
+                    UNION { ?instance rdf:type era:TrainUnit . }
+                    UNION { ?instance rdf:type era:OperationalTrainCategory . }
+                    UNION { ?instance rdf:type era:OperationalConsist . }
+                    UNION { ?instance rdf:type era:PhysicalTrainUnitIdentifier . }
+                    
+                    # Equipment Classes
+                    UNION { ?instance rdf:type era:SupportedOnBoardEquipment . }
+                    UNION { ?instance rdf:type era:OnBoardExtension . }
+                    
+                    # Movement Classes
+                    UNION { ?instance rdf:type era:MovementEvent . }
+                    UNION { ?instance rdf:type era:OperationalEventRef . }
+                    UNION { ?instance rdf:type era:StopDescription . }
+                    UNION { ?instance rdf:type era:AdditionalEventTime . }
+                    UNION { ?instance rdf:type era:DoorActivity . }
+                    UNION { ?instance rdf:type era:TrainUnitActivity . }
+                    
+                    # Restriction Classes
+                    UNION { ?instance rdf:type era:SpeedRestriction . }
+                    UNION { ?instance rdf:type era:MovementRestriction . }
+                    UNION { ?instance rdf:type era:SpecificMovementRestriction . }
+                    UNION { ?instance rdf:type era:DPSGroupsList . }
+                    UNION { ?instance rdf:type era:RestrictionEvent . }
+                    UNION { ?instance rdf:type era:RestrictionArea . }
+                    UNION { ?instance rdf:type era:TrainGroupSpec . }
+                    UNION { ?instance rdf:type era:RestrictedAspect . }
+                    UNION { ?instance rdf:type era:SpecificRestriction . }
+                    UNION { ?instance rdf:type era:RestrictionAreaState . }
+                    
+                    # Warning Measure Classes
+                    UNION { ?instance rdf:type era:WarningArea . }
+                    UNION { ?instance rdf:type era:WarningDevice . }
+                    UNION { ?instance rdf:type era:WarningMeasureEvent . }
+                    UNION { ?instance rdf:type era:WarningAreaState . }
+                    
+                    # Execution Response Classes
+                    UNION { ?instance rdf:type era:ExecutionResponse . }
+                    UNION { ?instance rdf:type era:EventExecutionReport . }
+                    UNION { ?instance rdf:type era:MovementEventExecutionReport . }
+                    UNION { ?instance rdf:type era:RestrictionEventExecutionReport . }
+                    UNION { ?instance rdf:type era:WarningMeasureEventExecutionReport . }
+                    
+                    # Train Report Classes
+                    UNION { ?instance rdf:type era:TrainUnitReportPE . }
+                    UNION { ?instance rdf:type era:TrainObject . }
+                    UNION { ?instance rdf:type era:TrainUnitReportAtoStatus . }
+                    UNION { ?instance rdf:type era:TrainUnitReportAtoCapabilities . }
+                    
+                    # Movement Permission Classes
+                    UNION { ?instance rdf:type era:MovementPermission . }
+                    UNION { ?instance rdf:type era:MpSpeed . }
+                    UNION { ?instance rdf:type era:MpDrivingMode . }
+                    
+                    # Event Handling Classes
+                    UNION { ?instance rdf:type era:EventHandling . }
+                    UNION { ?instance rdf:type era:EventEstimation . }
+                    
+                    # Train Capability Classes
+                    UNION { ?instance rdf:type era:EtcsDataAto . }
+                    UNION { ?instance rdf:type era:AdditionalTrainData . }
+                    
+                    # Physical Consist Classes
+                    UNION { ?instance rdf:type era:PhysicalConsist . }
+                    UNION { ?instance rdf:type era:PhysicalVehicle . }
+                    UNION { ?instance rdf:type era:DoorData . }
+                    
+                    # Track State Classes
+                    UNION { ?instance rdf:type era:TrackOccupationState . }
+                    UNION { ?instance rdf:type era:DpsGroupState . }
+                    UNION { ?instance rdf:type era:DPSState . }
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .

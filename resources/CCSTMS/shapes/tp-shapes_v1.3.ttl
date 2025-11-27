@@ -1,0 +1,1079 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ===== Allocation Section Shape =====
+era:AllocationSectionShape a sh:NodeShape ;
+    sh:targetClass era:AllocationSection ;
+    sh:message "Track allocation section for train protection with dependencies defining safe occupancy rules." ;
+    
+    # Linear Reference (required, track location)
+    sh:property [ 
+        sh:path era:linearReference ;
+        sh:node era:NetLinearReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AllocationSection must reference exactly one linearReference that conforms to NetLinearReferenceShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Dependencies (required, at least one dependency)
+    sh:property [ 
+        sh:path era:dependencies ;
+        sh:node era:AllocationSectionShape ;
+		sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:message "Each AllocationSection must have at least one dependencies (other allocation sections that must be considered for safe operation)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Name (optional, string - section identifier)
+    sh:property [ 
+        sh:path era:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "An AllocationSection may have at most one name (string, section identifier)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Area of Control Shape =====
+era:AreaOfControlShape a sh:NodeShape ;
+    sh:targetClass era:AreaOfControl ;
+    sh:message "Geographic area controlled by a specific interlocking or control system." ;
+    
+    # Area (required, geographic extent)
+    sh:property [ 
+        sh:path era:area ;
+        sh:node era:NetAreaReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AreaOfControl must reference exactly one area that conforms to NetAreaReferenceShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Controlled By (optional, controller reference)
+    sh:property [ 
+        sh:path era:controlledBy ;
+        sh:node era:ControllerShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "An AreaOfControl may reference at most one controlledBy that conforms to ControllerShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Name (optional, string - area identifier)
+    sh:property [ 
+        sh:path era:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "An AreaOfControl may have at most one name (string, control area identifier)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Controlled Infrastructure Element Shape =====
+era:ControlledInfraElementShape a sh:NodeShape ;
+    sh:targetClass era:ControlledInfraElement ;
+    sh:message "Infrastructure element under interlocking control - must be exactly one element type (DPS group or TVP section)." ;
+    
+    # Each Controlled Infrastructure Element must have exactly ONE of these types
+    sh:xone (
+        [ sh:path era:dpsGroup ;
+          sh:node era:DriveProtectionSectionGroupShape ;
+          sh:nodeKind sh:IRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Controlled infrastructure element is a drive protection section group." ]
+        
+        [ sh:path era:tvpSection ;
+          sh:node era:TvpSectionShape ;
+          sh:nodeKind sh:IRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Controlled infrastructure element is a TVP (Track Vacancy Proof) section." ]
+    ) .
+
+# ===== Controller Shape =====
+era:ControllerShape a sh:NodeShape ;
+    sh:targetClass era:Controller ;
+    sh:message "Interlocking or signaling controller with network communication parameters." ;
+    
+    # IP Address (optional, string - network address)
+    sh:property [ 
+        sh:path era:iPAddress ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A Controller may have at most one iPAddress (string, IP address for network communication)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Port Number (optional, string - TCP/UDP port)
+    sh:property [ 
+        sh:path era:portNumber ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A Controller may have at most one portNumber (string, network port for communication)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Version (optional, unsigned integer - software/firmware version)
+    sh:property [ 
+        sh:path era:version ;
+        sh:datatype xsd:unsignedInt ;
+        sh:maxCount 1 ;
+        sh:message "A Controller may have at most one version (unsigned integer, software/firmware version number)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # EULYNX Baseline (optional, string - protocol version)
+    sh:property [ 
+        sh:path era:eulynxBaseline ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A Controller may have at most one eulynxBaseline (string, EULYNX protocol baseline version)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Drive Protection Section Group Shape =====
+era:DriveProtectionSectionGroupShape a sh:NodeShape ;
+    sh:targetClass era:DriveProtectionSectionGroup ;
+    sh:message "Group of drive protection sections providing flank protection for a protected infrastructure element (switch, crossing, etc.)." ;
+    
+    # Dependencies Type (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:dependenciesType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/dps-dependency-type/exclusive>
+            <http://data.europa.eu/949/concepts/dps-dependency-type/equivalent>
+            <http://data.europa.eu/949/concepts/dps-dependency-type/specific>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property dependenciesType must have a value from the defined SKOS concept scheme (exclusive, equivalent, or specific)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Run Time (required, unsigned integer - activation time in seconds)
+    sh:property [ 
+        sh:path era:runTime ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DriveProtectionSectionGroup must have exactly one runTime (unsigned integer, time in seconds to activate protection)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Protected Infrastructure Elements (required, what is being protected)
+    sh:property [ 
+        sh:path era:protectedInfraElements ;
+        sh:node era:ProtectedInfraElementShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DriveProtectionSectionGroup must reference exactly one protectedInfraElements that conforms to ProtectedInfraElementShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Drive Protection Sections (required, at least one section)
+    sh:property [ 
+        sh:path era:driveProtectionSections ;
+        sh:node era:DriveProtectionSectionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:message "Each DriveProtectionSectionGroup must contain at least one driveProtectionSections that conform to DriveProtectionSectionShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # DPSG Dependencies (optional, multiple dependency references)
+    sh:property [ 
+        sh:path era:dpsgDependencies ;
+        sh:datatype xsd:unsignedInt ;
+        sh:message "A DriveProtectionSectionGroup may reference multiple dpsgDependencies (unsigned integer IDs of dependent DPS groups)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Name (optional, string - group identifier)
+    sh:property [ 
+        sh:path era:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A DriveProtectionSectionGroup may have at most one name (string, DPS group identifier)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Drive Protection Section Shape =====
+era:DriveProtectionSectionShape a sh:NodeShape ;
+    sh:targetClass era:DriveProtectionSection ;
+    sh:message "Individual track section providing flank protection with maximum permissible speed." ;
+    
+    # Name (required, string - section identifier)
+    sh:property [ 
+        sh:path era:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DriveProtectionSection must have exactly one name (string, section identifier)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Linear Element Section (required, track location)
+    sh:property [ 
+        sh:path era:linearElementSection ;
+        sh:node era:LinearElementSectionShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DriveProtectionSection must reference exactly one linearElementSection that conforms to LinearElementSectionShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Max Flank Protection Speed (required, unsigned integer - speed in km/h)
+    sh:property [ 
+        sh:path era:maxFlankProtectionSpeed ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each DriveProtectionSection must have exactly one maxFlankProtectionSpeed (unsigned integer, maximum speed in km/h for safe flank protection)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== ETCS Marker Shape =====
+era:ETCSMarkerShape a sh:NodeShape ;
+    sh:targetClass era:ETCSMarker ;
+    sh:message "ETCS marker board indicating transition points between ETCS levels or areas." ;
+    
+    # Marker Type (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:markerType ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/marker-function/entry>
+            <http://data.europa.eu/949/concepts/marker-function/exit>
+            <http://data.europa.eu/949/concepts/marker-function/intermediate>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property markerType must have a value from the defined SKOS concept scheme (entry, exit, or intermediate)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Max Transition Speed (optional, unsigned integer - speed in km/h)
+    sh:property [ 
+        sh:path era:maxTransitionSpeed ;
+        sh:datatype xsd:unsignedInt ;
+        sh:message "An ETCSMarker may have maxTransitionSpeed (unsigned integer, maximum speed in km/h for ETCS level transition)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Acknowledgement Distance (optional, unsigned integer - distance in meters)
+    sh:property [ 
+        sh:path era:acknowledgementDistance ;
+        sh:datatype xsd:unsignedInt ;
+        sh:message "An ETCSMarker may have acknowledgementDistance (unsigned integer, distance in meters before marker where driver must acknowledge transition)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Offset Transition Unreachable (optional, unsigned integer - distance in meters)
+    sh:property [ 
+        sh:path era:offsetTransitionUnreachable ;
+        sh:datatype xsd:unsignedInt ;
+        sh:message "An ETCSMarker may have offsetTransitionUnreachable (unsigned integer, distance in meters where transition becomes impossible)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Field Object Controller Shape =====
+era:FieldObjectControllerShape a sh:NodeShape ;
+    sh:targetClass era:FieldObjectController ;
+    sh:message "Field controller managing specific infrastructure elements within an area of control." ;
+    
+    # Belongs To AOC (required, area of control membership)
+    sh:property [ 
+        sh:path era:belongsToAoc ;
+        sh:node era:AreaOfControlShape ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each FieldObjectController must reference exactly one belongsToAoc that conforms to AreaOfControlShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Controlled By (required, parent controller)
+    sh:property [ 
+        sh:path era:controlledBy ;
+        sh:node era:ControllerShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each FieldObjectController must reference exactly one controlledBy that conforms to ControllerShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Controlled Infrastructure Elements (required, at least one element)
+    sh:property [ 
+        sh:path era:controlledInfraElements ;
+        sh:node era:ControlledInfraElementShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:message "Each FieldObjectController must control at least one controlledInfraElements that conform to ControlledInfraElementShape." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Protected Infrastructure Element Shape =====
+era:ProtectedInfraElementShape a sh:NodeShape ;
+    sh:targetClass era:ProtectedInfraElement ;
+    sh:message "Infrastructure element requiring flank protection - must be exactly one element type." ;
+    
+    # Each Protected Infrastructure Element must have exactly ONE of these types
+    sh:xone (
+        [ sh:path era:switch ;
+          sh:class era:Switch ;
+          sh:nodeKind sh:IRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Protected infrastructure element is a switch (points)." ]
+        
+        [ sh:path era:crossing ;
+          sh:node era:CrossingShape ;
+          sh:nodeKind sh:IRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Protected infrastructure element is a crossing (diamond)." ]
+        
+        [ sh:path era:slipCrossing ;
+          sh:node era:SlipCrossingShape ;
+          sh:nodeKind sh:IRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Protected infrastructure element is a slip crossing." ]
+        
+        [ sh:path era:levelCrossing ;
+          sh:node era:LevelCrossingShape ;
+          sh:nodeKind sh:IRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Protected infrastructure element is a level crossing (road/rail intersection)." ]
+        
+        [ sh:path era:derailer ;
+          sh:node era:DerailerShape ;
+          sh:nodeKind sh:IRI ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Protected infrastructure element is a derailer (safety device)." ]
+    ) .
+
+# ===== Train Protection Area Shape =====
+era:TrainProtectionAreaShape a sh:NodeShape ;
+    sh:targetClass era:TrainProtectionArea ;
+    sh:message "Complete train protection system configuration for an area including controllers, DPS groups, and allocation sections." ;
+    
+    # Controllers (optional, multiple controllers)
+    sh:property [ 
+        sh:path era:controllers ;
+        sh:node era:ControllerShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A TrainProtectionArea may contain multiple controllers." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Area of Control (optional, multiple control areas)
+    sh:property [ 
+        sh:path era:areaOfControl ;
+        sh:node era:AreaOfControlShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A TrainProtectionArea may contain multiple areaOfControl." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Field Object Controllers (optional, multiple field controllers)
+    sh:property [ 
+        sh:path era:fieldObjectControllers ;
+        sh:node era:FieldObjectControllerShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A TrainProtectionArea may contain multiple fieldObjectControllers." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # DPS Groups (optional, multiple protection groups)
+    sh:property [ 
+        sh:path era:dpsGroups ;
+        sh:node era:DriveProtectionSectionGroupShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A TrainProtectionArea may contain multiple dpsGroups (drive protection section groups)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Allocation Sections (optional, multiple allocation sections)
+    sh:property [ 
+        sh:path era:allocationSections ;
+        sh:node era:AllocationSectionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A TrainProtectionArea may contain multiple allocationSections." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # ETCS Markers (optional, multiple markers)
+    sh:property [ 
+        sh:path era:etcsMarkers ;
+        sh:node era:ETCSMarkerShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A TrainProtectionArea may contain multiple etcsMarkers." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ===== Train Protection Shape =====
+era:TrainProtectionShape a sh:NodeShape ;
+    sh:targetClass era:TrainProtection ;
+    sh:message "Top-level container for train protection system configuration." ;
+    
+    # TP Area (optional, multiple protection areas)
+    sh:property [ 
+        sh:path era:tpArea ;
+        sh:node era:TrainProtectionAreaShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "A TrainProtection may contain multiple tpArea (train protection areas)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== Net Linear Reference Shape =====
+era:NetLinearReferenceShape a sh:NodeShape ;
+    sh:targetClass era:NetLinearReference ;
+    
+    # Starts At (required, topological coordinate - can be inline or referenced)
+    sh:property [ 
+        sh:path era:startsAt ;
+        sh:node era:TopologicalCoordinateShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NetLinearReference must have exactly one startsAt that conforms to TopologicalCoordinateShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Ends At (required, topological coordinate - can be inline or referenced)
+    sh:property [ 
+        sh:path era:endsAt ;
+        sh:node era:TopologicalCoordinateShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NetLinearReference must have exactly one endsAt that conforms to TopologicalCoordinateShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Has Sequence (optional, RDF list of linear elements)
+    sh:property [ 
+        sh:path era:hasSequence ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:maxCount 1 ;
+        sh:message "A NetLinearReference may have at most one hasSequence property pointing to an RDF list." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate all list items are LinearElement instances
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "All items in the hasSequence list must be instances of era:LinearElement that conform to LinearElementShape." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:hasSequence ?list .
+                ?list rdf:rest*/rdf:first ?item .
+                
+                # Violation if item is not a LinearElement
+                FILTER NOT EXISTS { ?item a era:LinearElement }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+	
+# ===== Topological Coordinate Shape =====
+era:TopologicalCoordinateShape a sh:NodeShape ;
+    sh:targetClass era:TopologicalCoordinate ;
+    
+    # On Linear Element (required, can be inline or referenced)
+    sh:property [ 
+        sh:path era:onLinearElement ;
+        sh:node era:LinearElementShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TopologicalCoordinate must have exactly one onLinearElement that conforms to LinearElementShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Offset From Origin (required, unsigned integer >= 0 - distance in meters from element origin)
+    sh:property [ 
+        sh:path era:offsetFromOrigin ;
+        sh:datatype xsd:positiveInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each TopologicalCoordinate must have exactly one offsetFromOrigin (non-negative unsigned integer, in meters)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+
+# ===== Linear Element Shape =====
+era:LinearElementShape a sh:NodeShape ;
+    sh:targetClass era:LinearElement ;
+    
+    # Name (optional, string)
+    sh:property [ 
+        sh:path era:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A LinearElement may have at most one name (string)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Length of Net Linear Element (required, double > 0 - length in meters)
+    sh:property [ 
+        sh:path era:lengthOfNetLinearElement ;
+        sh:datatype xsd:double ;
+        sh:minInclusive 0.0 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinearElement must have exactly one lengthOfNetLinearElement (non-negative double, in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint: lengthOfNetLinearElement must be greater than 0
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The lengthOfNetLinearElement must be greater than 0 meters." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                $this era:lengthOfNetLinearElement ?len .
+                FILTER (?len <= 0)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+		
+
+# ===== Linear Element Section Shape =====
+era:LinearElementSectionShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementSection ;
+    
+    # On Element (required, reference to the linear element - can be inline or referenced)
+    sh:property [ 
+        sh:path era:onElement ;
+        sh:node era:LinearElementShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinearElementSection must have exactly one onElement that conforms to LinearElementShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Start Offset From Origin (required, double >= 0 - distance in meters from element origin)
+    sh:property [ 
+        sh:path era:startOffsetFromOrigin ;
+        sh:datatype xsd:double ;
+        sh:minInclusive 0.0 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinearElementSection must have exactly one startOffsetFromOrigin (non-negative double, in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # End Offset From Origin (required, double >= 0 - distance in meters from element origin)
+    sh:property [ 
+        sh:path era:endOffsetFromOrigin ;
+        sh:datatype xsd:double ;
+        sh:minInclusive 0.0 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinearElementSection must have exactly one endOffsetFromOrigin (non-negative double, in meters)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Applies In Both Directions (required, boolean)
+    sh:property [ 
+        sh:path era:appliesInBothDirections ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LinearElementSection must have exactly one appliesInBothDirections value (boolean)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint: startOffsetFromOrigin must be less than endOffsetFromOrigin
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The startOffsetFromOrigin must be less than endOffsetFromOrigin." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                $this era:startOffsetFromOrigin ?start ;
+                      era:endOffsetFromOrigin ?end .
+                FILTER (?start >= ?end)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+# ===== Switch Shape =====
+era:SwitchShape a sh:NodeShape ;
+    sh:targetClass era:Switch ;
+    
+    # Name (optional, string)
+    sh:property [ 
+        sh:path era:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A Switch may have at most one name (string)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Left Branch (required, network relation - can be inline or referenced)
+    sh:property [ 
+        sh:path era:leftBranch ;
+        sh:node era:NetRelationShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Switch must have exactly one leftBranch that conforms to NetRelationShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Right Branch (required, network relation - can be inline or referenced)
+    sh:property [ 
+        sh:path era:rightBranch ;
+        sh:node era:NetRelationShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Switch must have exactly one rightBranch that conforms to NetRelationShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Reversal Time (required, unsigned integer - time in seconds to change switch position)
+    sh:property [ 
+        sh:path era:reversalTime ;
+        sh:datatype xsd:unsignedInt ;
+		# sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Switch must have exactly one reversalTime (unsigned integer, in seconds)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint: Warning if reversalTime is 0
+	# FILTER (?time = 0)
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The reversalTime is 0 seconds. While this is valid, typical values for modern switches range from 3 to 10 seconds. Please verify this value is correct." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+			PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+            
+            SELECT $this
+            WHERE {
+                $this era:reversalTime ?time .
+				FILTER(?time = 0)
+                
+            }
+        """ ;
+        sh:severity sh:Warning ;
+    ] ;
+    
+    # SPARQL constraint: Warning if reversalTime is unusually high
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The reversalTime is greater than 30 seconds, which is unusually high for a railway switch. Typical values for modern switches range from 3 to 10 seconds. Please verify this value is correct." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+			PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+            
+            SELECT $this
+            WHERE {
+                $this era:reversalTime ?time .
+                FILTER (?time > 30)
+            }
+        """ ;
+        sh:severity sh:Warning ;
+    ] .
+	
+
+# ===== Net Relation Shape =====
+era:NetRelationShape a sh:NodeShape ;
+    sh:targetClass era:NetRelation ;
+    
+    # Element A (required, reference to a linear element)
+    sh:property [ 
+        sh:path era:elementA ;
+        sh:node era:LinearElementShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NetRelation must have exactly one elementA that conforms to LinearElementShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Is On Origin Of Element A (required, boolean - whether relation point is at origin of element A)
+    sh:property [ 
+        sh:path era:isOnOriginOfElementA ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NetRelation must have exactly one isOnOriginOfElementA value (boolean)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Element B (required, reference to a linear element)
+    sh:property [ 
+        sh:path era:elementB ;
+        sh:node era:LinearElementShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NetRelation must have exactly one elementB that conforms to LinearElementShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Is On Origin Of Element B (required, boolean - whether relation point is at origin of element B)
+    sh:property [ 
+        sh:path era:isOnOriginOfElementB ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NetRelation must have exactly one isOnOriginOfElementB value (boolean)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+# ===== Crossing Shape =====
+era:CrossingShape a sh:NodeShape ;
+    sh:targetClass era:Crossing ;
+    
+    # Name (optional, string)
+    sh:property [ 
+        sh:path era:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A Crossing may have at most one name (string)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Is Switchable (required, boolean)
+    sh:property [ 
+        sh:path era:isSwitchable ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Crossing must have exactly one isSwitchable value (boolean)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Topological Coordinates (required, exactly 2)
+    sh:property [ 
+        sh:path era:topologicalCoordinates ;
+        sh:node era:TopologicalCoordinateShape ;
+        sh:minCount 2 ;
+        sh:maxCount 2 ;
+        sh:message "Each Crossing must have exactly 2 topologicalCoordinates that conform to TopologicalCoordinateShape." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== Slip Crossing Shape =====
+era:SlipCrossingShape a sh:NodeShape ;
+    sh:targetClass era:SlipCrossing ;
+    
+    # Name (optional, string)
+    sh:property [ 
+        sh:path era:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A SlipCrossing may have at most one name (string)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Crossing (required, can be inline or referenced)
+    sh:property [ 
+        sh:path era:crossing ;
+        sh:node era:CrossingShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each SlipCrossing must have exactly one crossing that conforms to CrossingShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Switches (required, 2-4 switches)
+    sh:property [ 
+        sh:path era:switches ;
+        sh:class era:Switch ;
+        sh:minCount 2 ;
+        sh:maxCount 4 ;
+        sh:message "Each SlipCrossing must have between 2 and 4 switches that conform to SwitchShape." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+
+# ===== Level Crossing Shape =====
+era:LevelCrossingShape a sh:NodeShape ;
+    sh:targetClass era:LevelCrossing ;
+    sh:message "Road-rail intersection requiring protection and potentially drive protection sections for flank safety." ;
+    
+    # Area Reference (required, geographic location)
+    sh:property [ 
+        sh:path era:areaReference ;
+        sh:node era:NetAreaReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each LevelCrossing must reference exactly one areaReference that conforms to NetAreaReferenceShape (geographic extent of the crossing)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Name (optional, string - crossing identifier)
+    sh:property [ 
+        sh:path era:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A LevelCrossing may have at most one name (string, crossing identifier or location description)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+
+# ===== Net Area Reference Shape =====
+era:NetAreaReferenceShape a sh:NodeShape ;
+    sh:targetClass era:NetAreaReference ;
+    
+    # Includes (required, RDF list of net linear references)
+    sh:property [ 
+        sh:path era:includes ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NetAreaReference must have exactly one includes property pointing to an RDF list." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # SPARQL constraint to validate list has at least 1 item
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "The includes list must contain at least 1 item." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:includes ?list .
+                
+                # Count items in the list
+                {
+                    SELECT $this (COUNT(?item) AS ?count)
+                    WHERE {
+                        $this era:includes ?list .
+                        ?list rdf:rest*/rdf:first ?item .
+                    }
+                    GROUP BY $this
+                }
+                
+                # Violation if count is less than 1
+                FILTER (?count < 1)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    # SPARQL constraint to validate all list items are NetLinearReference instances
+    sh:sparql [ 
+        a sh:SPARQLConstraint ;
+        sh:message "All items in the includes list must be instances of era:NetLinearReference that conform to NetLinearReferenceShape." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                $this era:includes ?list .
+                ?list rdf:rest*/rdf:first ?item .
+                
+                # Violation if item is not a NetLinearReference
+                FILTER NOT EXISTS { ?item a era:NetLinearReference }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+
+# ===== ETCS Marker Shape =====
+era:ETCSMarkerShape a sh:NodeShape ;
+    sh:targetClass era:ETCSMarker ;
+    
+    # Name (optional, string)
+    sh:property [ 
+        sh:path era:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "An ETCSMarker may have at most one name (string)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Net Point Reference (required, can be inline or referenced)
+    sh:property [ 
+        sh:path era:netPointReference ;
+        sh:node era:NetPointReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSMarker must have exactly one netPointReference that conforms to NetPointReferenceShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Marker Function Stop (required, boolean - indicates if marker is a stop marker)
+    sh:property [ 
+        sh:path era:markerFunctionStop ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each ETCSMarker must have exactly one markerFunctionStop value (boolean)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== Derailer Shape =====
+era:DerailerShape a sh:NodeShape ;
+    sh:targetClass era:Derailer ;
+    
+    # Name (optional, string)
+    sh:property [ 
+        sh:path era:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:message "A Derailer may have at most one name (string)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Net Point Reference (required, can be inline or referenced)
+    sh:property [ 
+        sh:path era:netPointReference ;
+        sh:node era:NetPointReferenceShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Derailer must have exactly one netPointReference that conforms to NetPointReferenceShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Derail to Right (required, boolean - direction of derailment)
+    sh:property [ 
+        sh:path era:derailToRight ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Derailer must have exactly one derailToRight value (boolean)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Reversal Time (required, unsigned integer - typically in seconds)
+    sh:property [ 
+        sh:path era:reversalTime ;
+        sh:datatype xsd:unsignedInt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each Derailer must have exactly one reversalTime value (unsigned integer)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+# ===== Net Point Reference Shape =====
+era:NetPointReferenceShape a sh:NodeShape ;
+    sh:targetClass era:NetPointReference ;
+    
+    # Has Topological Coordinate (required, can be inline or referenced)
+    sh:property [ 
+        sh:path era:hasTopoCoordinate ;
+        sh:node era:TopologicalCoordinateShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each NetPointReference must have exactly one hasTopoCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Applies To Direction (required, controlled vocabulary)
+    sh:property [ 
+        sh:path era:appliesToDirection ;
+        sh:in (
+            <http://data.europa.eu/949/concepts/orientations/both>
+            <http://data.europa.eu/949/concepts/orientations/same>
+            <http://data.europa.eu/949/concepts/orientations/opposite>
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The property appliesToDirection must have a value from the defined SKOS concept scheme (both, same, or opposite)." ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+
+# Shape to check that at least one Train Protection class exists
+era:AtLeastOneTrainProtectionClassShape a sh:NodeShape ;
+    sh:target [
+        a sh:SPARQLTarget ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            SELECT ?this
+            WHERE {
+                BIND (era:ValidationRoot as ?this)
+            }
+        """ ;
+    ] ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The data must contain at least one instance of the required Train Protection classes (e.g., DriveProtectionSectionGroup, AllocationSection, FieldObjectController, AreaOfControl, etc.). This error may indicate that the provided data significantly deviates from the expected train protection and interlocking control model as defined in the extended ERA ontology." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this
+            WHERE {
+                FILTER NOT EXISTS {
+                    # Top-Level Container
+                    { ?instance rdf:type era:TrainProtection . }
+                    
+                    # Area Container
+                    UNION { ?instance rdf:type era:TrainProtectionArea . }
+                    
+                    # Drive Protection Section Classes
+                    UNION { ?instance rdf:type era:DriveProtectionSectionGroup . }
+                    UNION { ?instance rdf:type era:DriveProtectionSection . }
+                    
+                    # Allocation Classes
+                    UNION { ?instance rdf:type era:AllocationSection . }
+                    
+                    # Control Classes
+                    UNION { ?instance rdf:type era:FieldObjectController . }
+                    UNION { ?instance rdf:type era:AreaOfControl . }
+                    UNION { ?instance rdf:type era:Controller . }
+                    
+                    # Infrastructure Element References
+                    UNION { ?instance rdf:type era:ProtectedInfraElement . }
+                    UNION { ?instance rdf:type era:ControlledInfraElement . }
+                    
+                    # ETCS Marker
+                    UNION { ?instance rdf:type era:ETCSMarker . }
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .

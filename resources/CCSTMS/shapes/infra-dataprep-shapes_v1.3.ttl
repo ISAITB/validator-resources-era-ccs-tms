@@ -1,0 +1,1823 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+	
+# SPT2TS-130788: There shall be no netRelations defined between linear elements marked by a Switch as leftBranch and rightBranch .
+# ===== Switch Branch NetRelation Exclusion Constraint =====
+era:SwitchBranchNetRelationExclusionShape a sh:NodeShape ;
+    sh:targetClass era:Switch ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "There shall be no NetRelations defined between LinearElements that are exclusively part of the leftBranch and rightBranch of a Switch (i.e., no direct connections between exclusive branch elements)." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this ?forbiddenRelation ?leftExclusiveElement ?rightExclusiveElement
+            WHERE {
+                $this era:leftBranch ?leftBranchRel .
+                $this era:rightBranch ?rightBranchRel .
+                FILTER (?leftBranchRel != ?rightBranchRel)
+                
+                # (elementA, isOnOriginOfElementA) and (elementB, isOnOriginOfElementB)
+                ?leftBranchRel era:elementA ?leftElemA ;
+                               era:elementB ?leftElemB ;
+                               era:isOnOriginOfElementA ?leftOriginA ;
+                               era:isOnOriginOfElementB ?leftOriginB .
+
+                ?rightBranchRel era:elementA ?rightElemA ;
+                                era:elementB ?rightElemB ;
+                                era:isOnOriginOfElementA ?rightOriginA ;
+                                era:isOnOriginOfElementB ?rightOriginB .
+                
+                # (intersection of pairs)
+                # An element is shared if it appears in both relations with the same orientation: ref: SPT2TS-130788
+                
+                {
+                    BIND(?leftElemA AS ?leftExclusiveElement)
+                    BIND(?leftOriginA AS ?leftExclusiveOrigin)
+                    
+                    FILTER NOT EXISTS {
+                        FILTER (
+                            (?leftElemA = ?rightElemA && ?leftOriginA = ?rightOriginA) ||
+                            (?leftElemA = ?rightElemB && ?leftOriginA = ?rightOriginB)
+                        )
+                    }
+                }
+                UNION
+                {
+                    BIND(?leftElemB AS ?leftExclusiveElement)
+                    BIND(?leftOriginB AS ?leftExclusiveOrigin)
+                    
+                    FILTER NOT EXISTS {
+                        FILTER (
+                            (?leftElemB = ?rightElemA && ?leftOriginB = ?rightOriginA) ||
+                            (?leftElemB = ?rightElemB && ?leftOriginB = ?rightOriginB)
+                        )
+                    }
+                }
+                
+                {
+                    BIND(?rightElemA AS ?rightExclusiveElement)
+                    BIND(?rightOriginA AS ?rightExclusiveOrigin)
+                    
+                    FILTER NOT EXISTS {
+                        FILTER (
+                            (?rightElemA = ?leftElemA && ?rightOriginA = ?leftOriginA) ||
+                            (?rightElemA = ?leftElemB && ?rightOriginA = ?leftOriginB)
+                        )
+                    }
+                }
+                UNION
+                {
+                    BIND(?rightElemB AS ?rightExclusiveElement)
+                    BIND(?rightOriginB AS ?rightExclusiveOrigin)
+                    
+                    FILTER NOT EXISTS {
+                        FILTER (
+                            (?rightElemB = ?leftElemA && ?rightOriginB = ?leftOriginA) ||
+                            (?rightElemB = ?leftElemB && ?rightOriginB = ?leftOriginB)
+                        )
+                    }
+                }
+                ?forbiddenRelation a era:NetRelation .
+                FILTER (?forbiddenRelation != ?leftBranchRel && ?forbiddenRelation != ?rightBranchRel)
+                
+                ?forbiddenRelation era:elementA ?forbiddenElemA ;
+                                   era:elementB ?forbiddenElemB ;
+                                   era:isOnOriginOfElementA ?forbiddenOriginA ;
+                                   era:isOnOriginOfElementB ?forbiddenOriginB .
+                
+                FILTER (
+                    (?leftExclusiveElement = ?forbiddenElemA && ?leftExclusiveOrigin = ?forbiddenOriginA &&
+                     ?rightExclusiveElement = ?forbiddenElemB && ?rightExclusiveOrigin = ?forbiddenOriginB)
+                    ||
+                    (?rightExclusiveElement = ?forbiddenElemA && ?rightExclusiveOrigin = ?forbiddenOriginA &&
+                     ?leftExclusiveElement = ?forbiddenElemB && ?leftExclusiveOrigin = ?forbiddenOriginB)
+                )
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+era:SlipCrossingSwitchCountShape a sh:NodeShape ;
+    sh:targetClass era:SlipCrossing ;
+    
+	# SPT2TS-125789: A SlipCrossing shall not contain 3 instances of Switch.
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "A SlipCrossing must not contain exactly 3 instances of Switch." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                {
+                    SELECT $this (COUNT(?switch) AS ?switchCount)
+                    WHERE {
+                        $this era:switches ?switch .
+                    }
+                    GROUP BY $this
+                }
+                # Violation if count equals 3
+                FILTER (?switchCount = 3)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== NetLinearReference Sequence Exclusion Constraint =====
+era:NetLinearReferenceSequenceExclusionShape a sh:NodeShape ;
+    sh:targetClass era:NetLinearReference ;
+    
+	# SPT2TS-130930: The LinearElements referenced by a NetLinearReference's startsAt and endsAt topological coordinates shall not appear in its hasSequence list.
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The LinearElement referenced by startsAt must not appear in the hasSequence list." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?startsAtLinearElement
+            WHERE {
+                $this era:startsAt ?tcs .
+                ?tcs era:onLinearElement ?startsAtLinearElement .
+                
+                $this era:hasSequence ?seqList .
+                ?seqList rdf:rest*/rdf:first ?startsAtLinearElement .
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The LinearElement referenced by endsAt must not appear in the hasSequence list." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?endsAtLinearElement
+            WHERE {
+                $this era:endsAt ?tce .
+                ?tce era:onLinearElement ?endsAtLinearElement .
+                
+                $this era:hasSequence ?seqList .
+                ?seqList rdf:rest*/rdf:first ?endsAtLinearElement .
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+	
+# ===== NetRelation Distinct Elements Constraint =====
+era:NetRelationDistinctElementsShape a sh:NodeShape ;
+    sh:targetClass era:NetRelation ;
+    
+	# SPT2TS-130927: For every NetRelation, the referenced elementA and elementB shall be distinct LinearElements.
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "A NetRelation must reference distinct LinearElements in elementA and elementB (they cannot be the same)." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this ?linearElement
+            WHERE {
+                $this era:elementA ?le1 .
+                $this era:elementB ?le2 .
+                
+                # Violation: elementA and elementB reference the same LinearElement
+                FILTER (?le1 = ?le2)
+                
+                BIND(?le1 AS ?linearElement)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+# SPT2TS-130787: There shall be exactly 3 unique (LinearElement, isOnOrigin) flag pairs for every Switch
+# ===== Switch Must Have Exactly 3 Unique Element-Flag Pairs Constraint =====
+era:SwitchThreeUniqueElementFlagPairsShape a sh:NodeShape ;
+    sh:targetClass era:Switch ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "A Switch must have exactly 3 unique (LinearElement, isOnOrigin) flag pairs across its leftBranch and rightBranch NetRelations." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this (COUNT(DISTINCT ?pair) AS ?uniquePairCount)
+            WHERE {
+                {
+                    $this era:leftBranch ?netRelation .
+                }
+                UNION
+                {
+                    $this era:rightBranch ?netRelation .
+                }
+                {
+                    ?netRelation era:elementA ?element ;
+                                 era:isOnOriginOfElementA ?flag .
+                }
+                UNION
+                {
+                    ?netRelation era:elementB ?element ;
+                                 era:isOnOriginOfElementB ?flag .
+                }
+                BIND(CONCAT(STR(?element), "_", STR(?flag)) AS ?pair)
+            }
+            GROUP BY $this
+            HAVING (COUNT(DISTINCT ?pair) != 3)
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== BufferStop Unique Position Constraint =====
+era:BufferStopUniquePositionShape a sh:NodeShape ;
+    sh:targetClass era:BufferStop ;
+    
+	# SPT2TS-125797: No two distinct buffer stops may be declared at the exact same position in the network
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "No two distinct buffer stops may be declared at the exact same position in the network (same LinearElement and offsetFromOrigin)." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this ?otherBufferStop ?linearElement ?offset
+            WHERE {
+                $this era:netPointReference ?npr1 .
+                ?npr1 era:hasTopoCoordinate ?tc1 .
+                ?tc1 era:onLinearElement ?linearElement .
+                ?tc1 era:offsetFromOrigin ?offset .
+                
+                ?otherBufferStop a era:BufferStop .
+                ?otherBufferStop era:netPointReference ?npr2 .
+                ?npr2 era:hasTopoCoordinate ?tc2 .
+                ?tc2 era:onLinearElement ?linearElement .
+                ?tc2 era:offsetFromOrigin ?offset .
+                
+                FILTER ($this != ?otherBufferStop)
+                
+                FILTER (STR($this) < STR(?otherBufferStop))
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+era:LinearElementNetRelationParticipationShape a sh:NodeShape ;
+    sh:targetClass era:LinearElement ;
+    
+	# SPT2TS-130926: Every LinearElement at micro level shall exist in at least one NetRelation, either as elementA or elementB.
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Every LinearElement must exist in at least one NetRelation, either as elementA or elementB." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                $this a era:LinearElement .
+                
+                FILTER NOT EXISTS {
+                    ?nr era:elementA|era:elementB $this .
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== Net Linear Reference Shape - hasSequence Constraint =====
+era:NetLinearReferenceSequenceConstraintShape a sh:NodeShape ;
+    sh:targetClass era:NetLinearReference ;
+    
+	# SPARQL constraint: hasSequence shall be empty if startsAt and endsAt reference the same LinearElement
+	# SPT2TS-130928: The hasSequence of a NetLinearReference shall be empty if its startsAt and endsAt topological coordinates reference the same LinearElement.
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "A NetLinearReference must not have a hasSequence when its startsAt and endsAt topological coordinates reference the same LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                $this era:startsAt ?tc1 ;
+                      era:endsAt ?tc2 .
+                
+                ?tc1 era:onLinearElement ?le .
+                ?tc2 era:onLinearElement ?le .
+                
+                $this era:hasSequence ?seq .
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+	
+# ===== TvpSection TrainDetector Coverage Constraint =====
+era:TvpSectionTrainDetectorCoverageShape a sh:NodeShape ;
+    sh:targetClass era:TvpSection ;
+    
+	# SPT2TS-130924: TrainDetectors associated with a TvpSection shall be positioned on LinearElements that are fully covered by the TvpSection's linkedArea NetAreaReference.
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "All TrainDetectors associated with a TvpSection must be positioned on LinearElements that are fully covered by the TvpSection's linkedArea NetAreaReference." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?trainDetector ?linearElement
+            WHERE {
+                $this era:trainDetectors ?trainDetector .
+                ?trainDetector era:topologicalCoordinate ?tc .
+                ?tc era:onLinearElement ?linearElement .
+                $this era:linkedArea ?areaRef .
+                
+                FILTER NOT EXISTS {
+                    ?areaRef era:includes ?lr .
+                    {
+                        ?lr era:startsAt ?startTC .
+                        ?startTC era:onLinearElement ?linearElement .
+                    }
+                    UNION
+                    {
+                        ?lr era:endsAt ?endTC .
+                        ?endTC era:onLinearElement ?linearElement .
+                    }
+                    UNION
+                    {
+                        ?lr era:hasSequence ?seqList .
+                        ?seqList rdf:rest*/rdf:first ?linearElement .
+                    }
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== PlatformEdge StopLocation Coverage Constraint =====
+era:PlatformEdgeStopLocationCoverageShape a sh:NodeShape ;
+    sh:targetClass era:PlatformEdge ;
+	
+	    
+	# SPT2TS-130925: All StopLocations associated with a PlatformEdge shall be positioned on LinearElements that are fully covered by the PlatformEdge's linearReference.
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "All StopLocations associated with a PlatformEdge must be positioned on LinearElements that are fully covered by the PlatformEdge's linearReference." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?stopLocation ?linearElement
+            WHERE {
+                $this era:stopLocations ?stopLocation .
+                ?stopLocation era:netPointReference ?npr .
+                ?npr era:hasTopoCoordinate ?tc .
+                ?tc era:onLinearElement ?linearElement .
+                $this era:linearReference ?lr .
+                
+                FILTER NOT EXISTS {
+                    {
+                        ?lr era:startsAt ?startTC .
+                        ?startTC era:onLinearElement ?linearElement .
+                    }
+                    UNION
+                    {
+                        ?lr era:endsAt ?endTC .
+                        ?endTC era:onLinearElement ?linearElement .
+                    }
+                    UNION
+                    {
+                        ?lr era:hasSequence ?seqList .
+                        ?seqList rdf:rest*/rdf:first ?linearElement .
+                    }
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+
+	
+	
+# ===== Balise Unique Position Within BaliseGroup Constraint =====
+era:BaliseUniquePositionShape a sh:NodeShape ;
+    sh:targetClass era:BaliseGroup ;
+    
+	# SPT2TS-125800: At a specific position on a linear element, only a single instance of balise shall be present.
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "At a specific position on a linear element, only a single instance of balise shall be present within a BaliseGroup (no two balises in the same group may share the same LinearElement and offsetFromOrigin)." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?balise1 ?balise2 ?linearElement ?offset
+            WHERE {
+                $this era:balises ?baliseList .
+                
+                ?baliseList rdf:rest*/rdf:first ?balise1 .
+                ?baliseList rdf:rest*/rdf:first ?balise2 .
+                
+                ?balise1 era:topologicalCoordinate ?tc1 .
+                ?balise2 era:topologicalCoordinate ?tc2 .
+                
+                ?tc1 era:onLinearElement ?linearElement .
+                ?tc1 era:offsetFromOrigin ?offset .
+                ?tc2 era:onLinearElement ?linearElement .
+                ?tc2 era:offsetFromOrigin ?offset .
+                
+                # Violation: two distinct balises at the same position
+                FILTER (?balise1 != ?balise2)
+                
+                FILTER (STR(?balise1) < STR(?balise2))
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+
+
+# SPT2TS-125783: A LinearElementSection shall always be limited within a LinearElement. i.e., LinearElementSection do not span over multiple linearElements. 
+# ===== LinearElementSection Bounded Within LinearElement Constraint =====
+era:LinearElementSectionBoundedShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementSection ;
+    
+    sh:property [
+        sh:path era:startOffsetFromOrigin ;
+        sh:minInclusive 0 ;
+        sh:message "The startOffsetFromOrigin of a LinearElementSection must be non-negative (>= 0)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:property [
+        sh:path era:endOffsetFromOrigin ;
+        sh:minInclusive 0 ;
+        sh:message "The endOffsetFromOrigin of a LinearElementSection must be non-negative (>= 0)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Check endOffsetFromOrigin does not exceed LinearElement length
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The endOffsetFromOrigin of a LinearElementSection must not exceed the length (lengthOfNetLinearElement) of its associated LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this ?endOffset ?elementLength
+            WHERE {
+                $this era:onElement ?linearElement .
+                ?linearElement era:lengthOfNetLinearElement ?elementLength .
+                $this era:endOffsetFromOrigin ?endOffset .
+                
+                # Violation: end offset exceeds element length
+                FILTER (?endOffset > ?elementLength)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+		
+	
+# SPT2TS-131036(a): For every NetLinearReference with a non-empty hasSequence, there must exist a congruent NetRelations connecting the corresponding linear elements
+# ===== Part 1: NetLinearReference - startsAt to first sequence element connection =====
+era:NetLinearReferenceStartsAtToFirstSequenceShape a sh:NodeShape ;
+    sh:targetClass era:NetLinearReference ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "For a NetLinearReference with non-empty hasSequence, there must exist a NetRelation connecting the startsAt LinearElement to the first element in hasSequence." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?startsAtLE ?firstSeqLE
+            WHERE {
+                $this era:startsAt ?startsAtTC .
+                ?startsAtTC era:onLinearElement ?startsAtLE .
+                $this era:hasSequence ?seqList .
+                
+                ?seqList rdf:first ?firstSeqLE .
+
+                FILTER NOT EXISTS {
+                    ?nr a era:NetRelation .
+                    {
+                        ?nr era:elementA ?startsAtLE ;
+                            era:elementB ?firstSeqLE .
+                    }
+                    UNION
+                    {
+                        # Connection via elementB -> elementA (bidirectional)
+                        ?nr era:elementA ?firstSeqLE ;
+                            era:elementB ?startsAtLE .
+                    }
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+
+# SPT2TS-131036(b): For every NetLinearReference with a non-empty hasSequence, there must exist a congruent NetRelations connecting the corresponding linear elements
+# ===== Part 2: NetLinearReference - adjacent pairs in hasSequence =====
+era:NetLinearReferenceSequenceAdjacentPairsShape a sh:NodeShape ;
+    sh:targetClass era:NetLinearReference ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "For a NetLinearReference with hasSequence, there must exist NetRelations connecting each adjacent pair of LinearElements in the sequence." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?currentLE ?nextLE
+            WHERE {
+                $this era:hasSequence ?seqList .
+                
+                ?seqList rdf:rest* ?currentNode .
+                ?currentNode rdf:first ?currentLE .
+                ?currentNode rdf:rest ?nextNode .
+                ?nextNode rdf:first ?nextLE .
+                
+                FILTER (?nextNode != rdf:nil)
+                
+                FILTER NOT EXISTS {
+                    ?nr a era:NetRelation .
+                    {
+                        ?nr era:elementA ?currentLE ;
+                            era:elementB ?nextLE .
+                    }
+                    UNION
+                    {
+                        # Connection via elementB -> elementA (bidirectional)
+                        ?nr era:elementA ?nextLE ;
+                            era:elementB ?currentLE .
+                    }
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+
+# SPT2TS-131036(c): For every NetLinearReference with a non-empty hasSequence, there must exist a congruent NetRelations connecting the corresponding linear elements
+# ===== Part 3: NetLinearReference - last sequence element to endsAt =====
+era:NetLinearReferenceLastSequenceToEndsAtShape a sh:NodeShape ;
+    sh:targetClass era:NetLinearReference ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "For a NetLinearReference with non-empty hasSequence, there must exist a NetRelation connecting the last element in hasSequence to the endsAt LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?lastSeqLE ?endsAtLE
+            WHERE {
+                $this era:endsAt ?endsAtTC .
+                ?endsAtTC era:onLinearElement ?endsAtLE .
+                $this era:hasSequence ?seqList .
+                
+                ?seqList rdf:rest* ?lastNode .
+                ?lastNode rdf:first ?lastSeqLE .
+                ?lastNode rdf:rest rdf:nil .
+                
+                FILTER NOT EXISTS {
+                    ?nr a era:NetRelation .
+                    {
+                        ?nr era:elementA ?lastSeqLE ;
+                            era:elementB ?endsAtLE .
+                    }
+                    UNION
+                    {
+                        ?nr era:elementA ?endsAtLE ;
+                            era:elementB ?lastSeqLE .
+                    }
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+
+# ===== LinearElementGeometry Existence Constraint (for SampledLinearElementGeometry) =====
+era:LinearElementGeometryExistenceShape a sh:NodeShape ;
+    sh:targetClass era:SampledLinearElementGeometry ;
+    
+    sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:message "CantSamplePoint Congruence validation skipped: no corresponding LinearElementGeometry found." ;
+    sh:select """
+        PREFIX era: <http://data.europa.eu/949/>
+        
+        SELECT $this
+        WHERE {
+            BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
+            
+            # Violation if no LinearElementGeometry exists
+            FILTER NOT EXISTS {
+                ?leg a era:LinearElementGeometry .
+                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
+                FILTER (?thisId = ?legId)
+            }
+        }
+    """ ;
+    sh:severity sh:Warning ;  # Warning
+	] .
+
+
+
+# ===== CantSamplePoint Congruence Constraint =====
+era:CantSamplePointCongruenceShape a sh:NodeShape ;
+    sh:targetClass era:SampledLinearElementGeometry ;
+    
+	# SPT2TS-125315 The extent of CantSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.  
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "A CantSamplePoint must exist at the start position (elementGeometryPos) of every HorizontalArc in the corresponding LinearElementGeometry." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?missingPos
+            WHERE {
+                ?leg a era:LinearElementGeometry .
+                
+                # Extract LinearElement ID from both URIs (handles both patterns)
+                # Sample Pattern: .../ClassName/LE123 -> LE123
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
+                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
+                
+                FILTER (?thisId = ?legId)
+                
+                ?leg era:horizontalAlignments ?hSegmentList .
+                ?hSegmentList rdf:rest*/rdf:first ?hSegment .
+                
+                ?hSegment era:horizontalSegmentArc ?hArc .
+                ?hArc era:elementGeometryPos ?arcPos .
+                
+                FILTER NOT EXISTS {
+                    $this era:cants ?cantList .
+                    ?cantList rdf:rest*/rdf:first ?cantSample .
+                    ?cantSample era:pos ?cantPos .
+                    FILTER (?cantPos = ?arcPos)
+                }
+                
+                BIND(?arcPos AS ?missingPos)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Check that CantSamplePoints exist at start of HorizontalTransition
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "A CantSamplePoint must exist at the start position (elementGeometryPos) of every HorizontalTransition in the corresponding LinearElementGeometry." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?missingPos
+            WHERE {
+                ?leg a era:LinearElementGeometry .
+                
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
+                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
+                
+                FILTER (?thisId = ?legId)
+                
+                ?leg era:horizontalAlignments ?hSegmentList .
+                ?hSegmentList rdf:rest*/rdf:first ?hSegment .
+                
+                ?hSegment era:horizontalSegmentTransition ?hTrans .
+                ?hTrans era:elementGeometryPos ?transPos .
+                
+                FILTER NOT EXISTS {
+                    $this era:cants ?cantList .
+                    ?cantList rdf:rest*/rdf:first ?cantSample .
+                    ?cantSample era:pos ?cantPos .
+                    FILTER (?cantPos = ?transPos)
+                }
+                
+                BIND(?transPos AS ?missingPos)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Check that CantSamplePoints exist at end of HorizontalArc
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "A CantSamplePoint must exist at the end position of every HorizontalArc (at the start of the next segment in horizontalAlignments)." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?missingPos
+            WHERE {
+                ?leg a era:LinearElementGeometry .
+                
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
+                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
+                
+                FILTER (?thisId = ?legId)
+                
+                ?leg era:horizontalAlignments ?hSegmentList .
+                
+                ?hSegmentList rdf:rest*/rdf:first ?hSegment .
+                ?hSegment era:horizontalSegmentArc ?hArc .
+                
+                ?listNode rdf:first ?hSegment .
+                ?listNode rdf:rest ?nextNode .
+                ?nextNode rdf:first ?nextSegment .
+                
+                {
+                    ?nextSegment era:horizontalSegmentLine ?nextLine .
+                    ?nextLine era:elementGeometryPos ?endPos .
+                }
+                UNION
+                {
+                    ?nextSegment era:horizontalSegmentArc ?nextArc .
+                    ?nextArc era:elementGeometryPos ?endPos .
+                }
+                UNION
+                {
+                    ?nextSegment era:horizontalSegmentTransition ?nextTrans .
+                    ?nextTrans era:elementGeometryPos ?endPos .
+                }
+                
+                FILTER NOT EXISTS {
+                    $this era:cants ?cantList .
+                    ?cantList rdf:rest*/rdf:first ?cantSample .
+                    ?cantSample era:pos ?cantPos .
+                    FILTER (?cantPos = ?endPos)
+                }
+                
+                BIND(?endPos AS ?missingPos)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # Check that CantSamplePoints exist at end of HorizontalTransition
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "A CantSamplePoint must exist at the end position of every HorizontalTransition (at the start of the next segment in horizontalAlignments)." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?missingPos
+            WHERE {
+                ?leg a era:LinearElementGeometry .
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
+                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
+                
+                FILTER (?thisId = ?legId)
+                
+                ?leg era:horizontalAlignments ?hSegmentList .
+                
+                ?hSegmentList rdf:rest*/rdf:first ?hSegment .
+                ?hSegment era:horizontalSegmentTransition ?hTrans .
+                
+                ?listNode rdf:first ?hSegment .
+                ?listNode rdf:rest ?nextNode .
+                ?nextNode rdf:first ?nextSegment .
+                
+                {
+                    ?nextSegment era:horizontalSegmentLine ?nextLine .
+                    ?nextLine era:elementGeometryPos ?endPos .
+                }
+                UNION
+                {
+                    ?nextSegment era:horizontalSegmentArc ?nextArc .
+                    ?nextArc era:elementGeometryPos ?endPos .
+                }
+                UNION
+                {
+                    ?nextSegment era:horizontalSegmentTransition ?nextTrans .
+                    ?nextTrans era:elementGeometryPos ?endPos .
+                }
+                
+                FILTER NOT EXISTS {
+                    $this era:cants ?cantList .
+                    ?cantList rdf:rest*/rdf:first ?cantSample .
+                    ?cantSample era:pos ?cantPos .
+                    FILTER (?cantPos = ?endPos)
+                }
+                
+                BIND(?missingPos AS ?missingPos)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== GeometryArea Requires TopoArea Constraint =====
+era:GeometryAreaRequiresTopoAreaShape a sh:NodeShape ;
+    sh:targetClass era:GeometryArea ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Every GeometryArea must have a corresponding TopoArea with matching identifier. A GeometryArea cannot exist without its corresponding TopoArea." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?geoId)
+                
+                FILTER NOT EXISTS {
+                    ?topoArea a era:TopoArea .
+                    BIND(REPLACE(STR(?topoArea), "^.*/([^/]+)$", "$1") AS ?topoId)
+                    FILTER (?geoId = ?topoId)
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+# ===== SampledGeometryArea Requires TopoArea Constraint =====
+era:SampledGeometryAreaRequiresTopoAreaShape a sh:NodeShape ;
+    sh:targetClass era:SampledGeometryArea ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Every SampledGeometryArea must have a corresponding TopoArea with matching identifier. A SampledGeometryArea cannot exist without its corresponding TopoArea." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?sampledGeoId)
+                
+                FILTER NOT EXISTS {
+                    ?topoArea a era:TopoArea .
+                    BIND(REPLACE(STR(?topoArea), "^.*/([^/]+)$", "$1") AS ?topoId)
+                    FILTER (?sampledGeoId = ?topoId)
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+# ===== PropertyArea Requires TopoArea Constraint =====
+era:PropertyAreaRequiresTopoAreaShape a sh:NodeShape ;
+    sh:targetClass era:PropertyArea ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Every PropertyArea must have a corresponding TopoArea with matching identifier. A PropertyArea cannot exist without its corresponding TopoArea." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?propId)
+                
+                FILTER NOT EXISTS {
+                    ?topoArea a era:TopoArea .
+                    BIND(REPLACE(STR(?topoArea), "^.*/([^/]+)$", "$1") AS ?topoId)
+                    FILTER (?propId = ?topoId)
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+
+# ===== TrackUsageArea Requires TopoArea Constraint =====
+era:TrackUsageAreaRequiresTopoAreaShape a sh:NodeShape ;
+    sh:targetClass era:TrackUsageArea ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Every TrackUsageArea must have a corresponding TopoArea with matching identifier. A TrackUsageArea cannot exist without its corresponding TopoArea." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?trackUsageId)
+                
+                FILTER NOT EXISTS {
+                    ?topoArea a era:TopoArea .
+                    BIND(REPLACE(STR(?topoArea), "^.*/([^/]+)$", "$1") AS ?topoId)
+                    FILTER (?trackUsageId = ?topoId)
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+
+# ===== FunctionalArea Requires TopoArea Constraint =====
+era:FunctionalAreaRequiresTopoAreaShape a sh:NodeShape ;
+    sh:targetClass era:FunctionalArea ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Every FunctionalArea must have a corresponding TopoArea with matching identifier. A FunctionalArea cannot exist without its corresponding TopoArea." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?funcId)
+                FILTER NOT EXISTS {
+                    ?topoArea a era:TopoArea .
+                    BIND(REPLACE(STR(?topoArea), "^.*/([^/]+)$", "$1") AS ?topoId)
+                    FILTER (?funcId = ?topoId)
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+	
+# ===== LinearElementGeometry Requires LinearElement Constraint =====
+era:LinearElementGeometryRequiresLinearElementShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementGeometry ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Every LinearElementGeometry must have a corresponding LinearElement with matching identifier. A LinearElementGeometry cannot exist without its corresponding LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?geoId)
+                FILTER NOT EXISTS {
+                    ?linearElement a era:LinearElement .
+                    BIND(REPLACE(STR(?linearElement), "^.*/([^/]+)$", "$1") AS ?leId)
+                    FILTER (?geoId = ?leId)
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== SampledLinearElementGeometry Requires LinearElement Constraint =====
+era:SampledLinearElementGeometryRequiresLinearElementShape a sh:NodeShape ;
+    sh:targetClass era:SampledLinearElementGeometry ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Every SampledLinearElementGeometry must have a corresponding LinearElement with matching identifier. A SampledLinearElementGeometry cannot exist without its corresponding LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?sgeoId)
+                
+                FILTER NOT EXISTS {
+                    ?linearElement a era:LinearElement .
+                    BIND(REPLACE(STR(?linearElement), "^.*/([^/]+)$", "$1") AS ?leId)
+                    FILTER (?sgeoId = ?leId)
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== LinearElementSpeedProfile Requires LinearElement Constraint =====
+era:LinearElementSpeedProfileRequiresLinearElementShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementSpeedProfile ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Every LinearElementSpeedProfile must have a corresponding LinearElement with matching identifier. A LinearElementSpeedProfile cannot exist without its corresponding LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?legeoId)
+                
+                FILTER NOT EXISTS {
+                    ?linearElement a era:LinearElement .
+                    BIND(REPLACE(STR(?linearElement), "^.*/([^/]+)$", "$1") AS ?leId)
+                    FILTER (?legeoId = ?leId)
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+	
+# SPT2TS-125791: (a1) The extent of CurveSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
+# ===== Part (a1): Sign Consistency - SlopeSamplePoint sign must match VerticalArc sign =====
+era:SlopeSamplePointSignConsistencyVerticalArcShape a sh:NodeShape ;
+    sh:targetClass era:SampledLinearElementGeometry ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The sign of the slope at a SlopeSamplePoint must match the sign of the slope of the underlying VerticalArc segment at that position (considering the arc's initial slope and direction)." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?slopeSample ?samplePos ?sampleSlope ?arcSlope
+            WHERE {
+                ?leg a era:LinearElementGeometry .
+                
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
+                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
+                
+                FILTER (?thisId = ?legId)
+                
+                $this era:slopes ?slopeList .
+                ?slopeList rdf:rest*/rdf:first ?slopeSample .
+                ?slopeSample era:pos ?samplePos .
+                ?slopeSample era:samplePointSlope ?sampleSlope .
+                
+                ?leg era:verticalAlignments ?vSegmentList .
+                ?vSegmentList rdf:rest*/rdf:first ?vSegment .
+                ?vSegment era:verticalSegmentArc ?vArc .
+                ?vArc era:elementGeometryPos ?segmentStart .
+                ?vArc era:slope ?arcSlope .
+                
+                ?listNode rdf:first ?vSegment .
+                OPTIONAL {
+                    ?listNode rdf:rest ?nextNode .
+                    ?nextNode rdf:first ?nextSegment .
+                    {
+                        ?nextSegment era:verticalSegmentLine ?nextLine .
+                        ?nextLine era:elementGeometryPos ?segmentEnd .
+                    }
+                    UNION
+                    {
+                        ?nextSegment era:verticalSegmentArc ?nextArc .
+                        ?nextArc era:elementGeometryPos ?segmentEnd .
+                    }
+                }
+                
+                FILTER (?samplePos >= ?segmentStart)
+                FILTER (BOUND(?segmentEnd) -> ?samplePos < ?segmentEnd : true)
+                
+                # Violation: signs don't match (both non-zero and opposite signs)
+                FILTER (
+                    (?sampleSlope != 0 && ?arcSlope != 0) &&
+                    ((?sampleSlope > 0 && ?arcSlope < 0) || (?sampleSlope < 0 && ?arcSlope > 0))
+                )
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# SPT2TS-125791: (a2) The extent of CurveSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
+# ===== Part (a2): Sign Consistency - SlopeSamplePoint sign must match VerticalLine sign =====
+era:SlopeSamplePointSignConsistencyVerticalLineShape a sh:NodeShape ;
+    sh:targetClass era:SampledLinearElementGeometry ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The sign of the slope at a SlopeSamplePoint must match the sign of the slope of the underlying VerticalLine segment at that position." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?slopeSample ?samplePos ?sampleSlope ?segmentSlope
+            WHERE {
+                ?leg a era:LinearElementGeometry .
+                
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
+                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
+                
+                FILTER (?thisId = ?legId)
+                
+                $this era:slopes ?slopeList .
+                ?slopeList rdf:rest*/rdf:first ?slopeSample .
+                ?slopeSample era:pos ?samplePos .
+                ?slopeSample era:samplePointSlope ?sampleSlope .
+                
+                # VerticalLine segment
+                ?leg era:verticalAlignments ?vSegmentList .
+                ?vSegmentList rdf:rest*/rdf:first ?vSegment .
+                ?vSegment era:verticalSegmentLine ?vLine .
+                ?vLine era:elementGeometryPos ?segmentStart .
+                ?vLine era:slope ?segmentSlope .
+                
+                # Next segment
+                ?listNode rdf:first ?vSegment .
+                
+                OPTIONAL {
+                    ?listNode rdf:rest ?nextNode .
+                    ?nextNode rdf:first ?nextSegment .
+                    {
+                        ?nextSegment era:verticalSegmentLine ?nextLine .
+                        ?nextLine era:elementGeometryPos ?segmentEnd .
+                    }
+                    UNION
+                    {
+                        ?nextSegment era:verticalSegmentArc ?nextArc .
+                        ?nextArc era:elementGeometryPos ?segmentEnd .
+                    }
+                }
+                
+                FILTER (?samplePos >= ?segmentStart)
+                FILTER (BOUND(?segmentEnd) -> ?samplePos < ?segmentEnd : true)
+                
+                # Violation: signs don't match (both non-zero and opposite signs)
+                FILTER (
+                    (?sampleSlope != 0 && ?segmentSlope != 0) &&
+                    ((?sampleSlope > 0 && ?segmentSlope < 0) || (?sampleSlope < 0 && ?segmentSlope > 0))
+                )
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+# SPT2TS-125791: (b1) The extent of CurveSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
+# ===== Part (b1): Positional Continuity - SlopeSamplePoint at start of VerticalLine =====
+era:SlopeSamplePointCongruenceVerticalLineStartShape a sh:NodeShape ;
+    sh:targetClass era:SampledLinearElementGeometry ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "A SlopeSamplePoint must exist at the start position (elementGeometryPos) of every VerticalLine in the corresponding LinearElementGeometry." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?missingPos
+            WHERE {
+                ?leg a era:LinearElementGeometry .
+                
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
+                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
+                
+                FILTER (?thisId = ?legId)
+                
+                ?leg era:verticalAlignments ?vSegmentList .
+                ?vSegmentList rdf:rest*/rdf:first ?vSegment .
+                
+                ?vSegment era:verticalSegmentLine ?vLine .
+                ?vLine era:elementGeometryPos ?linePos .
+                
+                FILTER NOT EXISTS {
+                    $this era:slopes ?slopeList .
+                    ?slopeList rdf:rest*/rdf:first ?slopeSample .
+                    ?slopeSample era:pos ?slopePos .
+                    FILTER (?slopePos = ?linePos)
+                }
+                
+                BIND(?linePos AS ?missingPos)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+
+
+	
+# SPT2TS-125791: (b2) The extent of CurveSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
+# ===== Part (b2): Positional Continuity - SlopeSamplePoint at start of VerticalArc =====
+era:SlopeSamplePointCongruenceVerticalArcStartShape a sh:NodeShape ;
+    sh:targetClass era:SampledLinearElementGeometry ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "A SlopeSamplePoint must exist at the start position (elementGeometryPos) of every VerticalArc in the corresponding LinearElementGeometry." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?missingPos
+            WHERE {
+                ?leg a era:LinearElementGeometry .
+                
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
+                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
+                
+                FILTER (?thisId = ?legId)
+                
+                ?leg era:verticalAlignments ?vSegmentList .
+                ?vSegmentList rdf:rest*/rdf:first ?vSegment .
+                
+                ?vSegment era:verticalSegmentArc ?vArc .
+                ?vArc era:elementGeometryPos ?arcPos .
+                
+                FILTER NOT EXISTS {
+                    $this era:slopes ?slopeList .
+                    ?slopeList rdf:rest*/rdf:first ?slopeSample .
+                    ?slopeSample era:pos ?slopePos .
+                    FILTER (?slopePos = ?arcPos)
+                }
+                
+                BIND(?arcPos AS ?missingPos)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+
+
+# SPT2TS-125791: (b3) The extent of CurveSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
+# ===== Part (b3): Positional Continuity - SlopeSamplePoint at end of VerticalLine =====
+era:SlopeSamplePointCongruenceVerticalLineEndShape a sh:NodeShape ;
+    sh:targetClass era:SampledLinearElementGeometry ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "A SlopeSamplePoint must exist at the end position of every VerticalLine (at the start of the next segment in verticalAlignments)." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?missingPos
+            WHERE {
+                ?leg a era:LinearElementGeometry .
+                
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
+                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
+                
+                FILTER (?thisId = ?legId)
+                
+                ?leg era:verticalAlignments ?vSegmentList .
+                
+                ?vSegmentList rdf:rest*/rdf:first ?vSegment .
+                ?vSegment era:verticalSegmentLine ?vLine .
+                
+                ?listNode rdf:first ?vSegment .
+                ?listNode rdf:rest ?nextNode .
+                ?nextNode rdf:first ?nextSegment .
+                
+                {
+                    ?nextSegment era:verticalSegmentLine ?nextLine .
+                    ?nextLine era:elementGeometryPos ?endPos .
+                }
+                UNION
+                {
+                    ?nextSegment era:verticalSegmentArc ?nextArc .
+                    ?nextArc era:elementGeometryPos ?endPos .
+                }
+                
+                FILTER NOT EXISTS {
+                    $this era:slopes ?slopeList .
+                    ?slopeList rdf:rest*/rdf:first ?slopeSample .
+                    ?slopeSample era:pos ?slopePos .
+                    FILTER (?slopePos = ?endPos)
+                }
+                
+                BIND(?endPos AS ?missingPos)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+
+
+# SPT2TS-125791: (b4) The extent of CurveSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
+# ===== Part (b4): Positional Continuity - SlopeSamplePoint at end of VerticalArc =====
+era:SlopeSamplePointCongruenceVerticalArcEndShape a sh:NodeShape ;
+    sh:targetClass era:SampledLinearElementGeometry ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "A SlopeSamplePoint must exist at the end position of every VerticalArc (at the start of the next segment in verticalAlignments)." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?missingPos
+            WHERE {
+                ?leg a era:LinearElementGeometry .
+                
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
+                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
+                
+                FILTER (?thisId = ?legId)
+                
+                ?leg era:verticalAlignments ?vSegmentList .
+                
+                ?vSegmentList rdf:rest*/rdf:first ?vSegment .
+                ?vSegment era:verticalSegmentArc ?vArc .
+                
+                ?listNode rdf:first ?vSegment .
+                ?listNode rdf:rest ?nextNode .
+                ?nextNode rdf:first ?nextSegment .
+                
+                {
+                    ?nextSegment era:verticalSegmentLine ?nextLine .
+                    ?nextLine era:elementGeometryPos ?endPos .
+                }
+                UNION
+                {
+                    ?nextSegment era:verticalSegmentArc ?nextArc .
+                    ?nextArc era:elementGeometryPos ?endPos .
+                }
+                
+                FILTER NOT EXISTS {
+                    $this era:slopes ?slopeList .
+                    ?slopeList rdf:rest*/rdf:first ?slopeSample .
+                    ?slopeSample era:pos ?slopePos .
+                    FILTER (?slopePos = ?endPos)
+                }
+                
+                BIND(?endPos AS ?missingPos)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+
+# SPT2TS-130846: The position (pos) of the speed limit for every StaticSpeedLimit defined in a LinearElementSpeedProfile shall not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement
+# ===== StaticSpeedLimit Position Within LinearElement Length Constraint =====
+era:StaticSpeedLimitPositionWithinLengthShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementSpeedProfile ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The position (pos) of every StaticSpeedLimit in a LinearElementSpeedProfile must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this ?speedLimit ?position ?elementLength
+            WHERE {
+                ?linearElement a era:LinearElement .
+                
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?lespId)
+                BIND(REPLACE(STR(?linearElement), "^.*/([^/]+)$", "$1") AS ?leId)
+                
+                FILTER (?lespId = ?leId)
+                
+                ?linearElement era:lengthOfNetLinearElement ?elementLength .
+                
+                {
+                    # Same direction profile
+                    $this era:sameDirProfile ?speedProfile .
+                    ?speedProfile era:staticSpeedProfile ?speedLimit .
+                    ?speedLimit era:pos ?position .
+                }
+                UNION
+                {
+                    # Opposite direction profile
+                    $this era:oppositeDirProfile ?speedProfile .
+                    ?speedProfile era:staticSpeedProfile ?speedLimit .
+                    ?speedLimit era:pos ?position .
+                }
+                
+                # Violation: position exceeds element length
+                FILTER (?position > ?elementLength)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+	
+# SPT2TS-130851: For every defined horizontal segment (line, arc, or transition curve) in a LinearElementGeometry, the position of the segment shall not exceed the length of the corresponding LinearElement
+# ===== Horizontal Segment Position Within LinearElement Length Constraint =====
+era:HorizontalSegmentPositionWithinLengthShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementGeometry ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The position (elementGeometryPos) of every horizontal segment (HorizontalLine, HorizontalArc, or HorizontalTransition) in a LinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?segment ?segmentType ?position ?elementLength
+            WHERE {
+                ?linearElement a era:LinearElement .
+                
+                # Extract LinearElement ID from both URIs
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?legId)
+                BIND(REPLACE(STR(?linearElement), "^.*/([^/]+)$", "$1") AS ?leId)
+                
+                FILTER (?legId = ?leId)
+                
+                ?linearElement era:lengthOfNetLinearElement ?elementLength .
+                
+                $this era:horizontalAlignments ?hSegmentList .
+                ?hSegmentList rdf:rest*/rdf:first ?hSegment .
+                
+                {
+                    # HorizontalLine
+                    ?hSegment era:horizontalSegmentLine ?segment .
+                    ?segment era:elementGeometryPos ?position .
+                    BIND("HorizontalLine" AS ?segmentType)
+                }
+                UNION
+                {
+                    # HorizontalArc
+                    ?hSegment era:horizontalSegmentArc ?segment .
+                    ?segment era:elementGeometryPos ?position .
+                    BIND("HorizontalArc" AS ?segmentType)
+                }
+                UNION
+                {
+                    # HorizontalTransition
+                    ?hSegment era:horizontalSegmentTransition ?segment .
+                    ?segment era:elementGeometryPos ?position .
+                    BIND("HorizontalTransition" AS ?segmentType)
+                }
+                
+                # Violation: position exceeds element length
+                FILTER (?position > ?elementLength)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+	
+# SPT2TS-130874: For every defined vertical segment (line or arc) in a LinearElementGeometry, the position of the segment shall not exceed the length of the corresponding LinearElement
+# ===== Vertical Segment Position Within LinearElement Length Constraint =====
+era:VerticalSegmentPositionWithinLengthShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementGeometry ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The position (elementGeometryPos) of every vertical segment (VerticalLine or VerticalArc) in a LinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?segment ?segmentType ?position ?elementLength
+            WHERE {
+                ?linearElement a era:LinearElement .
+                
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?legId)
+                BIND(REPLACE(STR(?linearElement), "^.*/([^/]+)$", "$1") AS ?leId)
+                
+                FILTER (?legId = ?leId)
+                
+                ?linearElement era:lengthOfNetLinearElement ?elementLength .
+                
+                $this era:verticalAlignments ?vSegmentList .
+                ?vSegmentList rdf:rest*/rdf:first ?vSegment .
+                
+                {
+                    # VerticalLine
+                    ?vSegment era:verticalSegmentLine ?segment .
+                    ?segment era:elementGeometryPos ?position .
+                    BIND("VerticalLine" AS ?segmentType)
+                }
+                UNION
+                {
+                    # VerticalArc
+                    ?vSegment era:verticalSegmentArc ?segment .
+                    ?segment era:elementGeometryPos ?position .
+                    BIND("VerticalArc" AS ?segmentType)
+                }
+                
+                # Violation: position exceeds element length
+                FILTER (?position > ?elementLength)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# SPT2TS-130875: The position (elementGeometryPos) of every cant point defined in a LinearElementGeometry shall not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement.
+# ===== CantPoint Position Within LinearElement Length Constraint =====
+era:CantPointPositionWithinLengthShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementGeometry ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The position (elementGeometryPos) of every CantPoint in a LinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?cantPoint ?position ?elementLength
+            WHERE {
+                ?linearElement a era:LinearElement .
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?legId)
+                BIND(REPLACE(STR(?linearElement), "^.*/([^/]+)$", "$1") AS ?leId)
+                
+                FILTER (?legId = ?leId)
+                
+                ?linearElement era:lengthOfNetLinearElement ?elementLength .
+                
+                $this era:cantPoints ?cantPointList .
+                ?cantPointList rdf:rest*/rdf:first ?cantPoint .
+                ?cantPoint era:elementGeometryPos ?position .
+                
+                # Violation: position exceeds element length
+                FILTER (?position > ?elementLength)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+
+# SPT2TS-125785: (a) The position 'pos' of the CantSamplePoint, SlopeSamplePoint, and CurveSamplePoint for the defined SampleLinearElementGeometry object shall not exceed the length of the underlying linear element.
+# ===== CantSamplePoint Position Within LinearElement Length Constraint =====
+era:CantSamplePointPositionWithinLengthShape a sh:NodeShape ;
+    sh:targetClass era:SampledLinearElementGeometry ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The position (pos) of every CantSamplePoint in a SampledLinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?cantSample ?position ?elementLength
+            WHERE {
+                ?linearElement a era:LinearElement .
+                
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?slegId)
+                BIND(REPLACE(STR(?linearElement), "^.*/([^/]+)$", "$1") AS ?leId)
+                
+                FILTER (?slegId = ?leId)
+                
+                ?linearElement era:lengthOfNetLinearElement ?elementLength .
+                
+                $this era:cants ?cantList .
+                ?cantList rdf:rest*/rdf:first ?cantSample .
+                ?cantSample era:pos ?position .
+                
+                # Violation: position exceeds element length
+                FILTER (?position > ?elementLength)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+
+
+# SPT2TS-125785: (b) The position 'pos' of the CantSamplePoint, SlopeSamplePoint, and CurveSamplePoint for the defined SampleLinearElementGeometry object shall not exceed the length of the underlying linear element.
+# ===== SlopeSamplePoint Position Within LinearElement Length Constraint =====
+era:SlopeSamplePointPositionWithinLengthShape a sh:NodeShape ;
+    sh:targetClass era:SampledLinearElementGeometry ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The position (pos) of every SlopeSamplePoint in a SampledLinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?slopeSample ?position ?elementLength
+            WHERE {
+                ?linearElement a era:LinearElement .
+                
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?slegId)
+                BIND(REPLACE(STR(?linearElement), "^.*/([^/]+)$", "$1") AS ?leId)
+                
+                FILTER (?slegId = ?leId)
+                
+                ?linearElement era:lengthOfNetLinearElement ?elementLength .
+                
+                $this era:slopes ?slopeList .
+                ?slopeList rdf:rest*/rdf:first ?slopeSample .
+                ?slopeSample era:pos ?position .
+                
+                # Violation: position exceeds element length
+                FILTER (?position > ?elementLength)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+
+
+# SPT2TS-125785: (c) The position 'pos' of the CantSamplePoint, SlopeSamplePoint, and CurveSamplePoint for the defined SampleLinearElementGeometry object shall not exceed the length of the underlying linear element.
+# ===== CurveSamplePoint Position Within LinearElement Length Constraint =====
+era:CurveSamplePointPositionWithinLengthShape a sh:NodeShape ;
+    sh:targetClass era:SampledLinearElementGeometry ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The position (pos) of every CurveSamplePoint in a SampledLinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?curveSample ?position ?elementLength
+            WHERE {
+                ?linearElement a era:LinearElement .
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?slegId)
+                BIND(REPLACE(STR(?linearElement), "^.*/([^/]+)$", "$1") AS ?leId)
+                
+                FILTER (?slegId = ?leId)
+                
+                ?linearElement era:lengthOfNetLinearElement ?elementLength .
+                
+                $this era:curves ?curveList .
+                ?curveList rdf:rest*/rdf:first ?curveSample .
+                ?curveSample era:pos ?position .
+                
+                # Violation: position exceeds element length
+                FILTER (?position > ?elementLength)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+	
+# SPT2TS-130995: Every axle load speed profile defined in either direction of a track section shall be congruent with the corresponding linear element.
+# ===== AxleLoadSpeedProfile Congruence Constraint =====
+era:AxleLoadSpeedProfileCongruenceShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementSpeedProfile ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The startPos of every AxleLoadSpeedProfile must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this ?axleLoadProfile ?startPos ?elementLength
+            WHERE {
+                ?linearElement a era:LinearElement .
+                
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?lespId)
+                BIND(REPLACE(STR(?linearElement), "^.*/([^/]+)$", "$1") AS ?leId)
+                
+                FILTER (?lespId = ?leId)
+                
+                ?linearElement era:lengthOfNetLinearElement ?elementLength .
+                
+                {
+                    $this era:sameDirProfile ?speedProfile .
+                    ?speedProfile era:axleLoadSpeedProfiles ?axleLoadProfile .
+                }
+                UNION
+                {
+                    $this era:oppositeDirProfile ?speedProfile .
+                    ?speedProfile era:axleLoadSpeedProfiles ?axleLoadProfile .
+                }
+                
+                ?axleLoadProfile era:startPos ?startPos .
+                
+                FILTER (?startPos > ?elementLength)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The endPos of every AxleLoadSpeedProfile must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this ?axleLoadProfile ?endPos ?elementLength
+            WHERE {
+                ?linearElement a era:LinearElement .
+                
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?lespId)
+                BIND(REPLACE(STR(?linearElement), "^.*/([^/]+)$", "$1") AS ?leId)
+                
+                FILTER (?lespId = ?leId)
+                
+                ?linearElement era:lengthOfNetLinearElement ?elementLength .
+                
+                {
+                    $this era:sameDirProfile ?speedProfile .
+                    ?speedProfile era:axleLoadSpeedProfiles ?axleLoadProfile .
+                }
+                UNION
+                {
+                    $this era:oppositeDirProfile ?speedProfile .
+                    ?speedProfile era:axleLoadSpeedProfiles ?axleLoadProfile .
+                }
+                
+                ?axleLoadProfile era:endPos ?endPos .
+                
+                FILTER (?endPos > ?elementLength)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The startPos of every AxleLoadSpeedProfile must be less than or equal to endPos (proper ordering)." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this ?axleLoadProfile ?startPos ?endPos
+            WHERE {
+                {
+                    $this era:sameDirProfile ?speedProfile .
+                    ?speedProfile era:axleLoadSpeedProfiles ?axleLoadProfile .
+                }
+                UNION
+                {
+                    $this era:oppositeDirProfile ?speedProfile .
+                    ?speedProfile era:axleLoadSpeedProfiles ?axleLoadProfile .
+                }
+                
+                ?axleLoadProfile era:startPos ?startPos ;
+                                 era:endPos ?endPos .
+                
+                FILTER (?startPos > ?endPos)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+	
+# SPT2TS-125869: For each LinearElementSection, the 'startOffsetFromOrigin' value shall not be greater than 'endOffsetFromOrigin' value.
+# ===== LinearElementSection Offset Ordering Constraint =====
+era:LinearElementSectionOffsetOrderingShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementSection ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "For each LinearElementSection, the startOffsetFromOrigin must not be greater than endOffsetFromOrigin." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this ?startOffset ?endOffset
+            WHERE {
+                $this era:startOffsetFromOrigin ?startOffset ;
+                      era:endOffsetFromOrigin ?endOffset .
+                
+                # Violation: start is greater than end
+                FILTER (?startOffset > ?endOffset)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+# SPT2TS-125777: No two distinct derailers may be declared at the exact same position in the network, regardless of their orientation.
+# ===== Derailer Unique Position Constraint =====
+era:DerailerUniquePositionShape a sh:NodeShape ;
+    sh:targetClass era:Derailer ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "No two distinct derailers may be declared at the exact same position in the network (same LinearElement and offsetFromOrigin), regardless of their orientation." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this ?otherDerailer ?linearElement ?offset
+            WHERE {
+                $this era:netPointReference ?npr1 .
+                ?npr1 era:hasTopoCoordinate ?tc1 .
+                ?tc1 era:onLinearElement ?linearElement .
+                ?tc1 era:offsetFromOrigin ?offset .
+                
+                ?otherDerailer a era:Derailer .
+                ?otherDerailer era:netPointReference ?npr2 .
+                ?npr2 era:hasTopoCoordinate ?tc2 .
+                ?tc2 era:onLinearElement ?linearElement .
+                ?tc2 era:offsetFromOrigin ?offset .
+                
+                # Violation: two distinct derailers at the same position
+                FILTER ($this != ?otherDerailer)
+                
+                FILTER (STR($this) < STR(?otherDerailer))
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# ===== BaliseGroup Unique NID Constraint =====
+era:BaliseGroupUniqueNIDShape a sh:NodeShape ;
+    sh:targetClass era:BaliseGroup ;
+    
+	# SPT2TS-125788: The BaliseGroup  shall have unique Balise Group NIDs (NID_C + NID_BG)within a ETCS.
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "BaliseGroups must have unique Balise Group NIDs (NID_C + NID_BG combination) within the ETCS system. Two distinct BaliseGroups with the same NID_C must have different NID_BG values." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this ?otherBaliseGroup ?nid_c ?nid_bg
+            WHERE {
+                $this era:nid_c ?nid_c .
+                $this era:nid_bg ?nid_bg .
+                
+                ?otherBaliseGroup a era:BaliseGroup .
+                ?otherBaliseGroup era:nid_c ?nid_c .
+                ?otherBaliseGroup era:nid_bg ?nid_bg .
+                
+                # Violation: two distinct BaliseGroups with the same NID_C and NID_BG
+                FILTER ($this != ?otherBaliseGroup)
+                
+                FILTER (STR($this) < STR(?otherBaliseGroup))
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .

@@ -1,0 +1,149 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+# SPT2TS-130923: All FoulingPoints associated with a Crossing shall be positioned on the same LinearElements referenced in the Crossing's topologicalCoordinates.
+# ===== Crossing FoulingPoint LinearElement Constraint =====
+era:CrossingFoulingPointLinearElementShape a sh:NodeShape ;
+    sh:targetClass era:Crossing ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "All FoulingPoints associated with a Crossing must be positioned on LinearElements that are also referenced in the Crossing's topologicalCoordinates." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this ?foulingPoint ?fpLinearElement
+            WHERE {
+                $this era:foulingPoints ?foulingPoint .
+                ?foulingPoint era:topologicalCoordinate ?fpTC .
+                ?fpTC era:onLinearElement ?fpLinearElement .
+                
+                FILTER NOT EXISTS {
+                    $this era:topologicalCoordinates ?crossingTC .
+                    ?crossingTC era:onLinearElement ?fpLinearElement .
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# SPT2TS-125958: The position (pos) of every kilometric post in a LinearElementKm shall not exceed the length of the corresponding LinearElement.
+# ===== KilometricPost Position Within LinearElement Length Constraint =====
+era:KilometricPostPositionWithinLengthShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementKm ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The position (pos) of every KilometricPost in a LinearElementKm must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?kilometricPost ?position ?elementLength
+            WHERE {
+                $this era:linearElement ?linearElement .
+                ?linearElement era:lengthOfNetLinearElement ?elementLength .
+                
+                $this era:kilometricPosts ?kpList .
+                ?kpList rdf:rest*/rdf:first ?kilometricPost .
+                ?kilometricPost era:pos ?position .
+                
+                FILTER (?position > ?elementLength)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# SPT2TS-130878: For every Level Crossings, the danger points shall be congruent with the corresponding areaReference
+# ===== LevelCrossing DangerPoint Coverage Constraint =====
+era:LevelCrossingDangerPointCoverageShape a sh:NodeShape ;
+    sh:targetClass era:LevelCrossing ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "All DangerPoints associated with a LevelCrossing must be positioned on LinearElements that are fully covered by the LevelCrossing's areaReference." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?dangerPoint ?linearElement
+            WHERE {
+                $this era:dangerPoints ?dangerPoint .
+                ?dangerPoint era:topologicalCoordinate ?dpTC .
+                ?dpTC era:onLinearElement ?linearElement .
+                
+                $this era:areaReference ?areaRef .
+                FILTER NOT EXISTS {
+                    # NetAreaReference includes NetLinearReferences
+                    ?areaRef era:includes ?lr .
+                    {
+                        ?lr era:startsAt ?startTC .
+                        ?startTC era:onLinearElement ?linearElement .
+                    }
+                    UNION
+                    {
+                        ?lr era:endsAt ?endTC .
+                        ?endTC era:onLinearElement ?linearElement .
+                    }
+                    UNION
+                    {
+                        ?lr era:hasSequence ?seqList .
+                        ?seqList rdf:rest*/rdf:first ?linearElement .
+                    }
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+# SPT2TS-130910: All FoulingPoints associated with a Switch shall be positioned on LinearElements that are directly connected via the Switch's leftBranch or rightBranch NetRelations.
+# ===== Switch FoulingPoint LinearElement Constraint =====
+era:SwitchFoulingPointLinearElementShape a sh:NodeShape ;
+    sh:targetClass era:Switch ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "All FoulingPoints associated with a Switch must be positioned on LinearElements that are directly connected via the Switch's leftBranch or rightBranch NetRelations (i.e., on elementA or elementB of these NetRelations)." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this ?foulingPoint ?fpLinearElement
+            WHERE {
+                $this era:foulingPoints ?foulingPoint .
+                ?foulingPoint era:topologicalCoordinate ?fpTC .
+                ?fpTC era:onLinearElement ?fpLinearElement .
+                
+                # Check if this LinearElement is NOT connected via leftBranch or rightBranch
+                FILTER NOT EXISTS {
+                    {
+                        $this era:leftBranch ?leftBranchNR .
+                        {
+                            ?leftBranchNR era:elementA ?fpLinearElement .
+                        }
+                        UNION
+                        {
+                            ?leftBranchNR era:elementB ?fpLinearElement .
+                        }
+                    }
+                    UNION
+                    {
+                        $this era:rightBranch ?rightBranchNR .
+                        {
+                            ?rightBranchNR era:elementA ?fpLinearElement .
+                        }
+                        UNION
+                        {
+                            ?rightBranchNR era:elementB ?fpLinearElement .
+                        }
+                    }
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .

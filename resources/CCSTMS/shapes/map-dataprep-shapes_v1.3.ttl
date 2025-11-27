@@ -1,0 +1,65 @@
+@prefix era: <http://data.europa.eu/949/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ===== LinearElementCoordinate Position Within LinearElement Length Constraint =====
+era:LinearElementCoordinatePositionWithinLengthShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementProjection ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The position (pos) of every LinearElementCoordinate in a LinearElementProjection must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            
+            SELECT $this ?coordinate ?position ?elementLength
+            WHERE {
+                # Find the corresponding LinearElement with matching id
+                ?linearElement a era:LinearElement .
+                
+                # Extract LinearElement ID from both URIs
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?projId)
+                BIND(REPLACE(STR(?linearElement), "^.*/([^/]+)$", "$1") AS ?leId)
+                
+                FILTER (?projId = ?leId)
+                ?linearElement era:lengthOfNetLinearElement ?elementLength .
+                
+                $this era:coordinates ?coordList .
+                ?coordList rdf:rest*/rdf:first ?coordinate .
+                
+                ?coordinate era:pos ?position .
+                
+                # Violation: position exceeds element length
+                FILTER (?position > ?elementLength)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+	
+	
+# ===== LinearElementProjection Requires LinearElement Constraint =====
+era:LinearElementProjectionRequiresLinearElementShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementProjection ;
+    
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Every LinearElementProjection must have a corresponding LinearElement with matching identifier." ;
+        sh:select """
+            PREFIX era: <http://data.europa.eu/949/>
+            
+            SELECT $this
+            WHERE {
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?projId)
+                
+                FILTER NOT EXISTS {
+                    ?linearElement a era:LinearElement .
+                    BIND(REPLACE(STR(?linearElement), "^.*/([^/]+)$", "$1") AS ?leId)
+                    FILTER (?projId = ?leId)
+                }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
