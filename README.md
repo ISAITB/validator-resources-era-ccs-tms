@@ -41,7 +41,7 @@ The validator supports validation across multiple CCSTMS domains defined in the 
 Access the validator's web interface at:
 
 ```
-https://www.itb.ec.europa.eu/shacl/CCSTMS/upload
+https://www.itb.ec.europa.eu/shacl/ccstms/upload
 ```
 
 Simply upload your RDF file, select the validation domain, and receive instant feedback on your data's conformance.
@@ -51,7 +51,7 @@ Simply upload your RDF file, select the validation domain, and receive instant f
 Validate RDF content programmatically via the REST API:
 
 ```bash
-curl -X POST "https://www.itb.ec.europa.eu/shacl/CCSTMS/api/validate" \
+curl -X POST "https://www.itb.ec.europa.eu/shacl/ccstms/api/validate" \
   -H "Content-Type: application/json" \
   -d '{
     "contentToValidate": "<your-rdf-content>",
@@ -60,14 +60,14 @@ curl -X POST "https://www.itb.ec.europa.eu/shacl/CCSTMS/api/validate" \
   }'
 ```
 
-For complete API documentation, see the [Swagger UI](https://www.itb.ec.europa.eu/shacl/swagger-ui.html).
+For complete REST API documentation, see the [Swagger UI](https://www.itb.ec.europa.eu/shacl/swagger-ui.html).
 
 ### Using the SOAP API
 
 For enterprise integration, the SOAP API is available at:
 
 ```
-https://www.itb.ec.europa.eu/shacl/soap/CCSTMS/validation?wsdl
+https://www.itb.ec.europa.eu/shacl/soap/ccstms/validation?wsdl
 ```
 
 ### Using the Command-Line Tool (CLI)
@@ -76,7 +76,7 @@ Download the offline validator for local or CI/CD pipeline usage:
 
 ```bash
 # Download the CLI tool
-wget https://www.itb.ec.europa.eu/shacl-offline/CCSTMS/validator.zip
+wget https://www.itb.ec.europa.eu/shacl-offline/ccstms/validator.zip
 unzip validator.zip
 
 # Dependency
