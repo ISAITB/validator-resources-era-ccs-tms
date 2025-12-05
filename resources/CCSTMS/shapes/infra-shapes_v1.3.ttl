@@ -1443,10 +1443,10 @@ era:OperationalPointShape a sh:NodeShape ;
 	sh:property [ 
 		sh:path era:uopid ;
 		sh:datatype xsd:string ;
-		sh:pattern "^[A-Z]{2}[0-9]+$" ;  # Example: DE12345, FR67890
+		sh:pattern "^[A-Z]{2}.{0,10}$" ; # Example: DE12345, FR67890
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
-		sh:message "Each OperationalPoint must have exactly one uopid following the format: 2-letter country code + numeric ID (e.g., DE12345)." ;
+		sh:message "Each OperationalPoint must have exactly one uopid following the format: 2-letter country code + alphanumeric ID (e.g., DE12345)." ;
 		sh:severity sh:Violation ;
 	] ;
     # Operational Point Name (optional, string)
