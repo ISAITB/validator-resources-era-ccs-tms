@@ -205,9 +205,9 @@ era:DPSGroupsListShape a sh:NodeShape ;
     # DPS Groups (optional, multiple allowed)
     sh:property [ 
         sh:path era:dpsGroups ;
-        sh:node era:DriveProtectionSectionGroupShape ;
+        sh:class era:DriveProtectionSectionGroup ;
 		sh:nodeKind sh:IRI ;
-        sh:message "A DPSGroupsList may contain multiple dpsGroups that conform to DriveProtectionSectionGroupShape." ;
+        sh:message "A DPSGroupsList may contain multiple dpsGroups that conform to DriveProtectionSectionGroup object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -219,11 +219,11 @@ era:DPSStateShape a sh:NodeShape ;
     # DPS (required, reference to the Drive Protection Section)
     sh:property [ 
         sh:path era:dps ;
-        sh:node era:DriveProtectionSectionShape ;
+        sh:class era:DriveProtectionSection ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DPSState must reference exactly one dps (Drive Protection Section) that conforms to DriveProtectionSectionShape." ;
+        sh:message "Each DPSState must reference exactly one dps (Drive Protection Section) that conforms to DriveProtectionSection object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -331,11 +331,11 @@ era:DpsGroupStateShape a sh:NodeShape ;
     # DPS Group (required, reference to the group)
     sh:property [ 
         sh:path era:dpsGroup ;
-        sh:node era:DriveProtectionSectionGroupShape ;
+        sh:class era:DriveProtectionSectionGroup ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DpsGroupState must reference exactly one dpsGroup that conforms to DriveProtectionSectionGroupShape." ;
+        sh:message "Each DpsGroupState must reference exactly one dpsGroup that conforms to DriveProtectionSectionGroup object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -368,17 +368,17 @@ era:DpsGroupStateShape a sh:NodeShape ;
         sh:path era:dpsStates ;
         sh:node era:DPSStateShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DpsGroupState may contain multiple dpsStates that conform to DPSStateShape." ;
+        sh:message "A DpsGroupState may contain multiple dpsStates that conform to DPSState object." ;
         sh:severity sh:Violation ;
     ] ;
     
     # Operational Plan Movement (optional, associated movement plan)
     sh:property [ 
         sh:path era:operationalPlanMovement ;
-        sh:node era:OperationalPlanMovementShape ;
+        sh:class era:OperationalPlanMovement ;
 		sh:nodeKind sh:IRI ;
         sh:maxCount 1 ;
-        sh:message "A DpsGroupState may have at most one operationalPlanMovement that conforms to OperationalPlanMovementShape." ;
+        sh:message "A DpsGroupState may have at most one operationalPlanMovement that conforms to OperationalPlanMovement object." ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -523,11 +523,11 @@ era:EventEstimationShape a sh:NodeShape ;
     # Event (required, reference to the movement event)
     sh:property [ 
         sh:path era:event ;
-        sh:node era:MovementEventShape ;
+        sh:class era:MovementEvent ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each EventEstimation must reference exactly one event that conforms to MovementEventShape." ;
+        sh:message "Each EventEstimation must reference exactly one event that conforms to MovementEvent object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -544,7 +544,7 @@ era:EventEstimationShape a sh:NodeShape ;
 # ===== Event Execution Report Shape =====
 era:EventExecutionReportShape a sh:NodeShape ;
     sh:targetClass era:EventExecutionReport ;
-    sh:message "Report documenting the execution of a specific event - must contain exactly one report type." ;
+    sh:message "Report documenting the execution of a specific event - must contain exactly one report type. Such report type object needs to be properly constituted. " ;
     
     # Each Event Execution Report must have exactly ONE of these report types
     sh:xone (
@@ -600,11 +600,11 @@ era:EventHandlingShape a sh:NodeShape ;
     # Event (required, reference to the movement event)
     sh:property [ 
         sh:path era:event ;
-        sh:node era:MovementEventShape ;
+        sh:class era:MovementEvent ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each EventHandling must reference exactly one event that conforms to MovementEventShape." ;
+        sh:message "Each EventHandling must reference exactly one event that conforms to MovementEvent object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -636,7 +636,7 @@ era:ExecutionResponseShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each ExecutionResponse must reference exactly one operationalPlanRef that conforms to OperationalPlanReferenceShape." ;
+        sh:message "Each ExecutionResponse must reference exactly one operationalPlanRef that conforms to OperationalPlanReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -690,11 +690,11 @@ era:MovementEventExecutionReportShape a sh:NodeShape ;
     # Movement Event (required, reference to the event)
     sh:property [ 
         sh:path era:movementEvent ;
-        sh:node era:MovementEventShape ;
+        sh:class era:MovementEvent ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MovementEventExecutionReport must reference exactly one movementEvent that conforms to MovementEventShape." ;
+        sh:message "Each MovementEventExecutionReport must reference exactly one movementEvent that conforms to MovementEvent object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -762,7 +762,7 @@ era:MovementEventShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MovementEvent must have exactly one position that conforms to NetPointReferenceShape." ;
+        sh:message "Each MovementEvent must have exactly one position that conforms to NetPointReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -860,7 +860,7 @@ era:MovementEventShape a sh:NodeShape ;
         sh:node era:StopDescriptionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A MovementEvent may have at most one stopDescription that conforms to StopDescriptionShape (required if scheduledType or plannedType is stop)." ;
+        sh:message "A MovementEvent may have at most one stopDescription that conforms to StopDescription object (required if scheduledType or plannedType is stop)." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -869,7 +869,7 @@ era:MovementEventShape a sh:NodeShape ;
         sh:path era:startsAfterEvents ;
         sh:node era:OperationalEventRefShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A MovementEvent may reference multiple startsAfterEvents that must complete before this event starts." ;
+        sh:message "A MovementEvent may reference multiple startsAfterEvents that must complete before this event starts. This error might be because of referencing improper :OperationalEventRef" ;
         sh:severity sh:Violation ;
     ] .
 
@@ -886,7 +886,7 @@ era:MovementPermissionShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MovementPermission must have exactly one pathWay (NetLinearReference defining the permitted route)." ;
+        sh:message "Each MovementPermission must have exactly one pathWay (NetLinearReference defining the permitted route). A proper NetLinearReference is needed" ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -897,7 +897,7 @@ era:MovementPermissionShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MovementPermission must have exactly one riskBuffer (NetLinearReference defining safety buffer zone)." ;
+        sh:message "Each MovementPermission must have exactly one riskBuffer (NetLinearReference defining safety buffer zone). A proper NetLinearReference is needed" ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -907,7 +907,7 @@ era:MovementPermissionShape a sh:NodeShape ;
         sh:node era:MpSpeedShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each MovementPermission must have at least one speeds profile that conforms to MpSpeedShape." ;
+        sh:message "Each MovementPermission must have at least one speeds profile that conforms to MpSpeed object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -917,7 +917,7 @@ era:MovementPermissionShape a sh:NodeShape ;
         sh:node era:MpDrivingModeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each MovementPermission must have at least one movementModes that conform to MpDrivingModeShape." ;
+        sh:message "Each MovementPermission must have at least one movementModes that conform to MpDrivingMode object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -926,7 +926,7 @@ era:MovementPermissionShape a sh:NodeShape ;
         sh:path era:riskPaths ;
         sh:node era:NetLinearReferenceShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A MovementPermission may have multiple riskPaths (routes that conflict with this permission)." ;
+        sh:message "A MovementPermission may have multiple riskPaths (routes that conflict with this permission). A proper NetLinearReference is needed" ;
         sh:severity sh:Violation ;
     ] .
 
@@ -942,7 +942,7 @@ era:MovementRestrictionShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MovementRestriction must have exactly one restrictedPath (NetLinearReference defining where restriction applies)." ;
+        sh:message "Each MovementRestriction must have exactly one restrictedPath (NetLinearReference defining where restriction applies). A proper NetLinearReference is needed" ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -953,7 +953,7 @@ era:MovementRestrictionShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MovementRestriction must have exactly one specificRestriction that conforms to SpecificMovementRestrictionShape." ;
+        sh:message "Each MovementRestriction must have exactly one specificRestriction that conforms to SpecificMovementRestriction object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -969,7 +969,7 @@ era:MpDrivingModeShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MpDrivingMode must have exactly one path (NetLinearReference defining where this driving mode applies)." ;
+        sh:message "Each MpDrivingMode must have exactly one path (NetLinearReference defining where this driving mode applies). A proper NetLinearReference is needed." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1000,7 +1000,7 @@ era:MpSpeedShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MpSpeed must have exactly one path (NetLinearReference defining where this speed limit applies)." ;
+        sh:message "Each MpSpeed must have exactly one path (NetLinearReference defining where this speed limit applies). A proper NetLinearReference is needed." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1051,33 +1051,33 @@ era:OperationalConsistShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each OperationalConsist must have exactly one supportedOnBoardEquipment that conforms to SupportedOnBoardEquipmentShape." ;
+        sh:message "Each OperationalConsist must have exactly one supportedOnBoardEquipment that conforms to SupportedOnBoardEquipment object." ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Operational Event Reference Shape =====
 era:OperationalEventRefShape a sh:NodeShape ;
     sh:targetClass era:OperationalEventRef ;
-    sh:message "Reference to an operational event - must be exactly one event type (movement, restriction, or warning)." ;
+    sh:message "Reference to an operational event - must be exactly one 'proper' instance of event type (movement, restriction, or warning)." ;
     
     # Each Operational Event Reference must have exactly ONE of these event types
     sh:xone (
         [ sh:path era:movementEvent ;
-          sh:node era:MovementEventShape ;
+          sh:class era:MovementEvent ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
           sh:message "Operational event reference is a movement event." ]
         
         [ sh:path era:restrictionEvent ;
-          sh:node era:RestrictionEventShape ;
+          sh:class era:RestrictionEvent ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
           sh:message "Operational event reference is a restriction event." ]
         
         [ sh:path era:warningMeasureEvent ;
-          sh:node era:WarningMeasureEventShape ;
+          sh:class era:WarningMeasureEvent ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
@@ -1157,7 +1157,7 @@ era:OperationalPlanMovementShape a sh:NodeShape ;
         sh:node era:TrainUnitShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each OperationalPlanMovement must have at least one operationalTrainUnits that conform to TrainUnitShape." ;
+        sh:message "Each OperationalPlanMovement must have at least one operationalTrainUnits that conform to TrainUnit object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1166,7 +1166,7 @@ era:OperationalPlanMovementShape a sh:NodeShape ;
         sh:path era:movementRestrictions ;
         sh:node era:MovementRestrictionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OperationalPlanMovement may have multiple movementRestrictions that conform to MovementRestrictionShape." ;
+        sh:message "An OperationalPlanMovement may have multiple movementRestrictions that conform to MovementRestriction object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1179,21 +1179,21 @@ era:OperationalPlanReferenceShape a sh:NodeShape ;
     # Each Operational Plan Reference must have exactly ONE of these plan types
     sh:xone (
         [ sh:path era:operationalPlanMovementRef ;
-          sh:node era:OperationalPlanMovementShape ;
+          sh:class era:OperationalPlanMovement ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
           sh:message "Operational plan reference is a movement plan." ]
         
         [ sh:path era:operationalPlanRestrictionRef ;
-          sh:node era:OperationalPlanRestrictionShape ;
+          sh:class era:OperationalPlanRestriction ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
           sh:message "Operational plan reference is a restriction plan." ]
         
         [ sh:path era:operationalPlanWarningMeasureRef ;
-          sh:node era:OperationalPlanWarningMeasureShape ;
+          sh:class era:OperationalPlanWarningMeasure ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
@@ -1231,7 +1231,7 @@ era:OperationalPlanRestrictionShape a sh:NodeShape ;
         sh:node era:RestrictionEventShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each OperationalPlanRestriction must have at least one restrictionEvents that conform to RestrictionEventShape." ;
+        sh:message "Each OperationalPlanRestriction must have at least one restrictionEvents that conform to RestrictionEvent object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1266,7 +1266,7 @@ era:OperationalPlanWarningMeasureShape a sh:NodeShape ;
         sh:node era:WarningMeasureEventShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each OperationalPlanWarningMeasure must have at least one warningMeasureEvents that conform to WarningMeasureEventShape." ;
+        sh:message "Each OperationalPlanWarningMeasure must have at least one warningMeasureEvents that conform to WarningMeasureEvent object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1280,7 +1280,7 @@ era:OperationalTrafficPlanShape a sh:NodeShape ;
         sh:path era:operationalPlanMovements ;
         sh:node era:OperationalPlanMovementShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OperationalTrafficPlan may contain multiple operationalPlanMovements that conform to OperationalPlanMovementShape." ;
+        sh:message "An OperationalTrafficPlan may contain multiple operationalPlanMovements that conform to OperationalPlanMovement object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1289,7 +1289,7 @@ era:OperationalTrafficPlanShape a sh:NodeShape ;
         sh:path era:operationalPlanRestrictions ;
         sh:node era:OperationalPlanRestrictionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OperationalTrafficPlan may contain multiple operationalPlanRestrictions that conform to OperationalPlanRestrictionShape." ;
+        sh:message "An OperationalTrafficPlan may contain multiple operationalPlanRestrictions that conform to OperationalPlanRestriction object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1298,7 +1298,7 @@ era:OperationalTrafficPlanShape a sh:NodeShape ;
         sh:path era:operationalPlanWarningMeasures ;
         sh:node era:OperationalPlanWarningMeasureShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OperationalTrafficPlan may contain multiple operationalPlanWarningMeasures that conform to OperationalPlanWarningMeasureShape." ;
+        sh:message "An OperationalTrafficPlan may contain multiple operationalPlanWarningMeasures that conform to OperationalPlanWarningMeasure object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1677,7 +1677,7 @@ era:PhysicalVehicleShape a sh:NodeShape ;
 # ===== Restricted Aspect Shape =====
 era:RestrictedAspectShape a sh:NodeShape ;
     sh:targetClass era:RestrictedAspect ;
-    sh:message "Defines restrictions on train operation - must specify exactly one type of restriction aspect." ;
+    sh:message "Defines restrictions on train operation - must specify exactly one type of 'proper' restriction aspect." ;
     
     # Each Restricted Aspect must have exactly ONE of these restriction types
     sh:xone (
@@ -1761,7 +1761,7 @@ era:RestrictionAreaShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each RestrictionArea must have at least one linearElementSections that conform to LinearElementSectionShape (defining where restriction applies)." ;
+        sh:message "Each RestrictionArea must have at least one linearElementSections that conform to LinearElementSection object (defining where restriction applies)." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1771,7 +1771,7 @@ era:RestrictionAreaShape a sh:NodeShape ;
         sh:node era:SpecificRestrictionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each RestrictionArea must have at least one specificRestrictions that conform to SpecificRestrictionShape (defining what restrictions apply)." ;
+        sh:message "Each RestrictionArea must have at least one specificRestrictions that conform to SpecificRestriction object (defining what restrictions apply)." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1809,17 +1809,17 @@ era:RestrictionAreaStateShape a sh:NodeShape ;
         sh:node era:RestrictionAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A RestrictionAreaState may reference at most one restrictionArea that conforms to RestrictionAreaShape." ;
+        sh:message "A RestrictionAreaState may reference at most one restrictionArea that conforms to RestrictionArea object." ;
         sh:severity sh:Violation ;
     ] ;
     
     # Restriction Event (optional, associated event)
     sh:property [ 
         sh:path era:restrictionEvent ;
-        sh:node era:RestrictionEventShape ;
+        sh:class era:RestrictionEvent ;
 		sh:nodeKind sh:IRI ;
         sh:maxCount 1 ;
-        sh:message "A RestrictionAreaState may reference at most one restrictionEvent that conforms to RestrictionEventShape." ;
+        sh:message "A RestrictionAreaState may reference at most one restrictionEvent that conforms to RestrictionEvent object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1831,11 +1831,11 @@ era:RestrictionEventExecutionReportShape a sh:NodeShape ;
     # Restriction Event (required, reference to the event)
     sh:property [ 
         sh:path era:restrictionEvent ;
-        sh:node era:RestrictionEventShape ;
+        sh:class era:RestrictionEvent ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each RestrictionEventExecutionReport must reference exactly one restrictionEvent that conforms to RestrictionEventShape." ;
+        sh:message "Each RestrictionEventExecutionReport must reference exactly one restrictionEvent that conforms to RestrictionEvent object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1903,7 +1903,7 @@ era:RestrictionEventShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each RestrictionEvent must reference exactly one restrictionArea that conforms to RestrictionAreaShape." ;
+        sh:message "Each RestrictionEvent must reference exactly one restrictionArea that conforms to RestrictionArea object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1932,7 +1932,7 @@ era:RestrictionEventShape a sh:NodeShape ;
         sh:path era:startsAfterEvents ;
         sh:node era:OperationalEventRefShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A RestrictionEvent may reference multiple startsAfterEvents that must complete before this restriction is activated." ;
+        sh:message "A RestrictionEvent may reference multiple startsAfterEvents that must complete before this restriction is activated. Refer to the referenced object to ensure conformance." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1940,7 +1940,7 @@ era:RestrictionEventShape a sh:NodeShape ;
 # ===== Specific Movement Restriction Shape =====
 era:SpecificMovementRestrictionShape a sh:NodeShape ;
     sh:targetClass era:SpecificMovementRestriction ;
-    sh:message "Defines a specific type of movement restriction - must specify exactly one restriction type." ;
+    sh:message "Defines a specific type of movement restriction - must specify exactly one 'proper' restriction type." ;
     
     # Each Specific Movement Restriction must have exactly ONE of these restriction types
     sh:xone (
@@ -2008,7 +2008,7 @@ era:SpecificRestrictionShape a sh:NodeShape ;
         sh:node era:RestrictedAspectShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each SpecificRestriction must have at least one restrictedAspects that conform to RestrictedAspectShape." ;
+        sh:message "Each SpecificRestriction must have at least one restrictedAspects that conform to RestrictedAspect object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2098,7 +2098,7 @@ era:StopDescriptionShape a sh:NodeShape ;
         sh:node era:DoorActivityShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A StopDescription may have at most one doorActivity that conforms to DoorActivityShape." ;
+        sh:message "A StopDescription may have at most one doorActivity that conforms to DoorActivity object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2108,7 +2108,7 @@ era:StopDescriptionShape a sh:NodeShape ;
         sh:node era:AdditionalEventTimeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 4 ;
-        sh:message "A StopDescription may have at most 4 additionalEventTimes that conform to AdditionalEventTimeShape." ;
+        sh:message "A StopDescription may have at most 4 additionalEventTimes that conform to AdditionalEventTime object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2171,7 +2171,7 @@ era:SupportedOnBoardEquipmentShape a sh:NodeShape ;
         sh:path era:onboardExtensions ;
         sh:node era:OnBoardExtensionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A SupportedOnBoardEquipment may have multiple onboardExtensions that conform to OnBoardExtensionShape." ;
+        sh:message "A SupportedOnBoardEquipment may have multiple onboardExtensions that conform to OnBoardExtension object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2188,7 +2188,7 @@ era:TrackOccupationStateShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TrackOccupationState must reference exactly one trackArea that conforms to NetAreaReferenceShape." ;
+        sh:message "Each TrackOccupationState must reference exactly one trackArea that conforms to NetAreaReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2245,10 +2245,10 @@ era:TrackOccupationStateShape a sh:NodeShape ;
     # Operational Plan Movement (optional, associated movement plan)
     sh:property [ 
         sh:path era:operationalPlanMovement ;
-        sh:node era:OperationalPlanMovementShape ;
+        sh:class era:OperationalPlanMovement ;
 		sh:nodeKind sh:IRI ;
         sh:maxCount 1 ;
-        sh:message "A TrackOccupationState may reference at most one operationalPlanMovement that conforms to OperationalPlanMovementShape." ;
+        sh:message "A TrackOccupationState may reference at most one operationalPlanMovement that conforms to OperationalPlanMovement object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2258,7 +2258,7 @@ era:TrackOccupationStateShape a sh:NodeShape ;
         sh:node era:PhysicalTrainUnitIdentifierShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A TrackOccupationState may reference at most one trainUnitIdentifier that conforms to PhysicalTrainUnitIdentifierShape." ;
+        sh:message "A TrackOccupationState may reference at most one trainUnitIdentifier that conforms to PhysicalTrainUnitIdentifier object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2361,7 +2361,7 @@ era:TrainObjectShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TrainObject must have exactly one trainLocation that conforms to NetLinearReferenceShape." ;
+        sh:message "Each TrainObject must have exactly one trainLocation that conforms to NetLinearReference object. A proper NetLinearReference is needed" ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2491,8 +2491,9 @@ era:TrainObjectShape a sh:NodeShape ;
     sh:property [ 
         sh:path era:movementPermission ;
         sh:node era:MovementPermissionShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A TrainObject may have at most one movementPermission that conforms to MovementPermissionShape." ;
+        sh:message "A TrainObject may have at most one movementPermission that conforms to MovementPermission object." ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -2553,7 +2554,7 @@ era:TrainUnitReportAtoCapabilitiesShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TrainUnitReportAtoCapabilities must reference exactly one trainUnitIdentifier that conforms to PhysicalTrainUnitIdentifierShape." ;
+        sh:message "Each TrainUnitReportAtoCapabilities must reference exactly one trainUnitIdentifier that conforms to PhysicalTrainUnitIdentifier object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2676,7 +2677,7 @@ era:TrainUnitReportAtoCapabilitiesShape a sh:NodeShape ;
         sh:node era:EtcsDataAtoShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A TrainUnitReportAtoCapabilities may have at most one etcsData that conforms to EtcsDataAtoShape." ;
+        sh:message "A TrainUnitReportAtoCapabilities may have at most one etcsData that conforms to EtcsDataAto object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2686,17 +2687,17 @@ era:TrainUnitReportAtoCapabilitiesShape a sh:NodeShape ;
         sh:node era:AdditionalTrainDataShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A TrainUnitReportAtoCapabilities may have at most one additionalTrainData that conforms to AdditionalTrainDataShape." ;
+        sh:message "A TrainUnitReportAtoCapabilities may have at most one additionalTrainData that conforms to AdditionalTrainData object." ;
         sh:severity sh:Violation ;
     ] ;
     
     # Operational Plan Movement (optional, associated plan)
     sh:property [ 
         sh:path era:operationalPlanMovement ;
-        sh:node era:OperationalPlanMovementShape ;
+        sh:class era:OperationalPlanMovement ;
 		sh:nodeKind sh:IRI ;
         sh:maxCount 1 ;
-        sh:message "A TrainUnitReportAtoCapabilities may reference at most one operationalPlanMovement that conforms to OperationalPlanMovementShape." ;
+        sh:message "A TrainUnitReportAtoCapabilities may reference at most one operationalPlanMovement that conforms to OperationalPlanMovement object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2712,7 +2713,7 @@ era:TrainUnitReportAtoStatusShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TrainUnitReportAtoStatus must reference exactly one trainUnitIdentifier that conforms to PhysicalTrainUnitIdentifierShape." ;
+        sh:message "Each TrainUnitReportAtoStatus must reference exactly one trainUnitIdentifier that conforms to PhysicalTrainUnitIdentifier object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2733,7 +2734,7 @@ era:TrainUnitReportAtoStatusShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TrainUnitReportAtoStatus must have exactly one frontPosition that conforms to NetPointReferenceShape." ;
+        sh:message "Each TrainUnitReportAtoStatus must have exactly one frontPosition that conforms to NetPointReference object. A proper NetPointReference is needed" ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2889,17 +2890,17 @@ era:TrainUnitReportAtoStatusShape a sh:NodeShape ;
         sh:node era:EventHandlingShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A TrainUnitReportAtoStatus may have at most one eventHandling that conforms to EventHandlingShape." ;
+        sh:message "A TrainUnitReportAtoStatus may have at most one eventHandling that conforms to EventHandling object." ;
         sh:severity sh:Violation ;
     ] ;
     
     # Operational Plan Movement (optional, associated plan)
     sh:property [ 
         sh:path era:operationalPlanMovement ;
-        sh:node era:OperationalPlanMovementShape ;
+        sh:class era:OperationalPlanMovement ;
 		sh:nodeKind sh:IRI ;
         sh:maxCount 1 ;
-        sh:message "A TrainUnitReportAtoStatus may reference at most one operationalPlanMovement that conforms to OperationalPlanMovementShape." ;
+        sh:message "A TrainUnitReportAtoStatus may reference at most one operationalPlanMovement that conforms to OperationalPlanMovement object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2915,7 +2916,7 @@ era:TrainUnitReportPEShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TrainUnitReportPE must have exactly one cmdTrainObject that conforms to TrainObjectShape." ;
+        sh:message "Each TrainUnitReportPE must have exactly one cmdTrainObject that conforms to TrainObject object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2932,10 +2933,10 @@ era:TrainUnitReportPEShape a sh:NodeShape ;
     # Operational Plan Movement (optional, associated plan)
     sh:property [ 
         sh:path era:operationalPlanMovement ;
-        sh:node era:OperationalPlanMovementShape ;
+        sh:class era:OperationalPlanMovement ;
 		sh:nodeKind sh:IRI ;
         sh:maxCount 1 ;
-        sh:message "A TrainUnitReportPE may reference at most one operationalPlanMovement that conforms to OperationalPlanMovementShape." ;
+        sh:message "A TrainUnitReportPE may reference at most one operationalPlanMovement that conforms to OperationalPlanMovement object." ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -2952,7 +2953,7 @@ era:TrainUnitShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TrainUnit must reference exactly one physicalTrainUnit that conforms to PhysicalTrainUnitIdentifierShape." ;
+        sh:message "Each TrainUnit must reference exactly one physicalTrainUnit that conforms to PhysicalTrainUnitIdentifier object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2963,7 +2964,7 @@ era:TrainUnitShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TrainUnit must reference exactly one operationalTrainCategory that conforms to OperationalTrainCategoryShape." ;
+        sh:message "Each TrainUnit must reference exactly one operationalTrainCategory that conforms to OperationalTrainCategory object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -3098,7 +3099,7 @@ era:WarningAreaShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each WarningArea must reference exactly one trackArea that conforms to NetAreaReferenceShape." ;
+        sh:message "Each WarningArea must reference exactly one trackArea that conforms to NetAreaReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -3108,7 +3109,7 @@ era:WarningAreaShape a sh:NodeShape ;
         sh:node era:WarningDeviceShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each WarningArea must have at least one warningDevices that conform to WarningDeviceShape." ;
+        sh:message "Each WarningArea must have at least one warningDevices that conform to WarningDevice object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -3147,17 +3148,17 @@ era:WarningAreaStateShape a sh:NodeShape ;
         sh:node era:WarningAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A WarningAreaState may reference at most one warningArea that conforms to WarningAreaShape." ;
+        sh:message "A WarningAreaState may reference at most one warningArea that conforms to WarningArea object." ;
         sh:severity sh:Violation ;
     ] ;
     
     # Warning Measure Event (optional, associated event)
     sh:property [ 
         sh:path era:warningMeasureEvent ;
-        sh:node era:WarningMeasureEventShape ;
+        sh:class era:WarningMeasureEvent ;
 		sh:nodeKind sh:IRI ;
         sh:maxCount 1 ;
-        sh:message "A WarningAreaState may reference at most one warningMeasureEvent that conforms to WarningMeasureEventShape." ;
+        sh:message "A WarningAreaState may reference at most one warningMeasureEvent that conforms to WarningMeasureEvent object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -3188,11 +3189,11 @@ era:WarningMeasureEventExecutionReportShape a sh:NodeShape ;
     # Warning Measure Event (required, reference to the event)
     sh:property [ 
         sh:path era:warningMeasureEvent ;
-        sh:node era:WarningMeasureEventShape ;
+        sh:class era:WarningMeasureEvent ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each WarningMeasureEventExecutionReport must reference exactly one warningMeasureEvent that conforms to WarningMeasureEventShape." ;
+        sh:message "Each WarningMeasureEventExecutionReport must reference exactly one warningMeasureEvent that conforms to WarningMeasureEvent object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -3260,7 +3261,7 @@ era:WarningMeasureEventShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each WarningMeasureEvent must reference exactly one warningArea that conforms to WarningAreaShape." ;
+        sh:message "Each WarningMeasureEvent must reference exactly one warningArea that conforms to WarningArea object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -3289,7 +3290,7 @@ era:WarningMeasureEventShape a sh:NodeShape ;
         sh:path era:startsAfterEvents ;
         sh:node era:OperationalEventRefShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A WarningMeasureEvent may reference multiple startsAfterEvents that must complete before this warning is activated." ;
+        sh:message "A WarningMeasureEvent may reference multiple startsAfterEvents that must complete before this warning is activated. Properly constituted OperationalEventRef objects should be referenced." ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -3368,7 +3369,7 @@ era:NetLinearReferenceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetLinearReference must have exactly one startsAt that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each NetLinearReference must have exactly one startsAt that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -3379,7 +3380,7 @@ era:NetLinearReferenceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetLinearReference must have exactly one endsAt that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each NetLinearReference must have exactly one endsAt that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -3423,7 +3424,7 @@ era:NetPointReferenceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetPointReference must have exactly one hasTopoCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each NetPointReference must have exactly one hasTopoCoordinate that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -3454,7 +3455,7 @@ era:TopologicalCoordinateShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TopologicalCoordinate must have exactly one onLinearElement that conforms to LinearElementShape." ;
+        sh:message "Each TopologicalCoordinate must have exactly one onLinearElement that conforms to LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -3522,7 +3523,7 @@ era:NetPointReferenceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetPointReference must have exactly one hasTopoCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each NetPointReference must have exactly one hasTopoCoordinate that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -3553,7 +3554,7 @@ era:LinearElementSectionShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElementSection must have exactly one onElement that conforms to LinearElementShape." ;
+        sh:message "Each LinearElementSection must have exactly one onElement that conforms to LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     

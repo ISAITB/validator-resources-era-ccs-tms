@@ -325,81 +325,97 @@ era:NetLinearReferenceSequenceConstraintShape a sh:NodeShape ;
 	
 # SPT2TS-130924: TrainDetectors associated with a TvpSection shall be positioned on LinearElements 
 # that are fully covered by the TvpSection's linkedArea NetAreaReference.
-era:TvpSectionTrainDetectorCoverageShape a sh:NodeShape ;
+era:TvpSectionTrainDetectorOffsetCoverageConstraint
+    a sh:NodeShape ;
     sh:targetClass era:TvpSection ;
-    
+
     sh:sparql [
-        a sh:SPARQLConstraint ;
         sh:message """
-        Each TrainDetector must lie on a LinearElement segment that is fully
-        covered by the TvpSection's linkedArea. The offsetFromOrigin must fall
-        within the start→end bounds of a matching NetLinearReference.
+		Each TrainDetector must lie on a LinearElement segment that is fully covered by the TvpSection's linkedArea. 
+		The offsetFromOrigin must fall within the start→end bounds of a matching NetLinearReference.
         """ ;
         sh:severity sh:Violation ;
+
         sh:select """
-            PREFIX era: <http://data.europa.eu/949/>
-            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-            
-            SELECT $this ?trainDetector ?linearElement ?tdOffset
-            WHERE {
-                #####################################################
-                # 1. TvpSection -> TrainDetectors -> TopologicalCoordinate -> LE + offset
-                #####################################################
-                $this era:trainDetectors ?trainDetector ;
-                      era:linkedArea ?ar .
-                ?trainDetector era:topologicalCoordinate ?tc .
-                ?tc era:onLinearElement ?linearElement ;
-                    era:offsetFromOrigin ?tdOffset .
-                
-                #####################################################
-                # 2. Expand linkedArea.includes rdf:List -> ?lr
-                #####################################################
-                ?ar era:includes ?incList .
-                ?incList rdf:rest*/rdf:first ?lr .
-                
-                #####################################################
-                # 3. Extract start/end coordinates + offsets
-                #####################################################
-                ?lr era:startsAt ?startTC .
-                ?startTC era:onLinearElement ?startLE ;
-                         era:offsetFromOrigin ?startOffset .
-                
-                ?lr era:endsAt ?endTC .
-                ?endTC era:onLinearElement ?endLE ;
-                       era:offsetFromOrigin ?endOffset .
-                
-                #####################################################
-                # 4. Coverage conditions (4 cases)
-                #####################################################
-                FILTER NOT EXISTS {
-                    # CASE 1 — TrainDetector on SAME LE between start and end
-                    {
-                        FILTER(?linearElement = ?startLE && ?linearElement = ?endLE)
-                        FILTER(?tdOffset >= ?startOffset && ?tdOffset <= ?endOffset)
-                    }
-                    UNION
-                    # CASE 2 — TrainDetector on START element (multi-element path)
-                    {
-                        FILTER(?linearElement = ?startLE && ?startLE != ?endLE)
-                        FILTER(?tdOffset >= ?startOffset)
-                    }
-                    UNION
-                    # CASE 3 — TrainDetector on END element
-                    {
-                        FILTER(?linearElement = ?endLE && ?startLE != ?endLE)
-                        FILTER(?tdOffset <= ?endOffset)
-                    }
-                    UNION
-                    # CASE 4 — TrainDetector on intermediate element via hasSequence
-                    {
-                        ?lr era:hasSequence ?seqList .
-                        ?seqList rdf:rest*/rdf:first ?linearElement .
-                    }
+        PREFIX era: <http://data.europa.eu/949/>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+        SELECT ?this ?td ?le ?tdOffset
+        WHERE {
+            #############################################################
+            # Get detector LE + offset
+            #############################################################
+            ?this era:trainDetectors ?td ;
+                  era:linkedArea ?ar .
+
+            ?td era:topologicalCoordinate ?tc .
+            ?tc era:onLinearElement ?le ;
+                era:offsetFromOrigin ?tdOffset .
+
+            #############################################################
+            # VIOLATION only if NO lr covers the detector
+            #############################################################
+            FILTER NOT EXISTS {
+
+                # Expand rdf:List of NetLinearReference
+                ?ar era:includes ?includesList .
+                ?includesList rdf:rest*/rdf:first ?lr .
+
+                #########################################################
+                # OPTIONAL extraction of start/end (do not force binding)
+                #########################################################
+                OPTIONAL {
+                    ?lr era:startsAt ?startTC .
+                    ?startTC era:onLinearElement ?startLE ;
+                              era:offsetFromOrigin ?startOffset .
                 }
+                OPTIONAL {
+                    ?lr era:endsAt ?endTC .
+                    ?endTC era:onLinearElement ?endLE ;
+                            era:offsetFromOrigin ?endOffset .
+                }
+
+                #########################################################
+                # OPTIONAL processing of sequence elements
+                #########################################################
+                OPTIONAL {
+                    ?lr era:hasSequence ?seqList .
+                    ?seqList rdf:rest*/rdf:first ?seqLE .
+                }
+
+                #########################################################
+                # PASS if ANY of the following is true for this lr
+                #########################################################
+                FILTER (
+                    # CASE 1 — single-LE segment
+                    (BOUND(?startLE) && BOUND(?endLE) &&
+                     ?le = ?startLE && ?le = ?endLE &&
+                     ?tdOffset >= ?startOffset &&
+                     ?tdOffset <= ?endOffset)
+
+                    ||
+
+                    # CASE 2 — start LE of multi-LE path
+                    (BOUND(?startLE) && ?le = ?startLE &&
+                     ?startLE != ?endLE &&
+                     ?tdOffset >= ?startOffset)
+
+                    ||
+
+                    # CASE 3 — end LE of multi-LE path
+                    (BOUND(?endLE) && ?le = ?endLE &&
+                     ?startLE != ?endLE &&
+                     ?tdOffset <= ?endOffset)
+
+                    ||
+
+                    # CASE 4 — intermediate LE
+                    (BOUND(?seqLE) && ?le = ?seqLE)
+                )
             }
+        }
         """ ;
     ] .
-
 
 	
 # ===== PlatformEdge StopLocation Coverage Constraint =====

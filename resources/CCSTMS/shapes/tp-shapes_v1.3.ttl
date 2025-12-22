@@ -15,14 +15,14 @@ era:AllocationSectionShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each AllocationSection must reference exactly one linearReference that conforms to NetLinearReferenceShape." ;
+        sh:message "Each AllocationSection must reference exactly one linearReference that conforms to NetLinearReference object. A proper NetLinearReference is needed" ;
         sh:severity sh:Violation ;
     ] ;
     
     # Dependencies (required, at least one dependency)
     sh:property [ 
         sh:path era:dependencies ;
-        sh:node era:AllocationSectionShape ;
+        sh:class era:AllocationSection ;
 		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:message "Each AllocationSection must have at least one dependencies (other allocation sections that must be considered for safe operation)." ;
@@ -50,7 +50,7 @@ era:AreaOfControlShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each AreaOfControl must reference exactly one area that conforms to NetAreaReferenceShape." ;
+        sh:message "Each AreaOfControl must reference exactly one area that conforms to NetAreaReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -60,7 +60,7 @@ era:AreaOfControlShape a sh:NodeShape ;
         sh:node era:ControllerShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "An AreaOfControl may reference at most one controlledBy that conforms to ControllerShape." ;
+        sh:message "An AreaOfControl may reference at most one controlledBy that conforms to Controller object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -81,14 +81,14 @@ era:ControlledInfraElementShape a sh:NodeShape ;
     # Each Controlled Infrastructure Element must have exactly ONE of these types
     sh:xone (
         [ sh:path era:dpsGroup ;
-          sh:node era:DriveProtectionSectionGroupShape ;
+          sh:class era:DriveProtectionSectionGroup ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
           sh:message "Controlled infrastructure element is a drive protection section group." ]
         
         [ sh:path era:tvpSection ;
-          sh:node era:TvpSectionShape ;
+          sh:class era:TvpSection ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
@@ -172,7 +172,7 @@ era:DriveProtectionSectionGroupShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DriveProtectionSectionGroup must reference exactly one protectedInfraElements that conforms to ProtectedInfraElementShape." ;
+        sh:message "Each DriveProtectionSectionGroup must reference exactly one protectedInfraElements that conforms to ProtectedInfraElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -182,7 +182,7 @@ era:DriveProtectionSectionGroupShape a sh:NodeShape ;
         sh:node era:DriveProtectionSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each DriveProtectionSectionGroup must contain at least one driveProtectionSections that conform to DriveProtectionSectionShape." ;
+        sh:message "Each DriveProtectionSectionGroup must contain at least one driveProtectionSections that conform to DriveProtectionSection object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -225,7 +225,7 @@ era:DriveProtectionSectionShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DriveProtectionSection must reference exactly one linearElementSection that conforms to LinearElementSectionShape." ;
+        sh:message "Each DriveProtectionSection must reference exactly one linearElementSection that conforms to LinearElementSection object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -290,11 +290,11 @@ era:FieldObjectControllerShape a sh:NodeShape ;
     # Belongs To AOC (required, area of control membership)
     sh:property [ 
         sh:path era:belongsToAoc ;
-        sh:node era:AreaOfControlShape ;
+        sh:class era:AreaOfControl ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each FieldObjectController must reference exactly one belongsToAoc that conforms to AreaOfControlShape." ;
+        sh:message "Each FieldObjectController must reference exactly one belongsToAoc that conforms to AreaOfControl object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -305,7 +305,7 @@ era:FieldObjectControllerShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each FieldObjectController must reference exactly one controlledBy that conforms to ControllerShape." ;
+        sh:message "Each FieldObjectController must reference exactly one controlledBy that conforms to Controller object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -315,7 +315,7 @@ era:FieldObjectControllerShape a sh:NodeShape ;
         sh:node era:ControlledInfraElementShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each FieldObjectController must control at least one controlledInfraElements that conform to ControlledInfraElementShape." ;
+        sh:message "Each FieldObjectController must control at least one controlledInfraElements that conform to ControlledInfraElement object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -334,28 +334,28 @@ era:ProtectedInfraElementShape a sh:NodeShape ;
           sh:message "Protected infrastructure element is a switch (points)." ]
         
         [ sh:path era:crossing ;
-          sh:node era:CrossingShape ;
+          sh:class era:Crossing ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
           sh:message "Protected infrastructure element is a crossing (diamond)." ]
         
         [ sh:path era:slipCrossing ;
-          sh:node era:SlipCrossingShape ;
+          sh:class era:SlipCrossing ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
           sh:message "Protected infrastructure element is a slip crossing." ]
         
         [ sh:path era:levelCrossing ;
-          sh:node era:LevelCrossingShape ;
+          sh:class era:LevelCrossing ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
           sh:message "Protected infrastructure element is a level crossing (road/rail intersection)." ]
         
         [ sh:path era:derailer ;
-          sh:node era:DerailerShape ;
+          sh:class era:Derailer ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
@@ -372,7 +372,7 @@ era:TrainProtectionAreaShape a sh:NodeShape ;
         sh:path era:controllers ;
         sh:node era:ControllerShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A TrainProtectionArea may contain multiple controllers." ;
+        sh:message "A TrainProtectionArea may contain multiple validated controllers." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -381,7 +381,7 @@ era:TrainProtectionAreaShape a sh:NodeShape ;
         sh:path era:areaOfControl ;
         sh:node era:AreaOfControlShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A TrainProtectionArea may contain multiple areaOfControl." ;
+        sh:message "A TrainProtectionArea may contain multiple validated areaOfControl." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -390,7 +390,7 @@ era:TrainProtectionAreaShape a sh:NodeShape ;
         sh:path era:fieldObjectControllers ;
         sh:node era:FieldObjectControllerShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A TrainProtectionArea may contain multiple fieldObjectControllers." ;
+        sh:message "A TrainProtectionArea may contain multiple validated fieldObjectControllers." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -399,7 +399,7 @@ era:TrainProtectionAreaShape a sh:NodeShape ;
         sh:path era:dpsGroups ;
         sh:node era:DriveProtectionSectionGroupShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A TrainProtectionArea may contain multiple dpsGroups (drive protection section groups)." ;
+        sh:message "A TrainProtectionArea may contain multiple validated dpsGroups (drive protection section groups)." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -408,7 +408,7 @@ era:TrainProtectionAreaShape a sh:NodeShape ;
         sh:path era:allocationSections ;
         sh:node era:AllocationSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A TrainProtectionArea may contain multiple allocationSections." ;
+        sh:message "A TrainProtectionArea may contain multiple validated allocationSections." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -417,7 +417,7 @@ era:TrainProtectionAreaShape a sh:NodeShape ;
         sh:path era:etcsMarkers ;
         sh:node era:ETCSMarkerShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A TrainProtectionArea may contain multiple etcsMarkers." ;
+        sh:message "A TrainProtectionArea may contain multiple validated etcsMarkers." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -431,7 +431,7 @@ era:TrainProtectionShape a sh:NodeShape ;
         sh:path era:tpArea ;
         sh:node era:TrainProtectionAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A TrainProtection may contain multiple tpArea (train protection areas)." ;
+        sh:message "A TrainProtection may contain multiple validated tpArea (train protection areas)." ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -447,7 +447,7 @@ era:NetLinearReferenceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetLinearReference must have exactly one startsAt that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each NetLinearReference must have exactly one startsAt that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -458,7 +458,7 @@ era:NetLinearReferenceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetLinearReference must have exactly one endsAt that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each NetLinearReference must have exactly one endsAt that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -504,7 +504,7 @@ era:TopologicalCoordinateShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TopologicalCoordinate must have exactly one onLinearElement that conforms to LinearElementShape." ;
+        sh:message "Each TopologicalCoordinate must have exactly one onLinearElement that conforms to LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -571,7 +571,7 @@ era:LinearElementSectionShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElementSection must have exactly one onElement that conforms to LinearElementShape." ;
+        sh:message "Each LinearElementSection must have exactly one onElement that conforms to LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -645,7 +645,7 @@ era:SwitchShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Switch must have exactly one leftBranch that conforms to NetRelationShape." ;
+        sh:message "Each Switch must have exactly one leftBranch that conforms to NetRelation object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -656,7 +656,7 @@ era:SwitchShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Switch must have exactly one rightBranch that conforms to NetRelationShape." ;
+        sh:message "Each Switch must have exactly one rightBranch that conforms to NetRelation object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -664,7 +664,6 @@ era:SwitchShape a sh:NodeShape ;
     sh:property [ 
         sh:path era:reversalTime ;
         sh:datatype xsd:unsignedInt ;
-		# sh:datatype xsd:nonNegativeInteger ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:message "Each Switch must have exactly one reversalTime (unsigned integer, in seconds)." ;
@@ -715,10 +714,11 @@ era:NetRelationShape a sh:NodeShape ;
     # Element A (required, reference to a linear element)
     sh:property [ 
         sh:path era:elementA ;
-        sh:node era:LinearElementShape ;
+        sh:class era:LinearElement ;
+		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetRelation must have exactly one elementA that conforms to LinearElementShape." ;
+        sh:message "Each NetRelation must have exactly one elementA that conforms to LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -735,10 +735,11 @@ era:NetRelationShape a sh:NodeShape ;
     # Element B (required, reference to a linear element)
     sh:property [ 
         sh:path era:elementB ;
-        sh:node era:LinearElementShape ;
+        sh:class era:LinearElement ;
+		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetRelation must have exactly one elementB that conforms to LinearElementShape." ;
+        sh:message "Each NetRelation must have exactly one elementB that conforms to LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -780,9 +781,10 @@ era:CrossingShape a sh:NodeShape ;
     sh:property [ 
         sh:path era:topologicalCoordinates ;
         sh:node era:TopologicalCoordinateShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 2 ;
         sh:maxCount 2 ;
-        sh:message "Each Crossing must have exactly 2 topologicalCoordinates that conform to TopologicalCoordinateShape." ;
+        sh:message "Each Crossing must have exactly 2 topologicalCoordinates that conform to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -807,7 +809,7 @@ era:SlipCrossingShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SlipCrossing must have exactly one crossing that conforms to CrossingShape." ;
+        sh:message "Each SlipCrossing must have exactly one crossing that conforms to Crossing object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -815,9 +817,10 @@ era:SlipCrossingShape a sh:NodeShape ;
     sh:property [ 
         sh:path era:switches ;
         sh:class era:Switch ;
+		sh:nodeKind sh:IRI ;
         sh:minCount 2 ;
         sh:maxCount 4 ;
-        sh:message "Each SlipCrossing must have between 2 and 4 switches that conform to SwitchShape." ;
+        sh:message "Each SlipCrossing must have between 2 and 4 switches that conform to Switch object." ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -835,7 +838,7 @@ era:LevelCrossingShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LevelCrossing must reference exactly one areaReference that conforms to NetAreaReferenceShape (geographic extent of the crossing)." ;
+        sh:message "Each LevelCrossing must reference exactly one areaReference that conforms to NetAreaReference object (geographic extent of the crossing)." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -934,7 +937,7 @@ era:ETCSMarkerShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each ETCSMarker must have exactly one netPointReference that conforms to NetPointReferenceShape." ;
+        sh:message "Each ETCSMarker must have exactly one netPointReference that conforms to NetPointReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -969,7 +972,7 @@ era:DerailerShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Derailer must have exactly one netPointReference that conforms to NetPointReferenceShape." ;
+        sh:message "Each Derailer must have exactly one netPointReference that conforms to NetPointReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1005,7 +1008,7 @@ era:NetPointReferenceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetPointReference must have exactly one hasTopoCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each NetPointReference must have exactly one hasTopoCoordinate that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] ;
     

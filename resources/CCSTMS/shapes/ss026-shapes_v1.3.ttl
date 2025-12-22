@@ -86,7 +86,7 @@ era:AxleLoadSelectionShape a sh:NodeShape ;
         sh:node era:AxleLoadRestrictionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 31 ;
-        sh:message "An AxleLoadSelection may have at most 31 axleLoadRestrictions that conform to AxleLoadRestrictionShape." ;
+        sh:message "An AxleLoadSelection may have at most 31 axleLoadRestrictions that conform to AxleLoadRestriction object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -138,7 +138,7 @@ era:BalisePacketShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each BalisePacket must have exactly one packet that conforms to PacketShape." ;
+        sh:message "Each BalisePacket must have exactly one packet that conforms to Packet object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1120,7 +1120,7 @@ era:ETCSPacket_3Shape a sh:NodeShape ;
         sh:node era:NVKShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "An ETCSPacket_3 may have at most one nVKs that conforms to NVKShape." ;
+        sh:message "An ETCSPacket_3 may have at most one nVKs that conforms to NVK object." ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -1217,7 +1217,7 @@ era:ETCSPacket_41Shape a sh:NodeShape ;
         sh:node era:LevelTransitionWithAckShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 32 ;
-        sh:message "An ETCSPacket_41 may have at most 32 levelTransitionWithAck that conform to LevelTransitionWithAckShape." ;
+        sh:message "An ETCSPacket_41 may have at most 32 levelTransitionWithAck that conform to LevelTransitionWithAck object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1372,7 +1372,7 @@ era:ETCSPacket_46Shape a sh:NodeShape ;
         sh:node era:LevelTransitionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 31 ;
-        sh:message "An ETCSPacket_46 may have at most 31 levelTransitions that conform to LevelTransitionShape." ;
+        sh:message "An ETCSPacket_46 may have at most 31 levelTransitions that conform to LevelTransition object." ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -1388,7 +1388,7 @@ era:ETCSPacket_49Shape a sh:NodeShape ;
         sh:node era:CountryBaliseShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 31 ;
-        sh:message "An ETCSPacket_49 may have at most 31 countryBalises that conform to CountryBaliseShape." ;
+        sh:message "An ETCSPacket_49 may have at most 31 countryBalises that conform to CountryBalise object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1458,7 +1458,7 @@ era:ETCSPacket_51Shape a sh:NodeShape ;
         sh:node era:AxleLoadRestrictionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 31 ;
-        sh:message "An ETCSPacket_51 may have at most 31 axleLoadRestrictions that conform to AxleLoadRestrictionShape." ;
+        sh:message "An ETCSPacket_51 may have at most 31 axleLoadRestrictions that conform to AxleLoadRestriction object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1468,7 +1468,7 @@ era:ETCSPacket_51Shape a sh:NodeShape ;
         sh:node era:AxleLoadSelectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 31 ;
-        sh:message "An ETCSPacket_51 may have at most 31 axleLoadSelections that conform to AxleLoadSelectionShape." ;
+        sh:message "An ETCSPacket_51 may have at most 31 axleLoadSelections that conform to AxleLoadSelection object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1505,7 +1505,7 @@ era:ETCSPacket_52Shape a sh:NodeShape ;
         sh:node era:PBDSelectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 32 ;
-        sh:message "An ETCSPacket_52 may have at most 32 pbdSelection that conform to PBDSelectionShape." ;
+        sh:message "An ETCSPacket_52 may have at most 32 pbdSelection that conform to PBDSelection object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1521,7 +1521,7 @@ era:ETCSPacket_5Shape a sh:NodeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 33 ;
-        sh:message "Each ETCSPacket_5 must have between 1 and 33 links that conform to LinkItemShape." ;
+        sh:message "Each ETCSPacket_5 must have between 1 and 33 links that conform to LinkItem object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1617,7 +1617,7 @@ era:ETCSPacket_67Shape a sh:NodeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 32 ;
-        sh:message "Each ETCSPacket_67 must have between 1 and 32 dlTrackConditions that conform to DLTrackCondShape." ;
+        sh:message "Each ETCSPacket_67 must have between 1 and 32 dlTrackConditions that conform to DLTrackCond object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1654,7 +1654,7 @@ era:ETCSPacket_68Shape a sh:NodeShape ;
         sh:node era:DLMConditionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 32 ;
-        sh:message "An ETCSPacket_68 may have at most 32 trackCondSelection that conform to DLMConditionShape." ;
+        sh:message "An ETCSPacket_68 may have at most 32 trackCondSelection that conform to DLMCondition object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1691,7 +1691,7 @@ era:ETCSPacket_69Shape a sh:NodeShape ;
         sh:node era:TCSPConditionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 32 ;
-        sh:message "An ETCSPacket_69 may have at most 32 trackCondPlatformSelection that conform to TCSPConditionShape." ;
+        sh:message "An ETCSPacket_69 may have at most 32 trackCondPlatformSelection that conform to TCSPCondition object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1780,7 +1780,7 @@ era:ETCSPacket_70Shape a sh:NodeShape ;
         sh:node era:RouteSuitabilityShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 32 ;
-        sh:message "An ETCSPacket_70 may have at most 32 routeSuitabilities that conform to RouteSuitabilityShape." ;
+        sh:message "An ETCSPacket_70 may have at most 32 routeSuitabilities that conform to RouteSuitability object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1857,7 +1857,7 @@ era:ETCSPacket_72Shape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each ETCSPacket_72 must have exactly one textMessageConfig that conforms to TextMessageConfigShape." ;
+        sh:message "Each ETCSPacket_72 must have exactly one textMessageConfig that conforms to TextMessageConfig object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1885,7 +1885,7 @@ era:ETCSPacket_76Shape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each ETCSPacket_76 must have exactly one textMessageConfig that conforms to TextMessageConfigShape." ;
+        sh:message "Each ETCSPacket_76 must have exactly one textMessageConfig that conforms to TextMessageConfig object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1901,7 +1901,7 @@ era:ETCSPacket_79Shape a sh:NodeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 32 ;
-        sh:message "Each ETCSPacket_79 must have between 1 and 32 geoPosItems that conform to GeoPosItemShape." ;
+        sh:message "Each ETCSPacket_79 must have between 1 and 32 geoPosItems that conform to GeoPosItem object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1917,7 +1917,7 @@ era:ETCSPacket_80Shape a sh:NodeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 32 ;
-        sh:message "Each ETCSPacket_80 must have between 1 and 32 modeProfiles that conform to ModeProfileItemShape." ;
+        sh:message "Each ETCSPacket_80 must have between 1 and 32 modeProfiles that conform to ModeProfileItem object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1978,7 +1978,7 @@ era:ETCSPacket_88Shape a sh:NodeShape ;
         sh:node era:LXStatusShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "An ETCSPacket_88 may have at most one lx_Status that conforms to LXStatusShape." ;
+        sh:message "An ETCSPacket_88 may have at most one lx_Status that conforms to LXStatus object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2386,7 +2386,7 @@ era:NVKShape a sh:NodeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 32 ;
-        sh:message "Each NVK must have between 1 and 32 nvkItems that conform to NVKItemShape." ;
+        sh:message "Each NVK must have between 1 and 32 nvkItems that conform to NVKItem object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2396,7 +2396,7 @@ era:NVKShape a sh:NodeShape ;
         sh:node era:CorrectionFactorShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 31 ;
-        sh:message "An NVK may have at most 31 correctionFactors that conform to CorrectionFactorShape." ;
+        sh:message "An NVK may have at most 31 correctionFactors that conform to CorrectionFactor object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2483,7 +2483,7 @@ era:NVKItemShape a sh:NodeShape ;
         sh:node era:NVKSubItemShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 31 ;
-        sh:message "An NVKItem may have at most 31 nvkSubItems that conform to NVKSubItemShape." ;
+        sh:message "An NVKItem may have at most 31 nvkSubItems that conform to NVKSubItem object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2603,7 +2603,7 @@ era:PBDSelectionShape a sh:NodeShape ;
 # ===== Packet Shape (Discriminator Union) =====
 era:PacketShape a sh:NodeShape ;
     sh:targetClass era:Packet ;
-    sh:message "A Packet must contain exactly one ETCS packet type (packets 0-255)." ;
+    sh:message "A Packet must contain exactly one ETCS packet type (packets 0-255). Also, ensure conformance to the specific packet object" ;
     
     # Each Packet instance must have exactly ONE of the packet types
     sh:xone (

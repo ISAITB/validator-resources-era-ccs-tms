@@ -15,7 +15,7 @@ era:FunctionalElementProjectionShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each FunctionalElementProjection must reference exactly one elementRef that conforms to FunctionalElementRefShape." ;
+        sh:message "Each FunctionalElementProjection must reference exactly one elementRef that conforms to FunctionalElementRef object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -87,7 +87,7 @@ era:FunctionalElementRefShape a sh:NodeShape ;
     # Each Functional Element Reference must have exactly ONE of these element types
     sh:xone (
         [ sh:path era:balise ;
-          sh:node era:BaliseShape ;
+          sh:class era:Balise ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
@@ -101,35 +101,35 @@ era:FunctionalElementRefShape a sh:NodeShape ;
           sh:message "Functional element reference is a switch (points)." ]
         
         [ sh:path era:operationalPoint ;
-          sh:node era:OperationalPointShape ;
+          sh:class era:OperationalPoint ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
           sh:message "Functional element reference is an operational point (station, junction, etc.)." ]
         
         [ sh:path era:timingPoint ;
-          sh:node era:TimingPointShape ;
+          sh:class era:TimingPoint ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
           sh:message "Functional element reference is a timing point." ]
         
         [ sh:path era:stopLocation ;
-          sh:node era:StopLocationShape ;
+          sh:class era:StopLocation ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
           sh:message "Functional element reference is a stop location." ]
         
         [ sh:path era:etcsMarker ;
-          sh:node era:ETCSMarkerShape ;
+          sh:class era:ETCSMarker ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
           sh:message "Functional element reference is an ETCS marker board." ]
         
         [ sh:path era:derailer ;
-          sh:node era:DerailerShape ;
+          sh:class era:Derailer ;
           sh:nodeKind sh:IRI ;
           sh:minCount 1 ;
           sh:maxCount 1 ;
@@ -369,7 +369,7 @@ era:BaliseShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Balise must have exactly one topologicalCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each Balise must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -385,7 +385,7 @@ era:TopologicalCoordinateShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TopologicalCoordinate must have exactly one onLinearElement that conforms to LinearElementShape." ;
+        sh:message "Each TopologicalCoordinate must have exactly one onLinearElement that conforms to LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -462,7 +462,7 @@ era:SwitchShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Switch must have exactly one leftBranch that conforms to NetRelationShape." ;
+        sh:message "Each Switch must have exactly one leftBranch that conforms to NetRelation object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -473,7 +473,7 @@ era:SwitchShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Switch must have exactly one rightBranch that conforms to NetRelationShape." ;
+        sh:message "Each Switch must have exactly one rightBranch that conforms to NetRelation object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -533,9 +533,10 @@ era:NetRelationShape a sh:NodeShape ;
     sh:property [ 
         sh:path era:elementA ;
         sh:node era:LinearElementShape ;
+		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetRelation must have exactly one elementA that conforms to LinearElementShape." ;
+        sh:message "Each NetRelation must have exactly one elementA that conforms to LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -555,7 +556,7 @@ era:NetRelationShape a sh:NodeShape ;
         sh:node era:LinearElementShape ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetRelation must have exactly one elementB that conforms to LinearElementShape." ;
+        sh:message "Each NetRelation must have exactly one elementB that conforms to LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -570,7 +571,6 @@ era:NetRelationShape a sh:NodeShape ;
     ] .
 	
 	
-
 # ===== Operational Point Shape =====
 era:OperationalPointShape a sh:NodeShape ;
     sh:targetClass era:OperationalPoint ;
@@ -579,10 +579,10 @@ era:OperationalPointShape a sh:NodeShape ;
 	sh:property [ 
 		sh:path era:uopid ;
 		sh:datatype xsd:string ;
-		sh:pattern "^[A-Z]{2}[0-9]+$" ;  # Example: DE12345, FR67890
+		sh:pattern "^[A-Z]{2}.{0,10}$" ; # Example: DE12345, FR67890
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
-		sh:message "Each OperationalPoint must have exactly one uopid following the format: 2-letter country code + numeric ID (e.g., DE12345)." ;
+		sh:message "Each OperationalPoint must have exactly one uopid following the format: 2-letter country code + alphanumeric ID (e.g., DE12345)." ;
 		sh:severity sh:Violation ;
 	] ;
     # Operational Point Name (optional, string)
@@ -630,6 +630,7 @@ era:OperationalPointShape a sh:NodeShape ;
     sh:property [ 
         sh:path era:travelTimeMeasurementPoints ;
         sh:node era:TravelTimeMeasurementPointShape ;
+		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:message "OperationalPoint travelTimeMeasurementPoints must conform to TravelTimeMeasurementPointShape." ;
         sh:severity sh:Violation ;
     ] ;
@@ -666,7 +667,7 @@ era:TravelTimeMeasurementPointShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TravelTimeMeasurementPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each TravelTimeMeasurementPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -702,7 +703,7 @@ era:TimingPointShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TimingPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each TimingPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -713,7 +714,7 @@ era:TimingPointShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TimingPoint must have exactly one activeObject that conforms to TPActiveObjectShape." ;
+        sh:message "Each TimingPoint must have exactly one activeObject that conforms to TPActiveObject object." ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -732,7 +733,7 @@ era:TPActiveObjectShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, etcsMarker must conform to ETCSMarkerShape." ;
+            sh:message "If present, etcsMarker must conform to ETCSMarker object." ;
             sh:severity sh:Violation ;
         ]
         
@@ -743,7 +744,7 @@ era:TPActiveObjectShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, stopLocation must conform to StopLocationShape." ;
+            sh:message "If present, stopLocation must conform to StopLocation object." ;
             sh:severity sh:Violation ;
         ]
         
@@ -754,7 +755,7 @@ era:TPActiveObjectShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, timeMeasurePoint must conform to TravelTimeMeasurementPointShape." ;
+            sh:message "If present, timeMeasurePoint must conform to TravelTimeMeasurementPoint object." ;
             sh:severity sh:Violation ;
         ]
     ) .
@@ -781,7 +782,7 @@ era:StopLocationShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each StopLocation must have exactly one netPointReference that conforms to NetPointReferenceShape." ;
+        sh:message "Each StopLocation must have exactly one netPointReference that conforms to NetPointReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -820,7 +821,7 @@ era:StopLocationShape a sh:NodeShape ;
         sh:node era:StopTrainLimitShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A StopLocation may have at most one stopTrainLimit that conforms to StopTrainLimitShape." ;
+        sh:message "A StopLocation may have at most one stopTrainLimit that conforms to StopTrainLimit object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -886,7 +887,7 @@ era:NetPointReferenceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetPointReference must have exactly one hasTopoCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each NetPointReference must have exactly one hasTopoCoordinate that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -926,7 +927,7 @@ era:ETCSMarkerShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each ETCSMarker must have exactly one netPointReference that conforms to NetPointReferenceShape." ;
+        sh:message "Each ETCSMarker must have exactly one netPointReference that conforms to NetPointReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -962,7 +963,7 @@ era:DerailerShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Derailer must have exactly one netPointReference that conforms to NetPointReferenceShape." ;
+        sh:message "Each Derailer must have exactly one netPointReference that conforms to NetPointReference object." ;
         sh:severity sh:Violation ;
     ] ;
     

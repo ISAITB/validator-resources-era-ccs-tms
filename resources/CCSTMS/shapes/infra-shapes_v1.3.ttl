@@ -113,7 +113,7 @@ era:BaliseGroupShape a sh:NodeShape ;
 		sh:nodeKind sh:IRI ;
         sh:maxCount 1 ;
         sh:severity sh:Violation ;
-        sh:message "etcsMarker must reference an instance of era:ETCSMarker." ;
+        sh:message "etcsMarker must reference an instance of a proper era:ETCSMarker." ;
     ] ;
     
     # Link Orientation Direction (required, controlled vocabulary)
@@ -212,7 +212,7 @@ era:BaliseShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Balise must have exactly one topologicalCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each Balise must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -227,7 +227,7 @@ era:BridgeShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Bridge must have exactly one areaReference that conforms to NetAreaReferenceShape." ;
+        sh:message "Each Bridge must have exactly one areaReference that conforms to NetAreaReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -260,7 +260,7 @@ era:BufferStopShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each BufferStop must have exactly one netPointReference that conforms to NetPointReferenceShape." ;
+        sh:message "Each BufferStop must have exactly one netPointReference that conforms to NetPointReference object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -342,7 +342,7 @@ era:CrossingShape a sh:NodeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 2 ;
         sh:maxCount 2 ;
-        sh:message "Each Crossing must have exactly 2 topologicalCoordinates that conform to TopologicalCoordinateShape." ;
+        sh:message "Each Crossing must have exactly 2 topologicalCoordinates that conform to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -366,7 +366,7 @@ era:CurrentLimitationShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each CurrentLimitation must have at least one linearElementSections that conform to LinearElementSectionShape." ;
+        sh:message "Each CurrentLimitation must have at least one linearElementSections that conform to LinearElementSection object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -414,7 +414,7 @@ era:DerailerShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Derailer must have exactly one netPointReference that conforms to NetPointReferenceShape." ;
+        sh:message "Each Derailer must have exactly one netPointReference that conforms to NetPointReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -458,7 +458,7 @@ era:ETCSMarkerShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each ETCSMarker must have exactly one netPointReference that conforms to NetPointReferenceShape." ;
+        sh:message "Each ETCSMarker must have exactly one netPointReference that conforms to NetPointReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -491,7 +491,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:opPoints ;
         sh:node era:OperationalPointShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea opPoints must conform to OperationalPointShape." ;
+        sh:message "FunctionalArea opPoints must conform to OperationalPoint object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -500,7 +500,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:tvps ;
         sh:node era:TvpSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea tvps must conform to TvpSectionShape." ;
+        sh:message "FunctionalArea tvps must conform to TvpSection object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -509,7 +509,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:nationalBorders ;
         sh:node era:NationalBorderShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea nationalBorders must conform to NationalBorderShape." ;
+        sh:message "FunctionalArea nationalBorders must conform to NationalBorder object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -518,7 +518,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:bridges ;
         sh:node era:BridgeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea bridges must conform to BridgeShape." ;
+        sh:message "FunctionalArea bridges must conform to Bridge object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -527,7 +527,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:tunnels ;
         sh:node era:TunnelShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea tunnels must conform to TunnelShape." ;
+        sh:message "FunctionalArea tunnels must conform to Tunnel object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -536,7 +536,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:levelCrossings ;
         sh:node era:LevelCrossingShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea levelCrossings must conform to LevelCrossingShape." ;
+        sh:message "FunctionalArea levelCrossings must conform to LevelCrossing object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -545,7 +545,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:underpasses ;
         sh:node era:UnderpassShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea underpasses must conform to UnderpassShape." ;
+        sh:message "FunctionalArea underpasses must conform to Underpass object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -554,7 +554,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:baliseGroups ;
         sh:node era:BaliseGroupShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea baliseGroups must conform to BaliseGroupShape." ;
+        sh:message "FunctionalArea baliseGroups must conform to BaliseGroup object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -563,7 +563,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:etcsMarkers ;
         sh:node era:ETCSMarkerShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea etcsMarkers must conform to ETCSMarkerShape." ;
+        sh:message "FunctionalArea etcsMarkers must conform to ETCSMarker object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -572,7 +572,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:switches ;
         sh:class era:Switch ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea switches must conform to SwitchShape." ;
+        sh:message "FunctionalArea switches must conform to Switch object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -581,7 +581,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:derailers ;
         sh:node era:DerailerShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea derailers must conform to DerailerShape." ;
+        sh:message "FunctionalArea derailers must conform to Derailer object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -590,7 +590,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:crossings ;
         sh:node era:CrossingShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea crossings must conform to CrossingShape." ;
+        sh:message "FunctionalArea crossings must conform to Crossing object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -599,7 +599,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:slipCrossings ;
         sh:node era:SlipCrossingShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea slipCrossings must conform to SlipCrossingShape." ;
+        sh:message "FunctionalArea slipCrossings must conform to SlipCrossing object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -608,7 +608,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:bufferStops ;
         sh:node era:BufferStopShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea bufferStops must conform to BufferStopShape." ;
+        sh:message "FunctionalArea bufferStops must conform to BufferStop object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -617,7 +617,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:stopLocations ;
         sh:node era:StopLocationShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea stopLocations must conform to StopLocationShape." ;
+        sh:message "FunctionalArea stopLocations must conform to StopLocation object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -626,7 +626,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:timingPoints ;
         sh:node era:TimingPointShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea timingPoints must conform to TimingPointShape." ;
+        sh:message "FunctionalArea timingPoints must conform to TimingPoint object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -635,7 +635,7 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:trainDetectors ;
         sh:node era:TrainDetectorShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea trainDetectors must conform to TrainDetectorShape." ;
+        sh:message "FunctionalArea trainDetectors must conform to TrainDetector object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -668,7 +668,7 @@ era:GeometryAreaShape a sh:NodeShape ;
         sh:path era:linearElementGeometries ;
         sh:node era:LinearElementGeometryShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "GeometryArea linearElementGeometries must conform to LinearElementGeometryShape." ;
+        sh:message "GeometryArea linearElementGeometries must conform to LinearElementGeometry object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -748,7 +748,7 @@ era:HorizontalSegmentShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, horizontalSegmentArc must conform to HorizontalArcShape." ;
+            sh:message "If present, horizontalSegmentArc must conform to HorizontalArc object." ;
             sh:severity sh:Violation ;
         ]
         
@@ -759,7 +759,7 @@ era:HorizontalSegmentShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, horizontalSegmentLine must conform to HorizontalLineShape." ;
+            sh:message "If present, horizontalSegmentLine must conform to HorizontalLine object." ;
             sh:severity sh:Violation ;
         ]
         
@@ -770,7 +770,7 @@ era:HorizontalSegmentShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, horizontalSegmentTransition must conform to HorizontalTransitionShape." ;
+            sh:message "If present, horizontalSegmentTransition must conform to HorizontalTransition object." ;
             sh:severity sh:Violation ;
         ]
     ) .
@@ -839,7 +839,7 @@ era:InfrastructureShape a sh:NodeShape ;
         sh:path era:topoAreas ;
         sh:node era:TopoAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An Infrastructure may contain multiple topoAreas (track network topology and connectivity)." ;
+        sh:message "An Infrastructure may contain multiple validated topoAreas (track network topology and connectivity)." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -848,7 +848,7 @@ era:InfrastructureShape a sh:NodeShape ;
         sh:path era:functionalAreas ;
         sh:node era:FunctionalAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An Infrastructure may contain multiple functionalAreas (operational elements like switches, balises, platforms)." ;
+        sh:message "An Infrastructure may contain multiple validated functionalAreas (operational elements like switches, balises, platforms)." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -857,7 +857,7 @@ era:InfrastructureShape a sh:NodeShape ;
         sh:path era:geometryAreas ;
         sh:node era:GeometryAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An Infrastructure may contain multiple geometryAreas (track alignment geometry, gradients, curves)." ;
+        sh:message "An Infrastructure may contain multiple validated geometryAreas (track alignment geometry, gradients, curves)." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -866,7 +866,7 @@ era:InfrastructureShape a sh:NodeShape ;
         sh:path era:sampledGeometryAreas ;
         sh:node era:SampledGeometryAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An Infrastructure may contain multiple sampledGeometryAreas (discretized track geometry at regular intervals)." ;
+        sh:message "An Infrastructure may contain multiple validated sampledGeometryAreas (discretized track geometry at regular intervals)." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -875,7 +875,7 @@ era:InfrastructureShape a sh:NodeShape ;
         sh:path era:propertiesAreas ;
         sh:node era:PropertiesAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An Infrastructure may contain multiple propertiesAreas (track characteristics like gauge, loading limits, speed restrictions)." ;
+        sh:message "An Infrastructure may contain multiple validated propertiesAreas (track characteristics like gauge, loading limits, speed restrictions)." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -884,7 +884,7 @@ era:InfrastructureShape a sh:NodeShape ;
         sh:path era:trackUsageAreas ;
         sh:node era:TrackUsageAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An Infrastructure may contain multiple trackUsageAreas (operational usage patterns and constraints)." ;
+        sh:message "An Infrastructure may contain multiple validated trackUsageAreas (operational usage patterns and constraints)." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -900,7 +900,7 @@ era:LevelCrossingShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LevelCrossing must reference exactly one areaReference that conforms to NetAreaReferenceShape (geographic extent of the crossing)." ;
+        sh:message "Each LevelCrossing must reference exactly one areaReference that conforms to NetAreaReference object (geographic extent of the crossing)." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -943,7 +943,7 @@ era:LinearElementGaugeShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each LinearElementGauge must have at least one linearElementSections that conform to LinearElementSectionShape." ;
+        sh:message "Each LinearElementGauge must have at least one linearElementSections that conform to LinearElementSection object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -981,7 +981,7 @@ era:LinearElementGeometryShape a sh:NodeShape ;
     # SPARQL constraint to validate horizontal alignment list items
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the horizontalAlignments list must be instances of era:HorizontalSegment that conform to HorizontalSegmentShape." ;
+        sh:message "All items in the horizontalAlignments list must be instances of era:HorizontalSegment that conform to HorizontalSegment object." ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1001,7 +1001,7 @@ era:LinearElementGeometryShape a sh:NodeShape ;
     # SPARQL constraint to validate vertical alignment list items
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the verticalAlignments list must be instances of era:VerticalSegment that conform to VerticalSegmentShape." ;
+        sh:message "All items in the verticalAlignments list must be instances of era:VerticalSegment that conform to VerticalSegment object." ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1021,7 +1021,7 @@ era:LinearElementGeometryShape a sh:NodeShape ;
     # SPARQL constraint to validate cant point list items
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the cantPoints list must be instances of era:CantPoint that conform to CantPointShape." ;
+        sh:message "All items in the cantPoints list must be instances of era:CantPoint that conform to CantPoint object." ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1064,7 +1064,7 @@ era:LinearElementLoadingGaugeShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each LinearElementLoadingGauge must have at least one linearElementSections that conform to LinearElementSectionShape." ;
+        sh:message "Each LinearElementLoadingGauge must have at least one linearElementSections that conform to LinearElementSection object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1075,11 +1075,11 @@ era:LinearElementSectionShape a sh:NodeShape ;
     # On Element (required, reference to the linear element - can be inline or referenced)
     sh:property [ 
         sh:path era:onElement ;
-        sh:node era:LinearElementShape ;
+        sh:class era:LinearElement ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElementSection must have exactly one onElement that conforms to LinearElementShape." ;
+        sh:message "Each LinearElementSection must have exactly one onElement that conforms to LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1183,7 +1183,7 @@ era:LinearElementSpeedProfileShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElementSpeedProfile must have exactly one sameDirProfile that conforms to SpeedProfileShape." ;
+        sh:message "Each LinearElementSpeedProfile must have exactly one sameDirProfile that conforms to SpeedProfile object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1193,7 +1193,7 @@ era:LinearElementSpeedProfileShape a sh:NodeShape ;
         sh:node era:SpeedProfileShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A LinearElementSpeedProfile may have at most one oppositeDirProfile that conforms to SpeedProfileShape." ;
+        sh:message "A LinearElementSpeedProfile may have at most one oppositeDirProfile that conforms to SpeedProfile object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1217,7 +1217,7 @@ era:NationalBorderShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NationalBorder must have exactly one topologicalCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each NationalBorder must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1316,7 +1316,7 @@ era:NetLinearReferenceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetLinearReference must have exactly one startsAt that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each NetLinearReference must have exactly one startsAt that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1327,7 +1327,7 @@ era:NetLinearReferenceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetLinearReference must have exactly one endsAt that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each NetLinearReference must have exactly one endsAt that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1343,7 +1343,7 @@ era:NetLinearReferenceShape a sh:NodeShape ;
     # SPARQL constraint to validate all list items are LinearElement instances
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the hasSequence list must be instances of era:LinearElement that conform to LinearElementShape." ;
+        sh:message "All items in the hasSequence list must be instances of era:LinearElement that conform to LinearElement object." ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1371,7 +1371,7 @@ era:NetPointReferenceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetPointReference must have exactly one hasTopoCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each NetPointReference must have exactly one hasTopoCoordinate that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1396,11 +1396,11 @@ era:NetRelationShape a sh:NodeShape ;
     # Element A (required, reference to a linear element)
     sh:property [ 
         sh:path era:elementA ;
-        sh:node era:LinearElementShape ;
+        sh:class era:LinearElement ;
 		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetRelation must have exactly one elementA that conforms to LinearElementShape." ;
+        sh:message "Each NetRelation must have exactly one elementA that conforms to LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1417,11 +1417,11 @@ era:NetRelationShape a sh:NodeShape ;
     # Element B (required, reference to a linear element)
     sh:property [ 
         sh:path era:elementB ;
-        sh:node era:LinearElementShape ;
+        sh:class era:LinearElement ;
 		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetRelation must have exactly one elementB that conforms to LinearElementShape." ;
+        sh:message "Each NetRelation must have exactly one elementB that conforms to LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1495,14 +1495,14 @@ era:OperationalPointShape a sh:NodeShape ;
         sh:path era:travelTimeMeasurementPoints ;
         sh:node era:TravelTimeMeasurementPointShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "OperationalPoint travelTimeMeasurementPoints must conform to TravelTimeMeasurementPointShape." ;
+        sh:message "OperationalPoint travelTimeMeasurementPoints must conform to TravelTimeMeasurementPoint object." ;
         sh:severity sh:Violation ;
     ] ;
     
     # SPARQL constraint to validate all platform list items are Platform instances
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the platforms list must be instances of era:Platform that conform to PlatformShape." ;
+        sh:message "All items in the platforms list must be instances of era:Platform that conform to Platform object." ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1572,7 +1572,7 @@ era:PermittedBrakingDistanceShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each PermittedBrakingDistance must have at least one linearElementSections that conform to LinearElementSectionShape." ;
+        sh:message "Each PermittedBrakingDistance must have at least one linearElementSections that conform to LinearElementSection object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1606,7 +1606,7 @@ era:PlatformEdgeShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each PlatformEdge must have exactly one linearReference that conforms to NetLinearReferenceShape." ;
+        sh:message "Each PlatformEdge must have exactly one linearReference that conforms to NetLinearReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1638,10 +1638,10 @@ era:PlatformEdgeShape a sh:NodeShape ;
     # Stop Locations (required, one or more)
     sh:property [ 
         sh:path era:stopLocations ;
-        sh:node era:StopLocationShape ;
+        sh:class era:StopLocation ;
 		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
-        sh:message "Each PlatformEdge must have at least one stopLocations that conform to StopLocationShape." ;
+        sh:message "Each PlatformEdge must have at least one stopLocations that conform to validated StopLocation." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1664,7 +1664,7 @@ era:PlatformShape a sh:NodeShape ;
         sh:node era:PlatformEdgeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each Platform must have at least one platformEdges that conform to PlatformEdgeShape." ;
+        sh:message "Each Platform must have at least one platformEdges that conform to PlatformEdge object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1750,7 +1750,7 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:path era:linearElementGauges ;
         sh:node era:LinearElementGaugeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "PropertiesArea linearElementGauges must conform to LinearElementGaugeShape." ;
+        sh:message "PropertiesArea linearElementGauges must conform to LinearElementGauge object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1759,7 +1759,7 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:path era:linearElementLoadingGauges ;
         sh:node era:LinearElementLoadingGaugeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "PropertiesArea linearElementLoadingGauges must conform to LinearElementLoadingGaugeShape." ;
+        sh:message "PropertiesArea linearElementLoadingGauges must conform to validated LinearElementLoadingGauge." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1768,7 +1768,7 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:path era:linearElementSpeedProfiles ;
         sh:node era:LinearElementSpeedProfileShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "PropertiesArea linearElementSpeedProfiles must conform to LinearElementSpeedProfileShape." ;
+        sh:message "PropertiesArea linearElementSpeedProfiles must conform to validated LinearElementSpeedProfile." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1777,7 +1777,7 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:path era:tractionSystems ;
         sh:node era:TractionSystemShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "PropertiesArea tractionSystems must conform to TractionSystemShape." ;
+        sh:message "PropertiesArea tractionSystems must conform to TractionSystem object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1786,7 +1786,7 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:path era:currentLimitations ;
         sh:node era:CurrentLimitationShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "PropertiesArea currentLimitations must conform to CurrentLimitationShape." ;
+        sh:message "PropertiesArea currentLimitations must conform to CurrentLimitation object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1795,7 +1795,7 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:path era:permittedBrakingDistances ;
         sh:node era:PermittedBrakingDistanceShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "PropertiesArea permittedBrakingDistances must conform to PermittedBrakingDistanceShape." ;
+        sh:message "PropertiesArea permittedBrakingDistances must conform to validated PermittedBrakingDistance." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1804,7 +1804,7 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:path era:trackConditions ;
         sh:node era:TrackConditionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "PropertiesArea trackConditions must conform to TrackConditionShape." ;
+        sh:message "PropertiesArea trackConditions must conform to validated TrackCondition." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1828,7 +1828,7 @@ era:SampledGeometryAreaShape a sh:NodeShape ;
         sh:node era:SampledLinearElementGeometryShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each SampledGeometryArea must have at least one sampledLinearElementGeometries that conform to SampledLinearElementGeometryShape." ;
+        sh:message "Each SampledGeometryArea must have at least one sampledLinearElementGeometries that conform to SampledLinearElementGeometry object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1898,7 +1898,7 @@ era:SampledLinearElementGeometryShape a sh:NodeShape ;
     # SPARQL constraint to validate all curves list items are CurveSamplePoint instances
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the curves list must be instances of era:CurveSamplePoint that conform to CurveSamplePointShape." ;
+        sh:message "All items in the curves list must be instances of era:CurveSamplePoint that conform to CurveSamplePoint object." ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1947,7 +1947,7 @@ era:SampledLinearElementGeometryShape a sh:NodeShape ;
     # SPARQL constraint to validate all cants list items are CantSamplePoint instances
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the cants list must be instances of era:CantSamplePoint that conform to CantSamplePointShape." ;
+        sh:message "All items in the cants list must be instances of era:CantSamplePoint that conform to CantSamplePoint object." ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1995,7 +1995,7 @@ era:SampledLinearElementGeometryShape a sh:NodeShape ;
     # SPARQL constraint to validate all slopes list items are SlopeSamplePoint instances
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the slopes list must be instances of era:SlopeSamplePoint that conform to SlopeSamplePointShape." ;
+        sh:message "All items in the slopes list must be instances of era:SlopeSamplePoint that conform to SlopeSamplePoint object." ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -2028,11 +2028,11 @@ era:SlipCrossingShape a sh:NodeShape ;
     # Crossing (required, should be referenced)
     sh:property [ 
         sh:path era:crossing ;
-        sh:node era:CrossingShape ;
+        sh:class era:Crossing ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SlipCrossing must have exactly one crossing that conforms to CrossingShape." ;
+        sh:message "Each SlipCrossing must have exactly one crossing that conforms to a validated Crossing object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2043,7 +2043,7 @@ era:SlipCrossingShape a sh:NodeShape ;
 		sh:nodeKind sh:IRI ;
         sh:minCount 2 ;
         sh:maxCount 4 ;
-        sh:message "Each SlipCrossing must have between 2 and 4 switches that conform to SwitchShape." ;
+        sh:message "Each SlipCrossing must have between 2 and 4 switches that conform to Switch object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2093,7 +2093,7 @@ era:SpecificStaticSpeedLimitShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SpecificStaticSpeedLimit must have exactly one specificLimitCategory that conforms to SpeedLimitCategoryShape." ;
+        sh:message "Each SpecificStaticSpeedLimit must have exactly one specificLimitCategory that conforms to SpeedLimitCategory object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2161,7 +2161,7 @@ era:SpeedProfileShape a sh:NodeShape ;
         sh:node era:StaticSpeedLimitShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each SpeedProfile must have at least one staticSpeedProfile that conforms to StaticSpeedLimitShape." ;
+        sh:message "Each SpeedProfile must have at least one staticSpeedProfile that conforms to StaticSpeedLimit object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2170,7 +2170,7 @@ era:SpeedProfileShape a sh:NodeShape ;
         sh:path era:axleLoadSpeedProfiles ;
         sh:node era:AxleLoadSpeedProfileShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "SpeedProfile axleLoadSpeedProfiles must conform to AxleLoadSpeedProfileShape." ;
+        sh:message "SpeedProfile axleLoadSpeedProfiles must conform to AxleLoadSpeedProfile object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2203,7 +2203,7 @@ era:StaticSpeedLimitShape a sh:NodeShape ;
         sh:path era:specificStaticSpeedLimits ;
         sh:node era:SpecificStaticSpeedLimitShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "StaticSpeedLimit specificStaticSpeedLimits must conform to SpecificStaticSpeedLimitShape." ;
+        sh:message "StaticSpeedLimit specificStaticSpeedLimits must conform to validated SpecificStaticSpeedLimit." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2227,7 +2227,7 @@ era:StopLocationShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each StopLocation must have exactly one netPointReference that conforms to NetPointReferenceShape." ;
+        sh:message "Each StopLocation must have exactly one netPointReference that conforms to NetPointReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2266,7 +2266,7 @@ era:StopLocationShape a sh:NodeShape ;
         sh:node era:StopTrainLimitShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A StopLocation may have at most one stopTrainLimit that conforms to StopTrainLimitShape." ;
+        sh:message "A StopLocation may have at most one stopTrainLimit that conforms to validated StopTrainLimit object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2336,22 +2336,22 @@ era:SwitchShape a sh:NodeShape ;
     # Left Branch (required, network relation - can be inline or referenced)
     sh:property [ 
         sh:path era:leftBranch ;
-        sh:node era:NetRelationShape ;
+        sh:class era:NetRelation ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Switch must have exactly one leftBranch that conforms to NetRelationShape." ;
+        sh:message "Each Switch must have exactly one leftBranch that conforms to NetRelation object." ;
         sh:severity sh:Violation ;
     ] ;
     
     # Right Branch (required, network relation - can be inline or referenced)
     sh:property [ 
         sh:path era:rightBranch ;
-        sh:node era:NetRelationShape ;
+        sh:class era:NetRelation ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Switch must have exactly one rightBranch that conforms to NetRelationShape." ;
+        sh:message "Each Switch must have exactly one rightBranch that conforms to NetRelation object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2412,33 +2412,33 @@ era:TPActiveObjectShape a sh:NodeShape ;
         # Option 1: ETCS Marker
         [ 
             sh:path era:etcsMarker ;
-            sh:node era:ETCSMarkerShape ;
+            sh:class era:ETCSMarker ;
             sh:nodeKind sh:IRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, etcsMarker must conform to ETCSMarkerShape." ;
+            sh:message "If present, etcsMarker must conform to ETCSMarker object." ;
             sh:severity sh:Violation ;
         ]
         
         # Option 2: Stop Location
         [ 
             sh:path era:stopLocation ;
-            sh:node era:StopLocationShape ;
+            sh:class era:StopLocation ;
             sh:nodeKind sh:IRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, stopLocation must conform to StopLocationShape." ;
+            sh:message "If present, stopLocation must conform to StopLocation object." ;
             sh:severity sh:Violation ;
         ]
         
         # Option 3: Travel Time Measurement Point
         [ 
             sh:path era:timeMeasurePoint ;
-            sh:node era:TravelTimeMeasurementPointShape ;
+            sh:class era:TravelTimeMeasurementPoint ;
             sh:nodeKind sh:IRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, timeMeasurePoint must conform to TravelTimeMeasurementPointShape." ;
+            sh:message "If present, timeMeasurePoint must conform to TravelTimeMeasurementPoint object." ;
             sh:severity sh:Violation ;
         ]
     ) .
@@ -2473,7 +2473,7 @@ era:TimingPointShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TimingPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each TimingPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2484,7 +2484,7 @@ era:TimingPointShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TimingPoint must have exactly one activeObject that conforms to TPActiveObjectShape." ;
+        sh:message "Each TimingPoint must have exactly one activeObject that conforms to TPActiveObject object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2517,7 +2517,7 @@ era:TopoAreaShape a sh:NodeShape ;
         sh:path era:linearElements ;
         sh:node era:LinearElementShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "TopoArea linearElements must conform to LinearElementShape (can be inline or referenced)." ;
+        sh:message "TopoArea linearElements must conform to LinearElement object (can be inline or referenced)." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2526,7 +2526,7 @@ era:TopoAreaShape a sh:NodeShape ;
         sh:path era:netRelations ;
         sh:node era:NetRelationShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "TopoArea netRelations must conform to NetRelationShape (can be inline or referenced)." ;
+        sh:message "TopoArea netRelations must conform to NetRelation object (can be inline or referenced)." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2537,11 +2537,11 @@ era:TopologicalCoordinateShape a sh:NodeShape ;
     # On Linear Element (required, can be inline or referenced)
     sh:property [ 
         sh:path era:onLinearElement ;
-        sh:node era:LinearElementShape ;
+        sh:class era:LinearElement ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TopologicalCoordinate must have exactly one onLinearElement that conforms to LinearElementShape." ;
+        sh:message "Each TopologicalCoordinate must have exactly one onLinearElement that conforms to LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2588,7 +2588,7 @@ era:TrackConditionShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each TrackCondition must have at least one linearElementSections that conform to LinearElementSectionShape." ;
+        sh:message "Each TrackCondition must have at least one linearElementSections that conform to LinearElementSection object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2609,36 +2609,36 @@ era:TrackUsageAreaShape a sh:NodeShape ;
     # Preferred Same Direction (optional, multiple allowed)
     sh:property [ 
         sh:path era:preferredSameDir ;
-        sh:node era:LinearElementShape ;
+        sh:class era:LinearElement ;
 		sh:nodeKind sh:IRI ;
-        sh:message "TrackUsageArea preferredSameDir must conform to LinearElementShape." ;
+        sh:message "TrackUsageArea preferredSameDir must conform to validated LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
     # Preferred Opposite Direction (optional, multiple allowed)
     sh:property [ 
         sh:path era:preferredOppositeDir ;
-        sh:node era:LinearElementShape ;
+        sh:class era:LinearElement ;
 		sh:nodeKind sh:IRI ;
-        sh:message "TrackUsageArea preferredOppositeDir must conform to LinearElementShape." ;
+        sh:message "TrackUsageArea preferredOppositeDir must conform to validated LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
     # Secondary Tracks (optional, multiple allowed)
     sh:property [ 
         sh:path era:secondaryTracks ;
-        sh:node era:LinearElementShape ;
+        sh:class era:LinearElement ;
 		sh:nodeKind sh:IRI ;
-        sh:message "TrackUsageArea secondaryTracks must conform to LinearElementShape." ;
+        sh:message "TrackUsageArea secondaryTracks must conform to validated LinearElement object." ;
         sh:severity sh:Violation ;
     ] ;
     
     # Shunting Tracks (optional, multiple allowed)
     sh:property [ 
         sh:path era:shuntingTracks ;
-        sh:node era:LinearElementShape ;
+        sh:class era:LinearElement ;
 		sh:nodeKind sh:IRI ;
-        sh:message "TrackUsageArea shuntingTracks must conform to LinearElementShape." ;
+        sh:message "TrackUsageArea shuntingTracks must conform to validated LinearElement object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2672,7 +2672,7 @@ era:TractionSystemShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each TractionSystem must have at least one linearElementSections that conform to LinearElementSectionShape." ;
+        sh:message "Each TractionSystem must have at least one linearElementSections that conform to LinearElementSection object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2687,7 +2687,7 @@ era:TrainDetectorShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TrainDetector must have exactly one topologicalCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each TrainDetector must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2729,7 +2729,7 @@ era:TravelTimeMeasurementPointShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TravelTimeMeasurementPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each TravelTimeMeasurementPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2762,7 +2762,7 @@ era:TunnelShape a sh:NodeShape ;
         sh:node era:TunnelTubeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each Tunnel must have at least one tunnelTubes that conform to TunnelTubeShape." ;
+        sh:message "Each Tunnel must have at least one tunnelTubes that conform to validated TunnelTube object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2777,7 +2777,7 @@ era:TunnelTubeShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TunnelTube must have exactly one areaReference that conforms to NetAreaReferenceShape." ;
+        sh:message "Each TunnelTube must have exactly one areaReference that conforms to NetAreaReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2812,7 +2812,7 @@ era:TvpSectionShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TvpSection must have exactly one linkedArea that conforms to NetAreaReferenceShape." ;
+        sh:message "Each TvpSection must have exactly one linkedArea that conforms to NetAreaReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2821,7 +2821,7 @@ era:TvpSectionShape a sh:NodeShape ;
         sh:path era:trainDetectors ;
         sh:node era:TrainDetectorShape ;
 		sh:nodeKind sh:IRI ;
-        sh:message "TvpSection trainDetectors must conform to TrainDetectorShape." ;
+        sh:message "TvpSection trainDetectors must conform to TrainDetector object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2845,7 +2845,7 @@ era:UnderpassShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Underpass must have exactly one areaReference that conforms to NetAreaReferenceShape." ;
+        sh:message "Each Underpass must have exactly one areaReference that conforms to NetAreaReference object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2935,7 +2935,7 @@ era:VerticalSegmentShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, verticalSegmentArc must conform to VerticalArcShape." ;
+            sh:message "If present, verticalSegmentArc must conform to VerticalArc object." ;
             sh:severity sh:Violation ;
         ]
         
@@ -2946,7 +2946,7 @@ era:VerticalSegmentShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, verticalSegmentLine must conform to VerticalLineShape." ;
+            sh:message "If present, verticalSegmentLine must conform to VerticalLine object." ;
             sh:severity sh:Violation ;
         ]
     ) .
@@ -2967,7 +2967,7 @@ era:AtLeastOneInfrastructureClassShape a sh:NodeShape ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The data must contain at least one instance of the required infrastructure classes (e.g., TopoArea, LinearElement, Switch, OperationalPoint, etc.). This error may indicate that the provided data significantly deviates from the expected infrastructure model as defined in the extended ERA ontology." ;
+        sh:message "The data must contain at least one instance of the required infrastructure objects (e.g., TopoArea, LinearElement, Switch, OperationalPoint, etc.). This error may indicate that the provided data significantly deviates from the expected infrastructure model as defined in the extended ERA ontology." ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
