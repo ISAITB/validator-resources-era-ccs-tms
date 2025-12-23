@@ -168,7 +168,7 @@ era:BaliseShape a sh:NodeShape ;
     sh:property [ 
         sh:path era:etcsPackets ;
         sh:node era:BalisePacketShape ;
-        sh:message "Balise etcsPackets must conform to BalisePacketShape." ;
+        sh:message "Balise etcsPackets must reference valid BalisePacket." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -194,9 +194,9 @@ era:BufferStopShape a sh:NodeShape ;
     # Danger Points (optional, multiple allowed)
     sh:property [ 
         sh:path era:dangerPoints ;
-        sh:node era:DangerPointShape ;
+        sh:class era:DangerPoint ;
 		sh:nodeKind sh:IRI ;
-        sh:message "BufferStop dangerPoints must conform to DangerPointShape." ;
+        sh:message "BufferStop dangerPoints must conform to a valid DangerPoint object" ;
         sh:severity sh:Violation ;
     ] ;
 	
@@ -205,7 +205,7 @@ era:BufferStopShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
 		sh:minCount 1 ;
-        sh:message "BufferStop dangerPoints must conform to DangerPointShape." ;
+        sh:message "BufferStop dangerPoints must conform to valid DangerPoint object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -216,10 +216,10 @@ era:CrossingShape a sh:NodeShape ;
     # Fouling Points (required, one or more)
     sh:property [ 
         sh:path era:foulingPoints ;
-        sh:node era:FoulingPointShape ;
+        sh:class era:FoulingPoint ;
 		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
-        sh:message "Each Crossing must have at least one foulingPoints that conform to FoulingPointShape." ;
+        sh:message "Each Crossing must have at least one foulingPoint that conform to a valid FoulingPoint object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -244,7 +244,7 @@ era:DangerPointShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DangerPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each DangerPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -257,7 +257,7 @@ era:ETCSEngineeringShape a sh:NodeShape ;
         sh:path era:engAreas ;
         sh:node era:EngAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "ETCSEngineering engAreas must conform to EngAreaShape." ;
+        sh:message "ETCSEngineering engAreas must conform to a valid EngArea" ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -266,7 +266,7 @@ era:ETCSEngineeringShape a sh:NodeShape ;
         sh:path era:locationAccuracyAreas ;
         sh:node era:LocationAccuracyAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "ETCSEngineering locationAccuracyAreas must conform to LocationAccuracyAreaShape." ;
+        sh:message "ETCSEngineering locationAccuracyAreas must conform to valid LocationAccuracyArea object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -275,7 +275,7 @@ era:ETCSEngineeringShape a sh:NodeShape ;
         sh:path era:kmAreas ;
         sh:node era:KmAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "ETCSEngineering kmAreas must conform to KmAreaShape." ;
+        sh:message "ETCSEngineering kmAreas must conform to valid KmArea object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -313,7 +313,7 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:baliseGroups ;
         sh:node era:BaliseGroupShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea baliseGroups must conform to BaliseGroupShape." ;
+        sh:message "EngArea baliseGroups must conform to valid BaliseGroup object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -322,7 +322,7 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:bufferStops ;
         sh:node era:BufferStopShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea bufferStops must conform to BufferStopShape." ;
+        sh:message "EngArea bufferStops must conform to a valid BufferStop object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -331,7 +331,7 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:switches ;
         sh:node era:SwitchShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea switches must conform to SwitchShape." ;
+        sh:message "EngArea switches must conform to valid Switch object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -340,7 +340,7 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:crossings ;
         sh:node era:CrossingShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea crossings must conform to CrossingShape." ;
+        sh:message "EngArea crossings must conform to valid Crossing object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -349,7 +349,7 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:levelCrossings ;
         sh:node era:LevelCrossingShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea levelCrossings must conform to LevelCrossingShape." ;
+        sh:message "EngArea levelCrossings must conform to valid LevelCrossing object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -358,7 +358,7 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:dangerPoints ;
         sh:node era:DangerPointShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea dangerPoints must conform to DangerPointShape." ;
+        sh:message "EngArea dangerPoints must conform to valid DangerPoint object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -367,7 +367,7 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:foulingPoints ;
         sh:node era:FoulingPointShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea foulingPoints must conform to FoulingPointShape." ;
+        sh:message "EngArea foulingPoints must conform to valid FoulingPoint object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -376,7 +376,7 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:sleepers ;
         sh:node era:SleepersShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea sleepers must conform to SleepersShape." ;
+        sh:message "EngArea sleepers must conform to valid Sleepers object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -385,7 +385,7 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:trackUsagePaths ;
         sh:node era:TrackUsagePathShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea trackUsagePaths must conform to TrackUsagePathShape." ;
+        sh:message "EngArea trackUsagePaths must conform to valid TrackUsagePath object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -409,7 +409,7 @@ era:FoulingPointShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each FoulingPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinateShape." ;
+        sh:message "Each FoulingPoint must have exactly one topologicalCoordinate that conforms to valid TopologicalCoordinate object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -455,7 +455,7 @@ era:KmAreaShape a sh:NodeShape ;
         sh:path era:linearElementKm ;
         sh:node era:LinearElementKmShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "KmArea linearElementKm must conform to LinearElementKmShape." ;
+        sh:message "KmArea linearElementKm must conform to valid LinearElementKm object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -466,10 +466,10 @@ era:LevelCrossingShape a sh:NodeShape ;
     # Danger Points (required, one or more)
     sh:property [ 
         sh:path era:dangerPoints ;
-        sh:node era:DangerPointShape ;
+        sh:class era:DangerPoint ;
 		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
-        sh:message "Each LevelCrossing must have at least one dangerPoints that conform to DangerPointShape." ;
+        sh:message "Each LevelCrossing must have at least one dangerPoints that conform to DangerPoint object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -557,7 +557,7 @@ era:LocationAccuracyAreaShape a sh:NodeShape ;
         sh:path era:accuracyProfiles ;
         sh:node era:LinearElementAccuracyProfileShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "LocationAccuracyArea accuracyProfiles must conform to LinearElementAccuracyProfileShape." ;
+        sh:message "LocationAccuracyArea accuracyProfiles must conform to valid LinearElementAccuracyProfile object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -611,7 +611,7 @@ era:SleepersShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each Sleepers must have at least one linearElementSection that conform to LinearElementSectionShape." ;
+        sh:message "Each Sleepers must have at least one linearElementSection that conform to valid LinearElementSection object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -643,28 +643,28 @@ era:SwitchShape a sh:NodeShape ;
     # Fouling Points (required, one or more)
     sh:property [ 
         sh:path era:foulingPoints ;
-        sh:node era:FoulingPointShape ;
+        sh:class era:FoulingPoint ;
 		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
-        sh:message "Each Switch must have at least one foulingPoints that conform to FoulingPointShape." ;
+        sh:message "Each Switch must have at least one foulingPoints that conform to valid FoulingPoint object." ;
         sh:severity sh:Violation ;
     ] ;
     
     # Route Requires Point Left (optional, multiple allowed)
     sh:property [ 
         sh:path era:routeRequiresPointLeft ;
-        sh:node era:TrackUsagePathShape ;
+        sh:class era:TrackUsagePath ;
 		sh:nodeKind sh:IRI ;
-        sh:message "Switch routeRequiresPointLeft must conform to TrackUsagePathShape." ;
+        sh:message "Switch routeRequiresPointLeft must conform to TrackUsagePath object." ;
         sh:severity sh:Violation ;
     ] ;
     
     # Route Requires Point Right (optional, multiple allowed)
     sh:property [ 
         sh:path era:routeRequiresPointRight ;
-        sh:node era:TrackUsagePathShape ;
+        sh:class era:TrackUsagePath ;
 		sh:nodeKind sh:IRI ;
-        sh:message "Switch routeRequiresPointRight must conform to TrackUsagePathShape." ;
+        sh:message "Switch routeRequiresPointRight must conform to valid TrackUsagePath object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -679,17 +679,17 @@ era:TrackUsagePathShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TrackUsagePath must have exactly one pathBody that conforms to NetLinearReferenceShape." ;
+        sh:message "Each TrackUsagePath must have exactly one pathBody that conforms to valid NetLinearReference object." ;
         sh:severity sh:Violation ;
     ] ;
     
     # Has Preceded Track Usage Path (optional, single)
     sh:property [ 
         sh:path era:hasPreceededTrackUsagePath ;
-        sh:node era:TrackUsagePathShape ;
+        sh:class era:TrackUsagePath ;
 		sh:nodeKind sh:IRI ;
         sh:maxCount 1 ;
-        sh:message "A TrackUsagePath may have at most one hasPreceededTrackUsagePath that conforms to TrackUsagePathShape." ;
+        sh:message "A TrackUsagePath may have at most one hasPreceededTrackUsagePath that conforms to valid TrackUsagePath object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -728,11 +728,11 @@ era:LinearElementSectionShape a sh:NodeShape ;
     # On Element (required, reference to the linear element - can be inline or referenced)
     sh:property [ 
         sh:path era:onElement ;
-        sh:node era:LinearElementShape ;
+        sh:class era:LinearElement ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElementSection must have exactly one onElement that conforms to LinearElementShape." ;
+        sh:message "Each LinearElementSection must have exactly one onElement that conforms to a valid LinearElement." ;
         sh:severity sh:Violation ;
     ] ;
     

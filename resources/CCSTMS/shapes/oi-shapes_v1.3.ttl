@@ -196,7 +196,7 @@ era:AxleLoadSpeedProfileShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each AxleLoadSpeedProfile must reference exactly one segmentSection that conforms to SegmentSectionShape." ;
+        sh:message "Each AxleLoadSpeedProfile must reference exactly one segmentSection that conforms to SegmentSection object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -369,7 +369,7 @@ era:DigitalRegisterHandshakeAcknowledgementShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -427,7 +427,7 @@ era:DigitalRegisterHandshakeRejectionShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterHandshakeRejection must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:message "Each DigitalRegisterHandshakeRejection must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -451,7 +451,7 @@ era:DigitalRegisterHandshakeRejectionShape a sh:NodeShape ;
         sh:node era:ContactInformationShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A DigitalRegisterHandshakeRejection may have at most one contactInformation that conforms to ContactInformationShape." ;
+        sh:message "A DigitalRegisterHandshakeRejection may have at most one contactInformation that conforms to ContactInformation object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -467,7 +467,7 @@ era:DigitalRegisterHandshakeRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -478,7 +478,7 @@ era:DigitalRegisterHandshakeRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one absolutePosition that conforms to AbsolutePositionShape." ;
+        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one absolutePosition that conforms to AbsolutePosition object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -489,7 +489,7 @@ era:DigitalRegisterHandshakeRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one relativePos that conforms to RelativePositionShape." ;
+        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one relativePos that conforms to RelativePosition object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -515,7 +515,7 @@ era:DigitalRegisterSessionTerminationRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterSessionTerminationRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:message "Each DigitalRegisterSessionTerminationRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -532,7 +532,7 @@ era:DigitalRegisterSessionTerminationShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterSessionTermination must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:message "Each DigitalRegisterSessionTermination must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -562,7 +562,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DrivingProfile must have exactly one staticSpeedProfileStart that conforms to StaticSpeedProfileStartShape." ;
+        sh:message "Each DrivingProfile must have exactly one staticSpeedProfileStart that conforms to StaticSpeedProfileStart object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -573,7 +573,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DrivingProfile must have exactly one voltageStart that conforms to VoltageStartShape." ;
+        sh:message "Each DrivingProfile must have exactly one voltageStart that conforms to VoltageStart object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -796,7 +796,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:staticSpeedProfileChanges ;
         sh:node era:StaticSpeedProfileChangeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple staticSpeedProfileChanges." ;
+        sh:message "A DrivingProfile may have multiple validated staticSpeedProfileChanges." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -805,7 +805,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:voltageChanges ;
         sh:node era:VoltageChangeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple voltageChanges." ;
+        sh:message "A DrivingProfile may have multiple validated voltageChanges." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -814,7 +814,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:gradientChanges ;
         sh:node era:GradientChangeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple gradientChanges." ;
+        sh:message "A DrivingProfile may have multiple validated gradientChanges." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -823,7 +823,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:curveChanges ;
         sh:node era:CurveChangeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple curveChanges." ;
+        sh:message "A DrivingProfile may have multiple validated curveChanges." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -832,7 +832,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:currentChanges ;
         sh:node era:CurrentChangeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple currentChanges." ;
+        sh:message "A DrivingProfile may have multiple validated currentChanges." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -843,7 +843,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:baliseGroups ;
         sh:node era:BaliseGroupShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple baliseGroups." ;
+        sh:message "A DrivingProfile may reference multiple validated baliseGroups." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -852,7 +852,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:tunnels ;
         sh:node era:TunnelShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple tunnels." ;
+        sh:message "A DrivingProfile may reference multiple validated tunnels." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -861,7 +861,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:unprotectedLXs ;
         sh:node era:UnprotectedLXShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple unprotectedLXs." ;
+        sh:message "A DrivingProfile may reference multiple validated unprotectedLXs." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -870,7 +870,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:timingPoints ;
         sh:node era:TimingPointShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple timingPoints." ;
+        sh:message "A DrivingProfile may reference multiple validated timingPoints." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -879,7 +879,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:platformAreas ;
         sh:node era:SegmentSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple platformAreas." ;
+        sh:message "A DrivingProfile may reference multiple validated platformAreas." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -890,7 +890,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:axleLoadSpeedProfiles ;
         sh:node era:AxleLoadSpeedProfileShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple axleLoadSpeedProfiles." ;
+        sh:message "A DrivingProfile may have multiple validated axleLoadSpeedProfiles." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -899,7 +899,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:permittedBrakingDistances ;
         sh:node era:PermittedBrakingDistanceShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple permittedBrakingDistances." ;
+        sh:message "A DrivingProfile may have multiple validated permittedBrakingDistances." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -908,7 +908,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:limitedDynamicBrakeForces ;
         sh:node era:LimitedDynamicBrakeForceShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple limitedDynamicBrakeForces." ;
+        sh:message "A DrivingProfile may have multiple validated limitedDynamicBrakeForces." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -919,7 +919,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:switchOffRegenerativeBrakes ;
         sh:node era:SegmentSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple switchOffRegenerativeBrakes sections." ;
+        sh:message "A DrivingProfile may reference multiple validated switchOffRegenerativeBrakes sections." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -928,7 +928,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:switchOffMagneticShoeBrakes ;
         sh:node era:SegmentSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple switchOffMagneticShoeBrakes sections." ;
+        sh:message "A DrivingProfile may reference multiple validated switchOffMagneticShoeBrakes sections." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -937,7 +937,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:switchOffEddyCurrentBrakeServiceBrakes ;
         sh:node era:SegmentSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple switchOffEddyCurrentBrakeServiceBrakes sections." ;
+        sh:message "A DrivingProfile may reference multiple validated switchOffEddyCurrentBrakeServiceBrakes sections." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -946,7 +946,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:switchOffEddyCurrentBrakeEmergencyBrakes ;
         sh:node era:SegmentSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple switchOffEddyCurrentBrakeEmergencyBrakes sections." ;
+        sh:message "A DrivingProfile may reference multiple validated switchOffEddyCurrentBrakeEmergencyBrakes sections." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -955,7 +955,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:dynamicBrakeForceInhibitions ;
         sh:node era:SegmentSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple dynamicBrakeForceInhibitions sections." ;
+        sh:message "A DrivingProfile may reference multiple validated dynamicBrakeForceInhibitions sections." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -965,7 +965,7 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:node era:AtoTSContactInfoShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A DrivingProfile may have at most one atotsContactInfo." ;
+        sh:message "A DrivingProfile may have at most one validated atotsContactInfo." ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -981,7 +981,7 @@ era:GeometryProfileShape a sh:NodeShape ;
         sh:node era:AttitudeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A GeometryProfile may have at most one attitudes that conforms to AttitudeShape." ;
+        sh:message "A GeometryProfile may have at most one attitudes that conforms to Attitude object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -990,7 +990,7 @@ era:GeometryProfileShape a sh:NodeShape ;
         sh:path era:linearElementCoordinates ;
         sh:node era:LinearElementCoordinateShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A GeometryProfile may have multiple linearElementCoordinates." ;
+        sh:message "A GeometryProfile may have multiple validated linearElementCoordinates." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1031,7 +1031,7 @@ era:LimitedDynamicBrakeForceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LimitedDynamicBrakeForce must reference exactly one segmentSection that conforms to SegmentSectionShape." ;
+        sh:message "Each LimitedDynamicBrakeForce must reference exactly one segmentSection that conforms to SegmentSection object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1059,7 +1059,7 @@ era:MapAreaRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MapAreaRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:message "Each MapAreaRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1070,7 +1070,7 @@ era:MapAreaRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MapAreaRequest must have exactly one absolutePosition that conforms to AbsolutePositionShape." ;
+        sh:message "Each MapAreaRequest must have exactly one absolutePosition that conforms to AbsolutePosition object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1081,7 +1081,7 @@ era:MapAreaRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MapAreaRequest must have exactly one relativePos that conforms to RelativePositionShape." ;
+        sh:message "Each MapAreaRequest must have exactly one relativePos that conforms to RelativePosition object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1107,7 +1107,7 @@ era:MapAreaShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MapArea must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:message "Each MapArea must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1117,7 +1117,7 @@ era:MapAreaShape a sh:NodeShape ;
         sh:node era:SegmentProfileListShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each MapArea must have at least one segmentProfileList that conforms to SegmentProfileListShape." ;
+        sh:message "Each MapArea must have at least one segmentProfileList that conforms to SegmentProfileList object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1132,7 +1132,7 @@ era:OIAreaShape a sh:NodeShape ;
         sh:node era:OISegmentShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each OIArea must have at least one segments that conform to OISegmentShape." ;
+        sh:message "Each OIArea must have at least one segments that conform to OISegment object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1141,7 +1141,7 @@ era:OIAreaShape a sh:NodeShape ;
         sh:path era:timingPointsMapping ;
         sh:node era:TimingPointMappingShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OIArea may have multiple timingPointsMapping." ;
+        sh:message "An OIArea may have multiple validated timingPointsMapping." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1157,7 +1157,7 @@ era:OISegmentShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each OISegment must reference exactly one linearElementSection that conforms to LinearElementSectionShape." ;
+        sh:message "Each OISegment must reference exactly one linearElementSection that conforms to LinearElementSection object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1168,7 +1168,7 @@ era:OISegmentShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each OISegment must reference exactly one segmentProfile that conforms to SegmentProfileShape." ;
+        sh:message "Each OISegment must reference exactly one segmentProfile that conforms to SegmentProfile object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1182,7 +1182,7 @@ era:OIShape a sh:NodeShape ;
         sh:path era:oiAreas ;
         sh:node era:OIAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple oiAreas." ;
+        sh:message "An OI may contain multiple validated oiAreas." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1191,7 +1191,7 @@ era:OIShape a sh:NodeShape ;
         sh:path era:mapAreaRequests ;
         sh:node era:MapAreaRequestShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple mapAreaRequests." ;
+        sh:message "An OI may contain multiple validated mapAreaRequests." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1200,7 +1200,7 @@ era:OIShape a sh:NodeShape ;
         sh:path era:mapAreas ;
         sh:node era:MapAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple mapAreas." ;
+        sh:message "An OI may contain multiple validated mapAreas." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1209,7 +1209,7 @@ era:OIShape a sh:NodeShape ;
         sh:path era:digitalRegisterHandshakeRequests ;
         sh:node era:DigitalRegisterHandshakeRequestShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple digitalRegisterHandshakeRequests." ;
+        sh:message "An OI may contain multiple validated digitalRegisterHandshakeRequests." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1218,7 +1218,7 @@ era:OIShape a sh:NodeShape ;
         sh:path era:digitalRegisterHandshakeAcknowledgements ;
         sh:node era:DigitalRegisterHandshakeAcknowledgementShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple digitalRegisterHandshakeAcknowledgements." ;
+        sh:message "An OI may contain multiple validated digitalRegisterHandshakeAcknowledgements." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1227,7 +1227,7 @@ era:OIShape a sh:NodeShape ;
         sh:path era:digitalRegisterHandshakeRejections ;
         sh:node era:DigitalRegisterHandshakeRejectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple digitalRegisterHandshakeRejections." ;
+        sh:message "An OI may contain multiple validated digitalRegisterHandshakeRejections." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1236,7 +1236,7 @@ era:OIShape a sh:NodeShape ;
         sh:path era:digitalRegisterSessionTerminationRequests ;
         sh:node era:DigitalRegisterSessionTerminationRequestShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple digitalRegisterSessionTerminationRequests." ;
+        sh:message "An OI may contain multiple validated digitalRegisterSessionTerminationRequests." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1245,7 +1245,7 @@ era:OIShape a sh:NodeShape ;
         sh:path era:digitalRegisterSessionTerminations ;
         sh:node era:DigitalRegisterSessionTerminationShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple digitalRegisterSessionTerminations." ;
+        sh:message "An OI may contain multiple validated digitalRegisterSessionTerminations." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1254,7 +1254,7 @@ era:OIShape a sh:NodeShape ;
         sh:path era:segmentProfileRequests ;
         sh:node era:SegmentProfileRequestShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple segmentProfileRequests." ;
+        sh:message "An OI may contain multiple validated segmentProfileRequests." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1263,7 +1263,7 @@ era:OIShape a sh:NodeShape ;
         sh:path era:segmentProfilePackets ;
         sh:node era:SegmentProfilePacketShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple segmentProfilePackets." ;
+        sh:message "An OI may contain multiple validated segmentProfilePackets." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1279,7 +1279,7 @@ era:PermittedBrakingDistanceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each PermittedBrakingDistance must reference exactly one segmentSection that conforms to SegmentSectionShape." ;
+        sh:message "Each PermittedBrakingDistance must reference exactly one segmentSection that conforms to SegmentSection object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1351,7 +1351,7 @@ era:SegmentDescriptionShape a sh:NodeShape ;
         sh:node era:GeometryProfileShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A SegmentDescription may have at most one geometryProfile that conforms to GeometryProfileShape." ;
+        sh:message "A SegmentDescription may have at most one geometryProfile that conforms to GeometryProfile object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1361,7 +1361,7 @@ era:SegmentDescriptionShape a sh:NodeShape ;
         sh:node era:DrivingProfileShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A SegmentDescription may have at most one drivingProfile that conforms to DrivingProfileShape." ;
+        sh:message "A SegmentDescription may have at most one drivingProfile that conforms to DrivingProfile object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1415,7 +1415,7 @@ era:SegmentProfilePacketShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentProfilePacket must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:message "Each SegmentProfilePacket must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1425,7 +1425,7 @@ era:SegmentProfilePacketShape a sh:NodeShape ;
         sh:node era:SegmentProfileShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each SegmentProfilePacket must contain at least one segmentProfiles that conform to SegmentProfileShape." ;
+        sh:message "Each SegmentProfilePacket must contain at least one segmentProfiles that conform to SegmentProfile object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1441,7 +1441,7 @@ era:SegmentProfileRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentProfileRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeaderShape." ;
+        sh:message "Each SegmentProfileRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1521,7 +1521,7 @@ era:SegmentProfileShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentProfile must have exactly one segmentDescription that conforms to SegmentDescriptionShape." ;
+        sh:message "Each SegmentProfile must have exactly one segmentDescription that conforms to SegmentDescription object." ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1532,7 +1532,7 @@ era:SegmentProfileShape a sh:NodeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 4 ;
-        sh:message "Each SegmentProfile must have 1-4 adjacentSegmentProfiles that conform to AdjacentSegmentProfileShape (topology connections: plain line=2, points=3-4)." ;
+        sh:message "Each SegmentProfile must have 1-4 adjacentSegmentProfiles that conform to AdjacentSegmentProfile object." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1619,7 +1619,7 @@ era:StaticSpeedProfileChangeShape a sh:NodeShape ;
         sh:path era:specificStaticSpeedProfile ;
         sh:node era:SpecificStaticSpeedLimitShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A StaticSpeedProfileChange may have multiple specificStaticSpeedProfile entries for different train types." ;
+        sh:message "A StaticSpeedProfileChange may have multiple validated specificStaticSpeedProfile entries for different train types." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1656,7 +1656,7 @@ era:StaticSpeedProfileStartShape a sh:NodeShape ;
         sh:path era:specificStaticSpeedProfile ;
         sh:node era:SpecificStaticSpeedLimitShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A StaticSpeedProfileStart may have multiple specificStaticSpeedProfile entries for different train types." ;
+        sh:message "A StaticSpeedProfileStart may have multiple validated specificStaticSpeedProfile entries for different train types." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1668,22 +1668,22 @@ era:TimingPointMappingShape a sh:NodeShape ;
     # Infrastructure Timing Point (required, reference to infrastructure timing point)
     sh:property [ 
         sh:path era:infraTimingPoint ;
-        sh:node era:TimingPointShape ;
+        sh:class era:TimingPoint ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TimingPointMapping must reference exactly one infraTimingPoint that conforms to TimingPointShape." ;
+        sh:message "Each TimingPointMapping must reference exactly one infraTimingPoint that conforms to TimingPoint object." ;
         sh:severity sh:Violation ;
     ] ;
     
     # ATO Timing Point (required, reference to ATO timing point)
     sh:property [ 
         sh:path era:atoTimingPoint ;
-        sh:node era:TimingPointShape ;
+        sh:class era:TimingPoint ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TimingPointMapping must reference exactly one atoTimingPoint that conforms to TimingPointShape." ;
+        sh:message "Each TimingPointMapping must reference exactly one atoTimingPoint that conforms to TimingPoint object." ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -1815,7 +1815,7 @@ era:TunnelShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Tunnel must reference exactly one segmentSection that conforms to SegmentSectionShape." ;
+        sh:message "Each Tunnel must reference exactly one segmentSection that conforms to SegmentSection object." ;
         sh:severity sh:Violation ;
     ] ;
     
