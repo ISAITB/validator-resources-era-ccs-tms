@@ -348,7 +348,7 @@ era:TvpSectionTrainDetectorOffsetCoverageConstraint
     sh:sparql [
         sh:message """
 		Each TrainDetector must lie on a LinearElement segment that is fully covered by the TvpSection's linkedArea. 
-		The offsetFromOrigin must fall within the start→end bounds of a matching NetLinearReference.
+		The offsetFromOrigin must fall within the start -> end bounds of a matching NetLinearReference.
         """ ;
         sh:severity sh:Violation ;
 
@@ -912,7 +912,7 @@ era:CantSamplePointCongruenceShape a sh:NodeShape ;
 	# SPT2TS-125315 The extent of CantSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "A CantSamplePoint must exist at the start position of every HorizontalArc or HorizontalTransition segment. Missing position (in metersn): {?missingPos}" ;
+        sh:message "A CantSamplePoint must exist at the start position of every HorizontalArc or HorizontalTransition segment. Missing position (in meters): {?missingPos}" ;
         sh:select """
             PREFIX era:  <http://data.europa.eu/949/>
             PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1099,7 +1099,7 @@ era:CurveSamplePointCongruenceShape a sh:NodeShape ;
                     ?curveSample era:pos ?curvePos .
 					BIND(?curvePos AS ?missingPointInt)
 
-                    # ?curvePos : xsd:unsignedInt, millimeters (exp -3) → divide by 1000 for meters
+                    # ?curvePos : xsd:unsignedInt, millimeters (exp -3) -> divide by 1000 for meters
                     # ?arcPos   : xsd:double, meters
                     # Tolerance +-0.001 m (1 mm)
                     FILTER ( ABS( xsd:double(?curvePos) / 1000.0 - ?arcPos ) < 0.001 )
@@ -1124,7 +1124,7 @@ era:CurveSamplePointSignCongruenceShape a sh:NodeShape ;
 
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "Missing correspondence CurveSamplePoint or CurveSamplePoint at position {?arcPos} m has radius sign mismatch: segment radius is {?segmentRadius} m but sampled radius is {?sampleRadius} (mm as integer, exp -3)." ;
+        sh:message "Missing correspondence CurveSamplePoint, or CurveSamplePoint at position {?arcPos} m has radius sign mismatch: segment radius is {?segmentRadius} m but sampled radius is {?sampleRadius} (mm as integer, exp -3)." ;
         sh:select """
             PREFIX era:  <http://data.europa.eu/949/>
             PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
