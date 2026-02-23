@@ -348,7 +348,7 @@ era:TvpSectionTrainDetectorOffsetCoverageConstraint
     sh:sparql [
         sh:message """
 		Each TrainDetector must lie on a LinearElement segment that is fully covered by the TvpSection's linkedArea. 
-		The offsetFromOrigin must fall within the start→end bounds of a matching NetLinearReference.
+		The offsetFromOrigin must fall within the start -> end bounds of a matching NetLinearReference.
         """ ;
         sh:severity sh:Violation ;
 
@@ -701,192 +701,6 @@ era:LinearElementGeometryExistenceShape a sh:NodeShape ;
     """ ;
     sh:severity sh:Warning ;
 	] .
-
-
-
-# ===== CantSamplePoint Congruence Constraint =====
-era:CantSamplePointCongruenceShape a sh:NodeShape ;
-    sh:targetClass era:SampledLinearElementGeometry ;
-    
-	# SPT2TS-125315 The extent of CantSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.  
-    sh:sparql [
-        a sh:SPARQLConstraint ;
-        sh:message "A CantSamplePoint must exist at the start position (elementGeometryPos) of every HorizontalArc in the corresponding LinearElementGeometry." ;
-        sh:select """
-            PREFIX era: <http://data.europa.eu/949/>
-            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-            
-            SELECT $this ?missingPos
-            WHERE {
-                ?leg a era:LinearElementGeometry .
-                
-                # Sample Pattern: .../ClassName/LE123 -> LE123
-                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
-                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
-                
-                FILTER (?thisId = ?legId)
-                
-                ?leg era:horizontalAlignments ?hSegmentList .
-                ?hSegmentList rdf:rest*/rdf:first ?hSegment .
-                
-                ?hSegment era:horizontalSegmentArc ?hArc .
-                ?hArc era:elementGeometryPos ?arcPos .
-                
-                FILTER NOT EXISTS {
-                    $this era:cants ?cantList .
-                    ?cantList rdf:rest*/rdf:first ?cantSample .
-                    ?cantSample era:pos ?cantPos .
-                    FILTER (?cantPos = ?arcPos)
-                }
-                
-                BIND(?arcPos AS ?missingPos)
-            }
-        """ ;
-        sh:severity sh:Violation ;
-    ] ;
-    
-    # Check that CantSamplePoints exist at start of HorizontalTransition
-    sh:sparql [
-        a sh:SPARQLConstraint ;
-        sh:message "A CantSamplePoint must exist at the start position (elementGeometryPos) of every HorizontalTransition in the corresponding LinearElementGeometry." ;
-        sh:select """
-            PREFIX era: <http://data.europa.eu/949/>
-            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-            
-            SELECT $this ?missingPos
-            WHERE {
-                ?leg a era:LinearElementGeometry .
-                
-                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
-                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
-                
-                FILTER (?thisId = ?legId)
-                
-                ?leg era:horizontalAlignments ?hSegmentList .
-                ?hSegmentList rdf:rest*/rdf:first ?hSegment .
-                
-                ?hSegment era:horizontalSegmentTransition ?hTrans .
-                ?hTrans era:elementGeometryPos ?transPos .
-                
-                FILTER NOT EXISTS {
-                    $this era:cants ?cantList .
-                    ?cantList rdf:rest*/rdf:first ?cantSample .
-                    ?cantSample era:pos ?cantPos .
-                    FILTER (?cantPos = ?transPos)
-                }
-                
-                BIND(?transPos AS ?missingPos)
-            }
-        """ ;
-        sh:severity sh:Violation ;
-    ] ;
-    
-    # Check that CantSamplePoints exist at end of HorizontalArc
-    sh:sparql [
-        a sh:SPARQLConstraint ;
-        sh:message "A CantSamplePoint must exist at the end position of every HorizontalArc (at the start of the next segment in horizontalAlignments)." ;
-        sh:select """
-            PREFIX era: <http://data.europa.eu/949/>
-            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-            
-            SELECT $this ?missingPos
-            WHERE {
-                ?leg a era:LinearElementGeometry .
-                
-                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
-                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
-                
-                FILTER (?thisId = ?legId)
-                
-                ?leg era:horizontalAlignments ?hSegmentList .
-                
-                ?hSegmentList rdf:rest*/rdf:first ?hSegment .
-                ?hSegment era:horizontalSegmentArc ?hArc .
-                
-                ?listNode rdf:first ?hSegment .
-                ?listNode rdf:rest ?nextNode .
-                ?nextNode rdf:first ?nextSegment .
-                
-                {
-                    ?nextSegment era:horizontalSegmentLine ?nextLine .
-                    ?nextLine era:elementGeometryPos ?endPos .
-                }
-                UNION
-                {
-                    ?nextSegment era:horizontalSegmentArc ?nextArc .
-                    ?nextArc era:elementGeometryPos ?endPos .
-                }
-                UNION
-                {
-                    ?nextSegment era:horizontalSegmentTransition ?nextTrans .
-                    ?nextTrans era:elementGeometryPos ?endPos .
-                }
-                
-                FILTER NOT EXISTS {
-                    $this era:cants ?cantList .
-                    ?cantList rdf:rest*/rdf:first ?cantSample .
-                    ?cantSample era:pos ?cantPos .
-                    FILTER (?cantPos = ?endPos)
-                }
-                
-                BIND(?endPos AS ?missingPos)
-            }
-        """ ;
-        sh:severity sh:Violation ;
-    ] ;
-    
-    # Check that CantSamplePoints exist at end of HorizontalTransition
-    sh:sparql [
-        a sh:SPARQLConstraint ;
-        sh:message "A CantSamplePoint must exist at the end position of every HorizontalTransition (at the start of the next segment in horizontalAlignments)." ;
-        sh:select """
-            PREFIX era: <http://data.europa.eu/949/>
-            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-            
-            SELECT $this ?missingPos
-            WHERE {
-                ?leg a era:LinearElementGeometry .
-                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
-                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
-                
-                FILTER (?thisId = ?legId)
-                
-                ?leg era:horizontalAlignments ?hSegmentList .
-                
-                ?hSegmentList rdf:rest*/rdf:first ?hSegment .
-                ?hSegment era:horizontalSegmentTransition ?hTrans .
-                
-                ?listNode rdf:first ?hSegment .
-                ?listNode rdf:rest ?nextNode .
-                ?nextNode rdf:first ?nextSegment .
-                
-                {
-                    ?nextSegment era:horizontalSegmentLine ?nextLine .
-                    ?nextLine era:elementGeometryPos ?endPos .
-                }
-                UNION
-                {
-                    ?nextSegment era:horizontalSegmentArc ?nextArc .
-                    ?nextArc era:elementGeometryPos ?endPos .
-                }
-                UNION
-                {
-                    ?nextSegment era:horizontalSegmentTransition ?nextTrans .
-                    ?nextTrans era:elementGeometryPos ?endPos .
-                }
-                
-                FILTER NOT EXISTS {
-                    $this era:cants ?cantList .
-                    ?cantList rdf:rest*/rdf:first ?cantSample .
-                    ?cantSample era:pos ?cantPos .
-                    FILTER (?cantPos = ?endPos)
-                }
-                
-                BIND(?missingPos AS ?missingPos)
-            }
-        """ ;
-        sh:severity sh:Violation ;
-    ] .
 	
 	
 # ===== GeometryArea Requires TopoArea Constraint =====
@@ -1091,322 +905,267 @@ era:LinearElementSpeedProfileRequiresLinearElementShape a sh:NodeShape ;
 	
 	
 	
-# SPT2TS-125791: (a1) The extent of CurveSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
-# ===== Part (a1): Sign Consistency - SlopeSamplePoint sign must match VerticalArc sign =====
-era:SlopeSamplePointSignConsistencyVerticalArcShape a sh:NodeShape ;
-    sh:targetClass era:SampledLinearElementGeometry ;
-    
-    sh:sparql [
-        a sh:SPARQLConstraint ;
-        sh:message "The sign of the slope at a SlopeSamplePoint must match the sign of the slope of the underlying VerticalArc segment at that position (considering the arc's initial slope and direction)." ;
-        sh:select """
-            PREFIX era: <http://data.europa.eu/949/>
-            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-            
-            SELECT $this ?slopeSample ?samplePos ?sampleSlope ?arcSlope
-            WHERE {
-                ?leg a era:LinearElementGeometry .
-                
-                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
-                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
-                
-                FILTER (?thisId = ?legId)
-                
-                $this era:slopes ?slopeList .
-                ?slopeList rdf:rest*/rdf:first ?slopeSample .
-                ?slopeSample era:pos ?samplePos .
-                ?slopeSample era:samplePointSlope ?sampleSlope .
-                
-                ?leg era:verticalAlignments ?vSegmentList .
-                ?vSegmentList rdf:rest*/rdf:first ?vSegment .
-                ?vSegment era:verticalSegmentArc ?vArc .
-                ?vArc era:elementGeometryPos ?segmentStart .
-                ?vArc era:slope ?arcSlope .
-                
-                ?listNode rdf:first ?vSegment .
-                OPTIONAL {
-                    ?listNode rdf:rest ?nextNode .
-                    ?nextNode rdf:first ?nextSegment .
-                    {
-                        ?nextSegment era:verticalSegmentLine ?nextLine .
-                        ?nextLine era:elementGeometryPos ?segmentEnd .
-                    }
-                    UNION
-                    {
-                        ?nextSegment era:verticalSegmentArc ?nextArc .
-                        ?nextArc era:elementGeometryPos ?segmentEnd .
-                    }
-                }
-                
-                FILTER (?samplePos >= ?segmentStart)
-                FILTER (BOUND(?segmentEnd) -> ?samplePos < ?segmentEnd : true)
-                
-                # Violation: signs don't match (both non-zero and opposite signs)
-                FILTER (
-                    (?sampleSlope != 0 && ?arcSlope != 0) &&
-                    ((?sampleSlope > 0 && ?arcSlope < 0) || (?sampleSlope < 0 && ?arcSlope > 0))
-                )
-            }
-        """ ;
-        sh:severity sh:Violation ;
-    ] .
-	
-	
-# SPT2TS-125791: (a2) The extent of CurveSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
-# ===== Part (a2): Sign Consistency - SlopeSamplePoint sign must match VerticalLine sign =====
-era:SlopeSamplePointSignConsistencyVerticalLineShape a sh:NodeShape ;
-    sh:targetClass era:SampledLinearElementGeometry ;
-    
-    sh:sparql [
-        a sh:SPARQLConstraint ;
-        sh:message "The sign of the slope at a SlopeSamplePoint must match the sign of the slope of the underlying VerticalLine segment at that position." ;
-        sh:select """
-            PREFIX era: <http://data.europa.eu/949/>
-            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-            
-            SELECT $this ?slopeSample ?samplePos ?sampleSlope ?segmentSlope
-            WHERE {
-                ?leg a era:LinearElementGeometry .
-                
-                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
-                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
-                
-                FILTER (?thisId = ?legId)
-                
-                $this era:slopes ?slopeList .
-                ?slopeList rdf:rest*/rdf:first ?slopeSample .
-                ?slopeSample era:pos ?samplePos .
-                ?slopeSample era:samplePointSlope ?sampleSlope .
-                
-                # VerticalLine segment
-                ?leg era:verticalAlignments ?vSegmentList .
-                ?vSegmentList rdf:rest*/rdf:first ?vSegment .
-                ?vSegment era:verticalSegmentLine ?vLine .
-                ?vLine era:elementGeometryPos ?segmentStart .
-                ?vLine era:slope ?segmentSlope .
-                
-                # Next segment
-                ?listNode rdf:first ?vSegment .
-                
-                OPTIONAL {
-                    ?listNode rdf:rest ?nextNode .
-                    ?nextNode rdf:first ?nextSegment .
-                    {
-                        ?nextSegment era:verticalSegmentLine ?nextLine .
-                        ?nextLine era:elementGeometryPos ?segmentEnd .
-                    }
-                    UNION
-                    {
-                        ?nextSegment era:verticalSegmentArc ?nextArc .
-                        ?nextArc era:elementGeometryPos ?segmentEnd .
-                    }
-                }
-                
-                FILTER (?samplePos >= ?segmentStart)
-                FILTER (BOUND(?segmentEnd) -> ?samplePos < ?segmentEnd : true)
-                
-                # Violation: signs don't match (both non-zero and opposite signs)
-                FILTER (
-                    (?sampleSlope != 0 && ?segmentSlope != 0) &&
-                    ((?sampleSlope > 0 && ?segmentSlope < 0) || (?sampleSlope < 0 && ?segmentSlope > 0))
-                )
-            }
-        """ ;
-        sh:severity sh:Violation ;
-    ] .
-	
+# ===== CantSamplePoint Congruence Constraint (Arc & Transition) =====
+era:CantSamplePointCongruenceShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementGeometry ;
 
-# SPT2TS-125791: (b1) The extent of CurveSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
-# ===== Part (b1): Positional Continuity - SlopeSamplePoint at start of VerticalLine =====
-era:SlopeSamplePointCongruenceVerticalLineStartShape a sh:NodeShape ;
-    sh:targetClass era:SampledLinearElementGeometry ;
-    
+	# SPT2TS-125315 The extent of CantSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "A SlopeSamplePoint must exist at the start position (elementGeometryPos) of every VerticalLine in the corresponding LinearElementGeometry." ;
+        sh:message "A CantSamplePoint must exist at the start position of every HorizontalArc or HorizontalTransition segment. Missing position (in meters): {?missingPos}" ;
         sh:select """
-            PREFIX era: <http://data.europa.eu/949/>
-            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-            
+            PREFIX era:  <http://data.europa.eu/949/>
+            PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
             SELECT $this ?missingPos
             WHERE {
-                ?leg a era:LinearElementGeometry .
-                
                 BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
-                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
-                
-                FILTER (?thisId = ?legId)
-                
-                ?leg era:verticalAlignments ?vSegmentList .
-                ?vSegmentList rdf:rest*/rdf:first ?vSegment .
-                
-                ?vSegment era:verticalSegmentLine ?vLine .
-                ?vLine era:elementGeometryPos ?linePos .
-                
-                FILTER NOT EXISTS {
-                    $this era:slopes ?slopeList .
-                    ?slopeList rdf:rest*/rdf:first ?slopeSample .
-                    ?slopeSample era:pos ?slopePos .
-                    FILTER (?slopePos = ?linePos)
-                }
-                
-                BIND(?linePos AS ?missingPos)
-            }
-        """ ;
-        sh:severity sh:Violation ;
-    ] .
+                ?sampledLeg a era:SampledLinearElementGeometry .
+                BIND(REPLACE(STR(?sampledLeg), "^.*/([^/]+)$", "$1") AS ?sampledId)
+                FILTER(?thisId = ?sampledId)
 
+                # Traversing horizontalSegments, Arcs and Transitions only
+                $this era:horizontalAlignments ?hSegmentList .
+                ?hSegmentList rdf:rest*/rdf:first ?hSegment .
 
-	
-# SPT2TS-125791: (b2) The extent of CurveSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
-# ===== Part (b2): Positional Continuity - SlopeSamplePoint at start of VerticalArc =====
-era:SlopeSamplePointCongruenceVerticalArcStartShape a sh:NodeShape ;
-    sh:targetClass era:SampledLinearElementGeometry ;
-    
-    sh:sparql [
-        a sh:SPARQLConstraint ;
-        sh:message "A SlopeSamplePoint must exist at the start position (elementGeometryPos) of every VerticalArc in the corresponding LinearElementGeometry." ;
-        sh:select """
-            PREFIX era: <http://data.europa.eu/949/>
-            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-            
-            SELECT $this ?missingPos
-            WHERE {
-                ?leg a era:LinearElementGeometry .
-                
-                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
-                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
-                
-                FILTER (?thisId = ?legId)
-                
-                ?leg era:verticalAlignments ?vSegmentList .
-                ?vSegmentList rdf:rest*/rdf:first ?vSegment .
-                
-                ?vSegment era:verticalSegmentArc ?vArc .
-                ?vArc era:elementGeometryPos ?arcPos .
-                
+                {   ?hSegment era:horizontalSegmentArc ?hCurve . }
+                UNION
+                {   ?hSegment era:horizontalSegmentTransition ?hCurve . }
+
+                # elementGeometryPos: xsd:double, unit: meters
+                ?hCurve era:elementGeometryPos ?arcPos .
+
                 FILTER NOT EXISTS {
-                    $this era:slopes ?slopeList .
-                    ?slopeList rdf:rest*/rdf:first ?slopeSample .
-                    ?slopeSample era:pos ?slopePos .
-                    FILTER (?slopePos = ?arcPos)
+                    ?sampledLeg era:cants ?cantList .
+                    ?cantList rdf:rest*/rdf:first ?cantSample .
+                    ?cantSample era:pos ?cantPos .
+
+                    # ?cantPos : xsd:unsignedInt, millimeters (exp -3) -> divide by 1000 for meters
+                    # ?arcPos  : xsd:double, meters
+                    # Tolerance of 0.001 m (1 mm) to safely cover:
+                    #   - integer millimeter rounding gap (max +-0.0005 m)
+                    #   - floating-point division noise from /1000.0
+                    FILTER ( ABS( xsd:double(?cantPos) / 1000.0 - ?arcPos ) < 0.001 )
                 }
-                
+
                 BIND(?arcPos AS ?missingPos)
             }
         """ ;
         sh:severity sh:Violation ;
     ] .
+	
+# SPT2TS-125791: (a1) The extent of SlopeSamplePoint definition shall be congruent to the definition of vertical line & vertical arc segments.
+# ===== Part (a1): Sign Consistency - SlopeSamplePoint sign must match VerticalArc sign =====
+	
+# ===== SlopeSamplePoint Congruence Constraint (VerticalLine & VerticalArc) =====
+era:SlopeSamplePointCongruenceShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementGeometry ;
 
-
-# SPT2TS-125791: (b3) The extent of CurveSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
-# ===== Part (b3): Positional Continuity - SlopeSamplePoint at end of VerticalLine =====
-era:SlopeSamplePointCongruenceVerticalLineEndShape a sh:NodeShape ;
-    sh:targetClass era:SampledLinearElementGeometry ;
-    
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "A SlopeSamplePoint must exist at the end position of every VerticalLine (at the start of the next segment in verticalAlignments)." ;
+        sh:message "A SlopeSamplePoint must exist at the start position of every VerticalLine or VerticalArc segment. Missing position (in meters): {?missingPos}" ;
         sh:select """
-            PREFIX era: <http://data.europa.eu/949/>
-            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-            
+            PREFIX era:  <http://data.europa.eu/949/>
+            PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
             SELECT $this ?missingPos
             WHERE {
-                ?leg a era:LinearElementGeometry .
-                
                 BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
-                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
-                
-                FILTER (?thisId = ?legId)
-                
-                ?leg era:verticalAlignments ?vSegmentList .
-                
+                ?sampledLeg a era:SampledLinearElementGeometry .
+                BIND(REPLACE(STR(?sampledLeg), "^.*/([^/]+)$", "$1") AS ?sampledId)
+                FILTER(?thisId = ?sampledId)
+
+                $this era:verticalAlignments ?vSegmentList .
                 ?vSegmentList rdf:rest*/rdf:first ?vSegment .
-                ?vSegment era:verticalSegmentLine ?vLine .
-                
-                ?listNode rdf:first ?vSegment .
-                ?listNode rdf:rest ?nextNode .
-                ?nextNode rdf:first ?nextSegment .
-                
-                {
-                    ?nextSegment era:verticalSegmentLine ?nextLine .
-                    ?nextLine era:elementGeometryPos ?endPos .
-                }
+
+                {   ?vSegment era:verticalSegmentLine ?vCurve . }
                 UNION
-                {
-                    ?nextSegment era:verticalSegmentArc ?nextArc .
-                    ?nextArc era:elementGeometryPos ?endPos .
-                }
-                
+                {   ?vSegment era:verticalSegmentArc  ?vCurve . }
+
+                # elementGeometryPos: xsd:double, unit: meters
+                ?vCurve era:elementGeometryPos ?vertPos .
+
+                # Checking matching SlopeSamplePoint existence 
                 FILTER NOT EXISTS {
-                    $this era:slopes ?slopeList .
+                    ?sampledLeg era:slopes ?slopeList .
                     ?slopeList rdf:rest*/rdf:first ?slopeSample .
                     ?slopeSample era:pos ?slopePos .
-                    FILTER (?slopePos = ?endPos)
+
+                    # ?slopePos : xsd:unsignedInt, millimeters (exp -3) -> divide by 1000 for meters
+                    # ?vertPos  : xsd:double, meters
+                    # Tolerance +-0.001 m (1 mm)
+                    FILTER ( ABS( xsd:double(?slopePos) / 1000.0 - ?vertPos ) < 0.001 )
                 }
-                
-                BIND(?endPos AS ?missingPos)
+
+                BIND(?vertPos AS ?missingPos)
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+	
+
+# ===== SlopeSamplePoint Sign Congruence Constraint (Part 2) =====
+# vertical segment start position. Part 2 checks that where a match exists,
+# the sign of the sampled slope agrees with the sign of the segment slope.
+era:SlopeSamplePointSignCongruenceShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementGeometry ;
+
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "SlopeSamplePoint at position {?vertPos} m has sign mismatch: segment slope is {?segmentSlope} permill but sampled slope is {?sampleSlope} (tenths of pmill)." ;
+        sh:select """
+            PREFIX era:  <http://data.europa.eu/949/>
+            PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+            SELECT $this ?vertPos ?segmentSlope ?sampleSlope
+            WHERE {
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
+                ?sampledLeg a era:SampledLinearElementGeometry .
+                BIND(REPLACE(STR(?sampledLeg), "^.*/([^/]+)$", "$1") AS ?sampledId)
+                FILTER(?thisId = ?sampledId)
+
+                $this era:verticalAlignments ?vSegmentList .
+                ?vSegmentList rdf:rest*/rdf:first ?vSegment .
+
+                {   ?vSegment era:verticalSegmentLine ?vCurve . }
+                UNION
+                {   ?vSegment era:verticalSegmentArc  ?vCurve . }
+
+                # segmentSlope: xsd:double, unit: permill
+                ?vCurve era:elementGeometryPos ?vertPos .
+                ?vCurve era:slope              ?segmentSlope .
+
+                ?sampledLeg era:slopes ?slopeList .
+                ?slopeList rdf:rest*/rdf:first ?slopeSample .
+                ?slopeSample era:pos              ?slopePos .
+                ?slopeSample era:samplePointSlope ?sampleSlope .
+
+                FILTER ( ABS( xsd:double(?slopePos) / 1000.0 - ?vertPos ) < 0.001 )
+
+                # Flag sign mismatches only
+                # Zero on either side is treated as pass (neither > 0 nor < 0 fires)
+                FILTER (
+                    ( ?segmentSlope > 0 && ?sampleSlope < 0 ) ||
+                    ( ?segmentSlope < 0 && ?sampleSlope > 0 )
+                )
             }
         """ ;
         sh:severity sh:Violation ;
     ] .
 
 
-# SPT2TS-125791: (b4) The extent of CurveSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
-# ===== Part (b4): Positional Continuity - SlopeSamplePoint at end of VerticalArc =====
-era:SlopeSamplePointCongruenceVerticalArcEndShape a sh:NodeShape ;
-    sh:targetClass era:SampledLinearElementGeometry ;
-    
+
+# ===== CurveSamplePoint Congruence Constraint =====
+
+# ── Part 1: Existence ──
+# For every HorizontalArc or HorizontalTransition segment start position,
+# a corresponding CurveSamplePoint must exist in SampledLinearElementGeometry.
+era:CurveSamplePointCongruenceShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementGeometry ;
+
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "A SlopeSamplePoint must exist at the end position of every VerticalArc (at the start of the next segment in verticalAlignments)." ;
+        sh:message "A CurveSamplePoint must exist at the start position of every HorizontalArc or HorizontalTransition segment. Missing position (in meters): {?missingPos}" ;
         sh:select """
-            PREFIX era: <http://data.europa.eu/949/>
-            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-            
+            PREFIX era:  <http://data.europa.eu/949/>
+            PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
             SELECT $this ?missingPos
             WHERE {
-                ?leg a era:LinearElementGeometry .
-                
                 BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
-                BIND(REPLACE(STR(?leg), "^.*/([^/]+)$", "$1") AS ?legId)
-                
-                FILTER (?thisId = ?legId)
-                
-                ?leg era:verticalAlignments ?vSegmentList .
-                
-                ?vSegmentList rdf:rest*/rdf:first ?vSegment .
-                ?vSegment era:verticalSegmentArc ?vArc .
-                
-                ?listNode rdf:first ?vSegment .
-                ?listNode rdf:rest ?nextNode .
-                ?nextNode rdf:first ?nextSegment .
-                
-                {
-                    ?nextSegment era:verticalSegmentLine ?nextLine .
-                    ?nextLine era:elementGeometryPos ?endPos .
-                }
+                ?sampledLeg a era:SampledLinearElementGeometry .
+                BIND(REPLACE(STR(?sampledLeg), "^.*/([^/]+)$", "$1") AS ?sampledId)
+                FILTER(?thisId = ?sampledId)
+
+                # HorizontalLine is deliberately excluded — straight segments have no curvature
+                $this era:horizontalAlignments ?hSegmentList .
+                ?hSegmentList rdf:rest*/rdf:first ?hSegment .
+
+                {   ?hSegment era:horizontalSegmentArc        ?hCurve . }
                 UNION
-                {
-                    ?nextSegment era:verticalSegmentArc ?nextArc .
-                    ?nextArc era:elementGeometryPos ?endPos .
-                }
-                
+                {   ?hSegment era:horizontalSegmentTransition ?hCurve . }
+
+                # elementGeometryPos: xsd:double, unit: meters
+                ?hCurve era:elementGeometryPos ?arcPos .
+
+                # Checking matching CurveSamplePoint existence
                 FILTER NOT EXISTS {
-                    $this era:slopes ?slopeList .
-                    ?slopeList rdf:rest*/rdf:first ?slopeSample .
-                    ?slopeSample era:pos ?slopePos .
-                    FILTER (?slopePos = ?endPos)
+                    ?sampledLeg era:curves ?curveList .
+                    ?curveList rdf:rest*/rdf:first ?curveSample .
+                    ?curveSample era:pos ?curvePos .
+					BIND(?curvePos AS ?missingPointInt)
+
+                    # ?curvePos : xsd:unsignedInt, millimeters (exp -3) -> divide by 1000 for meters
+                    # ?arcPos   : xsd:double, meters
+                    # Tolerance +-0.001 m (1 mm)
+                    FILTER ( ABS( xsd:double(?curvePos) / 1000.0 - ?arcPos ) < 0.001 )
                 }
-                
-                BIND(?endPos AS ?missingPos)
+				BIND(?arcPos AS ?missingPos)
             }
         """ ;
         sh:severity sh:Violation ;
     ] .
-	
-	
+
+
+
+# ── Part 2: Radius Sign Congruence ──
+# Where a CurveSamplePoint exists at a segment start position,
+# the sign of sampleCurveRadius must agree with the sign of the segment radius.
+# Sign convention (same for both parametric and sampled):
+#   positive = right/clockwise curve
+#   negative = left/counter-clockwise curve
+# Zero radius on either side (e.g. transition start from straight) is treated as pass.
+era:CurveSamplePointSignCongruenceShape a sh:NodeShape ;
+    sh:targetClass era:LinearElementGeometry ;
+
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Missing correspondence CurveSamplePoint, or CurveSamplePoint at position {?arcPos} m has radius sign mismatch: segment radius is {?segmentRadius} m but sampled radius is {?sampleRadius} (mm as integer, exp -3)." ;
+        sh:select """
+            PREFIX era:  <http://data.europa.eu/949/>
+            PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+            SELECT $this ?arcPos ?segmentRadius ?sampleRadius
+            WHERE {
+                BIND(REPLACE(STR($this), "^.*/([^/]+)$", "$1") AS ?thisId)
+                ?sampledLeg a era:SampledLinearElementGeometry .
+                BIND(REPLACE(STR(?sampledLeg), "^.*/([^/]+)$", "$1") AS ?sampledId)
+                FILTER(?thisId = ?sampledId)
+
+                $this era:horizontalAlignments ?hSegmentList .
+                ?hSegmentList rdf:rest*/rdf:first ?hSegment .
+
+                {   ?hSegment era:horizontalSegmentArc        ?hCurve . }
+                UNION
+                {   ?hSegment era:horizontalSegmentTransition ?hCurve . }
+
+                # segmentRadius: xsd:double, unit: meters, signed
+                ?hCurve era:elementGeometryPos ?arcPos .
+                ?hCurve era:radius ?segmentRadius .
+
+                ?sampledLeg era:curves ?curveList .
+                ?curveList rdf:rest*/rdf:first ?curveSample .
+                ?curveSample era:pos ?curvePos .
+                ?curveSample era:sampleCurveRadius ?sampleRadius .
+
+                FILTER ( ABS( xsd:double(?curvePos) / 1000.0 - ?arcPos ) < 0.001 )
+
+                # Flaging sign mismatches only
+                # Zero on either side passes naturally.
+                FILTER (
+                    ( ?segmentRadius > 0 && ?sampleRadius < 0 ) ||
+                    ( ?segmentRadius < 0 && ?sampleRadius > 0 )
+                )
+            }
+        """ ;
+        sh:severity sh:Violation ;
+    ] .
+
 
 # SPT2TS-130846: The position (pos) of the speed limit for every StaticSpeedLimit defined in a LinearElementSpeedProfile shall not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement
 # ===== StaticSpeedLimit Position Within LinearElement Length Constraint =====
