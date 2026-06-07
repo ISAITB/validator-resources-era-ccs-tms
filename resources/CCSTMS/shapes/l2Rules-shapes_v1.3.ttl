@@ -1,0 +1,69 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix era:  <http://data.europa.eu/949/> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# SUBSET-036 §5.6.3 — Minimum Balise Centre-to-Centre Distance
+#
+# Speed limits are fetched via federation from the RINF endpoint:
+#     SERVICE  <https://graph.data.era.europa.eu/repositories/rinf-plus>
+# A violation is reported whenever two distinct balises on the same
+# Track/LinearElement are closer than those specified in SUBSET-036 minimum for that
+# LinearElement's track speed.
+
+era:BaliseMinimumDistanceShape
+    a sh:NodeShape ;
+    rdfs:label   "Minimum Balise Centre-to-Centre Distance"@en ;
+    rdfs:comment """SHACL constraint validating that the centre-to-centre
+        distance between any two Balises on the same LinearElement is at least
+        the minimum required by SUBSET-036 §5.6.3, which depends on the
+        Maximum Permitted Speed of the corresponding Track in RINF."""@en ;
+    sh:targetClass era:LinearElement ;
+    sh:sparql era:BaliseMinimumDistanceConstraint .
+
+era:BaliseMinimumDistanceConstraint
+    a sh:SPARQLConstraint ;
+    sh:message """Balises {?b1} and {?b2} on LinearElement {$this} are
+        {?actualDist_m} m apart, but ETCS Engineering rule requires at least
+        {?minDist_m} m for tracks with maximum permitted speed
+        {?maxSpeed} km/h."""@en ;
+    sh:prefixes era:ETCSPrefixes ;
+    sh:select """
+        SELECT $this ?b1 ?b2 ?actualDist_m ?minDist_m ?maxSpeed
+        WHERE {
+            ?b1 era:topologicalCoordinate ?tc1 .
+            ?tc1 era:onLinearElement   $this ;
+                 era:offsetFromOrigin  ?offset1_mm .
+            ?b2 era:topologicalCoordinate ?tc2 .
+            ?tc2 era:onLinearElement   $this ;
+                 era:offsetFromOrigin  ?offset2_mm .
+				 
+            FILTER(STR(?b1) < STR(?b2))
+            SERVICE <https://graph.data.era.europa.eu/repositories/rinf-plus> {
+                ?track a era:RunningTrack ;
+                       era:maximumPermittedSpeed ?maxSpeed ;
+                       era:netReference ?netLinearRef .
+                ?netLinearRef era:hasSequence ?seqList .
+                ?seqList rdf:rest*/rdf:first $this .
+            }
+            BIND(?offset1_mm * 0.001 AS ?offset1_m)
+            BIND(?offset2_mm * 0.001 AS ?offset2_m)
+            BIND(ABS(?offset1_m - ?offset2_m) AS ?actualDist_m)
+
+            BIND(
+                IF(?maxSpeed > 300 && ?maxSpeed <= 500, 5.0,
+                IF(?maxSpeed > 180 && ?maxSpeed <= 300, 3.0,
+                IF(?maxSpeed > 0   && ?maxSpeed <= 180, 2.3,
+                                                        2.3))) AS ?minDist_m
+            )
+            # violation occur if any pair is below the minimum
+            FILTER(?actualDist_m < ?minDist_m)
+        }
+    """ .
+
+era:ETCSPrefixes
+    a sh:PrefixDeclaration ;
+    sh:declare [ sh:prefix "era"  ; sh:namespace "http://data.europa.eu/949/"^^xsd:anyURI ] ,
+               [ sh:prefix "rdf"  ; sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI ] ,
+               [ sh:prefix "rdfs" ; sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ] .
