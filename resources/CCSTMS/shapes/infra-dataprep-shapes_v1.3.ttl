@@ -25,10 +25,15 @@
 # ===== Switch Branch NetRelation Exclusion Constraint =====
 era:SwitchBranchNetRelationExclusionShape a sh:NodeShape ;
     sh:targetClass era:Switch ;
+    era:additionalInfo "[BUSINESS RULE] This error might be because a NetRelation exists directly connecting a LinearElement exclusive to leftBranch with one exclusive to rightBranch — direct connections between exclusive branch elements are not permitted."@en ;
+    era:additionalInfo "[GESCHÄFTSREGEL] Dieser Fehler könnte daran liegen, dass eine NetRelation direkt ein LinearElement aus leftBranch mit einem aus rightBranch verbindet — direkte Verbindungen zwischen exklusiven Zweig-Elementen sind nicht zulässig."@de ;
+    era:additionalInfo "[RÈGLE MÉTIER] Cette erreur peut être due au fait qu''une NetRelation connecte directement un LinearElement exclusif à leftBranch avec un LinearElement exclusif à rightBranch — les connexions directes entre éléments exclusifs de branches ne sont pas autorisées."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "There shall be no NetRelations defined between LinearElements that are exclusively part of the leftBranch and rightBranch of a Switch (i.e., no direct connections between exclusive branch elements)." ;
+        sh:message "There shall be no NetRelations defined between LinearElements that are exclusively part of the leftBranch and rightBranch of a Switch (i.e., no direct connections between exclusive branch elements)."@en ;
+        sh:message "Es dürfen keine NetRelations zwischen LinearElements definiert sein, die ausschließlich Teil von leftBranch und rightBranch eines Switches sind (d. h. keine direkten Verbindungen zwischen exklusiven Zweigelementen)."@de ;
+        sh:message "Il ne doit y avoir aucune NetRelation définie entre les LinearElements qui font exclusivement partie des leftBranch et rightBranch d'un Switch (c'est-à-dire, aucune connexion directe entre des éléments de branche exclusifs)."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -122,11 +127,16 @@ era:SwitchBranchNetRelationExclusionShape a sh:NodeShape ;
 	
 era:SlipCrossingSwitchCountShape a sh:NodeShape ;
     sh:targetClass era:SlipCrossing ;
+    era:additionalInfo "[BUSINESS RULE] This error might be because this SlipCrossing contains exactly 3 Switch instances. Note that the constraint is specifically against exactly 3 — having 2 or 4 switches may be valid. The number 3 is the only forbidden count."@en ;
+    era:additionalInfo "[GESCHÄFTSREGEL] Dieser Fehler könnte daran liegen, dass diese SlipCrossing genau 3 Switch-Instanzen enthält. Die Einschränkung gilt speziell für genau 3 — 2 oder 4 Weichen können gültig sein."@de ;
+    era:additionalInfo "[RÈGLE MÉTIER] Cette erreur peut être due au fait que ce SlipCrossing contient exactement 3 instances Switch. La contrainte s''applique spécifiquement à exactement 3 — avoir 2 ou 4 aiguillages peut être valide."@fr ;
     
 	# SPT2TS-125789: A SlipCrossing shall not contain 3 instances of Switch.
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "A SlipCrossing must not contain exactly 3 instances of Switch." ;
+        sh:message "A SlipCrossing must not contain exactly 3 instances of Switch."@en ;
+        sh:message "Ein SlipCrossing darf nicht genau 3 Instanzen von Switch enthalten."@de ;
+        sh:message "Un SlipCrossing ne doit pas contenir exactement 3 instances de Switch."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -150,11 +160,16 @@ era:SlipCrossingSwitchCountShape a sh:NodeShape ;
 # ===== NetLinearReference Sequence Exclusion Constraint =====
 era:NetLinearReferenceSequenceExclusionShape a sh:NodeShape ;
     sh:targetClass era:NetLinearReference ;
+    era:additionalInfo "A NetLinearReference defines a path using a start point (startsAt), an end point (endsAt), and an optional ordered list of intermediate LinearElements (hasSequence). The LinearElements referenced by startsAt and endsAt are the boundary points of the path — they must not also appear inside the hasSequence list, since hasSequence is meant to contain only the intermediate LinearElements between those two boundaries. If this finding fires, check whether the LinearElement referenced via startsAt.onLinearElement or endsAt.onLinearElement appears anywhere in the hasSequence list and remove it — the start and end elements are implicitly part of the path definition and must not be repeated in the intermediate sequence."@en ;
+    era:additionalInfo "Eine NetLinearReference definiert einen Pfad über einen Startpunkt (startsAt), einen Endpunkt (endsAt) und eine optionale geordnete Liste zwischenliegender LinearElements (hasSequence). Die über startsAt und endsAt referenzierten LinearElements sind die Grenzpunkte des Pfades — sie dürfen nicht auch in der hasSequence-Liste erscheinen, da hasSequence ausschließlich die zwischen diesen beiden Grenzen liegenden LinearElements enthalten soll. Wenn dieser Befund auftritt, prüfen Sie, ob das über startsAt.onLinearElement oder endsAt.onLinearElement referenzierte LinearElement irgendwo in der hasSequence-Liste erscheint, und entfernen Sie es — die Start- und Endelemente sind implizit Teil der Pfaddefinition und dürfen in der Zwischensequenz nicht wiederholt werden."@de ;
+    era:additionalInfo "Une NetLinearReference définit un chemin via un point de départ (startsAt), un point d'arrivée (endsAt) et une liste ordonnée optionnelle de LinearElements intermédiaires (hasSequence). Les LinearElements référencés par startsAt et endsAt sont les points limites du chemin — ils ne doivent pas apparaître dans la liste hasSequence, car celle-ci est destinée à contenir uniquement les LinearElements intermédiaires entre ces deux limites. Si ce résultat apparaît, vérifiez si le LinearElement référencé via startsAt.onLinearElement ou endsAt.onLinearElement apparaît dans la liste hasSequence et supprimez-le — les éléments de début et de fin font implicitement partie de la définition du chemin et ne doivent pas être répétés dans la séquence intermédiaire."@fr ;
     
 	# SPT2TS-130930: The LinearElements referenced by a NetLinearReference's startsAt and endsAt topological coordinates shall not appear in its hasSequence list.
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The LinearElement referenced by startsAt must not appear in the hasSequence list." ;
+        sh:message "The LinearElement referenced by startsAt must not appear in the hasSequence list."@en ;
+        sh:message "Das von startsAt referenzierte LinearElement darf nicht in der Liste hasSequence erscheinen."@de ;
+        sh:message "Le LinearElement référencé par startsAt ne doit pas apparaître dans la liste hasSequence."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -173,7 +188,9 @@ era:NetLinearReferenceSequenceExclusionShape a sh:NodeShape ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The LinearElement referenced by endsAt must not appear in the hasSequence list." ;
+        sh:message "The LinearElement referenced by endsAt must not appear in the hasSequence list."@en ;
+        sh:message "Das von endsAt referenzierte LinearElement darf nicht in der Liste hasSequence erscheinen."@de ;
+        sh:message "Le LinearElement référencé par endsAt ne doit pas apparaître dans la liste hasSequence."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -195,11 +212,16 @@ era:NetLinearReferenceSequenceExclusionShape a sh:NodeShape ;
 # ===== NetRelation Distinct Elements Constraint =====
 era:NetRelationDistinctElementsShape a sh:NodeShape ;
     sh:targetClass era:NetRelation ;
+    era:additionalInfo "[BUSINESS RULE] This error might be because elementA and elementB reference the same LinearElement — a NetRelation must connect two distinct LinearElements. A self-referencing NetRelation is not permitted."@en ;
+    era:additionalInfo "[GESCHÄFTSREGEL] Dieser Fehler könnte daran liegen, dass elementA und elementB dasselbe LinearElement referenzieren — eine NetRelation muss zwei verschiedene LinearElements verbinden. Eine selbstreferenzierende NetRelation ist nicht zulässig."@de ;
+    era:additionalInfo "[RÈGLE MÉTIER] Cette erreur peut être due au fait qu''elementA et elementB référencent le même LinearElement — une NetRelation doit connecter deux LinearElements distincts. Une NetRelation autoréférentielle n''est pas permise."@fr ;
     
 	# SPT2TS-130927: For every NetRelation, the referenced elementA and elementB shall be distinct LinearElements.
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "A NetRelation must reference distinct LinearElements in elementA and elementB (they cannot be the same)." ;
+        sh:message "A NetRelation must reference distinct LinearElements in elementA and elementB (they cannot be the same)."@en ;
+        sh:message "Eine NetRelation muss auf unterschiedliche LinearElements in elementA und elementB verweisen (sie dürfen nicht identisch sein)."@de ;
+        sh:message "Une NetRelation doit référencer des LinearElements distincts dans elementA et elementB (ils ne peuvent pas être identiques)."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -222,10 +244,15 @@ era:NetRelationDistinctElementsShape a sh:NodeShape ;
 # ===== Switch Must Have Exactly 3 Unique Element-Flag Pairs Constraint =====
 era:SwitchThreeUniqueElementFlagPairsShape a sh:NodeShape ;
     sh:targetClass era:Switch ;
+    era:additionalInfo "[BUSINESS RULE] This error might be because the leftBranch and rightBranch NetRelations do not yield exactly 3 unique (LinearElement, isOnOrigin) flag pairs — every Switch must have exactly 3 such pairs, not 2 or 4. A standard switch has exactly 3 track endpoints: one shared (the toe), one on the left branch, and one on the right branch."@en ;
+    era:additionalInfo "[GESCHÄFTSREGEL] Dieser Fehler könnte daran liegen, dass die leftBranch- und rightBranch-NetRelationen nicht genau 3 eindeutige (LinearElement, isOnOrigin)-Flag-Paare ergeben. Jede Weiche muss genau 3 solcher Paare haben."@de ;
+    era:additionalInfo "[RÈGLE MÉTIER] Cette erreur peut être due au fait que les NetRelations leftBranch et rightBranch ne donnent pas exactement 3 paires uniques (LinearElement, isOnOrigin). Chaque aiguillage doit avoir exactement 3 paires de ce type."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "A Switch must have exactly 3 unique (LinearElement, isOnOrigin) flag pairs across its leftBranch and rightBranch NetRelations." ;
+        sh:message "A Switch must have exactly 3 unique (LinearElement, isOnOrigin) flag pairs across its leftBranch and rightBranch NetRelations."@en ;
+        sh:message "Ein Switch muss genau drei eindeutige Flag-Paare (LinearElement, isOnOrigin) über seine leftBranch- und rightBranch-NetRelations hinweg haben."@de ;
+        sh:message "Un commutateur doit avoir exactement 3 paires d'indicateurs uniques (LinearElement, isOnOrigin) dans ses NetRelations leftBranch et rightBranch."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -259,11 +286,16 @@ era:SwitchThreeUniqueElementFlagPairsShape a sh:NodeShape ;
 # ===== BufferStop Unique Position Constraint =====
 era:BufferStopUniquePositionShape a sh:NodeShape ;
     sh:targetClass era:BufferStop ;
+    era:additionalInfo "[BUSINESS RULE] This error might be because two distinct BufferStop instances are declared at exactly the same position — same LinearElement and same offsetFromOrigin. Each position in the network may only have one BufferStop."@en ;
+    era:additionalInfo "[GESCHÄFTSREGEL] Dieser Fehler könnte daran liegen, dass zwei verschiedene BufferStop-Instanzen an genau derselben Position deklariert sind — gleiches LinearElement und gleicher offsetFromOrigin. Jede Position im Netzwerk darf nur einen BufferStop haben."@de ;
+    era:additionalInfo "[RÈGLE MÉTIER] Cette erreur peut être due au fait que deux instances BufferStop distinctes sont déclarées à exactement la même position — même LinearElement et même offsetFromOrigin. Chaque position du réseau ne peut avoir qu''un seul BufferStop."@fr ;
     
 	# SPT2TS-125797: No two distinct buffer stops may be declared at the exact same position in the network
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "No two distinct buffer stops may be declared at the exact same position in the network (same LinearElement and offsetFromOrigin)." ;
+        sh:message "No two distinct buffer stops may be declared at the exact same position in the network (same LinearElement and offsetFromOrigin)."@en ;
+        sh:message "An der exakt gleichen Position im Netzwerk (gleiches LinearElement und offsetFromOrigin) dürfen keine zwei unterschiedlichen Prellböcke deklariert werden."@de ;
+        sh:message "Deux arrêts de tampon distincts ne peuvent pas être déclarés exactement à la même position dans le réseau (mêmes LinearElement et offsetFromOrigin)."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -291,11 +323,16 @@ era:BufferStopUniquePositionShape a sh:NodeShape ;
 	
 era:LinearElementNetRelationParticipationShape a sh:NodeShape ;
     sh:targetClass era:LinearElement ;
+    era:additionalInfo "[BUSINESS RULE] This error might be because this LinearElement does not appear as either elementA or elementB in any NetRelation in the dataset. Every LinearElement must be connected to the network topology via at least one NetRelation — a LinearElement that exists in isolation with no NetRelation referencing it is a violation."@en ;
+    era:additionalInfo "[GESCHÄFTSREGEL] Dieser Fehler könnte daran liegen, dass dieses LinearElement in keiner NetRelation im Datensatz als elementA oder elementB erscheint. Jedes LinearElement muss über mindestens eine NetRelation mit der Netzwerktopologie verbunden sein."@de ;
+    era:additionalInfo "[RÈGLE MÉTIER] Cette erreur peut être due au fait que ce LinearElement n''apparaît ni comme elementA ni comme elementB dans aucune NetRelation du jeu de données. Chaque LinearElement doit être connecté à la topologie du réseau via au moins une NetRelation."@fr ;
     
 	# SPT2TS-130926: Every LinearElement at micro level shall exist in at least one NetRelation, either as elementA or elementB.
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "Every LinearElement must exist in at least one NetRelation, either as elementA or elementB." ;
+        sh:message "Every LinearElement must exist in at least one NetRelation, either as elementA or elementB."@en ;
+        sh:message "Jedes LinearElement muss in mindestens einer NetRelation vorhanden sein, entweder als elementA oder elementB."@de ;
+        sh:message "Chaque LinearElement doit exister dans au moins une NetRelation, sous la forme elementA ou elementB."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -315,12 +352,17 @@ era:LinearElementNetRelationParticipationShape a sh:NodeShape ;
 # ===== Net Linear Reference Shape - hasSequence Constraint =====
 era:NetLinearReferenceSequenceConstraintShape a sh:NodeShape ;
     sh:targetClass era:NetLinearReference ;
+    era:additionalInfo "A NetLinearReference describes a path along the track network using a start point (startsAt), an end point (endsAt), and an optional intermediate sequence of LinearElements (hasSequence). When both startsAt and endsAt reference the same LinearElement, the path is entirely contained within that single LinearElement — no intermediate LinearElements are needed, so hasSequence must be empty or absent. If this finding fires, check whether the startsAt and endsAt topological coordinates both point to the same LinearElement via their onLinearElement property, and if so, remove the hasSequence from this NetLinearReference."@en ;
+    era:additionalInfo "Eine NetLinearReference beschreibt einen Pfad im Streckennetz über einen Startpunkt (startsAt), einen Endpunkt (endsAt) und eine optionale Zwischensequenz von LinearElements (hasSequence). Wenn sowohl startsAt als auch endsAt auf dasselbe LinearElement verweisen, ist der Pfad vollständig innerhalb dieses einzelnen LinearElements enthalten — es werden keine zwischenliegenden LinearElements benötigt, daher muss hasSequence leer oder nicht vorhanden sein. Wenn dieser Befund auftritt, prüfen Sie, ob die topologischen Koordinaten startsAt und endsAt beide über ihre onLinearElement-Eigenschaft auf dasselbe LinearElement verweisen, und entfernen Sie in diesem Fall hasSequence aus dieser NetLinearReference."@de ;
+    era:additionalInfo "Une NetLinearReference décrit un chemin dans le réseau ferroviaire via un point de départ (startsAt), un point d'arrivée (endsAt) et une séquence intermédiaire optionnelle de LinearElements (hasSequence). Lorsque startsAt et endsAt référencent tous deux le même LinearElement, le chemin est entièrement contenu dans ce seul LinearElement — aucun LinearElement intermédiaire n'est nécessaire, donc hasSequence doit être vide ou absent. Si ce résultat apparaît, vérifiez si les coordonnées topologiques startsAt et endsAt pointent toutes deux vers le même LinearElement via leur propriété onLinearElement, et si c'est le cas, supprimez hasSequence de cette NetLinearReference."@fr ;
     
 	# SPARQL constraint: hasSequence shall be empty if startsAt and endsAt reference the same LinearElement
 	# SPT2TS-130928: The hasSequence of a NetLinearReference shall be empty if its startsAt and endsAt topological coordinates reference the same LinearElement.
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "A NetLinearReference must not have a hasSequence when its startsAt and endsAt topological coordinates reference the same LinearElement." ;
+        sh:message "A NetLinearReference must not have a hasSequence when its startsAt and endsAt topological coordinates reference the same LinearElement."@en ;
+        sh:message "Eine NetLinearReference darf kein hasSequence haben, wenn ihre topologischen Koordinaten startsAt und endsAt auf dasselbe LinearElement verweisen."@de ;
+        sh:message "Un NetLinearReference ne doit pas avoir de hasSequence lorsque ses coordonnées topologiques startsAt et endsAt font référence au même LinearElement."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -344,12 +386,19 @@ era:NetLinearReferenceSequenceConstraintShape a sh:NodeShape ;
 era:TvpSectionTrainDetectorOffsetCoverageConstraint
     a sh:NodeShape ;
     sh:targetClass era:TvpSection ;
+    era:additionalInfo "[BUSINESS RULE] This error might be because a TrainDetector associated with this TvpSection lies on a LinearElement not covered by the TvpSection linkedArea, or because the TrainDetector offsetFromOrigin falls outside the start-to-end bounds of the matching NetLinearReference. The linkedArea defines the precise geometric extent of the TvpSection — every TrainDetector must be positioned strictly within that extent."@en ;
+    era:additionalInfo "[GESCHÄFTSREGEL] Dieser Fehler könnte daran liegen, dass ein TrainDetector, der mit diesem TvpSection verknüpft ist, auf einem LinearElement liegt, das nicht vom linkedArea des TvpSection abgedeckt wird, oder weil der offsetFromOrigin des TrainDetectors außerhalb der Start-bis-Ende-Grenzen der passenden NetLinearReference liegt."@de ;
+    era:additionalInfo "[RÈGLE MÉTIER] Cette erreur peut être due au fait qu''un TrainDetector associé à ce TvpSection se trouve sur un LinearElement non couvert par le linkedArea du TvpSection, ou parce que l''offsetFromOrigin du TrainDetector est en dehors des limites début-fin de la NetLinearReference correspondante."@fr ;
 
     sh:sparql [
         sh:message """
 		Each TrainDetector must lie on a LinearElement segment that is fully covered by the TvpSection's linkedArea. 
 		The offsetFromOrigin must fall within the start -> end bounds of a matching NetLinearReference.
-        """ ;
+        """@en ;
+        sh:message """Jeder TrainDetector muss auf einem LinearElement-Segment liegen, das vollständig vom linkedArea der TvpSection abgedeckt ist. 
+		Der offsetFromOrigin muss innerhalb der Start->Endgrenzen einer passenden NetLinearReference liegen."""@de ;
+        sh:message """Chaque TrainDetector doit se trouver sur un segment LinearElement entièrement couvert par le linkedArea de TvpSection. 
+		Le offsetFromOrigin doit se situer dans les limites de début -> de fin d’une NetLinearReference correspondante."""@fr ;
         sh:severity sh:Violation ;
 
         sh:select """
@@ -437,12 +486,17 @@ era:TvpSectionTrainDetectorOffsetCoverageConstraint
 # ===== PlatformEdge StopLocation Coverage Constraint =====
 era:PlatformEdgeStopLocationCoverageShape a sh:NodeShape ;
     sh:targetClass era:PlatformEdge ;
+    era:additionalInfo "[BUSINESS RULE] This error might be because a StopLocation associated with this PlatformEdge lies on a LinearElement not covered by the PlatformEdge linearReference. The linearReference defines the extent of the PlatformEdge — every StopLocation must sit on one of those LinearElements within the startsAt and endsAt bounds."@en ;
+    era:additionalInfo "[GESCHÄFTSREGEL] Dieser Fehler könnte daran liegen, dass eine StopLocation, die mit dieser PlatformEdge verknüpft ist, auf einem LinearElement liegt, das nicht von der linearReference der PlatformEdge abgedeckt wird."@de ;
+    era:additionalInfo "[RÈGLE MÉTIER] Cette erreur peut être due au fait qu''une StopLocation associée à cette PlatformEdge se trouve sur un LinearElement non couvert par la linearReference de la PlatformEdge."@fr ;
 	
 	    
 	# SPT2TS-130925: All StopLocations associated with a PlatformEdge shall be positioned on LinearElements that are fully covered by the PlatformEdge's linearReference.
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "All StopLocations associated with a PlatformEdge must be positioned on LinearElements that are fully covered by the PlatformEdge's linearReference." ;
+        sh:message "All StopLocations associated with a PlatformEdge must be positioned on LinearElements that are fully covered by the PlatformEdge's linearReference."@en ;
+        sh:message "Alle mit einem PlatformEdge verknüpften StopLocations müssen auf LinearElements positioniert sein, die vollständig vom linearReference des PlatformEdge abgedeckt sind."@de ;
+        sh:message "Tous les StopLocations associés à un PlatformEdge doivent être positionnés sur des LinearElements entièrement couverts par le linearReference de PlatformEdge."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -483,11 +537,16 @@ era:PlatformEdgeStopLocationCoverageShape a sh:NodeShape ;
 # ===== Balise Unique Position Within BaliseGroup Constraint =====
 era:BaliseUniquePositionShape a sh:NodeShape ;
     sh:targetClass era:BaliseGroup ;
+    era:additionalInfo "[BUSINESS RULE] This error might be because two Balises within the same group share the same position on a LinearElement (same offsetFromOrigin). Only one Balise instance is permitted at any given position within a group."@en ;
+    era:additionalInfo "[GESCHÄFTSREGEL] Dieser Fehler könnte daran liegen, dass zwei Balisen innerhalb derselben Gruppe dieselbe Position auf einem LinearElement teilen. Nur eine Balise-Instanz ist an einer bestimmten Position innerhalb einer Gruppe zulässig."@de ;
+    era:additionalInfo "[RÈGLE MÉTIER] Cette erreur peut être due au fait que deux Balises du même groupe partagent la même position sur un LinearElement. Une seule instance de Balise est autorisée à une position donnée dans un groupe."@fr ;
     
 	# SPT2TS-125800: At a specific position on a linear element, only a single instance of balise shall be present.
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "At a specific position on a linear element, only a single instance of balise shall be present within a BaliseGroup (no two balises in the same group may share the same LinearElement and offsetFromOrigin)." ;
+        sh:message "At a specific position on a linear element, only a single instance of balise shall be present within a BaliseGroup (no two balises in the same group may share the same LinearElement and offsetFromOrigin)."@en ;
+        sh:message "An einer bestimmten Position auf einem linearen Element darf innerhalb einer BaliseGroup nur eine einzige Instanz von Balise vorhanden sein (keine zwei Balisen in derselben Gruppe dürfen dasselbe LinearElement und offsetFromOrigin teilen)."@de ;
+        sh:message "À une position spécifique sur un élément linéaire, une seule instance de balise doit être présente dans un BaliseGroup (deux balises du même groupe ne peuvent pas partager le même LinearElement et offsetFromOrigin)."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -521,25 +580,34 @@ era:BaliseUniquePositionShape a sh:NodeShape ;
 # ===== LinearElementSection Bounded Within LinearElement Constraint =====
 era:LinearElementSectionBoundedShape a sh:NodeShape ;
     sh:targetClass era:LinearElementSection ;
+    era:additionalInfo "A LinearElementSection describes a portion of a single LinearElement using two offsets, startOffsetFromOrigin and endOffsetFromOrigin, both measured in metres from the start of that LinearElement. Both offsets must be zero or greater. In addition, endOffsetFromOrigin must not be larger than the LinearElement's own length (lengthOfNetLinearElement) — a section cannot extend past the end of the track segment it belongs to. Check the onElement reference points to the correct LinearElement, and that lengthOfNetLinearElement on that LinearElement is set correctly, before assuming the section's offsets are wrong."@en ;
+    era:additionalInfo "Ein LinearElementSection beschreibt einen Abschnitt eines einzelnen LinearElements anhand zweier Offsets, startOffsetFromOrigin und endOffsetFromOrigin, jeweils in Metern ab dem Anfang dieses LinearElements gemessen. Beide Offsets müssen größer oder gleich null sein. Zusätzlich darf endOffsetFromOrigin nicht größer sein als die Länge des LinearElements selbst (lengthOfNetLinearElement) — ein Abschnitt darf nicht über das Ende des zugehörigen Streckenabschnitts hinausreichen. Prüfen Sie, ob onElement auf das richtige LinearElement verweist und ob lengthOfNetLinearElement dort korrekt gesetzt ist, bevor Sie von falschen Offsets im Abschnitt ausgehen."@de ;
+    era:additionalInfo "Un LinearElementSection décrit une portion d'un seul LinearElement à l'aide de deux offsets, startOffsetFromOrigin et endOffsetFromOrigin, mesurés en mètres depuis le début de ce LinearElement. Les deux offsets doivent être supérieurs ou égaux à zéro. De plus, endOffsetFromOrigin ne doit pas dépasser la longueur du LinearElement lui-même (lengthOfNetLinearElement) — une section ne peut pas s'étendre au-delà de la fin du tronçon de voie auquel elle appartient. Vérifiez que onElement pointe vers le bon LinearElement et que lengthOfNetLinearElement y est correctement défini, avant de conclure que les offsets de la section sont erronés."@fr ;
     
     sh:property [
         sh:path era:startOffsetFromOrigin ;
         sh:minInclusive 0 ;
-        sh:message "The startOffsetFromOrigin of a LinearElementSection must be non-negative (>= 0)." ;
+        sh:message "The startOffsetFromOrigin of a LinearElementSection must be non-negative (>= 0)."@en ;
+        sh:message "Der startOffsetFromOrigin einer LinearElementSection darf nicht negativ sein (>= 0)."@de ;
+        sh:message "Le startOffsetFromOrigin d'un LinearElementSection doit être non négatif (>= 0)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
     sh:property [
         sh:path era:endOffsetFromOrigin ;
         sh:minInclusive 0 ;
-        sh:message "The endOffsetFromOrigin of a LinearElementSection must be non-negative (>= 0)." ;
+        sh:message "The endOffsetFromOrigin of a LinearElementSection must be non-negative (>= 0)."@en ;
+        sh:message "Der endOffsetFromOrigin einer LinearElementSection darf nicht negativ sein (>= 0)."@de ;
+        sh:message "Le endOffsetFromOrigin d'un LinearElementSection doit être non négatif (>= 0)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
     # Check endOffsetFromOrigin does not exceed LinearElement length
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The endOffsetFromOrigin of a LinearElementSection must not exceed the length (lengthOfNetLinearElement) of its associated LinearElement." ;
+        sh:message "The endOffsetFromOrigin of a LinearElementSection must not exceed the length (lengthOfNetLinearElement) of its associated LinearElement."@en ;
+        sh:message "Der endOffsetFromOrigin einer LinearElementSection darf die Länge (lengthOfNetLinearElement) des zugehörigen LinearElements nicht überschreiten."@de ;
+        sh:message "Le endOffsetFromOrigin d'un LinearElementSection ne doit pas dépasser la longueur (lengthOfNetLinearElement) de son LinearElement associé."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -561,10 +629,15 @@ era:LinearElementSectionBoundedShape a sh:NodeShape ;
 # ===== Part 1: NetLinearReference - startsAt to first sequence element connection =====
 era:NetLinearReferenceStartsAtToFirstSequenceShape a sh:NodeShape ;
     sh:targetClass era:NetLinearReference ;
+    era:additionalInfo "A NetLinearReference describes a continuous path across the track network, defined by a start point (startsAt), an end point (endsAt), and an optional ordered list of intermediate LinearElements (hasSequence). When hasSequence is not empty, the path must be physically continuous: there must be a NetRelation directly connecting the LinearElement at startsAt to the first LinearElement in hasSequence. If this finding fires, check that a NetRelation exists between these two specific LinearElements — referencing either one as elementA and the other as elementB — and that this NetRelation is actually present in the dataset, not just implied by adjacency."@en ;
+    era:additionalInfo "Eine NetLinearReference beschreibt einen durchgehenden Pfad im Streckennetz, definiert durch einen Startpunkt (startsAt), einen Endpunkt (endsAt) und eine optionale geordnete Liste von dazwischenliegenden LinearElements (hasSequence). Wenn hasSequence nicht leer ist, muss der Pfad physisch durchgehend sein: Es muss eine NetRelation existieren, die das LinearElement bei startsAt direkt mit dem ersten LinearElement in hasSequence verbindet. Wenn dieser Befund auftritt, prüfen Sie, ob eine NetRelation zwischen diesen beiden konkreten LinearElements existiert — mit einem als elementA und dem anderen als elementB — und ob diese NetRelation tatsächlich im Datensatz vorhanden ist."@de ;
+    era:additionalInfo "Une NetLinearReference décrit un chemin continu dans le réseau ferroviaire, défini par un point de départ (startsAt), un point d'arrivée (endsAt) et une liste ordonnée optionnelle de LinearElements intermédiaires (hasSequence). Lorsque hasSequence n'est pas vide, le chemin doit être physiquement continu : il doit exister une NetRelation reliant directement le LinearElement de startsAt au premier LinearElement de hasSequence. Si ce résultat apparaît, vérifiez qu'une NetRelation existe entre ces deux LinearElements précis — l'un référencé comme elementA et l'autre comme elementB — et qu'elle est bien présente dans le jeu de données."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "For a NetLinearReference with non-empty hasSequence, there must exist a NetRelation connecting the startsAt LinearElement to the first element in hasSequence." ;
+        sh:message "For a NetLinearReference with non-empty hasSequence, there must exist a NetRelation connecting the startsAt LinearElement to the first element in hasSequence."@en ;
+        sh:message "Für eine NetLinearReference mit nicht leerem hasSequence muss eine NetRelation vorhanden sein, die das LinearElement startsAt mit dem ersten Element in hasSequence verbindet."@de ;
+        sh:message "Pour un NetLinearReference avec hasSequence non vide, il doit exister un NetRelation connectant le startsAt LinearElement au premier élément de hasSequence."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -599,10 +672,15 @@ era:NetLinearReferenceStartsAtToFirstSequenceShape a sh:NodeShape ;
 # ===== Part 2: NetLinearReference - adjacent pairs in hasSequence =====
 era:NetLinearReferenceSequenceAdjacentPairsShape a sh:NodeShape ;
     sh:targetClass era:NetLinearReference ;
+    era:additionalInfo "This continues the path-continuity check for a NetLinearReference's hasSequence list: every consecutive pair of LinearElements within that ordered list must also be directly connected by a NetRelation. If this finding fires, identify which two adjacent entries in hasSequence are reported (see the focus node and bound variables in the validation report) and confirm a NetRelation exists linking them — a gap anywhere in the middle of the sequence breaks the physical continuity of the path, even if the start and end connections are correct."@en ;
+    era:additionalInfo "Dies setzt die Prüfung der Pfadkontinuität für die hasSequence-Liste einer NetLinearReference fort: Jedes aufeinanderfolgende Paar von LinearElements in dieser geordneten Liste muss ebenfalls direkt durch eine NetRelation verbunden sein. Wenn dieser Befund auftritt, ermitteln Sie, welche zwei benachbarten Einträge in hasSequence betroffen sind, und prüfen Sie, ob eine verbindende NetRelation existiert — eine Lücke irgendwo in der Mitte der Sequenz unterbricht die physische Kontinuität des Pfades, selbst wenn Start- und Endverbindung korrekt sind."@de ;
+    era:additionalInfo "Ceci poursuit la vérification de continuité du chemin pour la liste hasSequence d'une NetLinearReference : chaque paire consécutive de LinearElements dans cette liste ordonnée doit également être directement reliée par une NetRelation. Si ce résultat apparaît, identifiez quelles deux entrées adjacentes de hasSequence sont concernées et vérifiez qu'une NetRelation les reliant existe — une discontinuité n'importe où au milieu de la séquence rompt la continuité physique du chemin, même si les connexions de début et de fin sont correctes."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "For a NetLinearReference with hasSequence, there must exist NetRelations connecting each adjacent pair of LinearElements in the sequence." ;
+        sh:message "For a NetLinearReference with hasSequence, there must exist NetRelations connecting each adjacent pair of LinearElements in the sequence."@en ;
+        sh:message "Für eine NetLinearReference mit hasSequence müssen NetRelations vorhanden sein, die jedes benachbarte Paar von LinearElements in der Sequenz verbinden."@de ;
+        sh:message "Pour un NetLinearReference avec hasSequence, il doit exister des NetRelations reliant chaque paire adjacente de LinearElements dans la séquence."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -640,10 +718,15 @@ era:NetLinearReferenceSequenceAdjacentPairsShape a sh:NodeShape ;
 # ===== Part 3: NetLinearReference - last sequence element to endsAt =====
 era:NetLinearReferenceLastSequenceToEndsAtShape a sh:NodeShape ;
     sh:targetClass era:NetLinearReference ;
+    era:additionalInfo "This completes the path-continuity check for a NetLinearReference: there must be a NetRelation directly connecting the last LinearElement in hasSequence to the LinearElement at endsAt, mirroring the check already applied to the start of the path. If this finding fires, check that a NetRelation exists between the final element of hasSequence and the endsAt LinearElement."@en ;
+    era:additionalInfo "Dies schließt die Pfadkontinuitätsprüfung für eine NetLinearReference ab: Es muss eine NetRelation existieren, die das letzte LinearElement in hasSequence direkt mit dem LinearElement bei endsAt verbindet — analog zur bereits durchgeführten Prüfung am Anfang des Pfades. Wenn dieser Befund auftritt, prüfen Sie, ob eine NetRelation zwischen dem letzten Element von hasSequence und dem LinearElement bei endsAt existiert."@de ;
+    era:additionalInfo "Ceci termine la vérification de continuité du chemin pour une NetLinearReference : il doit exister une NetRelation reliant directement le dernier LinearElement de hasSequence au LinearElement de endsAt, à l'image de la vérification déjà appliquée au début du chemin. Si ce résultat apparaît, vérifiez qu'une NetRelation existe entre le dernier élément de hasSequence et le LinearElement de endsAt."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "For a NetLinearReference with non-empty hasSequence, there must exist a NetRelation connecting the last element in hasSequence to the endsAt LinearElement." ;
+        sh:message "For a NetLinearReference with non-empty hasSequence, there must exist a NetRelation connecting the last element in hasSequence to the endsAt LinearElement."@en ;
+        sh:message "Für eine NetLinearReference mit nicht leerem hasSequence muss eine NetRelation vorhanden sein, die das letzte Element in hasSequence mit dem LinearElement endsAt verbindet."@de ;
+        sh:message "Pour un NetLinearReference avec hasSequence non vide, il doit exister une NetRelation connectant le dernier élément de hasSequence au endsAt LinearElement."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -683,7 +766,9 @@ era:LinearElementGeometryExistenceShape a sh:NodeShape ;
     
     sh:sparql [
     a sh:SPARQLConstraint ;
-    sh:message "CantSamplePoint Congruence validation skipped: no corresponding LinearElementGeometry found." ;
+    sh:message "CantSamplePoint Congruence validation skipped: no corresponding LinearElementGeometry found."@en ;
+    sh:message "CantSamplePoint Kongruenzvalidierung übersprungen: keine entsprechende LinearElementGeometry gefunden."@de ;
+    sh:message "Validation de congruence CantSamplePoint ignorée : aucune LinearElementGeometry correspondante trouvée."@fr ;
     sh:select """
         PREFIX era: <http://data.europa.eu/949/>
         
@@ -706,10 +791,16 @@ era:LinearElementGeometryExistenceShape a sh:NodeShape ;
 # ===== GeometryArea Requires TopoArea Constraint =====
 era:GeometryAreaRequiresTopoAreaShape a sh:NodeShape ;
     sh:targetClass era:GeometryArea ;
-    
+    era:additionalInfo "A GeometryArea describes the alignment geometry (curves, gradients) for a section of track, but it does not define the track topology itself — that is the role of TopoArea. Every GeometryArea is therefore expected to have a matching TopoArea sharing the same identifier (the part of the URI after the last '/'). If this finding fires, either the corresponding TopoArea is missing from the dataset, or its identifier does not match the GeometryArea's identifier exactly — check both before assuming the GeometryArea itself is wrong."@en ;
+    era:additionalInfo "Eine GeometryArea beschreibt die Trassierungsgeometrie (Kurven, Gradienten) für einen Streckenabschnitt, definiert jedoch nicht die Gleistopologie selbst — das ist Aufgabe der TopoArea. Für jede GeometryArea wird daher eine passende TopoArea mit derselben Kennung erwartet (der Teil der URI nach dem letzten '/'). Wenn dieser Befund auftritt, fehlt entweder die entsprechende TopoArea im Datensatz, oder ihre Kennung stimmt nicht genau mit der der GeometryArea überein."@de ;
+    era:additionalInfo "Une GeometryArea décrit la géométrie de tracé (courbes, déclivités) pour une section de voie, mais ne définit pas elle-même la topologie de la voie — c'est le rôle de TopoArea. Chaque GeometryArea doit donc avoir une TopoArea correspondante partageant le même identifiant (la partie de l'URI après le dernier '/'). Si ce résultat apparaît, soit la TopoArea correspondante est absente du jeu de données, soit son identifiant ne correspond pas exactement à celui de la GeometryArea."@fr ;
+
+
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "Every GeometryArea must have a corresponding TopoArea with matching identifier. A GeometryArea cannot exist without its corresponding TopoArea." ;
+        sh:message "Every GeometryArea must have a corresponding TopoArea with matching identifier. A GeometryArea cannot exist without its corresponding TopoArea."@en ;
+        sh:message "Jede GeometryArea muss über eine entsprechende TopoArea mit passender Kennung verfügen. Eine GeometryArea kann nicht ohne die entsprechende TopoArea existieren."@de ;
+        sh:message "Chaque GeometryArea doit avoir une TopoArea correspondante avec un identifiant correspondant. Une GeometryArea ne peut pas exister sans sa TopoArea correspondante."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -731,10 +822,15 @@ era:GeometryAreaRequiresTopoAreaShape a sh:NodeShape ;
 # ===== SampledGeometryArea Requires TopoArea Constraint =====
 era:SampledGeometryAreaRequiresTopoAreaShape a sh:NodeShape ;
     sh:targetClass era:SampledGeometryArea ;
-    
+    era:additionalInfo "A SampledGeometryArea holds discretised (sampled-point) track geometry data for a section of track, but does not itself define track topology — that is the role of TopoArea. Every SampledGeometryArea is therefore expected to have a matching TopoArea sharing the same identifier (the part of the URI after the last '/'). If this finding fires, either the corresponding TopoArea is missing, or its identifier does not exactly match the SampledGeometryArea's identifier."@en ;
+    era:additionalInfo "Eine SampledGeometryArea enthält diskretisierte (punktbasierte) Geometriedaten für einen Streckenabschnitt, definiert jedoch nicht selbst die Gleistopologie — das ist Aufgabe der TopoArea. Für jede SampledGeometryArea wird daher eine passende TopoArea mit derselben Kennung erwartet. Wenn dieser Befund auftritt, fehlt entweder die entsprechende TopoArea, oder ihre Kennung stimmt nicht exakt überein."@de ;
+    era:additionalInfo "Une SampledGeometryArea contient des données de géométrie discrétisées (points échantillonnés) pour une section de voie, mais ne définit pas elle-même la topologie de la voie — c'est le rôle de TopoArea. Chaque SampledGeometryArea doit donc avoir une TopoArea correspondante avec le même identifiant. Si ce résultat apparaît, soit la TopoArea correspondante est absente, soit son identifiant ne correspond pas exactement."@fr ;
+
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "Every SampledGeometryArea must have a corresponding TopoArea with matching identifier. A SampledGeometryArea cannot exist without its corresponding TopoArea." ;
+        sh:message "Every SampledGeometryArea must have a corresponding TopoArea with matching identifier. A SampledGeometryArea cannot exist without its corresponding TopoArea."@en ;
+        sh:message "Jede SampledGeometryArea muss über eine entsprechende TopoArea mit passender Kennung verfügen. Eine SampledGeometryArea kann nicht ohne die entsprechende TopoArea existieren."@de ;
+        sh:message "Chaque SampledGeometryArea doit avoir une TopoArea correspondante avec un identifiant correspondant. Une SampledGeometryArea ne peut pas exister sans sa TopoArea correspondante."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -756,10 +852,15 @@ era:SampledGeometryAreaRequiresTopoAreaShape a sh:NodeShape ;
 # ===== PropertyArea Requires TopoArea Constraint =====
 era:PropertyAreaRequiresTopoAreaShape a sh:NodeShape ;
     sh:targetClass era:PropertyArea ;
-    
+    era:additionalInfo "A PropertyArea holds track characteristic data (gauge, loading limits, speed restrictions, traction system, braking distances) for a section of track, but does not itself define track topology — that is the role of TopoArea. Every PropertyArea is therefore expected to have a matching TopoArea sharing the same identifier (the part of the URI after the last '/'). If this finding fires, either the corresponding TopoArea is missing, or its identifier does not exactly match the PropertyArea's identifier."@en ;
+    era:additionalInfo "Eine PropertyArea enthält Streckeneigenschaften (Spurweite, Lastgrenzen, Geschwindigkeitsbeschränkungen, Traktionssystem, Bremswege) für einen Streckenabschnitt, definiert jedoch nicht selbst die Gleistopologie — das ist Aufgabe der TopoArea. Für jede PropertyArea wird daher eine passende TopoArea mit derselben Kennung erwartet. Wenn dieser Befund auftritt, fehlt entweder die entsprechende TopoArea, oder ihre Kennung stimmt nicht exakt überein."@de ;
+    era:additionalInfo "Une PropertyArea contient les caractéristiques de la voie (écartement, limites de charge, restrictions de vitesse, système de traction, distances de freinage) pour une section de voie, mais ne définit pas elle-même la topologie de la voie — c'est le rôle de TopoArea. Chaque PropertyArea doit donc avoir une TopoArea correspondante avec le même identifiant. Si ce résultat apparaît, soit la TopoArea correspondante est absente, soit son identifiant ne correspond pas exactement."@fr ;
+
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "Every PropertyArea must have a corresponding TopoArea with matching identifier. A PropertyArea cannot exist without its corresponding TopoArea." ;
+        sh:message "Every PropertyArea must have a corresponding TopoArea with matching identifier. A PropertyArea cannot exist without its corresponding TopoArea."@en ;
+        sh:message "Jede PropertyArea muss über eine entsprechende TopoArea mit passender Kennung verfügen. Eine PropertyArea kann nicht ohne die entsprechende TopoArea existieren."@de ;
+        sh:message "Chaque PropertyArea doit avoir une TopoArea correspondante avec un identifiant correspondant. Une PropertyArea ne peut pas exister sans sa TopoArea correspondante."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -782,10 +883,15 @@ era:PropertyAreaRequiresTopoAreaShape a sh:NodeShape ;
 # ===== TrackUsageArea Requires TopoArea Constraint =====
 era:TrackUsageAreaRequiresTopoAreaShape a sh:NodeShape ;
     sh:targetClass era:TrackUsageArea ;
-    
+    era:additionalInfo "A TrackUsageArea describes operational usage patterns for a section of track (preferred direction tracks, secondary tracks, shunting tracks), but does not itself define track topology — that is the role of TopoArea. Every TrackUsageArea is therefore expected to have a matching TopoArea sharing the same identifier (the part of the URI after the last '/'). If this finding fires, either the corresponding TopoArea is missing, or its identifier does not exactly match the TrackUsageArea's identifier."@en ;
+    era:additionalInfo "Eine TrackUsageArea beschreibt betriebliche Nutzungsmuster für einen Streckenabschnitt (bevorzugte Richtungsgleise, Nebengleise, Rangiergleise), definiert jedoch nicht selbst die Gleistopologie — das ist Aufgabe der TopoArea. Für jede TrackUsageArea wird daher eine passende TopoArea mit derselben Kennung erwartet. Wenn dieser Befund auftritt, fehlt entweder die entsprechende TopoArea, oder ihre Kennung stimmt nicht exakt überein."@de ;
+    era:additionalInfo "Une TrackUsageArea décrit les schémas d'utilisation opérationnelle d'une section de voie (voies de direction préférée, voies secondaires, voies de manœuvre), mais ne définit pas elle-même la topologie de la voie — c'est le rôle de TopoArea. Chaque TrackUsageArea doit donc avoir une TopoArea correspondante avec le même identifiant. Si ce résultat apparaît, soit la TopoArea correspondante est absente, soit son identifiant ne correspond pas exactement."@fr ;
+
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "Every TrackUsageArea must have a corresponding TopoArea with matching identifier. A TrackUsageArea cannot exist without its corresponding TopoArea." ;
+        sh:message "Every TrackUsageArea must have a corresponding TopoArea with matching identifier. A TrackUsageArea cannot exist without its corresponding TopoArea."@en ;
+        sh:message "Jede TrackUsageArea muss über eine entsprechende TopoArea mit passender Kennung verfügen. Eine TrackUsageArea kann nicht ohne die entsprechende TopoArea existieren."@de ;
+        sh:message "Chaque TrackUsageArea doit avoir une TopoArea correspondante avec un identifiant correspondant. Une TrackUsageArea ne peut pas exister sans sa TopoArea correspondante."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -808,10 +914,15 @@ era:TrackUsageAreaRequiresTopoAreaShape a sh:NodeShape ;
 # ===== FunctionalArea Requires TopoArea Constraint =====
 era:FunctionalAreaRequiresTopoAreaShape a sh:NodeShape ;
     sh:targetClass era:FunctionalArea ;
-    
+    era:additionalInfo "A FunctionalArea holds operational elements (switches, balises, platforms, signals, and similar) for a section of track, but does not itself define track topology — that is the role of TopoArea. Every FunctionalArea is therefore expected to have a matching TopoArea sharing the same identifier (the part of the URI after the last '/'). If this finding fires, either the corresponding TopoArea is missing, or its identifier does not exactly match the FunctionalArea's identifier."@en ;
+    era:additionalInfo "Eine FunctionalArea enthält betriebliche Elemente (Weichen, Balisen, Bahnsteige, Signale u. Ä.) für einen Streckenabschnitt, definiert jedoch nicht selbst die Gleistopologie — das ist Aufgabe der TopoArea. Für jede FunctionalArea wird daher eine passende TopoArea mit derselben Kennung erwartet. Wenn dieser Befund auftritt, fehlt entweder die entsprechende TopoArea, oder ihre Kennung stimmt nicht exakt überein."@de ;
+    era:additionalInfo "Une FunctionalArea contient des éléments opérationnels (aiguillages, balises, quais, signaux, etc.) pour une section de voie, mais ne définit pas elle-même la topologie de la voie — c'est le rôle de TopoArea. Chaque FunctionalArea doit donc avoir une TopoArea correspondante avec le même identifiant. Si ce résultat apparaît, soit la TopoArea correspondante est absente, soit son identifiant ne correspond pas exactement."@fr ;
+
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "Every FunctionalArea must have a corresponding TopoArea with matching identifier. A FunctionalArea cannot exist without its corresponding TopoArea." ;
+        sh:message "Every FunctionalArea must have a corresponding TopoArea with matching identifier. A FunctionalArea cannot exist without its corresponding TopoArea."@en ;
+        sh:message "Jede FunctionalArea muss über eine entsprechende TopoArea mit passender Kennung verfügen. Eine FunctionalArea kann nicht ohne die entsprechende TopoArea existieren."@de ;
+        sh:message "Chaque FunctionalArea doit avoir une TopoArea correspondante avec un identifiant correspondant. Une FunctionalArea ne peut pas exister sans sa TopoArea correspondante."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -833,10 +944,15 @@ era:FunctionalAreaRequiresTopoAreaShape a sh:NodeShape ;
 # ===== LinearElementGeometry Requires LinearElement Constraint =====
 era:LinearElementGeometryRequiresLinearElementShape a sh:NodeShape ;
     sh:targetClass era:LinearElementGeometry ;
+    era:additionalInfo "A LinearElementGeometry holds the alignment geometry (horizontal and vertical segments, cant) for a track segment, but it is a separate object from the LinearElement it describes — the two are linked only by sharing the same identifier (the part of the URI after the last '/'). If this finding fires, no LinearElement exists with the same id as this LinearElementGeometry — check that the LinearElement was included in the dataset and that its id matches exactly, including case."@en ;
+    era:additionalInfo "Eine LinearElementGeometry enthält die Trassierungsgeometrie (horizontale und vertikale Segmente, Überhöhung) für einen Streckenabschnitt, ist jedoch ein eigenständiges Objekt, das nur über eine gemeinsame Kennung (der Teil der URI nach dem letzten '/') mit dem zugehörigen LinearElement verknüpft ist. Wenn dieser Befund auftritt, existiert kein LinearElement mit derselben id wie diese LinearElementGeometry — prüfen Sie, ob das LinearElement im Datensatz enthalten ist und die id exakt übereinstimmt, auch in der Groß-/Kleinschreibung."@de ;
+    era:additionalInfo "Une LinearElementGeometry contient la géométrie de tracé (segments horizontaux et verticaux, dévers) pour un tronçon de voie, mais c'est un objet distinct du LinearElement qu'elle décrit — les deux ne sont liés que par un identifiant partagé (la partie de l'URI après le dernier '/'). Si ce résultat apparaît, aucun LinearElement avec le même id que cette LinearElementGeometry n'existe — vérifiez que le LinearElement est présent dans le jeu de données et que son id correspond exactement, y compris la casse."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "Every LinearElementGeometry must have a corresponding LinearElement with matching identifier. A LinearElementGeometry cannot exist without its corresponding LinearElement." ;
+        sh:message "Every LinearElementGeometry must have a corresponding LinearElement with matching identifier. A LinearElementGeometry cannot exist without its corresponding LinearElement."@en ;
+        sh:message "Jede LinearElementGeometry muss über ein entsprechendes LinearElement mit passender Kennung verfügen. Eine LinearElementGeometry kann nicht ohne das entsprechende LinearElement existieren."@de ;
+        sh:message "Chaque LinearElementGeometry doit avoir un LinearElement correspondant avec un identifiant correspondant. Un LinearElementGeometry ne peut pas exister sans son LinearElement correspondant."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -857,10 +973,15 @@ era:LinearElementGeometryRequiresLinearElementShape a sh:NodeShape ;
 # ===== SampledLinearElementGeometry Requires LinearElement Constraint =====
 era:SampledLinearElementGeometryRequiresLinearElementShape a sh:NodeShape ;
     sh:targetClass era:SampledLinearElementGeometry ;
+    era:additionalInfo "A SampledLinearElementGeometry holds discretised (point-sampled) geometry data — cant, slope, and curve sample points — for a track segment, but it is a separate object from the LinearElement it describes, linked only by sharing the same identifier (the part of the URI after the last '/'). If this finding fires, no LinearElement exists with the same id as this SampledLinearElementGeometry — check that the LinearElement is present in the dataset and that the ids match exactly."@en ;
+    era:additionalInfo "Eine SampledLinearElementGeometry enthält diskretisierte (punktbasierte) Geometriedaten — Überhöhungs-, Gradienten- und Kurvenabtastpunkte — für einen Streckenabschnitt, ist jedoch ein eigenständiges Objekt, das nur über eine gemeinsame Kennung (der Teil der URI nach dem letzten '/') mit dem zugehörigen LinearElement verknüpft ist. Wenn dieser Befund auftritt, existiert kein LinearElement mit derselben id wie diese SampledLinearElementGeometry — prüfen Sie, ob das LinearElement im Datensatz vorhanden ist und die ids exakt übereinstimmen."@de ;
+    era:additionalInfo "Une SampledLinearElementGeometry contient des données de géométrie discrétisées (points échantillonnés de dévers, pente et courbure) pour un tronçon de voie, mais c'est un objet distinct du LinearElement qu'elle décrit, lié uniquement par un identifiant partagé (la partie de l'URI après le dernier '/'). Si ce résultat apparaît, aucun LinearElement avec le même id que cette SampledLinearElementGeometry n'existe — vérifiez que le LinearElement est présent dans le jeu de données et que les id correspondent exactement."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "Every SampledLinearElementGeometry must have a corresponding LinearElement with matching identifier. A SampledLinearElementGeometry cannot exist without its corresponding LinearElement." ;
+        sh:message "Every SampledLinearElementGeometry must have a corresponding LinearElement with matching identifier. A SampledLinearElementGeometry cannot exist without its corresponding LinearElement."@en ;
+        sh:message "Jede SampledLinearElementGeometry muss über ein entsprechendes LinearElement mit passender Kennung verfügen. Eine SampledLinearElementGeometry kann ohne das entsprechende LinearElement nicht existieren."@de ;
+        sh:message "Chaque SampledLinearElementGeometry doit avoir un LinearElement correspondant avec un identifiant correspondant. Un SampledLinearElementGeometry ne peut pas exister sans son LinearElement correspondant."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -882,10 +1003,15 @@ era:SampledLinearElementGeometryRequiresLinearElementShape a sh:NodeShape ;
 # ===== LinearElementSpeedProfile Requires LinearElement Constraint =====
 era:LinearElementSpeedProfileRequiresLinearElementShape a sh:NodeShape ;
     sh:targetClass era:LinearElementSpeedProfile ;
+    era:additionalInfo "A LinearElementSpeedProfile holds the speed limit data (static speed limits, axle load speed profiles) for a track segment, but it is a separate object from the LinearElement it describes, linked only by sharing the same identifier (the part of the URI after the last '/'). If this finding fires, no LinearElement exists with the same id as this LinearElementSpeedProfile — check that the LinearElement is present in the dataset and that the ids match exactly."@en ;
+    era:additionalInfo "Ein LinearElementSpeedProfile enthält die Geschwindigkeitsdaten (statische Geschwindigkeitsbegrenzungen, Achslast-Geschwindigkeitsprofile) für einen Streckenabschnitt, ist jedoch ein eigenständiges Objekt, das nur über eine gemeinsame Kennung (der Teil der URI nach dem letzten '/') mit dem zugehörigen LinearElement verknüpft ist. Wenn dieser Befund auftritt, existiert kein LinearElement mit derselben id wie dieses LinearElementSpeedProfile — prüfen Sie, ob das LinearElement im Datensatz vorhanden ist und die ids exakt übereinstimmen."@de ;
+    era:additionalInfo "Un LinearElementSpeedProfile contient les données de vitesse (limites de vitesse statiques, profils de vitesse par charge à l'essieu) pour un tronçon de voie, mais c'est un objet distinct du LinearElement qu'il décrit, lié uniquement par un identifiant partagé (la partie de l'URI après le dernier '/'). Si ce résultat apparaît, aucun LinearElement avec le même id que ce LinearElementSpeedProfile n'existe — vérifiez que le LinearElement est présent dans le jeu de données et que les id correspondent exactement."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "Every LinearElementSpeedProfile must have a corresponding LinearElement with matching identifier. A LinearElementSpeedProfile cannot exist without its corresponding LinearElement." ;
+        sh:message "Every LinearElementSpeedProfile must have a corresponding LinearElement with matching identifier. A LinearElementSpeedProfile cannot exist without its corresponding LinearElement."@en ;
+        sh:message "Jedes LinearElementSpeedProfile muss über ein entsprechendes LinearElement mit passender Kennung verfügen. Ein LinearElementSpeedProfile kann nicht ohne das entsprechende LinearElement existieren."@de ;
+        sh:message "Chaque LinearElementSpeedProfile doit avoir un LinearElement correspondant avec un identifiant correspondant. Un LinearElementSpeedProfile ne peut pas exister sans son LinearElement correspondant."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -908,11 +1034,16 @@ era:LinearElementSpeedProfileRequiresLinearElementShape a sh:NodeShape ;
 # ===== CantSamplePoint Congruence Constraint (Arc & Transition) =====
 era:CantSamplePointCongruenceShape a sh:NodeShape ;
     sh:targetClass era:LinearElementGeometry ;
-
-	# SPT2TS-125315 The extent of CantSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
+    era:additionalInfo "This rule checks that for every HorizontalArc or HorizontalTransition segment in a LinearElementGeometry, a CantSamplePoint exists at the same position (within 1 mm tolerance) in the corresponding SampledLinearElementGeometry's cants list — cant (rail superelevation) is expected to begin where curvature begins. The position comparison uses elementGeometryPos (double, metres) on both the arc/transition segment and the CantSamplePoint. If the reported missing position seems unexpected, confirm that lengthOfNetLinearElement is set correctly on the linked LinearElement and that the cants list contains sample points at the expected positions."@en ;
+    era:additionalInfo "Diese Regel prüft, ob für jedes HorizontalArc- oder HorizontalTransition-Segment in einer LinearElementGeometry an derselben Position (mit 1 mm Toleranz) ein CantSamplePoint in der cants-Liste der entsprechenden SampledLinearElementGeometry existiert — die Überhöhung beginnt typischerweise dort, wo die Krümmung beginnt. Der Positionsvergleich verwendet elementGeometryPos (double, Meter) sowohl am Bogen-/Übergangssegment als auch am CantSamplePoint. Wenn die gemeldete fehlende Position unerwartet erscheint, stellen Sie sicher, dass lengthOfNetLinearElement am verknüpften LinearElement korrekt gesetzt ist und die cants-Liste Abtastpunkte an den erwarteten Positionen enthält."@de ;
+    era:additionalInfo "Cette règle vérifie que pour chaque segment HorizontalArc ou HorizontalTransition dans une LinearElementGeometry, un CantSamplePoint existe à la même position (avec une tolérance de 1 mm) dans la liste cants de la SampledLinearElementGeometry correspondante — le dévers est attendu là où commence la courbure. La comparaison de position utilise elementGeometryPos (double, mètres) sur le segment d'arc/transition et sur le CantSamplePoint. Si la position manquante signalée semble inattendue, vérifiez que lengthOfNetLinearElement est correctement défini sur le LinearElement lié et que la liste cants contient des points d'échantillonnage aux positions attendues."@fr ;
+    
+    # SPT2TS-125315 The extent of CantSamplePoint definition shall be congruent to the definition of horizontal arc and transition segments.
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "A CantSamplePoint must exist at the start position of every HorizontalArc or HorizontalTransition segment. Missing position (in meters): {?missingPos}" ;
+        sh:message "A CantSamplePoint must exist at the start position of every HorizontalArc or HorizontalTransition segment. Missing position (in meters): {?missingPos}"@en ;
+        sh:message "An der Startposition jedes HorizontalArc- oder HorizontalTransition-Segments muss ein CantSamplePoint vorhanden sein. Fehlende Position (in Metern): {?missingPos}"@de ;
+        sh:message "Un CantSamplePoint doit exister à la position de départ de chaque segment HorizontalArc ou HorizontalTransition. Position manquante (en mètres) : {?missingPos}"@fr ;
         sh:select """
             PREFIX era:  <http://data.europa.eu/949/>
             PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -961,10 +1092,15 @@ era:CantSamplePointCongruenceShape a sh:NodeShape ;
 # ===== SlopeSamplePoint Congruence Constraint (VerticalLine & VerticalArc) =====
 era:SlopeSamplePointCongruenceShape a sh:NodeShape ;
     sh:targetClass era:LinearElementGeometry ;
-
+    era:additionalInfo "This rule checks that for every VerticalLine or VerticalArc segment in a LinearElementGeometry, a SlopeSamplePoint exists at the same position (within 1 mm tolerance) in the corresponding SampledLinearElementGeometry's slopes list — a slope sample point is expected at every point where the gradient changes. The position comparison uses elementGeometryPos (double, metres) on both the vertical segment and the SlopeSamplePoint. If the reported missing position seems unexpected, confirm the slopes list contains sample points at the expected positions."@en ;
+    era:additionalInfo "Diese Regel prüft, ob für jedes VerticalLine- oder VerticalArc-Segment in einer LinearElementGeometry an derselben Position (mit 1 mm Toleranz) ein SlopeSamplePoint in der slopes-Liste der entsprechenden SampledLinearElementGeometry existiert — an jedem Punkt, an dem sich das Gefälle ändert, wird ein Steigungsabtastpunkt erwartet. Der Positionsvergleich verwendet elementGeometryPos (double, Meter) sowohl am vertikalen Segment als auch am SlopeSamplePoint. Wenn die gemeldete fehlende Position unerwartet erscheint, prüfen Sie, ob die slopes-Liste Abtastpunkte an den erwarteten Positionen enthält."@de ;
+    era:additionalInfo "Cette règle vérifie que pour chaque segment VerticalLine ou VerticalArc dans une LinearElementGeometry, un SlopeSamplePoint existe à la même position (avec une tolérance de 1 mm) dans la liste slopes de la SampledLinearElementGeometry correspondante — un point de pente est attendu à chaque endroit où le gradient change. La comparaison de position utilise elementGeometryPos (double, mètres) sur le segment vertical et sur le SlopeSamplePoint. Si la position manquante signalée semble inattendue, vérifiez que la liste slopes contient des points d'échantillonnage aux positions attendues."@fr ;
+    
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "A SlopeSamplePoint must exist at the start position of every VerticalLine or VerticalArc segment. Missing position (in meters): {?missingPos}" ;
+        sh:message "A SlopeSamplePoint must exist at the start position of every VerticalLine or VerticalArc segment. Missing position (in meters): {?missingPos}"@en ;
+        sh:message "An der Startposition jedes VerticalLine- oder VerticalArc-Segments muss ein SlopeSamplePoint vorhanden sein. Fehlende Position (in Metern): {?missingPos}"@de ;
+        sh:message "Un SlopeSamplePoint doit exister à la position de départ de chaque segment VerticalLine ou VerticalArc. Position manquante (en mètres) : {?missingPos}"@fr ;
         sh:select """
             PREFIX era:  <http://data.europa.eu/949/>
             PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1011,10 +1147,15 @@ era:SlopeSamplePointCongruenceShape a sh:NodeShape ;
 # the sign of the sampled slope agrees with the sign of the segment slope.
 era:SlopeSamplePointSignCongruenceShape a sh:NodeShape ;
     sh:targetClass era:LinearElementGeometry ;
-
+    era:additionalInfo "Where a SlopeSamplePoint exists at the same position as a VerticalLine or VerticalArc segment (within 1 mm tolerance, compared via elementGeometryPos in metres), the sign of its sampled slope value (samplePointSlope, int32, permill × 0.1, positive = rising, negative = falling) must agree with the sign of the segment's own slope value. A sign mismatch means the discretised geometry describes the track gradient in the opposite direction from the parametric geometry at that point — almost always indicating an error in how one of the two datasets was generated, since both are meant to describe the same physical track."@en ;
+    era:additionalInfo "Existiert an derselben Position wie ein VerticalLine- oder VerticalArc-Segment (mit 1 mm Toleranz, verglichen über elementGeometryPos in Metern) ein SlopeSamplePoint, muss das Vorzeichen seines abgetasteten Steigungswerts (samplePointSlope, int32, Promille × 0,1, positiv = Anstieg, negativ = Gefälle) mit dem Vorzeichen des Steigungswerts des Segments übereinstimmen. Eine Vorzeichenabweichung bedeutet, dass die diskretisierte Geometrie die Gleissteigung in entgegengesetzter Richtung zur parametrischen Geometrie beschreibt — fast immer ein Hinweis auf einen Fehler bei der Erzeugung eines der beiden Datensätze."@de ;
+    era:additionalInfo "Lorsqu'un SlopeSamplePoint existe à la même position qu'un segment VerticalLine ou VerticalArc (avec une tolérance de 1 mm, comparée via elementGeometryPos en mètres), le signe de sa valeur de pente échantillonnée (samplePointSlope, int32, pour mille × 0,1, positif = montée, négatif = descente) doit correspondre au signe de la valeur de pente du segment. Une incompatibilité de signe signifie que la géométrie discrétisée décrit la pente dans le sens opposé à la géométrie paramétrique — révélateur presque toujours d'une erreur dans la génération de l'un des deux jeux de données."@fr ;
+    
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "SlopeSamplePoint at position {?vertPos} m has sign mismatch: segment slope is {?segmentSlope} permill but sampled slope is {?sampleSlope} (tenths of pmill)." ;
+        sh:message "SlopeSamplePoint at position {?vertPos} m has sign mismatch: segment slope is {?segmentSlope} permill but sampled slope is {?sampleSlope} (tenths of pmill)."@en ;
+        sh:message "SlopeSamplePoint an der Position {?vertPos} m weist eine Vorzeichenabweichung auf: Die Segmentsteigung beträgt {?segmentSlope} Promille, aber die abgetastete Steigung beträgt {?sampleSlope} (Zehntel pmill)."@de ;
+        sh:message "SlopeSamplePoint à la position {?vertPos} m présente une incompatibilité de signe : la pente du segment est de {?segmentSlope} pour mille mais la pente échantillonnée est de {?sampleSlope} (dixièmes de pmill)."@fr ;
         sh:select """
             PREFIX era:  <http://data.europa.eu/949/>
             PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1065,10 +1206,15 @@ era:SlopeSamplePointSignCongruenceShape a sh:NodeShape ;
 # a corresponding CurveSamplePoint must exist in SampledLinearElementGeometry.
 era:CurveSamplePointCongruenceShape a sh:NodeShape ;
     sh:targetClass era:LinearElementGeometry ;
-
+    era:additionalInfo "This rule checks two things: first, that for every HorizontalArc or HorizontalTransition segment in a LinearElementGeometry, a CurveSamplePoint exists at the same position (within 1 mm tolerance) in the corresponding SampledLinearElementGeometry's curves list (HorizontalLine segments are excluded since straight segments have no curvature); second, where a matching CurveSamplePoint is found, that the sign of its sampled radius (sampleCurveRadius, double, metres, positive = right/clockwise, negative = left/counter-clockwise) matches the sign of the segment's own radius. The position comparison uses elementGeometryPos (double, metres) on both sides. The finding message identifies whether the issue is a missing CurveSamplePoint or a radius sign mismatch — check which case applies before investigating further."@en ;
+    era:additionalInfo "Diese Regel prüft zwei Dinge: erstens, ob für jedes HorizontalArc- oder HorizontalTransition-Segment in einer LinearElementGeometry an derselben Position (mit 1 mm Toleranz) ein CurveSamplePoint in der curves-Liste der entsprechenden SampledLinearElementGeometry existiert (HorizontalLine-Segmente sind ausgeschlossen, da gerade Abschnitte keine Krümmung aufweisen); zweitens, ob das Vorzeichen des abgetasteten Radius (sampleCurveRadius, double, Meter, positiv = Rechtskurve, negativ = Linkskurve) mit dem Vorzeichen des Segmentradius übereinstimmt. Der Positionsvergleich verwendet elementGeometryPos (double, Meter) auf beiden Seiten. Die Befundmeldung gibt an, ob es sich um einen fehlenden CurveSamplePoint oder eine Vorzeichenabweichung des Radius handelt — prüfen Sie, welcher Fall vorliegt."@de ;
+    era:additionalInfo "Cette règle vérifie deux points : premièrement, que pour chaque segment HorizontalArc ou HorizontalTransition dans une LinearElementGeometry, un CurveSamplePoint existe à la même position (avec une tolérance de 1 mm) dans la liste curves de la SampledLinearElementGeometry correspondante (les segments HorizontalLine sont exclus car les sections droites n'ont pas de courbure) ; deuxièmement, que le signe du rayon échantillonné (sampleCurveRadius, double, mètres, positif = droite/horaire, négatif = gauche/anti-horaire) correspond au signe du rayon du segment. La comparaison de position utilise elementGeometryPos (double, mètres) des deux côtés. Le message du résultat indique s'il s'agit d'un CurveSamplePoint manquant ou d'une incompatibilité de signe de rayon."@fr ;
+    
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "A CurveSamplePoint must exist at the start position of every HorizontalArc or HorizontalTransition segment. Missing position (in meters): {?missingPos}" ;
+        sh:message "A CurveSamplePoint must exist at the start position of every HorizontalArc or HorizontalTransition segment. Missing position (in meters): {?missingPos}"@en ;
+        sh:message "An der Startposition jedes HorizontalArc- oder HorizontalTransition-Segments muss ein CurveSamplePoint vorhanden sein. Fehlende Position (in Metern): {?missingPos}"@de ;
+        sh:message "Un CurveSamplePoint doit exister à la position de départ de chaque segment HorizontalArc ou HorizontalTransition. Position manquante (en mètres) : {?missingPos}"@fr ;
         sh:select """
             PREFIX era:  <http://data.europa.eu/949/>
             PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1121,10 +1267,15 @@ era:CurveSamplePointCongruenceShape a sh:NodeShape ;
 # Zero radius on either side (e.g. transition start from straight) is treated as pass.
 era:CurveSamplePointSignCongruenceShape a sh:NodeShape ;
     sh:targetClass era:LinearElementGeometry ;
+    era:additionalInfo "Where a CurveSamplePoint exists at the same position as a HorizontalArc or HorizontalTransition segment (within 1 mm tolerance, compared via elementGeometryPos in metres), the sign of its sampled curve radius (sampleCurveRadius, double, metres, positive = right/clockwise, negative = left/counter-clockwise) must agree with the sign of the segment's own radius. A sign mismatch means the discretised geometry curves in the opposite direction from the parametric geometry at that point — almost always indicating an error in how one of the two datasets was generated, since both are meant to describe the same physical track."@en ;
+    era:additionalInfo "Existiert an derselben Position wie ein HorizontalArc- oder HorizontalTransition-Segment (mit 1 mm Toleranz, verglichen über elementGeometryPos in Metern) ein CurveSamplePoint, muss das Vorzeichen seines abgetasteten Kurvenradius (sampleCurveRadius, double, Meter, positiv = Rechtskurve, negativ = Linkskurve) mit dem Vorzeichen des Segmentradius übereinstimmen. Eine Vorzeichenabweichung bedeutet, dass die diskretisierte Geometrie an dieser Stelle in entgegengesetzter Richtung zur parametrischen Geometrie kurvt — fast immer ein Hinweis auf einen Fehler bei der Erzeugung eines der beiden Datensätze."@de ;
+    era:additionalInfo "Lorsqu'un CurveSamplePoint existe à la même position qu'un segment HorizontalArc ou HorizontalTransition (avec une tolérance de 1 mm, comparée via elementGeometryPos en mètres), le signe de son rayon de courbure échantillonné (sampleCurveRadius, double, mètres, positif = droite/horaire, négatif = gauche/anti-horaire) doit correspondre au signe du rayon du segment. Une incompatibilité de signe signifie que la géométrie discrétisée courbe dans le sens opposé à la géométrie paramétrique à cet endroit — révélateur presque toujours d'une erreur dans la génération de l'un des deux jeux de données."@fr ;
 
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "Missing correspondence CurveSamplePoint, or CurveSamplePoint at position {?arcPos} m has radius sign mismatch: segment radius is {?segmentRadius} m but sampled radius is {?sampleRadius} (mm as integer, exp -3)." ;
+        sh:message "Missing correspondence CurveSamplePoint, or CurveSamplePoint at position {?arcPos} m has radius sign mismatch: segment radius is {?segmentRadius} m but sampled radius is {?sampleRadius} (mm as integer, exp -3)."@en ;
+        sh:message "Fehlende Korrespondenz CurveSamplePoint oder CurveSamplePoint an Position {?arcPos} m weist eine Nichtübereinstimmung des Radiuszeichens auf: Der Segmentradius beträgt {?segmentRadius} m, aber der abgetastete Radius beträgt {?sampleRadius} (mm als Ganzzahl, exp -3)."@de ;
+        sh:message "Correspondance manquante CurveSamplePoint ou CurveSamplePoint à la position {?arcPos} m présente une incompatibilité de signe de rayon : le rayon du segment est de {?segmentRadius} m mais le rayon échantillonné est de {?sampleRadius} (mm sous forme d'entier, exp -3)."@fr ;
         sh:select """
             PREFIX era:  <http://data.europa.eu/949/>
             PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1171,10 +1322,15 @@ era:CurveSamplePointSignCongruenceShape a sh:NodeShape ;
 # ===== StaticSpeedLimit Position Within LinearElement Length Constraint =====
 era:StaticSpeedLimitPositionWithinLengthShape a sh:NodeShape ;
     sh:targetClass era:LinearElementSpeedProfile ;
+    era:additionalInfo "Every StaticSpeedLimit within a LinearElementSpeedProfile's sameDirProfile or oppositeDirProfile has a position (pos) along the track, measured from the start of the corresponding LinearElement. This position must not exceed that LinearElement's own length (lengthOfNetLinearElement) — a speed limit cannot be placed beyond the physical end of the track segment it applies to. Check both directions of travel (same and opposite) for the offending speed limit, and confirm lengthOfNetLinearElement on the linked LinearElement is set correctly before assuming the speed limit's position is wrong."@en ;
+    era:additionalInfo "Jedes StaticSpeedLimit innerhalb des sameDirProfile oder oppositeDirProfile eines LinearElementSpeedProfile hat eine Position (pos) entlang der Strecke, gemessen ab dem Anfang des zugehörigen LinearElements. Diese Position darf die Länge dieses LinearElements (lengthOfNetLinearElement) nicht überschreiten — eine Geschwindigkeitsbegrenzung kann nicht über das physische Ende des Streckenabschnitts hinaus platziert werden, für den sie gilt. Prüfen Sie beide Fahrtrichtungen (gleich und entgegengesetzt) auf die betreffende Geschwindigkeitsbegrenzung und stellen Sie sicher, dass lengthOfNetLinearElement am verknüpften LinearElement korrekt gesetzt ist."@de ;
+    era:additionalInfo "Chaque StaticSpeedLimit dans le sameDirProfile ou oppositeDirProfile d'un LinearElementSpeedProfile a une position (pos) le long de la voie, mesurée depuis le début du LinearElement correspondant. Cette position ne doit pas dépasser la longueur de ce LinearElement (lengthOfNetLinearElement) — une limite de vitesse ne peut pas être placée au-delà de la fin physique du tronçon de voie auquel elle s'applique. Vérifiez les deux sens de circulation (même et opposé) pour la limite de vitesse en cause, et assurez-vous que lengthOfNetLinearElement est correctement défini sur le LinearElement lié."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The position (pos) of every StaticSpeedLimit in a LinearElementSpeedProfile must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:message "The position (pos) of every StaticSpeedLimit in a LinearElementSpeedProfile must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement."@en ;
+        sh:message "Die Position (pos) jedes StaticSpeedLimit in einem LinearElementSpeedProfile darf die Länge (lengthOfNetLinearElement) des entsprechenden LinearElements nicht überschreiten."@de ;
+        sh:message "La position (pos) de chaque StaticSpeedLimit dans un LinearElementSpeedProfile ne doit pas dépasser la longueur (lengthOfNetLinearElement) du LinearElement correspondant."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -1216,10 +1372,15 @@ era:StaticSpeedLimitPositionWithinLengthShape a sh:NodeShape ;
 # ===== Horizontal Segment Position Within LinearElement Length Constraint =====
 era:HorizontalSegmentPositionWithinLengthShape a sh:NodeShape ;
     sh:targetClass era:LinearElementGeometry ;
+    era:additionalInfo "Every horizontal alignment segment (HorizontalLine, HorizontalArc, or HorizontalTransition) within a LinearElementGeometry's horizontalAlignments list has a starting position (elementGeometryPos), measured from the start of the corresponding LinearElement. This position must not exceed that LinearElement's own length (lengthOfNetLinearElement) — no segment can start beyond the physical end of the track it describes. Identify which segment type and position is reported, and confirm lengthOfNetLinearElement on the linked LinearElement is correct before assuming the segment's position is wrong."@en ;
+    era:additionalInfo "Jedes horizontale Trassierungssegment (HorizontalLine, HorizontalArc oder HorizontalTransition) in der horizontalAlignments-Liste einer LinearElementGeometry hat eine Startposition (elementGeometryPos), gemessen ab dem Anfang des zugehörigen LinearElements. Diese Position darf die Länge dieses LinearElements (lengthOfNetLinearElement) nicht überschreiten — kein Segment kann über das physische Ende der beschriebenen Strecke hinaus beginnen. Ermitteln Sie, welcher Segmenttyp und welche Position gemeldet wird, und stellen Sie sicher, dass lengthOfNetLinearElement am verknüpften LinearElement korrekt ist."@de ;
+    era:additionalInfo "Chaque segment d'alignement horizontal (HorizontalLine, HorizontalArc ou HorizontalTransition) dans la liste horizontalAlignments d'une LinearElementGeometry a une position de départ (elementGeometryPos), mesurée depuis le début du LinearElement correspondant. Cette position ne doit pas dépasser la longueur de ce LinearElement (lengthOfNetLinearElement) — aucun segment ne peut commencer au-delà de la fin physique de la voie qu'il décrit. Identifiez le type de segment et la position signalés, et assurez-vous que lengthOfNetLinearElement est correct sur le LinearElement lié."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The position (elementGeometryPos) of every horizontal segment (HorizontalLine, HorizontalArc, or HorizontalTransition) in a LinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:message "The position (elementGeometryPos) of every horizontal segment (HorizontalLine, HorizontalArc, or HorizontalTransition) in a LinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement."@en ;
+        sh:message "Die Position (elementGeometryPos) jedes horizontalen Segments (HorizontalLine, HorizontalArc oder HorizontalTransition) in einer LinearElementGeometry darf die Länge (lengthOfNetLinearElement) des entsprechenden LinearElements nicht überschreiten."@de ;
+        sh:message "La position (elementGeometryPos) de chaque segment horizontal (HorizontalLine, HorizontalArc ou HorizontalTransition) dans un LinearElementGeometry ne doit pas dépasser la longueur (lengthOfNetLinearElement) du LinearElement correspondant."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1273,10 +1434,15 @@ era:HorizontalSegmentPositionWithinLengthShape a sh:NodeShape ;
 # ===== Vertical Segment Position Within LinearElement Length Constraint =====
 era:VerticalSegmentPositionWithinLengthShape a sh:NodeShape ;
     sh:targetClass era:LinearElementGeometry ;
+    era:additionalInfo "Every vertical alignment segment (VerticalLine or VerticalArc) within a LinearElementGeometry's verticalAlignments list has a starting position (elementGeometryPos), measured from the start of the corresponding LinearElement. This position must not exceed that LinearElement's own length (lengthOfNetLinearElement) — no segment can start beyond the physical end of the track it describes. Identify which segment type and position is reported, and confirm lengthOfNetLinearElement on the linked LinearElement is correct before assuming the segment's position is wrong."@en ;
+    era:additionalInfo "Jedes vertikale Trassierungssegment (VerticalLine oder VerticalArc) in der verticalAlignments-Liste einer LinearElementGeometry hat eine Startposition (elementGeometryPos), gemessen ab dem Anfang des zugehörigen LinearElements. Diese Position darf die Länge dieses LinearElements (lengthOfNetLinearElement) nicht überschreiten — kein Segment kann über das physische Ende der beschriebenen Strecke hinaus beginnen. Ermitteln Sie, welcher Segmenttyp und welche Position gemeldet wird, und stellen Sie sicher, dass lengthOfNetLinearElement am verknüpften LinearElement korrekt ist."@de ;
+    era:additionalInfo "Chaque segment d'alignement vertical (VerticalLine ou VerticalArc) dans la liste verticalAlignments d'une LinearElementGeometry a une position de départ (elementGeometryPos), mesurée depuis le début du LinearElement correspondant. Cette position ne doit pas dépasser la longueur de ce LinearElement (lengthOfNetLinearElement) — aucun segment ne peut commencer au-delà de la fin physique de la voie qu'il décrit. Identifiez le type de segment et la position signalés, et assurez-vous que lengthOfNetLinearElement est correct sur le LinearElement lié."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The position (elementGeometryPos) of every vertical segment (VerticalLine or VerticalArc) in a LinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:message "The position (elementGeometryPos) of every vertical segment (VerticalLine or VerticalArc) in a LinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement."@en ;
+        sh:message "Die Position (elementGeometryPos) jedes vertikalen Segments (VerticalLine oder VerticalArc) in einer LinearElementGeometry darf die Länge (lengthOfNetLinearElement) des entsprechenden LinearElements nicht überschreiten."@de ;
+        sh:message "La position (elementGeometryPos) de chaque segment vertical (VerticalLine ou VerticalArc) dans un LinearElementGeometry ne doit pas dépasser la longueur (lengthOfNetLinearElement) du LinearElement correspondant."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1321,10 +1487,15 @@ era:VerticalSegmentPositionWithinLengthShape a sh:NodeShape ;
 # ===== CantPoint Position Within LinearElement Length Constraint =====
 era:CantPointPositionWithinLengthShape a sh:NodeShape ;
     sh:targetClass era:LinearElementGeometry ;
+    era:additionalInfo "Every CantPoint within a LinearElementGeometry's cantPoints list has a position (elementGeometryPos), measured from the start of the corresponding LinearElement. This position must not exceed that LinearElement's own length (lengthOfNetLinearElement) — a cant point cannot be placed beyond the physical end of the track segment it describes. Confirm lengthOfNetLinearElement on the linked LinearElement is set correctly before assuming the cant point's position is wrong."@en ;
+    era:additionalInfo "Jeder CantPoint in der cantPoints-Liste einer LinearElementGeometry hat eine Position (elementGeometryPos), gemessen ab dem Anfang des zugehörigen LinearElements. Diese Position darf die Länge dieses LinearElements (lengthOfNetLinearElement) nicht überschreiten — ein Überhöhungspunkt kann nicht über das physische Ende des beschriebenen Streckenabschnitts hinaus platziert werden. Stellen Sie sicher, dass lengthOfNetLinearElement am verknüpften LinearElement korrekt gesetzt ist."@de ;
+    era:additionalInfo "Chaque CantPoint dans la liste cantPoints d'une LinearElementGeometry a une position (elementGeometryPos), mesurée depuis le début du LinearElement correspondant. Cette position ne doit pas dépasser la longueur de ce LinearElement (lengthOfNetLinearElement) — un point de dévers ne peut pas être placé au-delà de la fin physique du tronçon de voie qu'il décrit. Assurez-vous que lengthOfNetLinearElement est correctement défini sur le LinearElement lié."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The position (elementGeometryPos) of every CantPoint in a LinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:message "The position (elementGeometryPos) of every CantPoint in a LinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement."@en ;
+        sh:message "Die Position (elementGeometryPos) jedes CantPoints in einer LinearElementGeometry darf die Länge (lengthOfNetLinearElement) des entsprechenden LinearElements nicht überschreiten."@de ;
+        sh:message "La position (elementGeometryPos) de chaque CantPoint dans un LinearElementGeometry ne doit pas dépasser la longueur (lengthOfNetLinearElement) du LinearElement correspondant."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1356,10 +1527,15 @@ era:CantPointPositionWithinLengthShape a sh:NodeShape ;
 # ===== CantSamplePoint Position Within LinearElement Length Constraint =====
 era:CantSamplePointPositionWithinLengthShape a sh:NodeShape ;
     sh:targetClass era:SampledLinearElementGeometry ;
+    era:additionalInfo "Every CantSamplePoint within a SampledLinearElementGeometry's cants list has a position (elementGeometryPos, double, metres) on the associated LinearElement. This position must not exceed that LinearElement's own length (lengthOfNetLinearElement) — a cant sample point cannot be placed beyond the physical end of the track segment it describes. Confirm lengthOfNetLinearElement on the linked LinearElement is set correctly before assuming the sample point's position is wrong."@en ;
+    era:additionalInfo "Jeder CantSamplePoint in der cants-Liste einer SampledLinearElementGeometry hat eine Position (elementGeometryPos, double, Meter) auf dem zugehörigen LinearElement. Diese Position darf die Länge dieses LinearElements (lengthOfNetLinearElement) nicht überschreiten — ein abgetasteter Überhöhungspunkt kann nicht über das physische Ende des beschriebenen Streckenabschnitts hinaus platziert werden. Stellen Sie sicher, dass lengthOfNetLinearElement am verknüpften LinearElement korrekt gesetzt ist."@de ;
+    era:additionalInfo "Chaque CantSamplePoint dans la liste cants d'une SampledLinearElementGeometry a une position (elementGeometryPos, double, mètres) sur le LinearElement associé. Cette position ne doit pas dépasser la longueur de ce LinearElement (lengthOfNetLinearElement) — un point de dévers échantillonné ne peut pas être placé au-delà de la fin physique du tronçon de voie qu'il décrit. Assurez-vous que lengthOfNetLinearElement est correctement défini sur le LinearElement lié."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The position (pos) of every CantSamplePoint in a SampledLinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:message "The position (pos) of every CantSamplePoint in a SampledLinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement."@en ;
+        sh:message "Die Position (pos) jedes CantSamplePoint in einer SampledLinearElementGeometry darf die Länge (lengthOfNetLinearElement) des entsprechenden LinearElements nicht überschreiten."@de ;
+        sh:message "La position (pos) de chaque CantSamplePoint dans un SampledLinearElementGeometry ne doit pas dépasser la longueur (lengthOfNetLinearElement) du LinearElement correspondant."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1391,10 +1567,15 @@ era:CantSamplePointPositionWithinLengthShape a sh:NodeShape ;
 # ===== SlopeSamplePoint Position Within LinearElement Length Constraint =====
 era:SlopeSamplePointPositionWithinLengthShape a sh:NodeShape ;
     sh:targetClass era:SampledLinearElementGeometry ;
+    era:additionalInfo "Every SlopeSamplePoint within a SampledLinearElementGeometry's slopes list has a position (elementGeometryPos, double, metres) on the associated LinearElement. This position must not exceed that LinearElement's own length (lengthOfNetLinearElement) — a slope sample point cannot be placed beyond the physical end of the track segment it describes. Confirm lengthOfNetLinearElement on the linked LinearElement is set correctly before assuming the sample point's position is wrong."@en ;
+    era:additionalInfo "Jeder SlopeSamplePoint in der slopes-Liste einer SampledLinearElementGeometry hat eine Position (elementGeometryPos, double, Meter) auf dem zugehörigen LinearElement. Diese Position darf die Länge dieses LinearElements (lengthOfNetLinearElement) nicht überschreiten — ein abgetasteter Steigungspunkt kann nicht über das physische Ende des beschriebenen Streckenabschnitts hinaus platziert werden. Stellen Sie sicher, dass lengthOfNetLinearElement am verknüpften LinearElement korrekt gesetzt ist."@de ;
+    era:additionalInfo "Chaque SlopeSamplePoint dans la liste slopes d'une SampledLinearElementGeometry a une position (elementGeometryPos, double, mètres) sur le LinearElement associé. Cette position ne doit pas dépasser la longueur de ce LinearElement (lengthOfNetLinearElement) — un point de pente échantillonné ne peut pas être placé au-delà de la fin physique du tronçon de voie qu'il décrit. Assurez-vous que lengthOfNetLinearElement est correctement défini sur le LinearElement lié."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The position (pos) of every SlopeSamplePoint in a SampledLinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:message "The position (pos) of every SlopeSamplePoint in a SampledLinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement."@en ;
+        sh:message "Die Position (pos) jedes SlopeSamplePoint in einer SampledLinearElementGeometry darf die Länge (lengthOfNetLinearElement) des entsprechenden LinearElements nicht überschreiten."@de ;
+        sh:message "La position (pos) de chaque SlopeSamplePoint dans un SampledLinearElementGeometry ne doit pas dépasser la longueur (lengthOfNetLinearElement) du LinearElement correspondant."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1426,10 +1607,15 @@ era:SlopeSamplePointPositionWithinLengthShape a sh:NodeShape ;
 # ===== CurveSamplePoint Position Within LinearElement Length Constraint =====
 era:CurveSamplePointPositionWithinLengthShape a sh:NodeShape ;
     sh:targetClass era:SampledLinearElementGeometry ;
+    era:additionalInfo "Every CurveSamplePoint within a SampledLinearElementGeometry's curves list has a position (elementGeometryPos, double, metres) on the associated LinearElement. This position must not exceed that LinearElement's own length (lengthOfNetLinearElement) — a curve sample point cannot be placed beyond the physical end of the track segment it describes. Confirm lengthOfNetLinearElement on the linked LinearElement is set correctly before assuming the sample point's position is wrong."@en ;
+    era:additionalInfo "Jeder CurveSamplePoint in der curves-Liste einer SampledLinearElementGeometry hat eine Position (elementGeometryPos, double, Meter) auf dem zugehörigen LinearElement. Diese Position darf die Länge dieses LinearElements (lengthOfNetLinearElement) nicht überschreiten — ein abgetasteter Kurvenpunkt kann nicht über das physische Ende des beschriebenen Streckenabschnitts hinaus platziert werden. Stellen Sie sicher, dass lengthOfNetLinearElement am verknüpften LinearElement korrekt gesetzt ist."@de ;
+    era:additionalInfo "Chaque CurveSamplePoint dans la liste curves d'une SampledLinearElementGeometry a une position (elementGeometryPos, double, mètres) sur le LinearElement associé. Cette position ne doit pas dépasser la longueur de ce LinearElement (lengthOfNetLinearElement) — un point de courbure échantillonné ne peut pas être placé au-delà de la fin physique du tronçon de voie qu'il décrit. Assurez-vous que lengthOfNetLinearElement est correctement défini sur le LinearElement lié."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The position (pos) of every CurveSamplePoint in a SampledLinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:message "The position (pos) of every CurveSamplePoint in a SampledLinearElementGeometry must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement."@en ;
+        sh:message "Die Position (pos) jedes CurveSamplePoint in einer SampledLinearElementGeometry darf die Länge (lengthOfNetLinearElement) des entsprechenden LinearElements nicht überschreiten."@de ;
+        sh:message "La position (pos) de chaque CurveSamplePoint dans un SampledLinearElementGeometry ne doit pas dépasser la longueur (lengthOfNetLinearElement) du LinearElement correspondant."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1461,10 +1647,15 @@ era:CurveSamplePointPositionWithinLengthShape a sh:NodeShape ;
 # ===== AxleLoadSpeedProfile Congruence Constraint =====
 era:AxleLoadSpeedProfileCongruenceShape a sh:NodeShape ;
     sh:targetClass era:LinearElementSpeedProfile ;
+    era:additionalInfo "This shape applies three related checks to every AxleLoadSpeedProfile found in either direction (sameDirProfile or oppositeDirProfile) of the parent LinearElementSpeedProfile: (1) startPos must not exceed the corresponding LinearElement's length (lengthOfNetLinearElement); (2) endPos must not exceed that same length; and (3) startPos must not be greater than endPos. Check the specific sh:message of the finding to identify which of the three conditions failed, then check the relevant value(s) — startPos, endPos, and the LinearElement's lengthOfNetLinearElement — against each other."@en ;
+    era:additionalInfo "Diese Shape wendet drei zusammengehörige Prüfungen auf jedes AxleLoadSpeedProfile an, das in einer der beiden Richtungen (sameDirProfile oder oppositeDirProfile) des übergeordneten LinearElementSpeedProfile gefunden wird: (1) startPos darf die Länge des entsprechenden LinearElements (lengthOfNetLinearElement) nicht überschreiten; (2) endPos darf dieselbe Länge nicht überschreiten; und (3) startPos darf nicht größer als endPos sein. Prüfen Sie die konkrete sh:message des Befunds, um zu ermitteln, welche der drei Bedingungen fehlgeschlagen ist, und vergleichen Sie dann die relevanten Werte — startPos, endPos und lengthOfNetLinearElement des LinearElements — miteinander."@de ;
+    era:additionalInfo "Cette shape applique trois vérifications liées à chaque AxleLoadSpeedProfile trouvé dans l'une ou l'autre direction (sameDirProfile ou oppositeDirProfile) du LinearElementSpeedProfile parent : (1) startPos ne doit pas dépasser la longueur du LinearElement correspondant (lengthOfNetLinearElement) ; (2) endPos ne doit pas dépasser cette même longueur ; et (3) startPos ne doit pas être supérieur à endPos. Vérifiez le sh:message précis du résultat pour identifier laquelle des trois conditions a échoué, puis comparez les valeurs concernées — startPos, endPos et lengthOfNetLinearElement du LinearElement — entre elles."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The startPos of every AxleLoadSpeedProfile must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:message "The startPos of every AxleLoadSpeedProfile must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement."@en ;
+        sh:message "Der startPos jedes AxleLoadSpeedProfile darf die Länge (lengthOfNetLinearElement) des entsprechenden LinearElements nicht überschreiten."@de ;
+        sh:message "Le startPos de chaque AxleLoadSpeedProfile ne doit pas dépasser la longueur (lengthOfNetLinearElement) du LinearElement correspondant."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -1499,7 +1690,9 @@ era:AxleLoadSpeedProfileCongruenceShape a sh:NodeShape ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The endPos of every AxleLoadSpeedProfile must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:message "The endPos of every AxleLoadSpeedProfile must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement."@en ;
+        sh:message "Der endPos jedes AxleLoadSpeedProfile darf die Länge (lengthOfNetLinearElement) des entsprechenden LinearElements nicht überschreiten."@de ;
+        sh:message "Le endPos de chaque AxleLoadSpeedProfile ne doit pas dépasser la longueur (lengthOfNetLinearElement) du LinearElement correspondant."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -1534,7 +1727,9 @@ era:AxleLoadSpeedProfileCongruenceShape a sh:NodeShape ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The startPos of every AxleLoadSpeedProfile must be less than or equal to endPos (proper ordering)." ;
+        sh:message "The startPos of every AxleLoadSpeedProfile must be less than or equal to endPos (proper ordering)."@en ;
+        sh:message "Der startPos jedes AxleLoadSpeedProfile muss kleiner oder gleich endPos sein (richtige Reihenfolge)."@de ;
+        sh:message "Le startPos de chaque AxleLoadSpeedProfile doit être inférieur ou égal à endPos (ordre correct)."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -1565,10 +1760,15 @@ era:AxleLoadSpeedProfileCongruenceShape a sh:NodeShape ;
 # ===== LinearElementSection Offset Ordering Constraint =====
 era:LinearElementSectionOffsetOrderingShape a sh:NodeShape ;
     sh:targetClass era:LinearElementSection ;
+    era:additionalInfo "For every LinearElementSection, startOffsetFromOrigin marks where the section begins and endOffsetFromOrigin marks where it ends, both measured from the start of the same LinearElement. The start offset must not be greater than the end offset — a section cannot end before it begins. If this finding fires, compare the two offset values directly; this check is independent of, but complementary to, era:LinearElementSectionBoundedShape, which separately ensures both offsets are non-negative and that endOffsetFromOrigin does not exceed the LinearElement's length."@en ;
+    era:additionalInfo "Für jeden LinearElementSection markiert startOffsetFromOrigin den Beginn und endOffsetFromOrigin das Ende des Abschnitts, beide gemessen ab dem Anfang desselben LinearElements. Der Start-Offset darf nicht größer als der End-Offset sein — ein Abschnitt kann nicht enden, bevor er beginnt. Wenn dieser Befund auftritt, vergleichen Sie die beiden Offset-Werte direkt; diese Prüfung ist unabhängig von, aber ergänzend zu era:LinearElementSectionBoundedShape, die separat sicherstellt, dass beide Offsets nicht negativ sind und endOffsetFromOrigin die Länge des LinearElements nicht überschreitet."@de ;
+    era:additionalInfo "Pour chaque LinearElementSection, startOffsetFromOrigin marque le début et endOffsetFromOrigin marque la fin de la section, tous deux mesurés depuis le début du même LinearElement. L'offset de début ne doit pas être supérieur à l'offset de fin — une section ne peut pas se terminer avant de commencer. Si ce résultat apparaît, comparez directement les deux valeurs d'offset ; cette vérification est indépendante mais complémentaire de era:LinearElementSectionBoundedShape, qui garantit séparément que les deux offsets sont non négatifs et que endOffsetFromOrigin ne dépasse pas la longueur du LinearElement."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "For each LinearElementSection, the startOffsetFromOrigin must not be greater than endOffsetFromOrigin." ;
+        sh:message "For each LinearElementSection, the startOffsetFromOrigin must not be greater than endOffsetFromOrigin."@en ;
+        sh:message "Für jeden LinearElementSection darf startOffsetFromOrigin nicht größer als endOffsetFromOrigin sein."@de ;
+        sh:message "Pour chaque LinearElementSection, le startOffsetFromOrigin ne doit pas être supérieur à endOffsetFromOrigin."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -1589,10 +1789,16 @@ era:LinearElementSectionOffsetOrderingShape a sh:NodeShape ;
 # ===== Derailer Unique Position Constraint =====
 era:DerailerUniquePositionShape a sh:NodeShape ;
     sh:targetClass era:Derailer ;
+    era:additionalInfo "[BUSINESS RULE] This error might be because two distinct Derailer instances share the same position (same LinearElement and same offsetFromOrigin). Note that orientation does not make two derailers at the same position distinct — even if their derailToRight values differ, two derailers at the same location are not permitted."@en ;
+    era:additionalInfo "[GESCHÄFTSREGEL] Dieser Fehler könnte daran liegen, dass zwei verschiedene Derailer-Instanzen dieselbe Position teilen. Die Ausrichtung macht zwei Entgleisungsschutzvorrichtungen an derselben Position nicht unterschiedlich."@de ;
+    era:additionalInfo "[RÈGLE MÉTIER] Cette erreur peut être due au fait que deux instances Derailer distinctes partagent la même position. L''orientation ne distingue pas deux dérailleurs à la même position."@fr ;
+
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "No two distinct derailers may be declared at the exact same position in the network (same LinearElement and offsetFromOrigin), regardless of their orientation." ;
+        sh:message "No two distinct derailers may be declared at the exact same position in the network (same LinearElement and offsetFromOrigin), regardless of their orientation."@en ;
+        sh:message "Unabhängig von ihrer Ausrichtung dürfen keine zwei unterschiedlichen Entgleiser an der exakt gleichen Position im Netzwerk (gleiches LinearElement und offsetFromOrigin) deklariert werden."@de ;
+        sh:message "Deux dérailleurs distincts ne peuvent pas être déclarés exactement à la même position dans le réseau (mêmes LinearElement et offsetFromOrigin), quelle que soit leur orientation."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -1622,11 +1828,16 @@ era:DerailerUniquePositionShape a sh:NodeShape ;
 # ===== BaliseGroup Unique NID Constraint =====
 era:BaliseGroupUniqueNIDShape a sh:NodeShape ;
     sh:targetClass era:BaliseGroup ;
+    era:additionalInfo "[BUSINESS RULE] This error might be because two BaliseGroups share the same NID_BG value — but note that NID_BG only needs to be unique within the same NID_C (country ID). If two BaliseGroups have different NID_C values they may share the same NID_BG and that is valid. The uniqueness constraint only applies when NID_C is identical."@en ;
+    era:additionalInfo "[GESCHÄFTSREGEL] Dieser Fehler könnte daran liegen, dass zwei BaliseGroups denselben NID_BG-Wert teilen — NID_BG muss jedoch nur innerhalb desselben NID_C eindeutig sein. Wenn zwei BaliseGroups unterschiedliche NID_C-Werte haben, dürfen sie denselben NID_BG teilen."@de ;
+    era:additionalInfo "[RÈGLE MÉTIER] Cette erreur peut être due au fait que deux BaliseGroups partagent la même valeur NID_BG — NID_BG doit être unique uniquement au sein du même NID_C. Si deux BaliseGroups ont des valeurs NID_C différentes, ils peuvent partager le même NID_BG."@fr ;
     
 	# SPT2TS-125788: The BaliseGroup  shall have unique Balise Group NIDs (NID_C + NID_BG)within a ETCS.
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "BaliseGroups must have unique Balise Group NIDs (NID_C + NID_BG combination) within the ETCS system. Two distinct BaliseGroups with the same NID_C must have different NID_BG values." ;
+        sh:message "BaliseGroups must have unique Balise Group NIDs (NID_C + NID_BG combination) within the ETCS system. Two distinct BaliseGroups with the same NID_C must have different NID_BG values."@en ;
+        sh:message "BaliseGroups müssen innerhalb des ETCS-Systems über eindeutige Balise Group-NIDs (NID_C + NID_BG-Kombination) verfügen. Zwei unterschiedliche BaliseGroups mit demselben NID_C müssen unterschiedliche NID_BG-Werte haben."@de ;
+        sh:message "Les BaliseGroups doivent avoir des NID Balise Group uniques (combinaison NID_C + NID_BG) dans le système ETCS. Deux BaliseGroups distincts avec le même NID_C doivent avoir des valeurs NID_BG différentes."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
