@@ -1,0 +1,2634 @@
+# SPDX-License-Identifier: EUPL-1.2
+#
+# Copyright (c) 2026 LAWCON Consulting GmbH
+#
+# Licensed under the EUPL, Version 1.2 or – as soon as they are approved
+# by the European Commission – subsequent versions of the EUPL (the "Licence");
+# You may not use this work except in compliance with the Licence.
+# You may obtain a copy of the Licence at:
+#
+# https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the Licence is distributed on an "AS IS" basis,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+
+
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix qudt:    <http://qudt.org/schema/qudt/> .
+@prefix unit:    <http://qudt.org/vocab/unit/> .
+@prefix era:     <http://data.europa.eu/949/> .
+
+@prefix tp-sh: <http://data.europa.eu/949/shapes/tp#> .
+
+
+########################################################################
+#  SPARQL prefix declarations
+#
+#  SHACL 5.3: the Turtle @prefix declarations above do NOT apply inside
+#  sh:select - only sh:prefixes does. Without this, a query writing era:...
+#  fails with "Unknown namespace prefix : era" on any data graph that does
+#  not itself bind the same prefix (e.g. data written with full IRIs).
+########################################################################
+
+tp-sh:PrefixDeclarations
+    a owl:Ontology ;
+    rdfs:label "Prefixes available to every sh:select in this file"@en ;
+    sh:declare
+        [ sh:prefix "era"  ; sh:namespace "http://data.europa.eu/949/"^^xsd:anyURI ] ,
+        [ sh:prefix "rdf"  ; sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI ] ,
+        [ sh:prefix "rdfs" ; sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ] ,
+        [ sh:prefix "xsd"  ; sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI ] ,
+        [ sh:prefix "skos" ; sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ] ;
+    .
+
+########################################################################
+#  Imported shapes
+#
+#  tp references or composes these structs from other
+#  modules, so their shapes are inlined here for completeness (rule 17).
+#  They are minted in this module's namespace, prefixed with the source
+#  module, so this file never collides with the owning module's own
+#  shapes file. Loading both simply reports shared classes twice.
+########################################################################
+
+### Switch ############################################################
+tp-sh:infra-SwitchShape
+    a sh:NodeShape ;
+    sh:targetClass era:Switch ;
+    sh:name "Switch" ;
+    sh:description "A unit of track comprising two fixed rails (stock rails) and two movable rails (switch rails) used to direct vehicles from one track to another track." ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:infra-Switch-reversalTime ;
+    sh:property tp-sh:infra-Switch-leftBranch ;
+    sh:property tp-sh:infra-Switch-rightBranch ;
+    sh:property tp-sh:infra-Switch-name ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-Switch-reversalTime
+    a sh:PropertyShape ;
+    sh:path era:reversalTime ;
+    sh:name "reversalTime" ;
+    sh:description "Defines the time in seconds to switch from one position to the other" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:SEC ;
+    rdfs:comment "scaling exponent -1 (stored value x 10^-1 = physical value)"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-Switch-leftBranch
+    a sh:PropertyShape ;
+    sh:path era:leftBranch ;
+    sh:name "leftBranch" ;
+    sh:description "NetRelation referencing the left side of the switch in the facing direction of the switch" ;
+    sh:order 3 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:NetRelation ;
+    sh:message "leftBranch must reference an existing era:NetRelation by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-Switch-rightBranch
+    a sh:PropertyShape ;
+    sh:path era:rightBranch ;
+    sh:name "rightBranch" ;
+    sh:description "NetRelation referencing the right side of the switch in the facing direction of the switch" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:NetRelation ;
+    sh:message "rightBranch must reference an existing era:NetRelation by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-Switch-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 5 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### SlipCrossing ######################################################
+tp-sh:infra-SlipCrossingShape
+    a sh:NodeShape ;
+    sh:targetClass era:SlipCrossing ;
+    sh:name "SlipCrossing" ;
+    sh:description "Defines the physical track asset Slip Crossing ; 2 instances switch point define a single slip crossing and 4 instances of switch point defined a double slip crossing ; Reversal time is the maximum of known reversal times of switches. If the reversal time of at least one switch in the slip point is unknown, the reversal time of the slip point is unknown as well." ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:or (
+        [ sh:property [ sh:path era:switches ; sh:minCount 2 ; sh:maxCount 2 ] ]
+        [ sh:property [ sh:path era:switches ; sh:minCount 4 ; sh:maxCount 4 ] ]
+    ) ;
+    sh:message "A SlipCrossing must reference exactly two switches (single slip crossing) or exactly four switches (double slip crossing) - never three (see formatNote on SlipCrossing.switches)."@en ;
+    sh:property tp-sh:infra-SlipCrossing-switches ;
+    sh:property tp-sh:infra-SlipCrossing-crossing ;
+    sh:property tp-sh:infra-SlipCrossing-name ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-SlipCrossing-switches
+    a sh:PropertyShape ;
+    sh:path era:switches ;
+    sh:name "switches" ;
+    sh:description "Consists of simple points" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:Switch ;
+    sh:message "switches must reference an existing era:Switch by IRI."@en ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-SlipCrossing-crossing
+    a sh:PropertyShape ;
+    sh:path era:crossing ;
+    sh:name "crossing" ;
+    sh:description "Consists of crossing" ;
+    sh:order 3 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:Crossing ;
+    sh:message "crossing must reference an existing era:Crossing by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-SlipCrossing-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### Crossing ##########################################################
+tp-sh:infra-CrossingShape
+    a sh:NodeShape ;
+    sh:targetClass era:Crossing ;
+    sh:name "Crossing" ;
+    sh:description "Defines the physical track asset Crossing without possibility to switch between two linear elements" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:infra-Crossing-topologicalCoordinates ;
+    sh:property tp-sh:infra-Crossing-isSwitchable ;
+    sh:property tp-sh:infra-Crossing-name ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-Crossing-topologicalCoordinates
+    a sh:PropertyShape ;
+    sh:path era:topologicalCoordinates ;
+    sh:name "topologicalCoordinates" ;
+    sh:description "composes of topological coordinates" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-TopologicalCoordinateShape ;
+    sh:message "topologicalCoordinates must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:minCount 2 ;
+    sh:maxCount 2 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-Crossing-isSwitchable
+    a sh:PropertyShape ;
+    sh:path era:isSwitchable ;
+    sh:name "isSwitchable" ;
+    sh:description "True: If the crossing is switchable ; False: If the crossing is not switchable ; https://commons.wikimedia.org/wiki/Category:Switched_diamond_crossings" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-Crossing-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### Derailer ##########################################################
+tp-sh:infra-DerailerShape
+    a sh:NodeShape ;
+    sh:targetClass era:Derailer ;
+    sh:name "Derailer" ;
+    sh:description "Defines the physical track asset Derailer" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:infra-Derailer-netPointReference ;
+    sh:property tp-sh:infra-Derailer-reversalTime ;
+    sh:property tp-sh:infra-Derailer-derailToRight ;
+    sh:property tp-sh:infra-Derailer-name ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-Derailer-netPointReference
+    a sh:PropertyShape ;
+    sh:path era:netPointReference ;
+    sh:name "netPointReference" ;
+    sh:description "Defines position on LinearElement" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-NetPointReferenceShape ;
+    sh:message "netPointReference must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-Derailer-reversalTime
+    a sh:PropertyShape ;
+    sh:path era:reversalTime ;
+    sh:name "reversalTime" ;
+    sh:description "Defines the time in seconds to switch from one position to the other" ;
+    sh:order 3 ;
+    qudt:hasUnit unit:SEC ;
+    rdfs:comment "scaling exponent -1 (stored value x 10^-1 = physical value)"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-Derailer-derailToRight
+    a sh:PropertyShape ;
+    sh:path era:derailToRight ;
+    sh:name "derailToRight" ;
+    sh:description "Defines the side on which the derailer derails. If false = derailToLeft" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-Derailer-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 5 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### LevelCrossing #####################################################
+tp-sh:infra-LevelCrossingShape
+    a sh:NodeShape ;
+    sh:targetClass era:LevelCrossing ;
+    sh:name "LevelCrossing" ;
+    sh:description "A level crossing is an intersection where a railway line crosses a road or a path at the same level. It can be used for the implementation of the ETCS trackside or to identify potential collision scenarios" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:infra-LevelCrossing-areaReference ;
+    sh:property tp-sh:infra-LevelCrossing-name ;
+    sh:property tp-sh:infra-LevelCrossing-isProtected ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-LevelCrossing-areaReference
+    a sh:PropertyShape ;
+    sh:path era:areaReference ;
+    sh:name "areaReference" ;
+    sh:description "composes of track area" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-NetAreaReferenceShape ;
+    sh:message "areaReference must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-LevelCrossing-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-LevelCrossing-isProtected
+    a sh:PropertyShape ;
+    sh:path era:isProtected ;
+    sh:name "isProtected" ;
+    sh:description "True if the level crossing is protected, False - if the level crossing is unprotected" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### LinearElementSection ##############################################
+tp-sh:infra-LinearElementSectionShape
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementSection ;
+    sh:name "LinearElementSection" ;
+    sh:description "Defines adirected linear object (with a linear extension) located on a LinearElement" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    sh:property tp-sh:infra-LinearElementSection-onElement ;
+    sh:property tp-sh:infra-LinearElementSection-startOffsetFromOrigin ;
+    sh:property tp-sh:infra-LinearElementSection-endOffsetFromOrigin ;
+    sh:property tp-sh:infra-LinearElementSection-appliesInBothDirections ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-LinearElementSection-onElement
+    a sh:PropertyShape ;
+    sh:path era:onElement ;
+    sh:name "onElement" ;
+    sh:description "Specifies the linear element a section belongs to." ;
+    sh:order 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "onElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-LinearElementSection-startOffsetFromOrigin
+    a sh:PropertyShape ;
+    sh:path era:startOffsetFromOrigin ;
+    sh:name "startOffsetFromOrigin" ;
+    sh:description "Defines the start offset from the origin" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-LinearElementSection-endOffsetFromOrigin
+    a sh:PropertyShape ;
+    sh:path era:endOffsetFromOrigin ;
+    sh:name "endOffsetFromOrigin" ;
+    sh:description "Defines the end offset from the origin" ;
+    sh:order 3 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-LinearElementSection-appliesInBothDirections
+    a sh:PropertyShape ;
+    sh:path era:appliesInBothDirections ;
+    sh:name "appliesInBothDirections" ;
+    sh:description "Defines if the section applies in both directions" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### TrainDetectionSystem ##############################################
+tp-sh:infra-TrainDetectionSystemShape
+    a sh:NodeShape ;
+    sh:targetClass era:TrainDetectionSystem ;
+    sh:name "TrainDetectionSystem" ;
+    sh:description "Safety system used to detect the presence of vehicles on the railway track." ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:infra-TrainDetectionSystem-topologicalCoordinate ;
+    sh:property tp-sh:infra-TrainDetectionSystem-trainDetectionSystemType ;
+    sh:property tp-sh:infra-TrainDetectionSystem-referenceDir ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-TrainDetectionSystem-topologicalCoordinate
+    a sh:PropertyShape ;
+    sh:path era:topologicalCoordinate ;
+    sh:name "topologicalCoordinate" ;
+    sh:description "defines the location on linear element" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-TopologicalCoordinateShape ;
+    sh:message "topologicalCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-TrainDetectionSystem-trainDetectionSystemType
+    a sh:PropertyShape ;
+    sh:path era:trainDetectionSystemType ;
+    sh:name "trainDetectionSystemType" ;
+    sh:description "Defines the train detection system applicable for the TVPS" ;
+    sh:order 3 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/train-detection/20> <http://data.europa.eu/949/concepts/train-detection/10> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped TrainDetectionSystems concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-TrainDetectionSystem-referenceDir
+    a sh:PropertyShape ;
+    sh:path era:referenceDir ;
+    sh:name "referenceDir" ;
+    sh:description "Reference direction corresponding to linear element in which the train detector detects trains: same/opposite for axleCounter, both for trackCircuit" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/orientations/02> <http://data.europa.eu/949/concepts/orientations/00> <http://data.europa.eu/949/concepts/orientations/01> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped OrientationDirections concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### TvpSection ########################################################
+tp-sh:infra-TvpSectionShape
+    a sh:NodeShape ;
+    sh:targetClass era:TvpSection ;
+    sh:name "TvpSection" ;
+    sh:description "Defines the train vacancy proving section" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:infra-TvpSection-name ;
+    sh:property tp-sh:infra-TvpSection-linkedArea ;
+    sh:property tp-sh:infra-TvpSection-trainDetectors ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-TvpSection-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-TvpSection-linkedArea
+    a sh:PropertyShape ;
+    sh:path era:linkedArea ;
+    sh:name "linkedArea" ;
+    sh:description "composes of linked area" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-NetAreaReferenceShape ;
+    sh:message "linkedArea must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-TvpSection-trainDetectors
+    a sh:PropertyShape ;
+    sh:path era:trainDetectors ;
+    sh:name "trainDetectors" ;
+    sh:description "Defines the set of train detectors" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:TrainDetectionSystem ;
+    sh:message "trainDetectors must reference an existing era:TrainDetectionSystem by IRI."@en ;
+    sh:severity sh:Violation ;
+    .
+
+### NetAreaReference ##################################################
+tp-sh:infra-NetAreaReferenceShape
+    a sh:NodeShape ;
+    sh:targetClass era:NetAreaReference ;
+    sh:name "NetAreaReference" ;
+    sh:description "Represents an area reference in the network." ;
+    sh:property tp-sh:infra-NetAreaReference-includes ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-NetAreaReference-includes
+    a sh:PropertyShape ;
+    sh:path era:includes ;
+    sh:name "includes" ;
+    sh:description "List of linear references included in an network area reference." ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-NetLinearReferenceShape ;
+    sh:message "includes must be a well-formed NetLinearReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### TopoArea ##########################################################
+tp-sh:infra-TopoAreaShape
+    a sh:NodeShape ;
+    sh:targetClass era:TopoArea ;
+    sh:name "TopoArea" ;
+    sh:description "Defines a container for rail network topology" ;
+    rdfs:comment "sub-package: topology" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:infra-TopoArea-taVersionTimestamp ;
+    sh:property tp-sh:infra-TopoArea-linearElements ;
+    sh:property tp-sh:infra-TopoArea-netRelations ;
+    sh:property tp-sh:infra-TopoArea-name ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-TopoArea-taVersionTimestamp
+    a sh:PropertyShape ;
+    sh:path era:taVersionTimestamp ;
+    sh:name "taVersionTimestamp" ;
+    sh:description "version information of the topo-area which is valid since timestamp" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-TopoArea-linearElements
+    a sh:PropertyShape ;
+    sh:path era:linearElements ;
+    sh:name "linearElements" ;
+    sh:description "composes of linear elements = Edges in the graph" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-LinearElementShape ;
+    sh:message "linearElements must be a well-formed LinearElement (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-TopoArea-netRelations
+    a sh:PropertyShape ;
+    sh:path era:netRelations ;
+    sh:name "netRelations" ;
+    sh:description "composes of net relations = links between edges in the graph" ;
+    sh:order 4 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-NetRelationShape ;
+    sh:message "netRelations must be a well-formed NetRelation (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-TopoArea-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 5 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### NetRelation #######################################################
+tp-sh:infra-NetRelationShape
+    a sh:NodeShape ;
+    sh:targetClass era:NetRelation ;
+    sh:name "NetRelation" ;
+    sh:description "Defines a relation between two elements." ;
+    rdfs:comment "sub-package: topology" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:infra-NetRelation-elementA ;
+    sh:property tp-sh:infra-NetRelation-elementB ;
+    sh:property tp-sh:infra-NetRelation-isOnOriginOfElementA ;
+    sh:property tp-sh:infra-NetRelation-isOnOriginOfElementB ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-NetRelation-elementA
+    a sh:PropertyShape ;
+    sh:path era:elementA ;
+    sh:name "elementA" ;
+    sh:description "References the first linear element in an oriented relation." ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "elementA must reference an existing era:LinearElement by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-NetRelation-elementB
+    a sh:PropertyShape ;
+    sh:path era:elementB ;
+    sh:name "elementB" ;
+    sh:description "References the second linear element in an oriented relation." ;
+    sh:order 3 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "elementB must reference an existing era:LinearElement by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-NetRelation-isOnOriginOfElementA
+    a sh:PropertyShape ;
+    sh:path era:isOnOriginOfElementA ;
+    sh:name "isOnOriginOfElementA" ;
+    sh:description "Determines if the position of the topological element A in a relation is the origin of element A." ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-NetRelation-isOnOriginOfElementB
+    a sh:PropertyShape ;
+    sh:path era:isOnOriginOfElementB ;
+    sh:name "isOnOriginOfElementB" ;
+    sh:description "Determines if the position of the topological element B in a relation is the origin of element B." ;
+    sh:order 5 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### TopologicalCoordinate #############################################
+tp-sh:infra-TopologicalCoordinateShape
+    a sh:NodeShape ;
+    sh:targetClass era:TopologicalCoordinate ;
+    sh:name "TopologicalCoordinate" ;
+    sh:description "Defines a topological coordinate on the track" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    sh:property tp-sh:infra-TopologicalCoordinate-onLinearElement ;
+    sh:property tp-sh:infra-TopologicalCoordinate-offsetFromOrigin ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-TopologicalCoordinate-onLinearElement
+    a sh:PropertyShape ;
+    sh:path era:onLinearElement ;
+    sh:name "onLinearElement" ;
+    sh:description "is positioned on linear element" ;
+    sh:order 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "onLinearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-TopologicalCoordinate-offsetFromOrigin
+    a sh:PropertyShape ;
+    sh:path era:offsetFromOrigin ;
+    sh:name "offsetFromOrigin" ;
+    sh:description "position on the associated NetElement" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### NetPointReference #################################################
+tp-sh:infra-NetPointReferenceShape
+    a sh:NodeShape ;
+    sh:targetClass era:NetPointReference ;
+    sh:name "NetPointReference" ;
+    sh:description "Represents a point reference in the network." ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    sh:property tp-sh:infra-NetPointReference-hasTopoCoordinate ;
+    sh:property tp-sh:infra-NetPointReference-appliesToDirection ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-NetPointReference-hasTopoCoordinate
+    a sh:PropertyShape ;
+    sh:path era:hasTopoCoordinate ;
+    sh:name "hasTopoCoordinate" ;
+    sh:description "Defines the topological coordinate of a network point reference" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-TopologicalCoordinateShape ;
+    sh:message "hasTopoCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-NetPointReference-appliesToDirection
+    a sh:PropertyShape ;
+    sh:path era:appliesToDirection ;
+    sh:name "appliesToDirection" ;
+    sh:description "The direction relative to the origin of the linear element towards the point reference applies" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/orientations/02> <http://data.europa.eu/949/concepts/orientations/00> <http://data.europa.eu/949/concepts/orientations/01> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped OrientationDirections concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### LinearElement #####################################################
+tp-sh:infra-LinearElementShape
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElement ;
+    sh:name "LinearElement" ;
+    sh:description "A linear element is an uninterrupted stretch of railway track, without divergence or convergence." ;
+    rdfs:comment "sub-package: topology" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:infra-LinearElement-lengthOfNetLinearElement ;
+    sh:property tp-sh:infra-LinearElement-name ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-LinearElement-lengthOfNetLinearElement
+    a sh:PropertyShape ;
+    sh:path era:lengthOfNetLinearElement ;
+    sh:name "lengthOfNetLinearElement" ;
+    sh:description "Defines the distance along the LinearElement's track centre line." ;
+    sh:order 2 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-LinearElement-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### NetLinearReference ################################################
+tp-sh:infra-NetLinearReferenceShape
+    a sh:NodeShape ;
+    sh:targetClass era:NetLinearReference ;
+    sh:name "NetLinearReference" ;
+    sh:description "Defines a linked path on the topology" ;
+    sh:sparql tp-sh:infra-NetLinearReference-hasSequence-listWellFormed ;
+    sh:property tp-sh:infra-NetLinearReference-startsAt ;
+    sh:property tp-sh:infra-NetLinearReference-endsAt ;
+    sh:property tp-sh:infra-NetLinearReference-hasSequence ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-NetLinearReference-startsAt
+    a sh:PropertyShape ;
+    sh:path era:startsAt ;
+    sh:name "startsAt" ;
+    sh:description "Definesthe starting point of a linear reference" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-NetPointReferenceShape ;
+    sh:message "startsAt must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-NetLinearReference-endsAt
+    a sh:PropertyShape ;
+    sh:path era:endsAt ;
+    sh:name "endsAt" ;
+    sh:description "Specifies the ending point of a linear reference" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-NetPointReferenceShape ;
+    sh:message "endsAt must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-NetLinearReference-hasSequence
+    a sh:PropertyShape ;
+    sh:path era:hasSequence ;
+    sh:name "hasSequence" ;
+    sh:description "The ordered sequence of topological linear elements which create a linear net reference." ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    sh:message "hasSequence is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:node tp-sh:infra-NetLinearReference-hasSequence-items ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:infra-NetLinearReference-hasSequence-listWellFormed
+    a sh:SPARQLConstraint ;
+    sh:prefixes tp-sh:PrefixDeclarations ;
+    sh:message "era:hasSequence is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:select """
+            SELECT DISTINCT $this
+            WHERE {
+                $this era:hasSequence ?head .
+                ?head rdf:rest* ?cell .
+                FILTER ( ?cell != rdf:nil )
+                { FILTER NOT EXISTS { ?cell rdf:first ?f } }
+                UNION
+                { FILTER NOT EXISTS { ?cell rdf:rest ?r } }
+                UNION
+                { ?cell rdf:first ?f1, ?f2 . FILTER ( ?f1 != ?f2 ) }
+                UNION
+                { ?cell rdf:rest ?r1, ?r2 . FILTER ( ?r1 != ?r2 ) }
+            }
+        """ ;
+    .
+
+tp-sh:infra-NetLinearReference-hasSequence-items
+    a sh:NodeShape ;
+    rdfs:label "Items of the rdf:List carried by era:hasSequence"@en ;
+    sh:property [
+        a sh:PropertyShape ;
+        sh:path ( [ sh:zeroOrMorePath rdf:rest ] rdf:first ) ;
+        sh:nodeKind sh:IRI ;
+        sh:class era:LinearElement ;
+        sh:message "hasSequence must reference an existing era:LinearElement by IRI."@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    .
+
+########################################################################
+#  tp node shapes
+########################################################################
+### ProtectedInfraElement #############################################
+tp-sh:ProtectedInfraElementShape
+    a sh:NodeShape ;
+    sh:targetClass era:ProtectedInfraElement ;
+    sh:name "ProtectedInfraElement" ;
+    sh:description "Defines Protected Infra Element" ;
+    sh:xone (
+        tp-sh:ProtectedInfraElement-switch-present
+        tp-sh:ProtectedInfraElement-slipCrossing-present
+        tp-sh:ProtectedInfraElement-crossing-present
+        tp-sh:ProtectedInfraElement-derailer-present
+        tp-sh:ProtectedInfraElement-levelCrossing-present
+    ) ;
+    sh:message "ProtectedInfraElement is a union: exactly one of (switch, slipCrossing, crossing, derailer, levelCrossing) must be present."@en ;
+    sh:property tp-sh:ProtectedInfraElement-switch ;
+    sh:property tp-sh:ProtectedInfraElement-slipCrossing ;
+    sh:property tp-sh:ProtectedInfraElement-crossing ;
+    sh:property tp-sh:ProtectedInfraElement-derailer ;
+    sh:property tp-sh:ProtectedInfraElement-levelCrossing ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:ProtectedInfraElement-switch
+    a sh:PropertyShape ;
+    sh:path era:switch ;
+    sh:name "switch" ;
+    sh:description "References the infra switch" ;
+    sh:order 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:Switch ;
+    sh:message "switch must reference an existing era:Switch by IRI."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:ProtectedInfraElement-slipCrossing
+    a sh:PropertyShape ;
+    sh:path era:slipCrossing ;
+    sh:name "slipCrossing" ;
+    sh:description "References the infra slip crossing" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:SlipCrossing ;
+    sh:message "slipCrossing must reference an existing era:SlipCrossing by IRI."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:ProtectedInfraElement-crossing
+    a sh:PropertyShape ;
+    sh:path era:crossing ;
+    sh:name "crossing" ;
+    sh:description "References the infra crossing" ;
+    sh:order 3 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:Crossing ;
+    sh:message "crossing must reference an existing era:Crossing by IRI."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:ProtectedInfraElement-derailer
+    a sh:PropertyShape ;
+    sh:path era:derailer ;
+    sh:name "derailer" ;
+    sh:description "References the infra derailer" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:Derailer ;
+    sh:message "derailer must reference an existing era:Derailer by IRI."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:ProtectedInfraElement-levelCrossing
+    a sh:PropertyShape ;
+    sh:path era:levelCrossing ;
+    sh:name "levelCrossing" ;
+    sh:description "References the infra level crossing" ;
+    sh:order 5 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LevelCrossing ;
+    sh:message "levelCrossing must reference an existing era:LevelCrossing by IRI."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:ProtectedInfraElement-switch-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:switch is present"@en ;
+    sh:property tp-sh:ProtectedInfraElement-switch-required ;
+    .
+
+tp-sh:ProtectedInfraElement-switch-required
+    a sh:PropertyShape ;
+    sh:path era:switch ;
+    sh:minCount 1 ;
+    .
+
+tp-sh:ProtectedInfraElement-slipCrossing-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:slipCrossing is present"@en ;
+    sh:property tp-sh:ProtectedInfraElement-slipCrossing-required ;
+    .
+
+tp-sh:ProtectedInfraElement-slipCrossing-required
+    a sh:PropertyShape ;
+    sh:path era:slipCrossing ;
+    sh:minCount 1 ;
+    .
+
+tp-sh:ProtectedInfraElement-crossing-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:crossing is present"@en ;
+    sh:property tp-sh:ProtectedInfraElement-crossing-required ;
+    .
+
+tp-sh:ProtectedInfraElement-crossing-required
+    a sh:PropertyShape ;
+    sh:path era:crossing ;
+    sh:minCount 1 ;
+    .
+
+tp-sh:ProtectedInfraElement-derailer-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:derailer is present"@en ;
+    sh:property tp-sh:ProtectedInfraElement-derailer-required ;
+    .
+
+tp-sh:ProtectedInfraElement-derailer-required
+    a sh:PropertyShape ;
+    sh:path era:derailer ;
+    sh:minCount 1 ;
+    .
+
+tp-sh:ProtectedInfraElement-levelCrossing-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:levelCrossing is present"@en ;
+    sh:property tp-sh:ProtectedInfraElement-levelCrossing-required ;
+    .
+
+tp-sh:ProtectedInfraElement-levelCrossing-required
+    a sh:PropertyShape ;
+    sh:path era:levelCrossing ;
+    sh:minCount 1 ;
+    .
+
+### SwitchableTracksideAsset ##########################################
+tp-sh:SwitchableTracksideAssetShape
+    a sh:NodeShape ;
+    sh:targetClass era:SwitchableTracksideAsset ;
+    sh:name "SwitchableTracksideAsset" ;
+    sh:description "Defines Switchable Trackside Asset" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:SwitchableTracksideAsset-name ;
+    sh:property tp-sh:SwitchableTracksideAsset-switchableTracksideAssetSections ;
+    sh:property tp-sh:SwitchableTracksideAsset-protectedInfraElements ;
+    sh:property tp-sh:SwitchableTracksideAsset-dependenciesType ;
+    sh:property tp-sh:SwitchableTracksideAsset-switchableTracksideAssetsDependencies ;
+    sh:property tp-sh:SwitchableTracksideAsset-runTime ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchableTracksideAsset-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchableTracksideAsset-switchableTracksideAssetSections
+    a sh:PropertyShape ;
+    sh:path era:switchableTracksideAssetSections ;
+    sh:name "Switchable Trackside Asset Section" ;
+    sh:description "Composes of Switchable Trackside Asset Sections" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:SwitchableTracksideAssetSectionShape ;
+    sh:message "switchableTracksideAssetSections must be a well-formed SwitchableTracksideAssetSection (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchableTracksideAsset-protectedInfraElements
+    a sh:PropertyShape ;
+    sh:path era:protectedInfraElements ;
+    sh:name "Protected Infrastructure Elements" ;
+    sh:description "Composes of Protected Infra Element" ;
+    sh:order 4 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:ProtectedInfraElementShape ;
+    sh:message "protectedInfraElements must be a well-formed ProtectedInfraElement (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchableTracksideAsset-dependenciesType
+    a sh:PropertyShape ;
+    sh:path era:dependenciesType ;
+    sh:name "dependenciesType" ;
+    sh:description "defines dependencies between n Switchable Trackside Asset Sections" ;
+    sh:order 5 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/dependency-type/exclusive> <http://data.europa.eu/949/concepts/dependency-type/equivalent> <http://data.europa.eu/949/concepts/dependency-type/specific> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped DependencyType concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchableTracksideAsset-switchableTracksideAssetsDependencies
+    a sh:PropertyShape ;
+    sh:path era:switchableTracksideAssetsDependencies ;
+    sh:name "Switchable Trackside Assets Dependencies" ;
+    sh:description "contains row-wise bit matrix with column = index of the element in DriveProtectionSectionGroup. 0 means not allowed to use ; 1 means allowed to use for rail traffic. Each line in the matrix contains a valid state of the DriveProtectionSectionGroup ; Use only if DPSDependencyType == Specific" ;
+    sh:order 6 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchableTracksideAsset-runTime
+    a sh:PropertyShape ;
+    sh:path era:runTime ;
+    sh:name "runTime" ;
+    sh:description "Defines the total time required for the DPS(s) in a DPS Group to switch from one position to the other" ;
+    sh:order 7 ;
+    qudt:hasUnit unit:SEC ;
+    rdfs:comment "scaling exponent -1 (stored value x 10^-1 = physical value)"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### SwitchableTracksideAssetSection ###################################
+tp-sh:SwitchableTracksideAssetSectionShape
+    a sh:NodeShape ;
+    sh:targetClass era:SwitchableTracksideAssetSection ;
+    sh:name "SwitchableTracksideAssetSection" ;
+    sh:description "Defines Switchable Trackside Asset Section" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:SwitchableTracksideAssetSection-name ;
+    sh:property tp-sh:SwitchableTracksideAssetSection-linearElementSection ;
+    sh:property tp-sh:SwitchableTracksideAssetSection-maxFlankProtectionSpeed ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchableTracksideAssetSection-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchableTracksideAssetSection-linearElementSection
+    a sh:PropertyShape ;
+    sh:path era:linearElementSection ;
+    sh:name "linearElementSection" ;
+    sh:description "Composes of the Linear Element Section" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-LinearElementSectionShape ;
+    sh:message "linearElementSection must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchableTracksideAssetSection-maxFlankProtectionSpeed
+    a sh:PropertyShape ;
+    sh:path era:maxFlankProtectionSpeed ;
+    sh:name "Maximum Flank Protection Speed" ;
+    sh:description "Defines the Maximum Speed Allowed on the Switchable Trackside Asset when it is set for Flank Protection" ;
+    sh:order 4 ;
+    qudt:hasUnit unit:KiloM-PER-HR ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### FoulingSection ####################################################
+tp-sh:FoulingSectionShape
+    a sh:NodeShape ;
+    sh:targetClass era:FoulingSection ;
+    sh:name "FoulingSection" ;
+    sh:description "Defines an fouling section for a section of track" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:sparql tp-sh:FoulingSection-dependencies-irreflexive ;
+    sh:property tp-sh:FoulingSection-name ;
+    sh:property tp-sh:FoulingSection-linearReferences ;
+    sh:property tp-sh:FoulingSection-dependencies ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:FoulingSection-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:FoulingSection-linearReferences
+    a sh:PropertyShape ;
+    sh:path era:linearReferences ;
+    sh:name "linearReferences" ;
+    sh:description "References Linear Element Sections" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-LinearElementSectionShape ;
+    sh:message "linearReferences must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:FoulingSection-dependencies
+    a sh:PropertyShape ;
+    sh:path era:dependencies ;
+    sh:name "dependencies" ;
+    sh:description "is dependent on the fouling sections" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:FoulingSection ;
+    sh:message "dependencies must reference an existing era:FoulingSection by IRI."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:FoulingSection-dependencies-irreflexive
+    a sh:SPARQLConstraint ;
+    sh:prefixes tp-sh:PrefixDeclarations ;
+    sh:message "era:dependencies is an owl:IrreflexiveProperty: a FoulingSection must not point at itself."@en ;
+    sh:select """
+            SELECT $this
+            WHERE { $this era:dependencies $this }
+        """ ;
+    .
+
+### ControlledInfraElement ############################################
+tp-sh:ControlledInfraElementShape
+    a sh:NodeShape ;
+    sh:targetClass era:ControlledInfraElement ;
+    sh:name "ControlledInfraElement" ;
+    sh:description "Defines Controlled Infra Element" ;
+    sh:xone (
+        tp-sh:ControlledInfraElement-switchConfigurationData-present
+        tp-sh:ControlledInfraElement-tvpSection-present
+        tp-sh:ControlledInfraElement-trainDetector-present
+        tp-sh:ControlledInfraElement-levelCrossing-present
+    ) ;
+    sh:message "ControlledInfraElement is a union: exactly one of (switchConfigurationData, tvpSection, trainDetector, levelCrossing) must be present."@en ;
+    sh:property tp-sh:ControlledInfraElement-switchConfigurationData ;
+    sh:property tp-sh:ControlledInfraElement-tvpSection ;
+    sh:property tp-sh:ControlledInfraElement-trainDetector ;
+    sh:property tp-sh:ControlledInfraElement-levelCrossing ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:ControlledInfraElement-switchConfigurationData
+    a sh:PropertyShape ;
+    sh:path era:switchConfigurationData ;
+    sh:name "switchConfigurationData" ;
+    sh:description "Reference to the Configuration for the Switch" ;
+    sh:order 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:SwitchConfigurationData ;
+    sh:message "switchConfigurationData must reference an existing era:SwitchConfigurationData by IRI."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:ControlledInfraElement-tvpSection
+    a sh:PropertyShape ;
+    sh:path era:tvpSection ;
+    sh:name "tvpSection" ;
+    sh:description "Reference to the Configuration for the Tvp Section" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:TvpSectionConfigurationData ;
+    sh:message "tvpSection must reference an existing era:TvpSectionConfigurationData by IRI."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:ControlledInfraElement-trainDetector
+    a sh:PropertyShape ;
+    sh:path era:trainDetector ;
+    sh:name "trainDetector" ;
+    sh:description "Reference to the Configuration for the Train Detection System" ;
+    sh:order 3 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:TrainDetectionSystemConfigurationData ;
+    sh:message "trainDetector must reference an existing era:TrainDetectionSystemConfigurationData by IRI."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:ControlledInfraElement-levelCrossing
+    a sh:PropertyShape ;
+    sh:path era:levelCrossing ;
+    sh:name "levelCrossing" ;
+    sh:description "Reference to the Configuration for the Level Crossing" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LxConfigurationData ;
+    sh:message "levelCrossing must reference an existing era:LxConfigurationData by IRI."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:ControlledInfraElement-switchConfigurationData-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:switchConfigurationData is present"@en ;
+    sh:property tp-sh:ControlledInfraElement-switchConfigurationData-required ;
+    .
+
+tp-sh:ControlledInfraElement-switchConfigurationData-required
+    a sh:PropertyShape ;
+    sh:path era:switchConfigurationData ;
+    sh:minCount 1 ;
+    .
+
+tp-sh:ControlledInfraElement-tvpSection-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:tvpSection is present"@en ;
+    sh:property tp-sh:ControlledInfraElement-tvpSection-required ;
+    .
+
+tp-sh:ControlledInfraElement-tvpSection-required
+    a sh:PropertyShape ;
+    sh:path era:tvpSection ;
+    sh:minCount 1 ;
+    .
+
+tp-sh:ControlledInfraElement-trainDetector-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:trainDetector is present"@en ;
+    sh:property tp-sh:ControlledInfraElement-trainDetector-required ;
+    .
+
+tp-sh:ControlledInfraElement-trainDetector-required
+    a sh:PropertyShape ;
+    sh:path era:trainDetector ;
+    sh:minCount 1 ;
+    .
+
+tp-sh:ControlledInfraElement-levelCrossing-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:levelCrossing is present"@en ;
+    sh:property tp-sh:ControlledInfraElement-levelCrossing-required ;
+    .
+
+tp-sh:ControlledInfraElement-levelCrossing-required
+    a sh:PropertyShape ;
+    sh:path era:levelCrossing ;
+    sh:minCount 1 ;
+    .
+
+### FieldObjectController #############################################
+tp-sh:FieldObjectControllerShape
+    a sh:NodeShape ;
+    sh:targetClass era:FieldObjectController ;
+    sh:name "FieldObjectController" ;
+    sh:description "Defines a Field Object Controller" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:FieldObjectController-controlledInfraElements ;
+    sh:property tp-sh:FieldObjectController-belongsToAoc ;
+    sh:property tp-sh:FieldObjectController-controlledBy ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:FieldObjectController-controlledInfraElements
+    a sh:PropertyShape ;
+    sh:path era:controlledInfraElements ;
+    sh:name "controlledInfraElements" ;
+    sh:description "Reference to the controller infrastructure elements" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:ControlledInfraElementShape ;
+    sh:message "controlledInfraElements must be a well-formed ControlledInfraElement (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:FieldObjectController-belongsToAoc
+    a sh:PropertyShape ;
+    sh:path era:belongsToAoc ;
+    sh:name "belongsToAoc" ;
+    sh:description "defines the Area of Control to which this field object controller belongs to" ;
+    sh:order 3 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:AreaOfControl ;
+    sh:message "belongsToAoc must reference an existing era:AreaOfControl by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:FieldObjectController-controlledBy
+    a sh:PropertyShape ;
+    sh:path era:controlledBy ;
+    sh:name "controlledBy" ;
+    sh:description "composes of controller controlling the Field Object Controller" ;
+    sh:order 4 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:ControllerShape ;
+    sh:message "controlledBy must be a well-formed Controller (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### SwitchConfigurationData ###########################################
+tp-sh:SwitchConfigurationDataShape
+    a sh:NodeShape ;
+    sh:targetClass era:SwitchConfigurationData ;
+    sh:name "SwitchConfigurationData" ;
+    sh:description "Defines Configuration Data for Switch" ;
+    sh:property tp-sh:SwitchConfigurationData-switch ;
+    sh:property tp-sh:SwitchConfigurationData-conTmaxPointOperation ;
+    sh:property tp-sh:SwitchConfigurationData-numberPointMachine ;
+    sh:property tp-sh:SwitchConfigurationData-unintended ;
+    sh:property tp-sh:SwitchConfigurationData-redrive ;
+    sh:property tp-sh:SwitchConfigurationData-switchMachineConfiguration ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchConfigurationData-switch
+    a sh:PropertyShape ;
+    sh:path era:switch ;
+    sh:name "switch" ;
+    sh:description "Composes of infra Switch" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-SwitchShape ;
+    sh:message "switch must be a well-formed Switch (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchConfigurationData-conTmaxPointOperation
+    a sh:PropertyShape ;
+    sh:path era:conTmaxPointOperation ;
+    sh:name "Maximum Point Operation Time" ;
+    sh:description "Con_tmax_Point_Operation is a configurable timer, starting with the command Moving to the Point machines and defines the max. time span after the Point has to arrive to an End position" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchConfigurationData-numberPointMachine
+    a sh:PropertyShape ;
+    sh:path era:numberPointMachine ;
+    sh:name "numberPointMachine" ;
+    sh:description "Defines the number of point machines" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchConfigurationData-unintended
+    a sh:PropertyShape ;
+    sh:path era:unintended ;
+    sh:name "unintended" ;
+    sh:description "Defines weather it candetect and report unintended position" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchConfigurationData-redrive
+    a sh:PropertyShape ;
+    sh:path era:redrive ;
+    sh:name "redrive" ;
+    sh:description "Defineswhether it is configured to perform redrive" ;
+    sh:order 5 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchConfigurationData-switchMachineConfiguration
+    a sh:PropertyShape ;
+    sh:path era:switchMachineConfiguration ;
+    sh:name "switch Machine Configuration" ;
+    sh:description "Composes the Configuration for the Switch machine" ;
+    sh:order 6 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:SwitchMachineConfigurationShape ;
+    sh:message "switchMachineConfiguration must be a well-formed SwitchMachineConfiguration (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### SwitchMachineConfiguration ########################################
+tp-sh:SwitchMachineConfigurationShape
+    a sh:NodeShape ;
+    sh:targetClass era:SwitchMachineConfiguration ;
+    sh:name "SwitchMachineConfiguration" ;
+    sh:description "Defines Configuration Data for Switch Machine" ;
+    sh:property tp-sh:SwitchMachineConfiguration-switchMachineType ;
+    sh:property tp-sh:SwitchMachineConfiguration-interfaceType ;
+    sh:property tp-sh:SwitchMachineConfiguration-crucial ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchMachineConfiguration-switchMachineType
+    a sh:PropertyShape ;
+    sh:path era:switchMachineType ;
+    sh:name "switchMachineType" ;
+    sh:description "Defines the type of switch machine" ;
+    sh:order 1 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchMachineConfiguration-interfaceType
+    a sh:PropertyShape ;
+    sh:path era:interfaceType ;
+    sh:name "interfaceType" ;
+    sh:description "Defines the type of interface for the switch machine" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:SwitchMachineConfiguration-crucial
+    a sh:PropertyShape ;
+    sh:path era:crucial ;
+    sh:name "crucial" ;
+    sh:description "Defines for whether it is crucial or non-crucial" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### LxConfigurationData ###############################################
+tp-sh:LxConfigurationDataShape
+    a sh:NodeShape ;
+    sh:targetClass era:LxConfigurationData ;
+    sh:name "LxConfigurationData" ;
+    sh:description "Defines Configuration Data for Level Crossing" ;
+    sh:property tp-sh:LxConfigurationData-levelCrossing ;
+    sh:property tp-sh:LxConfigurationData-conTmaxClosureTimer ;
+    sh:property tp-sh:LxConfigurationData-conTPdiLossDeactivationTimer ;
+    sh:property tp-sh:LxConfigurationData-closureTimeUsed ;
+    sh:property tp-sh:LxConfigurationData-preActivation ;
+    sh:property tp-sh:LxConfigurationData-detectionElementUsed ;
+    sh:property tp-sh:LxConfigurationData-detectionElementsNumber ;
+    sh:property tp-sh:LxConfigurationData-indexDetectionElemtents ;
+    sh:property tp-sh:LxConfigurationData-obstacleDetectionUsed ;
+    sh:property tp-sh:LxConfigurationData-lcIsolationFunctionUsed ;
+    sh:property tp-sh:LxConfigurationData-localOperationHandover ;
+    sh:property tp-sh:LxConfigurationData-indexLocalOperationsHandovers ;
+    sh:property tp-sh:LxConfigurationData-triggersCriticalFailure ;
+    sh:property tp-sh:LxConfigurationData-triggersNonCriticalFailure ;
+    sh:property tp-sh:LxConfigurationData-localDeactivationRequests ;
+    sh:property tp-sh:LxConfigurationData-indexLocalDeactivationRequests ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-levelCrossing
+    a sh:PropertyShape ;
+    sh:path era:levelCrossing ;
+    sh:name "levelCrossing" ;
+    sh:description "Composes of infra level crossing" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-LevelCrossingShape ;
+    sh:message "levelCrossing must be a well-formed LevelCrossing (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-conTmaxClosureTimer
+    a sh:PropertyShape ;
+    sh:path era:conTmaxClosureTimer ;
+    sh:name "Maximum Closure Timer" ;
+    sh:description "Defines the permissible duration for the activation of the level crossing. The time value is configurable and specific to a particular location." ;
+    sh:order 2 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-conTPdiLossDeactivationTimer
+    a sh:PropertyShape ;
+    sh:path era:conTPdiLossDeactivationTimer ;
+    sh:name "PDI Loss Deactivation Timer" ;
+    sh:description "Defines the delay to deactivate the Level Crossing protection facility after an activation caused by an interrupted Safe communication protocol connection.The time value is configurable and specific to a particular location." ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-closureTimeUsed
+    a sh:PropertyShape ;
+    sh:path era:closureTimeUsed ;
+    sh:name "Use Closure Time" ;
+    sh:description "Defines theusage of the Closure Time" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-preActivation
+    a sh:PropertyShape ;
+    sh:path era:preActivation ;
+    sh:name "preActivation" ;
+    sh:description "Definesthe usage of the activation type Pre-Activation." ;
+    sh:order 5 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-detectionElementUsed
+    a sh:PropertyShape ;
+    sh:path era:detectionElementUsed ;
+    sh:name "Used Detection Elements" ;
+    sh:description "Defines the usage of Detection elements" ;
+    sh:order 6 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-detectionElementsNumber
+    a sh:PropertyShape ;
+    sh:path era:detectionElementsNumber ;
+    sh:name "Number of Detection Elements" ;
+    sh:description "Defines the number of detection elements used" ;
+    sh:order 7 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-indexDetectionElemtents
+    a sh:PropertyShape ;
+    sh:path era:indexDetectionElemtents ;
+    sh:name "Index of Detection Elements" ;
+    sh:description "Defines the index of the detection elements" ;
+    sh:order 8 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-obstacleDetectionUsed
+    a sh:PropertyShape ;
+    sh:path era:obstacleDetectionUsed ;
+    sh:name "Used Obstacle Detection" ;
+    sh:description "Defines the usage of obstacle detection" ;
+    sh:order 9 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-lcIsolationFunctionUsed
+    a sh:PropertyShape ;
+    sh:path era:lcIsolationFunctionUsed ;
+    sh:name "Used Level Crossing Isolation Function" ;
+    sh:description "Defines the isolation function used" ;
+    sh:order 10 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-localOperationHandover
+    a sh:PropertyShape ;
+    sh:path era:localOperationHandover ;
+    sh:name "localOperationHandover" ;
+    sh:description "Presence of local operation handover" ;
+    sh:order 11 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-indexLocalOperationsHandovers
+    a sh:PropertyShape ;
+    sh:path era:indexLocalOperationsHandovers ;
+    sh:name "indexLocalOperationsHandovers" ;
+    sh:description "Index of local operations handovers" ;
+    sh:order 12 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-triggersCriticalFailure
+    a sh:PropertyShape ;
+    sh:path era:triggersCriticalFailure ;
+    sh:name "triggersCriticalFailure" ;
+    sh:description "List of triggers resulting in a critical failure" ;
+    sh:order 13 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-triggersNonCriticalFailure
+    a sh:PropertyShape ;
+    sh:path era:triggersNonCriticalFailure ;
+    sh:name "triggersNonCriticalFailure" ;
+    sh:description "List of triggers resulting in a non-critical failure." ;
+    sh:order 14 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-localDeactivationRequests
+    a sh:PropertyShape ;
+    sh:path era:localDeactivationRequests ;
+    sh:name "localDeactivationRequests" ;
+    sh:description "Presence of local (de)activation requests" ;
+    sh:order 15 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:LxConfigurationData-indexLocalDeactivationRequests
+    a sh:PropertyShape ;
+    sh:path era:indexLocalDeactivationRequests ;
+    sh:name "indexLocalDeactivationRequests" ;
+    sh:description "Index of local (de)activation requests." ;
+    sh:order 16 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:severity sh:Violation ;
+    .
+
+### TrainDetectionSystemConfigurationData #############################
+tp-sh:TrainDetectionSystemConfigurationDataShape
+    a sh:NodeShape ;
+    sh:targetClass era:TrainDetectionSystemConfigurationData ;
+    sh:name "TrainDetectionSystemConfigurationData" ;
+    sh:description "Defines Configuration Data for Train Detection System" ;
+    sh:property tp-sh:TrainDetectionSystemConfigurationData-abilityToForceTvpsClear ;
+    sh:property tp-sh:TrainDetectionSystemConfigurationData-tvpSectionConfigurationData ;
+    sh:property tp-sh:TrainDetectionSystemConfigurationData-trainDetectorConfigurationData ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TrainDetectionSystemConfigurationData-abilityToForceTvpsClear
+    a sh:PropertyShape ;
+    sh:path era:abilityToForceTvpsClear ;
+    sh:name "abilityToForceTvpsClear" ;
+    sh:description "The handling of the ability to force a TVPS to clear in the state disturbed, reason operational according to Variant A and B.Note: The functional differences between these variants is explained in section Eu.TDS.6525" ;
+    sh:order 1 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TrainDetectionSystemConfigurationData-tvpSectionConfigurationData
+    a sh:PropertyShape ;
+    sh:path era:tvpSectionConfigurationData ;
+    sh:name "tvpSectionConfigurationData" ;
+    sh:description "Composes Tvp Section Configuration Data" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:TvpSectionConfigurationDataShape ;
+    sh:message "tvpSectionConfigurationData must be a well-formed TvpSectionConfigurationData (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TrainDetectionSystemConfigurationData-trainDetectorConfigurationData
+    a sh:PropertyShape ;
+    sh:path era:trainDetectorConfigurationData ;
+    sh:name "trainDetectorConfigurationData" ;
+    sh:description "Composes train detector Configuration Data" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:TrainDetectorConfigurationDataShape ;
+    sh:message "trainDetectorConfigurationData must be a well-formed TrainDetectorConfigurationData (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+### TrainDetectorConfigurationData ####################################
+tp-sh:TrainDetectorConfigurationDataShape
+    a sh:NodeShape ;
+    sh:targetClass era:TrainDetectorConfigurationData ;
+    sh:name "TrainDetectorConfigurationData" ;
+    sh:description "Defines Configuration Data for Train Detector" ;
+    sh:property tp-sh:TrainDetectorConfigurationData-trainDetector ;
+    sh:property tp-sh:TrainDetectorConfigurationData-directionOfPassing ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TrainDetectorConfigurationData-trainDetector
+    a sh:PropertyShape ;
+    sh:path era:trainDetector ;
+    sh:name "trainDetector" ;
+    sh:description "Composes of infra train detection system" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-TrainDetectionSystemShape ;
+    sh:message "trainDetector must be a well-formed TrainDetectionSystem (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TrainDetectorConfigurationData-directionOfPassing
+    a sh:PropertyShape ;
+    sh:path era:directionOfPassing ;
+    sh:name "directionOfPassing" ;
+    sh:description "Defines the passing direction of the train with respect to the train detector." ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### TvpSectionConfigurationData #######################################
+tp-sh:TvpSectionConfigurationDataShape
+    a sh:NodeShape ;
+    sh:targetClass era:TvpSectionConfigurationData ;
+    sh:name "TvpSectionConfigurationData" ;
+    sh:description "Defines Configuration Data for TVP Section" ;
+    sh:property tp-sh:TvpSectionConfigurationData-tvpSection ;
+    sh:property tp-sh:TvpSectionConfigurationData-drfcCommandUsed ;
+    sh:property tp-sh:TvpSectionConfigurationData-uflCommandUsed ;
+    sh:property tp-sh:TvpSectionConfigurationData-permissibleFcModes ;
+    sh:property tp-sh:TvpSectionConfigurationData-conTInhibitionTimer ;
+    sh:property tp-sh:TvpSectionConfigurationData-conTDealyOfNotificationOfAvailability ;
+    sh:property tp-sh:TvpSectionConfigurationData-conTMaxfcPOrFcPA ;
+    sh:property tp-sh:TvpSectionConfigurationData-conTMinfcPOrFcPA ;
+    sh:property tp-sh:TvpSectionConfigurationData-conTTdpDelay ;
+    sh:property tp-sh:TvpSectionConfigurationData-conTTdpUnidentifiedPatternDelay ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TvpSectionConfigurationData-tvpSection
+    a sh:PropertyShape ;
+    sh:path era:tvpSection ;
+    sh:name "tvpSection" ;
+    sh:description "Composes of infra tvp section" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-TvpSectionShape ;
+    sh:message "tvpSection must be a well-formed TvpSection (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TvpSectionConfigurationData-drfcCommandUsed
+    a sh:PropertyShape ;
+    sh:path era:drfcCommandUsed ;
+    sh:name "Used Disable restriction to force section commands" ;
+    sh:description "Usage of the DRFC-command per each TVPS and per source of the command (Electronic Interlocking or Maintainer)." ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TvpSectionConfigurationData-uflCommandUsed
+    a sh:PropertyShape ;
+    sh:path era:uflCommandUsed ;
+    sh:name "Used Update Filling Level Commands" ;
+    sh:description "Usage of the UFL-command per each TVPS." ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TvpSectionConfigurationData-permissibleFcModes
+    a sh:PropertyShape ;
+    sh:path era:permissibleFcModes ;
+    sh:name "Permissible Force Section modes" ;
+    sh:description "Permissible FC-modes per each TVPS and per source of the command (Electronic Interlocking, Maintainer or from internal)." ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TvpSectionConfigurationData-conTInhibitionTimer
+    a sh:PropertyShape ;
+    sh:path era:conTInhibitionTimer ;
+    sh:name "Inhibition Timer" ;
+    sh:description "Configurable delay, defining the duration between the detection of a passing for a TVPS (incoming wheel, outgoing wheel or undefined pattern) and the moment that the state of a TVPS is considered stable. Cd_Cancel is not rejected during inhibition time. Until expiration of this delay, all FC, DRFC and UFL commands to the TVPS are rejected." ;
+    sh:order 5 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TvpSectionConfigurationData-conTDealyOfNotificationOfAvailability
+    a sh:PropertyShape ;
+    sh:path era:conTDealyOfNotificationOfAvailability ;
+    sh:name "Delay of Availability Notification" ;
+    sh:description "Defines a configurable delay of reporting vacant from the Train Detection System to the interlocking, following the state change of a TVPS from occupied to vacant" ;
+    sh:order 6 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TvpSectionConfigurationData-conTMaxfcPOrFcPA
+    a sh:PropertyShape ;
+    sh:path era:conTMaxfcPOrFcPA ;
+    sh:name "Max Configurable time" ;
+    sh:description "Configurable time, defining the maximum time between detecting a sweeping train and confirmation of a succesful sweeping." ;
+    sh:order 7 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TvpSectionConfigurationData-conTMinfcPOrFcPA
+    a sh:PropertyShape ;
+    sh:path era:conTMinfcPOrFcPA ;
+    sh:name "Min Configurable Time" ;
+    sh:description "a configurable time, which starts with the first detected incomming Wheel." ;
+    sh:order 8 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TvpSectionConfigurationData-conTTdpDelay
+    a sh:PropertyShape ;
+    sh:path era:conTTdpDelay ;
+    sh:name "Passed TDP Indication Delay" ;
+    sh:description "configurable delay, defining the duration of a passed TDP and the message, that the TDP is in state TDP not passed." ;
+    sh:order 9 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TvpSectionConfigurationData-conTTdpUnidentifiedPatternDelay
+    a sh:PropertyShape ;
+    sh:path era:conTTdpUnidentifiedPatternDelay ;
+    sh:name "Undefined Pattern Delay" ;
+    sh:description "Configurable delay, defining the duration after an undefined pattern was detected till the TDP is reported as Disturbed." ;
+    sh:order 10 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### GenericIOConfigurationData ########################################
+tp-sh:GenericIOConfigurationDataShape
+    a sh:NodeShape ;
+    sh:targetClass era:GenericIOConfigurationData ;
+    sh:name "GenericIOConfigurationData" ;
+    sh:description "Defines the Configuration Data for Generic IO" ;
+    sh:property tp-sh:GenericIOConfigurationData-conTFlashPeriod ;
+    sh:property tp-sh:GenericIOConfigurationData-outputChannelConfigurationData ;
+    sh:property tp-sh:GenericIOConfigurationData-inputChannelConfigurationData ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:GenericIOConfigurationData-conTFlashPeriod
+    a sh:PropertyShape ;
+    sh:path era:conTFlashPeriod ;
+    sh:name "Flash Period Time" ;
+    sh:description "Defines the Configurable time for flash period" ;
+    sh:order 1 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:GenericIOConfigurationData-outputChannelConfigurationData
+    a sh:PropertyShape ;
+    sh:path era:outputChannelConfigurationData ;
+    sh:name "outputChannelConfigurationData" ;
+    sh:description "Composes output channel configuration data" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:OutputChannelConfigurationDataShape ;
+    sh:message "outputChannelConfigurationData must be a well-formed OutputChannelConfigurationData (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:GenericIOConfigurationData-inputChannelConfigurationData
+    a sh:PropertyShape ;
+    sh:path era:inputChannelConfigurationData ;
+    sh:name "inputChannelConfigurationData" ;
+    sh:description "Composes input channel configuration data" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:InputChannelConfigurationDataShape ;
+    sh:message "inputChannelConfigurationData must be a well-formed InputChannelConfigurationData (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+### OutputChannelConfigurationData ####################################
+tp-sh:OutputChannelConfigurationDataShape
+    a sh:NodeShape ;
+    sh:targetClass era:OutputChannelConfigurationData ;
+    sh:name "OutputChannelConfigurationData" ;
+    sh:description "Defines the Configuration of the Output Channel" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:OutputChannelConfigurationData-type ;
+    sh:property tp-sh:OutputChannelConfigurationData-physicalOutputMonitored ;
+    sh:property tp-sh:OutputChannelConfigurationData-flashing ;
+    sh:property tp-sh:OutputChannelConfigurationData-conTActivationDelayOn ;
+    sh:property tp-sh:OutputChannelConfigurationData-conTActivationDelayOff ;
+    sh:property tp-sh:OutputChannelConfigurationData-conTFlashDutyCycle ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:OutputChannelConfigurationData-type
+    a sh:PropertyShape ;
+    sh:path era:type ;
+    sh:name "type" ;
+    sh:description "Defines the type of output channel configuration data" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:OutputChannelConfigurationData-physicalOutputMonitored
+    a sh:PropertyShape ;
+    sh:path era:physicalOutputMonitored ;
+    sh:name "physicalOutputMonitored" ;
+    sh:description "Defines weather physical output is monitored" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:OutputChannelConfigurationData-flashing
+    a sh:PropertyShape ;
+    sh:path era:flashing ;
+    sh:name "flashing" ;
+    sh:description "Defines weather it is flashing" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:OutputChannelConfigurationData-conTActivationDelayOn
+    a sh:PropertyShape ;
+    sh:path era:conTActivationDelayOn ;
+    sh:name "Activation Delay Time" ;
+    sh:description "The activation delay period Con_t_Activation_Delay shall be configurable for each Output Channel, both, for switching-on and switching-off, for special applications" ;
+    sh:order 5 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:OutputChannelConfigurationData-conTActivationDelayOff
+    a sh:PropertyShape ;
+    sh:path era:conTActivationDelayOff ;
+    sh:name "Activation Delay Off Time" ;
+    sh:description "represents the time value for conTActivationDelay. This is the delay for switching-off the Output Channel." ;
+    sh:order 6 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:OutputChannelConfigurationData-conTFlashDutyCycle
+    a sh:PropertyShape ;
+    sh:path era:conTFlashDutyCycle ;
+    sh:name "Flash Duty Cycle Time" ;
+    sh:description "Defines the Configurable flash duty cycle period" ;
+    sh:order 7 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### InputChannelConfigurationData #####################################
+tp-sh:InputChannelConfigurationDataShape
+    a sh:NodeShape ;
+    sh:targetClass era:InputChannelConfigurationData ;
+    sh:name "InputChannelConfigurationData" ;
+    sh:description "Defines the Configuration Data for the Input Channel" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:InputChannelConfigurationData-type ;
+    sh:property tp-sh:InputChannelConfigurationData-physicalOutputMonitored ;
+    sh:property tp-sh:InputChannelConfigurationData-conTMessageDelayTime ;
+    sh:property tp-sh:InputChannelConfigurationData-conTMaxSwitchingPeriod ;
+    sh:property tp-sh:InputChannelConfigurationData-debouncingTime ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:InputChannelConfigurationData-type
+    a sh:PropertyShape ;
+    sh:path era:type ;
+    sh:name "type" ;
+    sh:description "Defines the type of input channel configuration data" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:InputChannelConfigurationData-physicalOutputMonitored
+    a sh:PropertyShape ;
+    sh:path era:physicalOutputMonitored ;
+    sh:name "physicalOutputMonitored" ;
+    sh:description "Defines weather physical output is monitored" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:InputChannelConfigurationData-conTMessageDelayTime
+    a sh:PropertyShape ;
+    sh:path era:conTMessageDelayTime ;
+    sh:name "Message Delay Time" ;
+    sh:description "The Message delay time Con_t_Message_Delay_Time shall be configurable for each Input Channel, both, for report of switching-on and switching-off, for special applications." ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:InputChannelConfigurationData-conTMaxSwitchingPeriod
+    a sh:PropertyShape ;
+    sh:path era:conTMaxSwitchingPeriod ;
+    sh:name "Max Switching Period Time" ;
+    sh:description "Con_tmax_Switching_Period is a period, which needs to be configured individually for each Input Channel, which is monitored Antivalent or Equivalent" ;
+    sh:order 5 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:InputChannelConfigurationData-debouncingTime
+    a sh:PropertyShape ;
+    sh:path era:debouncingTime ;
+    sh:name "Debouncing Time" ;
+    sh:description "Debouncing_Time needs to be configured and followed individually for each action of both, switching-on and switching-off, of an Input Channel" ;
+    sh:order 6 ;
+    qudt:hasUnit unit:SEC ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### AreaOfControl #####################################################
+tp-sh:AreaOfControlShape
+    a sh:NodeShape ;
+    sh:targetClass era:AreaOfControl ;
+    sh:name "AreaOfControl" ;
+    sh:description "Defines the Area of Control of a system like Traffic CS, MBS/APS, TMS, PE/EAL, ...." ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:AreaOfControl-name ;
+    sh:property tp-sh:AreaOfControl-area ;
+    sh:property tp-sh:AreaOfControl-controlledBy ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:AreaOfControl-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:AreaOfControl-area
+    a sh:PropertyShape ;
+    sh:path era:area ;
+    sh:name "area" ;
+    sh:description "composes of linked area" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:infra-NetAreaReferenceShape ;
+    sh:message "area must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:AreaOfControl-controlledBy
+    a sh:PropertyShape ;
+    sh:path era:controlledBy ;
+    sh:name "controlledBy" ;
+    sh:description "composes of controller controlling the Area of Control" ;
+    sh:order 4 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:ControllerShape ;
+    sh:message "controlledBy must be a well-formed Controller (blank node or IRI)."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### Controller ########################################################
+tp-sh:ControllerShape
+    a sh:NodeShape ;
+    sh:targetClass era:Controller ;
+    sh:name "Controller" ;
+    sh:description "Defines a controller" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:Controller-iPAddress ;
+    sh:property tp-sh:Controller-rastaId ;
+    sh:property tp-sh:Controller-portNumber ;
+    sh:property tp-sh:Controller-eulynxBaseline ;
+    sh:property tp-sh:Controller-ocVersion ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:Controller-iPAddress
+    a sh:PropertyShape ;
+    sh:path era:iPAddress ;
+    sh:name "IP Address" ;
+    sh:description "defines the ip address for communication purposes" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:Controller-rastaId
+    a sh:PropertyShape ;
+    sh:path era:rastaId ;
+    sh:name "RASTA-ID" ;
+    sh:description "defines EULYNX RaSTA identifier for the field object controller" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:Controller-portNumber
+    a sh:PropertyShape ;
+    sh:path era:portNumber ;
+    sh:name "Port Number" ;
+    sh:description "defines the port number for communication purposes" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:Controller-eulynxBaseline
+    a sh:PropertyShape ;
+    sh:path era:eulynxBaseline ;
+    sh:name "EULYNX Baseline" ;
+    sh:description "defines EULYNX baseline for the filed object controller" ;
+    sh:order 5 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:Controller-ocVersion
+    a sh:PropertyShape ;
+    sh:path era:ocVersion ;
+    sh:name "Object-Controller Version" ;
+    sh:description "defines the EULYNX field object controller version" ;
+    sh:order 6 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### ETCSMarker ########################################################
+tp-sh:ETCSMarkerShape
+    a sh:NodeShape ;
+    sh:targetClass era:ETCSMarker ;
+    sh:name "ETCSMarker" ;
+    sh:description "Defines the ETCS Marker Boards" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:ETCSMarker-markerType ;
+    sh:property tp-sh:ETCSMarker-acknowledgementDistance ;
+    sh:property tp-sh:ETCSMarker-maxTransitionSpeed ;
+    sh:property tp-sh:ETCSMarker-offsetTransitionUnreachable ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:ETCSMarker-markerType
+    a sh:PropertyShape ;
+    sh:path era:markerType ;
+    sh:name "markerType" ;
+    sh:description "Defines the type of marker board associated" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/marker-function/exit> <http://data.europa.eu/949/concepts/marker-function/entry> <http://data.europa.eu/949/concepts/marker-function/intermediate> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped MarkerFunction concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:ETCSMarker-acknowledgementDistance
+    a sh:PropertyShape ;
+    sh:path era:acknowledgementDistance ;
+    sh:name "acknowledgementDistance" ;
+    sh:description "Defines the distance at which the driver should acknowledge a visual/audio indication on the DMI" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:ETCSMarker-maxTransitionSpeed
+    a sh:PropertyShape ;
+    sh:path era:maxTransitionSpeed ;
+    sh:name "Maximum Transition Speed" ;
+    sh:description "Defines the maximum allowed speed during transition" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:ETCSMarker-offsetTransitionUnreachable
+    a sh:PropertyShape ;
+    sh:path era:offsetTransitionUnreachable ;
+    sh:name "offsetTransitionUnreachable" ;
+    sh:description "Definesa distance from LRBG that indicates the point beyond which a transition becomes unreachable." ;
+    sh:order 5 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:severity sh:Violation ;
+    .
+
+### TrainProtectionArea ###############################################
+tp-sh:TrainProtectionAreaShape
+    a sh:NodeShape ;
+    sh:targetClass era:TrainProtectionArea ;
+    sh:name "TrainProtectionArea" ;
+    sh:description "Defines Train Protection Area" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property tp-sh:TrainProtectionArea-topoArea ;
+    sh:property tp-sh:TrainProtectionArea-switchableTracksideAssets ;
+    sh:property tp-sh:TrainProtectionArea-allocationSections ;
+    sh:property tp-sh:TrainProtectionArea-fieldObjectControllers ;
+    sh:property tp-sh:TrainProtectionArea-areaOfControl ;
+    sh:property tp-sh:TrainProtectionArea-etcsMarkers ;
+    sh:property tp-sh:TrainProtectionArea-controllers ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TrainProtectionArea-topoArea
+    a sh:PropertyShape ;
+    sh:path era:topoArea ;
+    sh:name "topoArea" ;
+    sh:description "reference to the corresponding TopoArea" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:TopoArea ;
+    sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TrainProtectionArea-switchableTracksideAssets
+    a sh:PropertyShape ;
+    sh:path era:switchableTracksideAssets ;
+    sh:name "switchableTracksideAssets" ;
+    sh:description "Defines the switchable trackside assets belonging to the Train Protection Area." ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:SwitchableTracksideAssetShape ;
+    sh:message "switchableTracksideAssets must be a well-formed SwitchableTracksideAsset (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TrainProtectionArea-allocationSections
+    a sh:PropertyShape ;
+    sh:path era:allocationSections ;
+    sh:name "allocationSections" ;
+    sh:description "Defines the fouling sections associated with the Train Protection Area." ;
+    sh:order 4 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:FoulingSectionShape ;
+    sh:message "allocationSections must be a well-formed FoulingSection (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TrainProtectionArea-fieldObjectControllers
+    a sh:PropertyShape ;
+    sh:path era:fieldObjectControllers ;
+    sh:name "fieldObjectControllers" ;
+    sh:description "Defines the field object controllers associated with the Train Protection Area." ;
+    sh:order 5 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:FieldObjectControllerShape ;
+    sh:message "fieldObjectControllers must be a well-formed FieldObjectController (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TrainProtectionArea-areaOfControl
+    a sh:PropertyShape ;
+    sh:path era:areaOfControl ;
+    sh:name "areaOfControl" ;
+    sh:description "Defines the areas of control belonging to the Train Protection Area." ;
+    sh:order 6 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:AreaOfControlShape ;
+    sh:message "areaOfControl must be a well-formed AreaOfControl (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TrainProtectionArea-etcsMarkers
+    a sh:PropertyShape ;
+    sh:path era:etcsMarkers ;
+    sh:name "etcsMarkers" ;
+    sh:description "Defines the ETCS markers located within the Train Protection Area." ;
+    sh:order 7 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:ETCSMarkerShape ;
+    sh:message "etcsMarkers must be a well-formed ETCSMarker (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TrainProtectionArea-controllers
+    a sh:PropertyShape ;
+    sh:path era:controllers ;
+    sh:name "controllers" ;
+    sh:description "Defines the controllers associated with the Train Protection Area." ;
+    sh:order 8 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:ControllerShape ;
+    sh:message "controllers must be a well-formed Controller (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+### TrainProtection ###################################################
+tp-sh:TrainProtectionShape
+    a sh:NodeShape ;
+    sh:targetClass era:TrainProtection ;
+    sh:name "TrainProtection" ;
+    sh:description "Defines the container for all Train Protection Areas within a railway infrastructure system." ;
+    sh:property tp-sh:TrainProtection-tpArea ;
+    sh:severity sh:Violation ;
+    .
+
+tp-sh:TrainProtection-tpArea
+    a sh:PropertyShape ;
+    sh:path era:tpArea ;
+    sh:name "tpArea" ;
+    sh:description "Defines the collection of Train Protection Areas belonging to the railway infrastructure system." ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node tp-sh:TrainProtectionAreaShape ;
+    sh:message "tpArea must be a well-formed TrainProtectionArea (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .

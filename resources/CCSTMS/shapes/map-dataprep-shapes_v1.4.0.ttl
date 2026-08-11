@@ -1,0 +1,504 @@
+# SPDX-License-Identifier: EUPL-1.2
+#
+# Copyright (c) 2026 LAWCON Consulting GmbH
+#
+# Licensed under the EUPL, Version 1.2 or – as soon as they are approved
+# by the European Commission – subsequent versions of the EUPL (the "Licence");
+# You may not use this work except in compliance with the Licence.
+# You may obtain a copy of the Licence at:
+#
+# https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the Licence is distributed on an "AS IS" basis,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+
+@prefix sh:     <http://www.w3.org/ns/shacl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix era:    <http://data.europa.eu/949/> .
+
+@prefix map-dp: <http://data.europa.eu/949/shapes/map-dataprep#> .
+
+
+################################################################################
+#
+#  SPARQL prefix declarations
+#
+#  SHACL 5.3: the Turtle @prefix declarations above do NOT apply inside sh:select.
+#  Only sh:prefixes does. Without this block a query writing era:... fails outright
+#  with "Unknown namespace prefix : era" on any data graph that does not itself
+#  happen to bind the same prefix - data written with full IRIs, or binding era949:
+#  instead of era:. Every sh:SPARQLConstraint below therefore carries
+#  sh:prefixes map-dp:PrefixDeclarations.
+#
+################################################################################
+
+map-dp:PrefixDeclarations
+    a owl:Ontology ;
+    rdfs:label "Prefixes available to every sh:select in this file"@en ;
+    sh:declare
+        [ sh:prefix "era"  ; sh:namespace "http://data.europa.eu/949/"^^xsd:anyURI ] ,
+        [ sh:prefix "rdf"  ; sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI ] ,
+        [ sh:prefix "rdfs" ; sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ] ,
+        [ sh:prefix "xsd"  ; sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI ] ,
+        [ sh:prefix "skos" ; sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ] ;
+    .
+
+
+################################################################################
+#
+#  MAP-DP-001  (M-01)  A coordinate must not be positioned beyond the end of the
+#                      LinearElement it projects.
+#
+#     for all lep, for all c in lep.coordinates:
+#         c.pos <= lep.linearElement.lengthOfNetLinearElement
+#
+#  THE THIRD OCCURRENCE of a pattern implemented twice already: an object anchored
+#  to a LinearElement by an explicit era:linearElement reference, carrying an
+#  "ordered": "byIndex" list of positioned members. eng's ENG-DP-001 (kilometric
+#  posts) and ENG-DP-009 (offset accuracies) are the templates, down to the rdf:List
+#  walk and the tolerant non-list branch.
+#
+#  Rationale: pos says where along the linear element this spatial coordinate
+#  belongs. A projection is what turns a topological position into a place on the
+#  ground, and it does so by INTERPOLATING between the positions listed here. A
+#  coordinate beyond the element's end therefore does not merely mislabel one point:
+#  it anchors one end of an interpolation interval to track that does not exist, so
+#  every position between it and its neighbour is projected onto the wrong ground.
+#  An object correctly placed on the topology then comes out at the wrong place on
+#  the map, with nothing wrong on either side taken alone.
+#
+#  coordinates IS AN RDF LIST - tagged "ordered": "byIndex" in map.json, so the
+#  members are the ITEMS of an rdf:List, not direct objects of the property.
+#  era:coordinates alone reaches the list's first CELL, which is not a
+#  LinearElementCoordinate and carries no pos; a rule written that way would match
+#  nothing and pass everything in silence. The items are reached with
+#  era:coordinates/rdf:rest*/rdf:first, and a second UNION branch tolerates the
+#  non-list form for the reason set out under infra's DP-016.
+#
+#  CROSS-MODULE - the length lives on an infra LinearElement. Validated without the
+#  infra topology in the graph, the opening patterns match nothing and the rule is
+#  silent: silence for want of the other half, not a clean bill of health.
+#
+#  SCOPE - no further guard is needed. A missing era:linearElement or
+#  lengthOfNetLinearElement is a structural fault the respective -shapes.ttl reports.
+#  Comparison is by VALUE, so a position written as a plain integer is compared
+#  correctly against a double length.
+#
+#  REPORTING - the focus node is the LinearElementProjection and sh:value is the
+#  offending position rather than the coordinate, LinearElementCoordinate being a
+#  composition and so possibly a blank node. The x value is carried in the projection
+#  so that two coordinates sharing one bad position are reported separately.
+#
+#  NOT COVERED - an upper bound only, so a negative pos is accepted here, as
+#  throughout the position rules in every module.
+#
+################################################################################
+
+map-dp:LinearElementProjection-MAPDP001
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementProjection ;
+    rdfs:label "MAP-DP-001 a coordinate must not sit beyond the end of the element it projects"@en ;
+    sh:sparql map-dp:MAPDP001-coordinateBeyondElementEnd ;
+    sh:severity sh:Violation ;
+    .
+
+map-dp:MAPDP001-coordinateBeyondElementEnd
+    a sh:SPARQLConstraint ;
+    sh:prefixes map-dp:PrefixDeclarations ;
+    rdfs:label "MAP-DP-001"@en ;
+    sh:message "MAP-DP-001: this LinearElementProjection places a coordinate at pos {?value} m, beyond the end of the referenced LinearElement, whose lengthOfNetLinearElement is {?len} m. The position is an offset from that element's origin, so it must not exceed the element's length. Because spatial coordinates are interpolated between the listed positions, a member off the end anchors one end of an interpolation interval to track that does not exist - so every position between it and its neighbour is projected onto the wrong ground, and an object correctly placed on the topology comes out in the wrong place on the map. Either correct the position, or move the coordinate to the projection of the element it really belongs to."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value ?len ?c ?x
+        WHERE {
+            $this era:linearElement ?le .
+            ?le   era:lengthOfNetLinearElement ?len .
+
+            # coordinates is ordered byIndex, so the members are the ITEMS of an
+            # rdf:List; the second branch tolerates the non-list form
+            {   $this era:coordinates/rdf:rest*/rdf:first ?c . }
+            UNION
+            {   $this era:coordinates ?c . }
+
+            ?c era:pos ?value .
+            OPTIONAL { ?c era:x ?x }
+
+            FILTER ( ?value > ?len )
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  MAP-DP-002  (M-02)  Coordinates must run in order along the list.
+#
+#     for all lep: reading the pos values of lep.coordinates in list order gives a
+#     sequence that is STRICTLY MONOTONIC - increasing throughout, or decreasing
+#     throughout.
+#
+#  THE FOURTH MEMBER of the monotonic-list family, after infra's DP-026 (six
+#  series), ENG-DP-002 (kilometric posts) and ENG-DP-010 (offset accuracies).
+#  coordinates is tagged "ordered": "byIndex", which is a promise about MEANING: the
+#  members are in the sequence of their real location, so neighbours in the array are
+#  neighbours on the ground.
+#
+#  EITHER DIRECTION IS ALLOWED, as established for every byIndex list in this model:
+#  a list may run against the direction in which the element's offsets grow. It is
+#  the reversal PART WAY ALONG that is the defect.
+#
+#  Rationale: consecutive coordinates are the two ends of an interval over which
+#  position is interpolated into space. A list that doubles back makes those
+#  intervals overlap and run backwards, so a single position on the element can be
+#  projected to two different points depending on which interval a consumer happens
+#  to use - and the projection is the only thing standing between a topological
+#  position and a place on the ground.
+#
+#  SPLIT IN TWO, as its three siblings are:
+#
+#    MAP-DP-002a  two ADJACENT coordinates at the same position. Contradictory
+#                 rather than untidy: one place on the element is given two
+#                 different spatial points, so the projection is ambiguous exactly
+#                 there. Nothing else in any rule set catches this.
+#
+#    MAP-DP-002b  the list CHANGES DIRECTION. Detected over three consecutive
+#                 members: if no two adjacent positions are equal then every step is
+#                 strictly up or strictly down, so a sequence that is not monotonic
+#                 must turn somewhere, and at the turn three consecutive members form
+#                 a peak or a valley. Reporting the turning position names the member
+#                 to move.
+#
+#  INTERACTION - MAP-DP-002b says nothing where adjacent positions are equal, so a
+#  list that both repeats a position AND turns is reported by MAP-DP-002a alone on
+#  the first pass; once the repeat is corrected a second pass reports the turn.
+#
+#  RELIES ON THE rdf:LIST, unavoidably: order is not a property a plain multi-valued
+#  property has, so there is no tolerant non-list branch here as there is in
+#  MAP-DP-001. On data written without a list this rule is necessarily silent, that
+#  missing list being a structural fault map-shapes.ttl reports.
+#
+#  NOT CROSS-MODULE, unlike MAP-DP-001: this rule compares members against one
+#  another and needs no infra data at all, so it is just as effective on a map
+#  fragment validated on its own.
+#
+#  A list of two members - the minimum the model allows - is always in order and is
+#  never reported by MAP-DP-002b; two members at one position are still caught by
+#  MAP-DP-002a.
+#
+################################################################################
+
+map-dp:LinearElementProjection-MAPDP002
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementProjection ;
+    rdfs:label "MAP-DP-002 coordinates must run in order along the list"@en ;
+    sh:sparql
+        map-dp:MAPDP002a-adjacentPositionsEqual ,
+        map-dp:MAPDP002b-listChangesDirection ;
+    sh:severity sh:Violation ;
+    .
+
+map-dp:MAPDP002a-adjacentPositionsEqual
+    a sh:SPARQLConstraint ;
+    sh:prefixes map-dp:PrefixDeclarations ;
+    rdfs:label "MAP-DP-002a"@en ;
+    sh:message "MAP-DP-002a: two LinearElementCoordinates that follow one another in this projection's list are both at pos {?value} m. One place on the element is then given two different spatial points, so the projection is ambiguous exactly there and a consumer will pick one arbitrarily. Remove the duplicate, or correct whichever position was copied."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value ?cell
+        WHERE {
+            $this era:coordinates/rdf:rest* ?cell .
+            ?cell rdf:first ?c1 ;
+                  rdf:rest  ?c2cell .
+            ?c2cell rdf:first ?c2 .
+
+            ?c1 era:pos ?value .
+            ?c2 era:pos ?p2 .
+
+            FILTER ( ?value = ?p2 )
+        }
+    """ ;
+    .
+
+map-dp:MAPDP002b-listChangesDirection
+    a sh:SPARQLConstraint ;
+    sh:prefixes map-dp:PrefixDeclarations ;
+    rdfs:label "MAP-DP-002b"@en ;
+    sh:message "MAP-DP-002b: this projection's list of coordinates changes direction at pos {?value} m - the three consecutive members at {?p1}, {?value} and {?p3} m turn back on themselves. The list is tagged byIndex, so it is in the order its members occupy on the ground; that order may run either way along the element but must not reverse part way. Consecutive coordinates are the two ends of an interval over which position is interpolated into space, so a list that doubles back makes those intervals overlap and one position can be projected to two different points. Move the member at {?value} m to its proper place in the sequence, or correct its position."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value ?p1 ?p3 ?cell
+        WHERE {
+            # three consecutive members
+            $this era:coordinates/rdf:rest* ?cell .
+            ?cell rdf:first ?c1 ;
+                  rdf:rest  ?c2cell .
+            ?c2cell rdf:first ?c2 ;
+                    rdf:rest  ?c3cell .
+            ?c3cell rdf:first ?c3 .
+
+            ?c1 era:pos ?p1 .
+            ?c2 era:pos ?value .
+            ?c3 era:pos ?p3 .
+
+            # a peak or a valley: the middle member is a turning point. Equal
+            # adjacent positions satisfy neither branch and are MAP-DP-002a's.
+            FILTER (   ( ?p1 < ?value && ?value > ?p3 )
+                    || ( ?p1 > ?value && ?value < ?p3 ) )
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  MAP-DP-003  (M-03)  An accuracy must not be negative.
+#
+#     for all c of class LinearElementCoordinate:
+#         c.accX >= 0   and   c.accY >= 0   and   c.accZ >= 0
+#     for all f of class FunctionalElementProjection:
+#         f.accX >= 0   and   f.accY >= 0   and   f.accZ >= 0
+#
+#  THE BOUND IS INCLUSIVE, AND THAT IS THE WHOLE POINT OF THIS RULE. map.json
+#  documents every one of these fields as "absolute accuracy as 1sigma. Use 0.0 if
+#  not defined", so ZERO IS AN EXPLICITLY SANCTIONED VALUE and must not be reported.
+#  Written by analogy with eng's ENG-DP-018d - which advises on a zero accuracy -
+#  this rule would have flagged the model's own documented convention on every
+#  record that leaves an accuracy unstated.
+#
+#  The two modules differ only in what they say: eng.json is silent on what zero
+#  means, so there the ambiguity is worth an advisory; map.json states it outright,
+#  so here it is simply valid. The rules follow each model rather than each other.
+#
+#  What remains is the floor. An accuracy is a one-sigma MAGNITUDE - a distance
+#  either side of the stated value - and a negative magnitude is not a smaller
+#  uncertainty but a meaningless number. A consumer using it as a tolerance computes
+#  a negative margin, which either collapses to zero (silently treating an unknown
+#  position as exact) or inverts a comparison. Neither failure announces itself.
+#
+#  SIX PROPERTY SHAPES ACROSS TWO CLASSES, all SHACL Core - sh:minInclusive 0, so no
+#  SPARQL and no prefix concerns. Each is its own shape so the report names which
+#  axis is at fault.
+#
+#  accPos NEEDS NO RULE and deliberately has none: it is declared uint32, so a
+#  negative value is already a datatype fault that map-shapes.ttl reports through
+#  sh:datatype. Adding a bound here would duplicate it. Note also that accPos is in
+#  MILLIMETRES while pos is in metres - no rule here compares them, but any future
+#  rule that does must convert, as infra's DP-033 has to for eoaOffset in
+#  centimetres.
+#
+#  NOT COVERED - nothing here bounds an accuracy from ABOVE. An accX of 10000 m is
+#  as good as no position at all, but the model gives no upper limit and inventing
+#  one would be guesswork.
+#
+################################################################################
+
+map-dp:LinearElementCoordinate-MAPDP003
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementCoordinate ;
+    rdfs:label "MAP-DP-003 a coordinate's accuracies must not be negative"@en ;
+    sh:property
+        map-dp:MAPDP003a-coordAccXNotNegative ,
+        map-dp:MAPDP003b-coordAccYNotNegative ,
+        map-dp:MAPDP003c-coordAccZNotNegative ;
+    .
+
+map-dp:MAPDP003a-coordAccXNotNegative
+    a sh:PropertyShape ;
+    rdfs:label "MAP-DP-003a"@en ;
+    sh:path era:accX ;
+    sh:minInclusive 0 ;
+    sh:message "MAP-DP-003a: accX is negative on this LinearElementCoordinate. An accuracy is a one-sigma magnitude - a distance either side of the stated value - so it cannot be less than zero. Note that ZERO is valid and is not reported: map.json defines it as meaning the accuracy is not stated."@en ;
+    sh:severity sh:Violation ;
+    .
+
+map-dp:MAPDP003b-coordAccYNotNegative
+    a sh:PropertyShape ;
+    rdfs:label "MAP-DP-003b"@en ;
+    sh:path era:accY ;
+    sh:minInclusive 0 ;
+    sh:message "MAP-DP-003b: accY is negative on this LinearElementCoordinate. An accuracy is a one-sigma magnitude and cannot be less than zero; zero itself is valid and means the accuracy is not stated."@en ;
+    sh:severity sh:Violation ;
+    .
+
+map-dp:MAPDP003c-coordAccZNotNegative
+    a sh:PropertyShape ;
+    rdfs:label "MAP-DP-003c"@en ;
+    sh:path era:accZ ;
+    sh:minInclusive 0 ;
+    sh:message "MAP-DP-003c: accZ is negative on this LinearElementCoordinate. An accuracy is a one-sigma magnitude and cannot be less than zero; zero itself is valid and means the accuracy is not stated."@en ;
+    sh:severity sh:Violation ;
+    .
+
+map-dp:FunctionalElementProjection-MAPDP003
+    a sh:NodeShape ;
+    sh:targetClass era:FunctionalElementProjection ;
+    rdfs:label "MAP-DP-003 a projection's accuracies must not be negative"@en ;
+    sh:property
+        map-dp:MAPDP003d-projAccXNotNegative ,
+        map-dp:MAPDP003e-projAccYNotNegative ,
+        map-dp:MAPDP003f-projAccZNotNegative ;
+    .
+
+map-dp:MAPDP003d-projAccXNotNegative
+    a sh:PropertyShape ;
+    rdfs:label "MAP-DP-003d"@en ;
+    sh:path era:accX ;
+    sh:minInclusive 0 ;
+    sh:message "MAP-DP-003d: accX is negative on this FunctionalElementProjection. An accuracy is a one-sigma magnitude and cannot be less than zero; zero itself is valid and means the accuracy is not stated."@en ;
+    sh:severity sh:Violation ;
+    .
+
+map-dp:MAPDP003e-projAccYNotNegative
+    a sh:PropertyShape ;
+    rdfs:label "MAP-DP-003e"@en ;
+    sh:path era:accY ;
+    sh:minInclusive 0 ;
+    sh:message "MAP-DP-003e: accY is negative on this FunctionalElementProjection. An accuracy is a one-sigma magnitude and cannot be less than zero; zero itself is valid and means the accuracy is not stated."@en ;
+    sh:severity sh:Violation ;
+    .
+
+map-dp:MAPDP003f-projAccZNotNegative
+    a sh:PropertyShape ;
+    rdfs:label "MAP-DP-003f"@en ;
+    sh:path era:accZ ;
+    sh:minInclusive 0 ;
+    sh:message "MAP-DP-003f: accZ is negative on this FunctionalElementProjection. An accuracy is a one-sigma magnitude and cannot be less than zero; zero itself is valid and means the accuracy is not stated."@en ;
+    sh:severity sh:Violation ;
+    .
+
+
+################################################################################
+#
+#  MAP-DP-004  (M-05)  A projection must cover the whole element.
+#
+#     for all lep with coordinates non-empty:
+#            exists c in lep.coordinates:  c.pos = 0
+#        and exists c in lep.coordinates:
+#                | c.pos - lep.linearElement.lengthOfNetLinearElement | <= 1
+#
+#  Rationale: a projection turns a topological position into a place on the ground
+#  by INTERPOLATING between the positions it lists. Interpolation needs a point on
+#  each side, so a projection running only from 100 m to 900 m of a 1000 m element
+#  cannot place anything in the opening or closing 100 m: a consumer must either
+#  refuse to project there or EXTRAPOLATE beyond the last coordinate, which is a
+#  guess presented as a place on the map. Every object correctly recorded on those
+#  stretches - a balise, a marker, a stop location - then has no trustworthy
+#  position in this map.
+#
+#  THIS IS THE cantPoints ARGUMENT, NOT THE ALIGNMENT ARGUMENT. Infra's DP-027
+#  requires cant to be defined at both ends because cant is interpolated BETWEEN
+#  points; DP-038 requires only the origin for the horizontal and vertical
+#  alignments because a geometric primitive EXTENDS from its own position onwards.
+#  A projected coordinate is of the first kind, so both ends are needed here.
+#
+#  The model hints at the same thing through the multiplicity: coordinates is 2..*,
+#  and two points are exactly what is needed to bracket an element.
+#
+#  SEVERITY sh:Violation. Defining the projection at the beginning and the end of the
+#  track is MANDATORY, confirmed with you directly - so this is a fault, not a matter
+#  of judgement, and the rule is pitched to match.
+#
+#  It was first written as an advisory on the grounds that map.json only IMPLIES the
+#  requirement through the 2..* multiplicity, where infra.json states it outright for
+#  cant ("the linear element must be completely defined, at least at beginning and
+#  end"). That reasoning was about what the JSON happens to say, not about what the
+#  data has to be: a projection that does not reach both ends leaves part of the
+#  element with no trustworthy position in this map, and no consumer can make that
+#  good. The requirement is the same one DP-027 enforces for cant, and it carries the
+#  same severity.
+#
+#  THE TWO ENDS ARE MATCHED DIFFERENTLY, exactly as in DP-027:
+#
+#    MAP-DP-004a, the ORIGIN, is matched EXACTLY. Zero is exactly representable and
+#    is authored rather than derived, so there is nothing for a tolerance to absorb.
+#
+#    MAP-DP-004b, the FAR END, is matched within +/- 1 m. Its target is not a
+#    constant but lengthOfNetLinearElement, a second authored double from another
+#    module and frequently computed; the projection's closing position and the
+#    recorded element length commonly come from different sources or are rounded
+#    differently. Same tolerance and same reasoning as DP-024 and DP-027b.
+#
+#  A NOTE ON UNITS, which matters in this module and nowhere else. pos is in METRES
+#  and is a topological offset along the element - it has nothing to do with the
+#  spatial reference system named by Map.epsg. So this rule, like MAP-DP-001 and
+#  MAP-DP-002, is entirely unaffected by whether a given Map holds geographic
+#  coordinates, projected metres or monitor coordinates. Only x, y and z carry the
+#  map's units, and no rule in this file touches them except to check their sign.
+#
+#  SCOPE - a projection with no coordinates at all is SKIPPED. coordinates is 2..*,
+#  so its absence is a structural fault map-shapes.ttl reports, and this rule has
+#  nothing to add. MAP-DP-004b additionally needs the infra element for its length,
+#  and is silent without it.
+#
+################################################################################
+
+map-dp:LinearElementProjection-MAPDP004
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementProjection ;
+    rdfs:label "MAP-DP-004 a projection should cover the whole element"@en ;
+    sh:sparql
+        map-dp:MAPDP004a-noCoordinateAtOrigin ,
+        map-dp:MAPDP004b-noCoordinateAtFarEnd ;
+    sh:severity sh:Violation ;
+    .
+
+map-dp:MAPDP004a-noCoordinateAtOrigin
+    a sh:SPARQLConstraint ;
+    sh:prefixes map-dp:PrefixDeclarations ;
+    rdfs:label "MAP-DP-004a"@en ;
+    sh:message "MAP-DP-004a: this LinearElementProjection has no coordinate at pos 0, so nothing on the element is projected between its origin and the first coordinate. Spatial coordinates are interpolated between the listed positions, so a consumer must either refuse to project over that opening stretch or extrapolate backwards - a guess presented as a place on the map. Add a coordinate at the origin: defining the projection at the beginning and end of the track is mandatory."@en ;
+    sh:select """
+        SELECT DISTINCT $this
+        WHERE {
+            # only judge a projection that lists coordinates; their absence is a
+            # structural fault against 2..* that map-shapes.ttl reports
+            {   $this era:coordinates/rdf:rest*/rdf:first ?anyC . }
+            UNION
+            {   $this era:coordinates ?anyC . }
+            ?anyC era:pos ?anyPos .
+
+            FILTER NOT EXISTS {
+                {   $this era:coordinates/rdf:rest*/rdf:first ?c . }
+                UNION
+                {   $this era:coordinates ?c . }
+                ?c era:pos ?pos .
+                # the target is the CONSTANT zero, so no tolerance is applied here
+                FILTER ( ?pos = 0 )
+            }
+        }
+    """ ;
+    .
+
+map-dp:MAPDP004b-noCoordinateAtFarEnd
+    a sh:SPARQLConstraint ;
+    sh:prefixes map-dp:PrefixDeclarations ;
+    rdfs:label "MAP-DP-004b"@en ;
+    sh:message "MAP-DP-004b: this LinearElementProjection has no coordinate within 1 m of the far end of the element, whose lengthOfNetLinearElement is {?len} m, so nothing is projected between the last coordinate and the element's end. As at the origin, a consumer must refuse to project there or extrapolate. The match allows +/- 1 m to absorb differences in authoring precision between the projection and the recorded element length. Add a closing coordinate: defining the projection at the beginning and end of the track is mandatory."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?len
+        WHERE {
+            $this era:linearElement ?le .
+            ?le   era:lengthOfNetLinearElement ?len .
+
+            {   $this era:coordinates/rdf:rest*/rdf:first ?anyC . }
+            UNION
+            {   $this era:coordinates ?anyC . }
+            ?anyC era:pos ?anyPos .
+
+            FILTER NOT EXISTS {
+                {   $this era:coordinates/rdf:rest*/rdf:first ?c . }
+                UNION
+                {   $this era:coordinates ?c . }
+                ?c era:pos ?pos .
+                # ---- TOLERANCE: single point of change ------------------- #
+                # A coordinate within 1 m of the element's end closes the
+                # projection. Absorbs authoring precision between two
+                # independently recorded doubles, as DP-024 and DP-027b do.
+                FILTER ( ABS(?pos - ?len) <= 1.0 )
+            }
+        }
+    """ ;
+    .

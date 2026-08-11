@@ -1,0 +1,2050 @@
+# SPDX-License-Identifier: EUPL-1.2
+#
+# Copyright (c) 2026 LAWCON Consulting GmbH
+#
+# Licensed under the EUPL, Version 1.2 or – as soon as they are approved
+# by the European Commission – subsequent versions of the EUPL (the "Licence");
+# You may not use this work except in compliance with the Licence.
+# You may obtain a copy of the Licence at:
+#
+# https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the Licence is distributed on an "AS IS" basis,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+
+@prefix sh:     <http://www.w3.org/ns/shacl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix era:    <http://data.europa.eu/949/> .
+
+@prefix eng-dp: <http://data.europa.eu/949/shapes/eng-dataprep#> .
+
+
+
+################################################################################
+#
+#  SPARQL prefix declarations
+#
+#  SHACL 5.3: the Turtle @prefix declarations above do NOT apply inside sh:select.
+#  Only sh:prefixes does. Without this block a query writing era:... fails outright
+#  with "Unknown namespace prefix : era" on any data graph that does not itself
+#  happen to bind the same prefix - data written with full IRIs, or binding era949:
+#  instead of era:. Every sh:SPARQLConstraint below therefore carries
+#  sh:prefixes eng-dp:PrefixDeclarations.
+#
+################################################################################
+
+eng-dp:PrefixDeclarations
+    a owl:Ontology ;
+    rdfs:label "Prefixes available to every sh:select in this file"@en ;
+    sh:declare
+        [ sh:prefix "era"  ; sh:namespace "http://data.europa.eu/949/"^^xsd:anyURI ] ,
+        [ sh:prefix "rdf"  ; sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI ] ,
+        [ sh:prefix "rdfs" ; sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ] ,
+        [ sh:prefix "xsd"  ; sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI ] ,
+        [ sh:prefix "skos" ; sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ] ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-001  A kilometric post must not be positioned beyond the end of the
+#              LinearElement whose kilometre referencing it belongs to.
+#
+#     for all lek, for all kp in lek.kilometricPosts:
+#         kp.pos <= lek.linearElement.lengthOfNetLinearElement
+#
+#  Rationale: pos is where along the linear element the kilometric post stands,
+#  measured from the element's origin. The post is what ties a position on the
+#  topology to a railway kilometre value - the reference in which the line is
+#  described, signals are named, incidents are reported and works are ordered.
+#  A post beyond the end of its element anchors that translation to track the
+#  element does not contain, so every kilometre value derived from it is wrong,
+#  and wrong in a way that is invisible from the kilometre side: the numbers still
+#  increase smoothly, they simply refer to the wrong ground.
+#
+#  Note that kilometricPosts is the ordered set from which kilometre values are
+#  INTERPOLATED between posts. A post placed off the end therefore does not merely
+#  mislabel one point; it skews the interpolation over the whole stretch between
+#  itself and its neighbour.
+#
+#  THE INFRA COUNTERPART is DP-015, which bounds a StaticSpeedLimit's pos against
+#  the same length, and the structure here is identical: an object anchored to a
+#  LinearElement by an explicit era:linearElement reference, carrying a list of
+#  positioned members. As there, the reference is what is navigated - not any
+#  identity shared through the IRI, which context.txt rule 24 forbids relying on.
+#
+#  kilometricPosts IS AN RDF LIST - it is tagged "ordered": "byIndex" in eng.json,
+#  so the posts are the ITEMS of an rdf:List, not direct objects of the property.
+#  era:kilometricPosts alone reaches the list's first CELL, which is not a
+#  KilometricPost and carries no pos; a rule written that way would match nothing
+#  and pass everything in silence. The items are reached with
+#  era:kilometricPosts/rdf:rest*/rdf:first. A second UNION branch tolerates the
+#  non-list form, for the reason set out under infra's DP-016: a provider who
+#  writes the posts as a plain multi-valued property has made a structural error
+#  that eng-shapes.ttl reports, but staying silent about their positions would be
+#  the wrong failure mode.
+#
+#  CROSS-MODULE - the length lives on an infra LinearElement. If the eng data is
+#  validated without the infra topology in the graph, the opening patterns match
+#  nothing and this rule is silent. That is silence for want of the other half, not
+#  a clean bill of health.
+#
+#  SCOPE - no further guard is needed. A missing era:linearElement or
+#  lengthOfNetLinearElement is a structural fault that the respective -shapes.ttl
+#  reports. kilometricPosts is "*", so a LinearElementKm with no posts at all is
+#  legitimate and this rule is simply vacuous on it. Comparison is by VALUE, so a
+#  position written as a plain integer is compared correctly against a double
+#  length.
+#
+#  REPORTING - the focus node is the LinearElementKm and sh:value is the offending
+#  position rather than the post, KilometricPost being a composition and so usually
+#  a blank node a data preparer cannot look up. kmPostName is carried in the
+#  projection, under OPTIONAL because it is 0..1, so that two distinct posts sharing
+#  one bad position are reported separately rather than collapsing into one finding.
+#  It is deliberately NOT interpolated into the message: an absent optional renders
+#  as the literal placeholder text, which would read worse than omitting it.
+#
+#  NOT COVERED - the rule states an upper bound only, so a negative pos is accepted
+#  here. Note also that eng.json says of kilometricPosts that "these are sorted by
+#  pos from 0 to length", which asserts both an ORDER and a COVERAGE that no rule
+#  yet checks; both would be rules of their own, and the ordering one is notably
+#  stricter than infra's DP-026, since it names a direction.
+#
+################################################################################
+
+eng-dp:LinearElementKm-ENGDP001
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementKm ;
+    rdfs:label "ENG-DP-001 a kilometric post must not sit beyond the end of its linear element"@en ;
+    sh:sparql eng-dp:ENGDP001-kilometricPostBeyondElementEnd ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:ENGDP001-kilometricPostBeyondElementEnd
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-001"@en ;
+    sh:message "ENG-DP-001: this LinearElementKm has a KilometricPost at pos {?value} m, beyond the end of the referenced LinearElement, whose lengthOfNetLinearElement is {?len} m. The position is an offset from that element's origin, so it must not exceed the element's length. A post off the end anchors the translation between topology and railway kilometre to track that is not there, and because kilometre values are interpolated between posts it skews every value between this post and its neighbour, not just the one point. Either correct the position, or move the post to the kilometre referencing of the element it really stands on."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value ?len ?kp ?kmName
+        WHERE {
+            $this era:linearElement ?le .
+            ?le   era:lengthOfNetLinearElement ?len .
+
+            # kilometricPosts is ordered byIndex, so the posts are the ITEMS of an
+            # rdf:List; the second branch tolerates the non-list form
+            {   $this era:kilometricPosts/rdf:rest*/rdf:first ?kp . }
+            UNION
+            {   $this era:kilometricPosts ?kp . }
+
+            ?kp era:pos ?value .
+            OPTIONAL { ?kp era:kmPostName ?kmName }
+
+            FILTER ( ?value > ?len )
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-002  Kilometric posts must run in order along the list.
+#
+#     for all lek: reading the positions of lek.kilometricPosts in list order
+#     gives a sequence that is STRICTLY MONOTONIC - increasing throughout, or
+#     decreasing throughout.
+#
+#  The seventh list in the model to carry this rule, and the eng counterpart of
+#  infra's DP-026. kilometricPosts is tagged "ordered": "byIndex", which is a
+#  promise about MEANING and not merely about serialisation: the posts are in the
+#  sequence of their real location, so neighbours in the array are neighbours on
+#  the ground.
+#
+#  EITHER DIRECTION IS ALLOWED, as in DP-026 and DP-036. Note that eng.json says of
+#  kilometricPosts that "these are sorted by pos from 0 to length", which reads as
+#  ASCENDING specifically; this rule deliberately does not enforce that reading.
+#  Confirmed with you that byIndex permits either direction throughout the model,
+#  so the direction-specific wording in the model's info text is treated as
+#  descriptive of the usual case rather than as a constraint. If you later decide
+#  kilometre posts are the exception and must ascend, that is a one-line tightening
+#  of ENG-DP-002b - but it would be a different rule from the one implemented here,
+#  and it should be a deliberate choice rather than a side effect.
+#
+#  Rationale: a consumer walking this list expects order on the ground, and uses
+#  consecutive posts as the two ends of an interval over which a kilometre value is
+#  interpolated. A list that doubles back makes those intervals overlap and run
+#  backwards, so the interpolation is not merely inaccurate but ill-defined - a
+#  single position on the element can be assigned two different kilometre values
+#  depending on which interval a consumer happens to use.
+#
+#  Nothing about the individual posts is wrong, which is why no other rule sees it:
+#  each position is within the element (ENG-DP-001), each kilometre value is
+#  plausible. Only the ORDER betrays the fault.
+#
+#  SPLIT IN TWO, as DP-026 is, because the two ways of breaking order want
+#  different messages:
+#
+#    ENG-DP-002a  two ADJACENT posts at the same position. This is contradictory
+#                 rather than untidy: two posts at one place on the element assign
+#                 two kilometre values to that one place, and the translation
+#                 between topology and kilometre is ambiguous there. Unlike DP-036,
+#                 where DP-008 already caught coincident balises, nothing else in
+#                 any rule set catches this - so it is checked here.
+#
+#    ENG-DP-002b  the list CHANGES DIRECTION. Detected locally over three
+#                 consecutive posts: if no two adjacent positions are equal then
+#                 every step is strictly up or strictly down, so a sequence that is
+#                 not monotonic must turn somewhere, and at the turn three
+#                 consecutive posts form a peak or a valley. Reporting the turning
+#                 position points at the post to move.
+#
+#  INTERACTION - ENG-DP-002b says nothing where adjacent positions are equal, so a
+#  list that both repeats a position AND turns is reported by ENG-DP-002a alone on
+#  the first pass; once the repeat is corrected a second pass reports the turn.
+#
+#  RELIES ON THE rdf:LIST, unavoidably: order is not a property a plain
+#  multi-valued property has, so there is no tolerant non-list branch here as there
+#  is in ENG-DP-001. On data written without a list this rule is necessarily
+#  silent, that missing list being a structural fault eng-shapes.ttl reports.
+#
+#  NOT CROSS-MODULE, unlike ENG-DP-001: this rule compares posts against one
+#  another and needs no infra data at all, so it is just as effective on an eng
+#  fragment validated on its own.
+#
+#  A list of one or two posts is always in order and is never reported by
+#  ENG-DP-002b; two posts at one position are still caught by ENG-DP-002a.
+#
+#  NOT COVERED - the kilometer VALUES are not checked against the positions.
+#  A sound list of positions may still carry kilometre values that jump about, or
+#  that run in a direction inconsistent with the positions. That is a real and
+#  separate rule: kilometre values should themselves be monotonic, though not
+#  necessarily in the same direction as pos, since a line's kilometre reference may
+#  run against the element's origin direction. Worth writing once you have said
+#  which pairings are legitimate.
+#
+################################################################################
+
+eng-dp:LinearElementKm-ENGDP002
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementKm ;
+    rdfs:label "ENG-DP-002 kilometric posts must run in order along the list"@en ;
+    sh:sparql
+        eng-dp:ENGDP002a-adjacentPositionsEqual ,
+        eng-dp:ENGDP002b-listChangesDirection ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:ENGDP002a-adjacentPositionsEqual
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-002a"@en ;
+    sh:message "ENG-DP-002a: two KilometricPosts that follow one another in this LinearElementKm's list are both at pos {?value} m. Two posts at one place on the element assign two kilometre values to that place, so the translation between topology and railway kilometre is ambiguous there and a consumer will pick one arbitrarily. Remove the duplicate, or correct whichever position was copied."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value ?cell
+        WHERE {
+            $this era:kilometricPosts/rdf:rest* ?cell .
+            ?cell rdf:first ?k1 ;
+                  rdf:rest  ?c2 .
+            ?c2   rdf:first ?k2 .
+
+            ?k1 era:pos ?value .
+            ?k2 era:pos ?p2 .
+
+            FILTER ( ?value = ?p2 )
+        }
+    """ ;
+    .
+
+eng-dp:ENGDP002b-listChangesDirection
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-002b"@en ;
+    sh:message "ENG-DP-002b: this LinearElementKm's list of kilometric posts changes direction at pos {?value} m - the three consecutive posts at {?p1}, {?value} and {?p3} m turn back on themselves. The list is tagged byIndex, so it is in the order the posts occupy on the ground; that order may run either way along the element but must not reverse part way. Consecutive posts are the two ends of an interval over which kilometre values are interpolated, so a list that doubles back makes those intervals overlap and one position can be given two different kilometre values. Move the post at {?value} m to its proper place in the sequence, or correct its position."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value ?p1 ?p3 ?cell
+        WHERE {
+            # three consecutive posts
+            $this era:kilometricPosts/rdf:rest* ?cell .
+            ?cell rdf:first ?k1 ;
+                  rdf:rest  ?c2 .
+            ?c2   rdf:first ?k2 ;
+                  rdf:rest  ?c3 .
+            ?c3   rdf:first ?k3 .
+
+            ?k1 era:pos ?p1 .
+            ?k2 era:pos ?value .
+            ?k3 era:pos ?p3 .
+
+            # a peak or a valley: the middle post is a turning point. Equal
+            # adjacent positions satisfy neither branch and are ENG-DP-002a's.
+            FILTER (   ( ?p1 < ?value && ?value > ?p3 )
+                    || ( ?p1 > ?value && ?value < ?p3 ) )
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-003  Every danger point of a level crossing must stand on a LinearElement
+#              belonging to that level crossing's own area.
+#
+#     for all lx, for all dp in lx.dangerPoints:
+#         dp.topologicalCoordinate.onLinearElement in elements( lx.areaReference )
+#
+#  where the elements of a NetAreaReference are collected over ALL of its linear
+#  references - includes is 1..*, so an area may be built from several paths - and
+#  for each of those the element set is the union of three sources:
+#
+#         startsAt.hasTopoCoordinate.onLinearElement      (the first element)
+#       U endsAt.hasTopoCoordinate.onLinearElement        (the last element)
+#       U hasSequence                                     (the intermediates)
+#
+#  That union is exactly right given infra's DP-002, which forbids the two end
+#  elements from also appearing in hasSequence: the sequence carries only what lies
+#  BETWEEN them, so neither end would be found by looking at hasSequence alone.
+#
+#  THE TWO HALVES OF THIS RULE COME FROM DIFFERENT MODULES, and unusually they meet
+#  on ONE NODE rather than through a reference. eng.json's LevelCrossing declares
+#  only id and dangerPoints; areaReference belongs to infra.json's LevelCrossing.
+#  A LevelCrossing instance in RDF therefore carries era:dangerPoints from the eng
+#  description and era:areaReference from the infra description of the very same
+#  object - context.txt rule 19, that a module redefining a class covers only its
+#  own attributes, seen from the data side.
+#
+#  The practical consequence is that this rule needs BOTH module descriptions of the
+#  crossing in the graph. Validating eng data alone leaves era:areaReference absent
+#  and the rule silent - not because the danger points are sound but because there
+#  is nothing to compare them with. The guard below therefore does double duty: in
+#  infra terms a missing areaReference is a structural fault (it is 1..1 there), but
+#  here it is at least as likely to mean the infra half simply was not loaded, and
+#  in neither case should this rule speak.
+#
+#  Rationale: a level crossing is where a road crosses the railway, and its area
+#  reference is the stretch of track that crossing occupies. The danger points are
+#  the places within it at which a road user and a train can come into conflict -
+#  they are what fouling and protection distances are measured from, and what
+#  decides where a train must be stopped when the crossing is not clear. A danger
+#  point on track outside the crossing's own area describes a conflict at a place
+#  the crossing does not reach, so the protection is computed for the wrong piece
+#  of railway. This is exactly the defect described: a provider anchoring a danger
+#  point somewhere else entirely, which nothing else in any rule set would notice
+#  because the point is internally well formed and its position is valid on the
+#  element it names.
+#
+#  NOTE ON PATH - a DangerPoint carries era:topologicalCoordinate DIRECTLY, as a
+#  Balise or a TrainDetectionSystem does, and NOT through a NetPointReference the
+#  way a Derailer or BufferStop does. The area's own end points, by contrast, DO go
+#  through NetPointReference. The two sides of this rule therefore walk paths of
+#  different lengths; using one for both would silently match nothing and pass
+#  everything.
+#
+#  THE INFRA COUNTERPART is DP-014, which places a TvpSection's train detectors
+#  within its linkedArea. The shape of the two is identical; only the property
+#  names and the module boundary differ.
+#
+#  LIMITATION - this checks element MEMBERSHIP, which is what the rule states. It
+#  does not check the offset along the two END elements of a linear reference, which
+#  the area covers only partially: from startsAt's offset to the end of that
+#  element, and from the start of the last element to endsAt's offset. A danger
+#  point on the right element but outside that offset range is therefore accepted
+#  here. The same limitation as DP-005 and DP-014, and enforcing it needs the
+#  orientation semantics of the reference.
+#
+#  REPORTING - dangerPoints is a REFERENCE, so the danger points carry IRIs a
+#  preparer can look up, and sh:value is the offending point itself rather than a
+#  position. Several danger points with one at fault yield exactly one finding.
+#
+#  NOT COVERED - eng's BufferStop also carries a dangerPoint (0..1), and the same
+#  question could be asked of it: a buffer stop's danger point ought to lie near the
+#  buffer stop. That would be a rule of its own, and needs a decision on what "near"
+#  means, since a BufferStop has a point reference rather than an area.
+#
+################################################################################
+
+eng-dp:LevelCrossing-ENGDP003
+    a sh:NodeShape ;
+    sh:targetClass era:LevelCrossing ;
+    rdfs:label "ENG-DP-003 danger points must lie within the level crossing's own area"@en ;
+    sh:sparql eng-dp:ENGDP003-dangerPointOutsideAreaReference ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:ENGDP003-dangerPointOutsideAreaReference
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-003"@en ;
+    sh:message "ENG-DP-003: this DangerPoint stands on a LinearElement that is not part of the LevelCrossing's areaReference. A danger point marks where a road user and a train can come into conflict, and it is what fouling and protection distances are measured from; placed on track the crossing does not occupy, the protection is computed for the wrong piece of railway. Either move the danger point, or extend the crossing's area reference to cover the element it stands on."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value
+        WHERE {
+            $this era:dangerPoints ?value .
+
+            # a danger point's coordinate hangs directly off it - no NetPointReference
+            ?value era:topologicalCoordinate/era:onLinearElement ?dle .
+
+            # areaReference comes from the INFRA description of this same node.
+            # Absent, it means either a structural fault there or that the infra
+            # half of the data was not loaded; in neither case should we speak.
+            FILTER EXISTS { $this era:areaReference ?anyArea }
+
+            FILTER NOT EXISTS {
+                $this era:areaReference/era:includes ?lr .
+                {
+                    ?lr era:startsAt/era:hasTopoCoordinate/era:onLinearElement ?dle .
+                } UNION {
+                    ?lr era:endsAt/era:hasTopoCoordinate/era:onLinearElement ?dle .
+                } UNION {
+                    ?lr era:hasSequence/rdf:rest*/rdf:first ?dle .
+                }
+            }
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-004  Every fouling point of a crossing must stand on one of the
+#              LinearElements the crossing itself occupies.
+#
+#     for all cr, for all fp in cr.foulingPoints:
+#         fp.topologicalCoordinate.onLinearElement
+#             in { tc.onLinearElement : tc in cr.topologicalCoordinates }
+#
+#  AS IN ENG-DP-003, THE TWO HALVES COME FROM DIFFERENT MODULES AND MEET ON ONE
+#  NODE. eng.json's Crossing declares only id and foulingPoints; topologicalCoordinates
+#  belongs to infra.json's Crossing, along with isSwitchable and name. A Crossing
+#  instance in RDF therefore carries both, and this rule needs both module
+#  descriptions in the graph. Validating eng data alone leaves the coordinates
+#  absent and the rule silent - silence for want of the other half, not a clean
+#  bill of health. The guard below enforces that.
+#
+#  MIND THE SINGULAR AND THE PLURAL. This is the sharpest trap in the rule:
+#
+#      FoulingPoint  era:topologicalCoordinate    (SINGULAR, 1..1)
+#      Crossing      era:topologicalCoordinates   (PLURAL,   2..2)
+#
+#  Two properties differing by one letter, one on each side of the comparison, and
+#  BOTH substitutions fail SILENTLY - which is the dangerous direction. Substituting
+#  either way was run against data that must be reported: the singular on both sides
+#  finds no crossing coordinates, so the guard never passes and nothing is checked;
+#  the plural on both sides finds no fouling point coordinate, so no comparison is
+#  ever set up. Neither over-reports, which would at least be noticed. Both were
+#  verified to pass bad data cleanly, and that is why the trap is called out here.
+#
+#  Note also that BOTH sides here are direct - a Crossing's coordinates are a
+#  composition of TopologicalCoordinate, not a NetPointReference - so unlike
+#  ENG-DP-003 the two paths are of equal length. The trap is the name, not the depth.
+#
+#  Rationale: a crossing is where two tracks cross, and its two topological
+#  coordinates are the points at which each of those tracks passes through it. A
+#  fouling point is the place beyond which a vehicle standing on one track will
+#  foul the other - it is what clearance is measured to, and what decides whether a
+#  route over one track may be set while a vehicle stands on the other. It is only
+#  meaningful on a track that actually passes through the crossing. A fouling point
+#  on some third element describes clearance at a place where nothing crosses, so
+#  the protection is computed for the wrong ground and two conflicting movements
+#  can be authorised at once.
+#
+#  RELATION TO INFRA'S DP-032, which requires a Crossing's two coordinates to be on
+#  DIFFERENT linear elements. Together the two rules say that a crossing offers
+#  exactly two distinct elements and every fouling point must sit on one of them.
+#  Where DP-032 is violated and both coordinates name one element, this rule
+#  silently becomes stricter - only that one element is admitted - which is a
+#  reasonable way to behave on data that is already reported elsewhere.
+#
+#  SCOPE - foulingPoints is 1..*, so a crossing carrying none is a structural fault
+#  that eng-shapes.ttl reports, and this rule is simply vacuous on it. A crossing
+#  with no topologicalCoordinates is skipped by the guard.
+#
+#  LIMITATION - element MEMBERSHIP only, as the rule states. A fouling point is not
+#  required to lie at any particular offset along the element, nor within any
+#  distance of the crossing's own coordinate. It could sit at the far end of a
+#  kilometre-long element and pass. If a distance bound is wanted it would be a rule
+#  of its own, and would need a figure from you.
+#
+#  REPORTING - foulingPoints is a REFERENCE, so the fouling points carry IRIs a
+#  preparer can look up and sh:value is the offending point itself.
+#
+#  NOT COVERED - eng's Switch also has foulingPoints, 1..*, and the same question
+#  applies to it. A Switch has no topologicalCoordinates, though; its extent is
+#  given by leftBranch and rightBranch, so the elements admitted there are the three
+#  ports that infra's DP-013 reasons about. That is a different query and a
+#  different rule.
+#
+################################################################################
+
+eng-dp:Crossing-ENGDP004
+    a sh:NodeShape ;
+    sh:targetClass era:Crossing ;
+    rdfs:label "ENG-DP-004 fouling points must lie on an element the crossing occupies"@en ;
+    sh:sparql eng-dp:ENGDP004-foulingPointOffTheCrossing ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:ENGDP004-foulingPointOffTheCrossing
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-004"@en ;
+    sh:message "ENG-DP-004: this FoulingPoint stands on a LinearElement that is neither of the two the Crossing occupies. A fouling point marks where a vehicle on one track begins to foul the other, and it is only meaningful on a track that actually passes through the crossing; on a third element it describes clearance at a place where nothing crosses, so a route may be set over one track while a vehicle stands foul on the other. Either move the fouling point onto one of the crossing's own elements, or attach it to the crossing it really belongs to."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value
+        WHERE {
+            $this era:foulingPoints ?value .
+
+            # SINGULAR on the fouling point, and direct - no NetPointReference
+            ?value era:topologicalCoordinate/era:onLinearElement ?fle .
+
+            # topologicalCoordinates comes from the INFRA description of this same
+            # node. Absent, the infra half was not loaded; do not speak.
+            FILTER EXISTS { $this era:topologicalCoordinates ?anyTc }
+
+            # PLURAL on the crossing, and also direct
+            FILTER NOT EXISTS {
+                $this era:topologicalCoordinates/era:onLinearElement ?fle .
+            }
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-005  Every fouling point of a switch must stand on a LinearElement that
+#              one of the switch's own branch relations connects.
+#
+#     for all sw, for all fp in sw.foulingPoints:
+#         fp.topologicalCoordinate.onLinearElement in connected( sw )
+#
+#     where  connected(sw) = { elementA(nr), elementB(nr)
+#                              : nr in { sw.leftBranch, sw.rightBranch } }
+#
+#  and connects(nr, le) holds when le is EITHER of the relation's two elements,
+#  as given. The set is therefore the four element slots of the two branch
+#  relations, which by infra's DP-013 resolve to three distinct ends and in
+#  practice to three elements: the common track and the two divergences.
+#
+#  THE SISTER OF ENG-DP-004, and the difference is where the admissible elements
+#  come from. A Crossing states its own extent directly, in its two
+#  topologicalCoordinates. A Switch does not: it names two NetRelations, and the
+#  elements must be read off those. So this rule reaches ONE HOP FURTHER, and the
+#  NetRelation objects themselves must be in the graph, not merely referenced.
+#
+#  CROSS-MODULE ON ONE NODE, again. eng.json's Switch declares foulingPoints,
+#  tipShift, bladeLength and the two route properties; leftBranch and rightBranch
+#  belong to infra.json's Switch. One Switch instance carries both.
+#
+#  THE GUARD REQUIRES BOTH BRANCHES TO RESOLVE, and this is deliberate rather than
+#  incidental. A guard that merely asked for SOME connected element would leave the
+#  rule half-informed when one branch resolves and the other does not - the
+#  admissible set would then hold only the elements of the branch that happened to
+#  load, and a fouling point on the missing branch's element would be reported as
+#  though it were misplaced. That is a false accusation produced by incomplete
+#  data, which is the worst kind. Requiring both branches means the rule speaks
+#  only when it knows the switch's full extent, and is silent otherwise - silence
+#  for want of data, as everywhere else in this file.
+#
+#  Rationale: a fouling point at a switch is the place beyond which a vehicle
+#  standing on one leg will foul a movement over another - it is what clearance is
+#  measured to, and what decides whether a route may be set over one leg while a
+#  vehicle stands on another. It is only meaningful on a leg of that switch. A
+#  fouling point on some unrelated element describes clearance where the switch has
+#  no reach at all, so the protection is computed for the wrong ground and two
+#  conflicting movements over the switch can be authorised at once. Since a switch
+#  is precisely the place where two movements can be brought into conflict, this is
+#  the rule's sharpest form.
+#
+#  LIMITATION - ELEMENT membership, not END membership, exactly as the given
+#  definition of connects states. The rule does not ask which END of the element
+#  the switch reaches, so a fouling point at the far end of a long common track,
+#  hundreds of metres from the switch, is accepted. That is the same distinction
+#  infra's DP-012 and DP-013 turn on, where reasoning about (element, isOnOrigin)
+#  pairs rather than elements is what makes those rules correct. Tightening this
+#  one would need a decision on how far from the switch a fouling point may lie,
+#  which is a figure only you can supply - and note it is the same open question
+#  left by ENG-DP-004.
+#
+#  REPORTING - foulingPoints is a REFERENCE, so the fouling points carry IRIs and
+#  sh:value is the offending point itself. One finding per misplaced point.
+#
+################################################################################
+
+eng-dp:Switch-ENGDP005
+    a sh:NodeShape ;
+    sh:targetClass era:Switch ;
+    rdfs:label "ENG-DP-005 fouling points must lie on a leg of their own switch"@en ;
+    sh:sparql eng-dp:ENGDP005-foulingPointOffTheSwitch ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:ENGDP005-foulingPointOffTheSwitch
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-005"@en ;
+    sh:message "ENG-DP-005: this FoulingPoint stands on a LinearElement that neither of the Switch's branch relations connects. A fouling point at a switch marks where a vehicle on one leg begins to foul a movement over another, so it is only meaningful on a leg of that switch; on an unrelated element it describes clearance where the switch has no reach, and a route may be set over one leg while a vehicle stands foul on another. Either move the fouling point onto one of the elements named by the switch's leftBranch or rightBranch, or attach it to the switch it really belongs to."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value
+        WHERE {
+            $this era:foulingPoints ?value .
+
+            # a fouling point carries its coordinate DIRECTLY - no NetPointReference
+            ?value era:topologicalCoordinate/era:onLinearElement ?fle .
+
+            # leftBranch and rightBranch come from the INFRA description of this
+            # same node, and the NetRelations they name must themselves be in the
+            # graph. BOTH branches must resolve: knowing only half the switch's
+            # extent would turn a missing relation into a false accusation.
+            FILTER EXISTS {
+                $this era:leftBranch/(era:elementA|era:elementB) ?anyLeft .
+            }
+            FILTER EXISTS {
+                $this era:rightBranch/(era:elementA|era:elementB) ?anyRight .
+            }
+
+            # connects(nr, le) : le is EITHER element of the relation
+            FILTER NOT EXISTS {
+                $this (era:leftBranch|era:rightBranch)/(era:elementA|era:elementB) ?fle .
+            }
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-006  A balise's position in its group must lie within the group.
+#
+#     for all bg, for all b in bg.balises:
+#         b.n_pig <= |bg.balises| - 1        equivalently  b.n_pig < |bg.balises|
+#
+#  n_pig is the balise's position WITHIN the group, counted from ZERO: n_pig 0 is
+#  the first balise, 1 the second, and so on. A group of three balises therefore
+#  admits n_pig 0, 1 and 2 only, and an n_pig of 3 or more names a position the
+#  group does not have.
+#
+#  WHAT THE STRUCTURAL SHAPES ALREADY DO, AND WHY THIS IS STILL NEEDED. eng-shapes
+#  enforces n_pig's declared range of 0..7, and infra-shapes enforces the balises
+#  list bound of 1..8. Between them they guarantee only that n_pig is a position
+#  SOME group could have. They say nothing about THIS group: a two-balise group
+#  whose second balise carries n_pig 6 passes both, because 6 is in 0..7 and 2 is
+#  in 1..8. It is the RELATIVE bound - n_pig against the size of its own group -
+#  that no declared constraint can express, and that is what this rule adds.
+#
+#  Rationale: an on-board reads the balises of a group as it passes over them and
+#  uses n_pig to know which one it has just read and how many are still to come.
+#  A value outside the group's actual size tells it to expect a balise that does
+#  not exist, so the group is never completed and the reading is discarded or
+#  reported as an error - and a balise group that cannot be read is a position
+#  reference lost at exactly the point where it was meant to be gained.
+#
+#  CROSS-MODULE, and split unusually. n_pig belongs to eng.json's Balise; the
+#  balises list belongs to infra.json's BaliseGroup - eng.json's BaliseGroup
+#  declares only id, etcsMVersion and q_link. So the group's membership comes from
+#  one module and the position from the other, and both must be in the graph. If
+#  the eng half is absent no balise has an n_pig and nothing is compared; if the
+#  infra half is absent there is no list to size. Either way the rule is silent for
+#  want of data.
+#
+#  THE COUNT IS OF SLOTS, NOT OF DISTINCT BALISES, and the difference matters on
+#  defective data. A list naming the same balise twice has three slots but two
+#  distinct balises; counting the latter would shrink the admissible range and
+#  report an n_pig that is in fact correct for its position. The repeated balise is
+#  a defect, but it is not this rule's, and manufacturing a second finding from it
+#  would mislead. Counting list CELLS avoids that.
+#
+#  A NESTED AGGREGATE IS USED, which needs care under pySHACL: a nested SELECT must
+#  itself select every pre-bound variable, or validation fails outright with "All
+#  potentially pre-bound variables must be selected from a nested SELECT query".
+#  The inner SELECT therefore projects $this alongside the count and groups by it.
+#  Doing the aggregation at the top level instead would have forced the finding to
+#  name only the GROUP and its worst n_pig; nesting keeps the offending BALISE as
+#  the value node, which is what a preparer needs.
+#
+#  BOTH SERIALISATIONS ARE COUNTED. The list form is walked cell by cell; a second
+#  branch counts the direct objects of era:balises for the non-list form, excluding
+#  anything that is itself a list cell so that the two branches cannot double-count,
+#  and excluding rdf:nil so that an EMPTY list counts zero rather than one. Every
+#  one of these cases was checked against known counts before the rule was written.
+#
+#  NOT COVERED, and worth a rule of its own: nothing here requires the n_pig values
+#  within a group to be DISTINCT, nor to cover 0 .. n-1 exactly. Two balises both
+#  carrying n_pig 0, or a three-balise group numbered 0, 1, 1, satisfy this rule
+#  while being just as unreadable on board. That is the natural companion to this
+#  one and is a straightforward addition if you want it.
+#
+################################################################################
+
+eng-dp:BaliseGroup-ENGDP006
+    a sh:NodeShape ;
+    sh:targetClass era:BaliseGroup ;
+    rdfs:label "ENG-DP-006 a balise's n_pig must lie within its own group"@en ;
+    sh:sparql eng-dp:ENGDP006-nPigOutsideGroupSize ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:ENGDP006-nPigOutsideGroupSize
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-006"@en ;
+    sh:message "ENG-DP-006: this Balise carries n_pig {?npig}, but its BaliseGroup holds only {?n} balises. n_pig is the position of the balise within the group counted from zero, so the highest value this group admits is {?n} minus one. An on-board uses n_pig to know which balise it has read and how many remain; a position the group does not have leaves the group incomplete and the reading is lost. Either correct n_pig, or add the balises the group is missing."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value ?npig ?n
+        WHERE {
+            # The size of THIS group. A nested SELECT must project every pre-bound
+            # variable, so $this is selected and grouped by; without that pySHACL
+            # rejects the query outright.
+            {
+                SELECT $this (COUNT(DISTINCT ?slot) AS ?n)
+                WHERE {
+                    # list form: one slot per cell, so a repeated balise still
+                    # counts as the two positions it occupies
+                    {   $this era:balises/rdf:rest* ?slot .
+                        ?slot rdf:first ?anyB .
+                    }
+                    UNION
+                    # non-list form: the balises themselves are the slots. List
+                    # cells are excluded so the branches cannot double-count, and
+                    # rdf:nil is excluded so an EMPTY list counts zero, not one.
+                    {   $this era:balises ?slot .
+                        FILTER ( ?slot != rdf:nil )
+                        FILTER NOT EXISTS { ?slot rdf:first ?anyCell }
+                    }
+                }
+                GROUP BY $this
+            }
+
+            # the balises themselves, in either serialisation
+            {   $this era:balises/rdf:rest*/rdf:first ?value . }
+            UNION
+            {   $this era:balises ?value . }
+
+            # n_pig comes from the ENG description of the balise; absent, there is
+            # nothing to judge and no row is produced
+            ?value era:n_pig ?npig .
+
+            FILTER ( ?npig >= ?n )
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-007  ADVISORY - every LinearElement should have a speed profile.
+#
+#     for all le:  exists lesp of class LinearElementSpeedProfile
+#                      with lesp.linearElement = le
+#
+#  WHY THIS RULE LIVES IN THE ENG SET THOUGH BOTH ITS CLASSES ARE INFRA'S.
+#  LinearElement and LinearElementSpeedProfile are both declared in infra.json, and
+#  on first reading that puts the rule in infra-dataprep-shapes.ttl. It does not,
+#  and the reason is worth stating because it decides where several future rules
+#  will go.
+#
+#  An infra dataset that describes elements without speed profiles is NOT defective.
+#  PropertiesArea.linearElementSpeedProfiles is "*", and a topology-and-geometry
+#  description that says nothing about permitted speeds is a complete, coherent
+#  thing in its own right. There is no fault to report against infra alone.
+#
+#  The absence only BECOMES a problem for a consumer assembling infra together with
+#  eng - the point at which the data is expected to describe railway that can
+#  actually be run over, and at which a missing permitted speed stops being an
+#  omission and starts being a gap in what the combined description promises. The
+#  rule therefore belongs to the reading that makes it a fault, not to the module
+#  that happens to declare the classes.
+#
+#  The practical consequence: validate infra on its own and this rule is not
+#  applied at all, which is correct. Validate infra together with eng and it is.
+#
+#  SEVERITY sh:Warning, for the same reason and by the same reading. Even in the
+#  combined setting the absence may be deliberate or may simply lie in another
+#  file, so it is raised as advice. Under allow_warnings it does not block; a strict
+#  pass still does.
+#
+#  Rationale for caring at all: a speed profile is what says how fast a train may
+#  run over an element. Without one a consumer must either refuse to route over the
+#  element - turning usable railway into a barrier - or invent a limit, by carrying
+#  the previous element's speed forward or falling back on a default, and present
+#  the invention as data. The element itself is perfectly well formed; the fault is
+#  an ABSENCE, which no per-object rule can see.
+#
+#  SHACL CORE, no SPARQL: an INVERSE path from the element back to whatever points
+#  at it, exactly as infra's DP-004 does for NetRelations.
+#
+#  THE CLASS FILTER IS LOAD-BEARING. SIX classes across four modules carry an
+#  era:linearElement reference:
+#
+#      infra   LinearElementSpeedProfile   LinearElementGeometry
+#              SampledLinearElementGeometry
+#      eng     LinearElementKm   LinearElementAccuracyProfile
+#      map     LinearElementProjection
+#
+#  KmArea was a seventh until a model defect was corrected: its second attribute
+#  referenced a LinearElement while its own id carried sameKeyAs infra.TopoArea, and
+#  both its sibling area classes reference a TopoArea. It now reads era:topoArea.
+#
+#  A bare inverse path is satisfied by any of them, so an element with a geometry
+#  but no speed profile would pass. sh:qualifiedValueShape with
+#  sh:class era:LinearElementSpeedProfile is what narrows it, and there is a test
+#  for exactly that case.
+#
+#  IT DEPENDS ON THE PROFILE BEING TYPED, since sh:class matches on rdf:type. An
+#  untyped LinearElementSpeedProfile leaves its element advised as having none.
+#  That missing type is a structural fault infra-shapes.ttl reports, and the same
+#  dependence is accepted in DP-004.
+#
+#  IT EXPECTS THE COMPLETE DATASET. Validating one PropertiesArea, or a fragment of
+#  a TopoArea, will advise on every element whose profile lies outside the fragment.
+#  This was measured rather than assumed: as a Violation the rule reported ten of
+#  the eleven fixtures and examples in this repository, none of which is wrong - a
+#  worked example about a crossover has no business carrying five speed profiles.
+#
+#  NOT COVERED - nothing here forbids TWO speed profiles for one element, which
+#  would be ambiguous: a LinearElementSpeedProfile already carries both directions
+#  in sameDirProfile and oppositeDirProfile, so a second profile object for the
+#  same element leaves no way to say which governs.
+#
+################################################################################
+
+eng-dp:LinearElement-ENGDP007
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElement ;
+    rdfs:label "ENG-DP-007 every linear element should have a speed profile"@en ;
+    sh:property eng-dp:ENGDP007-hasSpeedProfile ;
+    .
+
+eng-dp:ENGDP007-hasSpeedProfile
+    a sh:PropertyShape ;
+    rdfs:label "ENG-DP-007"@en ;
+    sh:path [ sh:inversePath era:linearElement ] ;
+    sh:qualifiedValueShape [ sh:class era:LinearElementSpeedProfile ] ;
+    sh:qualifiedMinCount 1 ;
+    sh:message "ENG-DP-007 (advisory): no LinearElementSpeedProfile references this LinearElement, so no permitted speed is defined for it. A consumer must then either refuse to route over the element or invent a limit - by carrying the previous element's speed forward, or falling back on a default - and present the invention as data. Note this is not a fault in infra data on its own, where speed profiles are optional; it is raised for datasets that combine infra with eng and are expected to describe runnable railway. Note also that a geometry, a kilometre profile or a projection referencing this element does not satisfy the rule; a speed profile specifically is required, and the complete dataset is expected."@en ;
+    sh:severity sh:Warning ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-008  (P-07)  ADVISORY - a speed profile should start at the element
+#                      origin.
+#
+#     for all lesp, for all sp in { lesp.sameDirProfile, lesp.oppositeDirProfile }:
+#         sp.staticSpeedProfile non-empty
+#         =>  exists l in sp.staticSpeedProfile:  l.pos = 0
+#
+#  WHY THIS SITS IN THE ENG SET, like ENG-DP-007 and for the same reason. Both
+#  classes are infra's, but an infra dataset is not defective for saying nothing
+#  about permitted speeds - PropertiesArea.linearElementSpeedProfiles is "*". The
+#  gap only matters to a consumer assembling infra with eng, at the point where the
+#  data is expected to describe railway that can actually be run over. ENG-DP-007
+#  asks whether an element has a profile at all; this asks whether the profile it
+#  has covers the element from its start. They are two halves of one question and
+#  belong together.
+#
+#  Rationale: a static speed limit applies FROM its position onwards, until the
+#  next one takes over. If the lowest position in a profile is 250 m, then the first
+#  250 m of the element has no permitted speed at all - not an unrestricted stretch,
+#  an undefined one. A consumer must either refuse to run there or carry a speed in
+#  from somewhere else: from the previous element, from a line default, or by
+#  extending the first limit backwards. Each of those is a guess, and the guess is
+#  indistinguishable from data once it has been made.
+#
+#  This is the same shape of defect as DP-027a in the infra set, which requires cant
+#  to be defined from the element's origin, and the same argument applies: it is the
+#  OPENING stretch that has nothing to fall back on, because there is nothing before
+#  it on the element to inherit from.
+#
+#  SEVERITY sh:Warning, at your instruction and for a defensible reason: a profile
+#  beginning part way along MAY be intended, if the operator's convention is that a
+#  speed is inherited from the preceding element until a new limit is declared.
+#  Whether that convention holds is not something the data says, so the rule advises
+#  rather than accuses. Under allow_warnings it does not block; a strict pass does.
+#
+#  PER DIRECTION. sameDirProfile is 1..1 and oppositeDirProfile is 0..1, and each is
+#  a separate SpeedProfile that must stand on its own - a limit at the origin in one
+#  direction says nothing about the other. The UNION keeps them apart and the
+#  direction is named in the message.
+#
+#  MATCHED EXACTLY, WITH NO TOLERANCE, and this is a deliberate difference from
+#  DP-024 and DP-027b which both take +/- 1 m. Those compare two independently
+#  authored quantities - a transition position against a cant position, a cant
+#  position against a recorded element length - and a metre absorbs the difference
+#  in how the two were derived. Here the target is the CONSTANT zero: exactly
+#  representable in xsd:double, and authored rather than computed. There is nothing
+#  for a tolerance to absorb, and a speed limit at 0.5 m still leaves half a metre
+#  undefined. Positions compare by VALUE, so a limit written 0 satisfies the test as
+#  well as one written "0.0"^^xsd:double.
+#
+#  SCOPE - a SpeedProfile carrying no staticSpeedProfile at all is skipped: that is
+#  a structural fault against the 1..* multiplicity, which infra-shapes.ttl reports,
+#  and this rule has nothing to say about it.
+#
+#  NOT COVERED - the FAR end. Nothing here asks that the profile reach the element's
+#  end, and nothing needs to: unlike cant, which is interpolated BETWEEN points, a
+#  static limit EXTENDS from its position onwards, so the last limit already governs
+#  to the end of the element. This is the same distinction that makes DP-038 check
+#  only the origin while DP-027 checks both ends.
+#
+################################################################################
+
+eng-dp:LinearElementSpeedProfile-ENGDP008
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementSpeedProfile ;
+    rdfs:label "ENG-DP-008 a speed profile should start at the element origin"@en ;
+    sh:sparql eng-dp:ENGDP008-noSpeedLimitAtOrigin ;
+    sh:severity sh:Warning ;
+    .
+
+eng-dp:ENGDP008-noSpeedLimitAtOrigin
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-008"@en ;
+    sh:message "ENG-DP-008 (advisory): this LinearElementSpeedProfile's {?dir} has no StaticSpeedLimit at pos 0, so no permitted speed is defined from the element's origin up to the first limit. A static limit applies from its position onwards, so nothing covers the opening stretch and a consumer must either refuse to run there or carry a speed in from elsewhere - from the previous element, a line default, or by extending the first limit backwards - and present that guess as data. Add a limit at the origin, unless your convention is that the speed is inherited from the preceding element."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?dir
+        WHERE {
+            {   $this era:sameDirProfile     ?sp . BIND("sameDirProfile"     AS ?dir) }
+            UNION
+            {   $this era:oppositeDirProfile ?sp . BIND("oppositeDirProfile" AS ?dir) }
+
+            # only judge a profile that carries limits; an empty staticSpeedProfile
+            # is a structural fault against 1..* that infra-shapes.ttl reports
+            FILTER EXISTS { ?sp era:staticSpeedProfile/era:pos ?anyPos }
+
+            FILTER NOT EXISTS {
+                ?sp era:staticSpeedProfile ?l .
+                ?l  era:pos ?pos .
+                # the target is the CONSTANT zero, so no tolerance is applied here,
+                # unlike DP-024 and DP-027b. Comparison is still BY VALUE.
+                FILTER ( ?pos = 0 )
+            }
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-009  (E-01)  An offset accuracy must not be stated beyond the end of the
+#                      LinearElement whose accuracy it describes.
+#
+#     for all leap, for all oa in leap.offsetAccuracies:
+#         oa.offset <= leap.linearElement.lengthOfNetLinearElement
+#
+#  LinearElementAccuracyProfile and OffsetAccuracy were, until this rule, the one
+#  corner of eng.json that no rule touched at all. Their structure is an exact copy
+#  of LinearElementKm and KilometricPost: an object anchored to a LinearElement by an
+#  explicit era:linearElement reference, carrying an "ordered": "byIndex" list of
+#  positioned members. ENG-DP-001 is therefore the template, and this rule follows it
+#  down to the rdf:List walk and the tolerant non-list branch.
+#
+#  Rationale: accuracy is the statement of how far a recorded position may be from
+#  the true one. It is what a consumer uses to decide how much to trust EVERY other
+#  position on the element - whether two objects recorded 3 m apart are really
+#  distinct, whether a balise is inside a section or just outside it, how much margin
+#  a protection distance needs. Because the values are interpolated between offsets,
+#  an accuracy stated beyond the element's end does not merely describe absent track:
+#  it drags the interpolation over the whole stretch between itself and its
+#  neighbour, so confidence is flattered or degraded along real track. That is a
+#  quiet failure - nothing looks wrong, positions are simply trusted by the wrong
+#  amount.
+#
+#  offsetAccuracies IS AN RDF LIST - "ordered": "byIndex" in eng.json, so the members
+#  are the ITEMS of an rdf:List. era:offsetAccuracies alone reaches the list's first
+#  CELL, which is not an OffsetAccuracy and carries no offset; a rule written that
+#  way would match nothing and pass everything in silence. The items are reached with
+#  era:offsetAccuracies/rdf:rest*/rdf:first, and a second UNION branch tolerates the
+#  non-list form for the reason set out under infra's DP-016.
+#
+#  CROSS-MODULE - the length lives on an infra LinearElement. Validated without the
+#  infra topology in the graph, the opening patterns match nothing and the rule is
+#  silent: silence for want of the other half, not a clean bill of health.
+#
+#  SCOPE - no further guard is needed. A missing era:linearElement or
+#  lengthOfNetLinearElement is a structural fault the respective -shapes.ttl reports.
+#  offsetAccuracies is 0..*, so a profile with no members at all is legitimate and
+#  this rule is vacuous on it. Comparison is by VALUE, so an offset written as a
+#  plain integer is compared correctly against a double length.
+#
+#  REPORTING - the focus node is the LinearElementAccuracyProfile and sh:value is the
+#  offending offset rather than the member, OffsetAccuracy being a composition and so
+#  usually a blank node a preparer cannot look up. The accuracy value is carried in
+#  the projection so that two members sharing one bad offset are reported separately.
+#
+#  NOT COVERED - an upper bound only, so a negative offset is accepted here, as
+#  throughout ENG-DP-001 and the infra position rules. Nor is the accuracy VALUE
+#  itself checked: an accuracy of zero claims a perfect position and is almost
+#  certainly a placeholder, which is proposal E-11.
+#
+################################################################################
+
+eng-dp:LinearElementAccuracyProfile-ENGDP009
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementAccuracyProfile ;
+    rdfs:label "ENG-DP-009 an offset accuracy must not sit beyond the end of its linear element"@en ;
+    sh:sparql eng-dp:ENGDP009-offsetAccuracyBeyondElementEnd ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:ENGDP009-offsetAccuracyBeyondElementEnd
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-009"@en ;
+    sh:message "ENG-DP-009: this LinearElementAccuracyProfile states an accuracy at offset {?value} m, beyond the end of the referenced LinearElement, whose lengthOfNetLinearElement is {?len} m. The offset is measured from that element's origin, so it must not exceed the element's length. Because accuracy values are interpolated between offsets, a member off the end skews the confidence attached to every position between it and its neighbour - so positions along real track are trusted by the wrong amount, with nothing visibly wrong. Either correct the offset, or move the member to the accuracy profile of the element it really describes."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value ?len ?oa ?acc
+        WHERE {
+            $this era:linearElement ?le .
+            ?le   era:lengthOfNetLinearElement ?len .
+
+            # offsetAccuracies is ordered byIndex, so the members are the ITEMS of
+            # an rdf:List; the second branch tolerates the non-list form
+            {   $this era:offsetAccuracies/rdf:rest*/rdf:first ?oa . }
+            UNION
+            {   $this era:offsetAccuracies ?oa . }
+
+            ?oa era:offset ?value .
+            OPTIONAL { ?oa era:accuracy ?acc }
+
+            FILTER ( ?value > ?len )
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-010  (E-02)  Offset accuracies must run in order along the list.
+#
+#     for all leap: reading the offsets of leap.offsetAccuracies in list order
+#     gives a sequence that is STRICTLY MONOTONIC - increasing throughout, or
+#     decreasing throughout.
+#
+#  The eighth byIndex list in the model to carry this rule, and the direct
+#  counterpart of ENG-DP-002. offsetAccuracies is tagged "ordered": "byIndex", which
+#  is a promise about MEANING: the members are in the sequence of their real location,
+#  so neighbours in the array are neighbours on the ground.
+#
+#  EITHER DIRECTION IS ALLOWED, as established for every byIndex list in this model:
+#  a list may run against the direction in which the element's offsets grow. It is
+#  the reversal PART WAY ALONG that is the defect.
+#
+#  Rationale: consecutive members are the two ends of an interval over which accuracy
+#  is interpolated. A list that doubles back makes those intervals overlap and run
+#  backwards, so a single position can be assigned two different accuracies depending
+#  on which interval a consumer happens to use - and since accuracy is what decides
+#  how much every other position is trusted, the ambiguity propagates into every
+#  judgement made about that stretch of track.
+#
+#  SPLIT IN TWO, as ENG-DP-002 is:
+#
+#    ENG-DP-010a  two ADJACENT members at the same offset. Contradictory rather than
+#                 untidy: one place on the element given two different accuracies,
+#                 with nothing to say which holds. Nothing else in any rule set
+#                 catches this.
+#
+#    ENG-DP-010b  the list CHANGES DIRECTION. Detected over three consecutive
+#                 members: if no two adjacent offsets are equal then every step is
+#                 strictly up or strictly down, so a sequence that is not monotonic
+#                 must turn somewhere, and at the turn three consecutive members form
+#                 a peak or a valley. Reporting the turning offset names the member
+#                 to move.
+#
+#  INTERACTION - ENG-DP-010b says nothing where adjacent offsets are equal, so a list
+#  that both repeats an offset AND turns is reported by ENG-DP-010a alone on the first
+#  pass; once the repeat is corrected a second pass reports the turn.
+#
+#  RELIES ON THE rdf:LIST, unavoidably: order is not a property a plain multi-valued
+#  property has, so there is no tolerant non-list branch here as there is in
+#  ENG-DP-009. On data written without a list this rule is necessarily silent, that
+#  missing list being a structural fault eng-shapes.ttl reports.
+#
+#  NOT CROSS-MODULE, unlike ENG-DP-009: this rule compares members against one
+#  another and needs no infra data at all, so it is just as effective on an eng
+#  fragment validated on its own.
+#
+#  A list of one or two members is always in order and is never reported by
+#  ENG-DP-010b; two members at one offset are still caught by ENG-DP-010a.
+#
+################################################################################
+
+eng-dp:LinearElementAccuracyProfile-ENGDP010
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementAccuracyProfile ;
+    rdfs:label "ENG-DP-010 offset accuracies must run in order along the list"@en ;
+    sh:sparql
+        eng-dp:ENGDP010a-adjacentOffsetsEqual ,
+        eng-dp:ENGDP010b-listChangesDirection ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:ENGDP010a-adjacentOffsetsEqual
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-010a"@en ;
+    sh:message "ENG-DP-010a: two OffsetAccuracy members that follow one another in this LinearElementAccuracyProfile's list are both at offset {?value} m. Two members at one place on the element assign two different accuracies to that place, so how far a position there may be trusted is ambiguous and a consumer will pick one arbitrarily. Remove the duplicate, or correct whichever offset was copied."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value ?cell
+        WHERE {
+            $this era:offsetAccuracies/rdf:rest* ?cell .
+            ?cell rdf:first ?m1 ;
+                  rdf:rest  ?c2 .
+            ?c2   rdf:first ?m2 .
+
+            ?m1 era:offset ?value .
+            ?m2 era:offset ?o2 .
+
+            FILTER ( ?value = ?o2 )
+        }
+    """ ;
+    .
+
+eng-dp:ENGDP010b-listChangesDirection
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-010b"@en ;
+    sh:message "ENG-DP-010b: this LinearElementAccuracyProfile's list of offset accuracies changes direction at offset {?value} m - the three consecutive members at {?o1}, {?value} and {?o3} m turn back on themselves. The list is tagged byIndex, so it is in the order its members occupy on the ground; that order may run either way along the element but must not reverse part way. Consecutive members are the two ends of an interval over which accuracy is interpolated, so a list that doubles back makes those intervals overlap and one position can be given two different accuracies. Move the member at {?value} m to its proper place in the sequence, or correct its offset."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value ?o1 ?o3 ?cell
+        WHERE {
+            # three consecutive members
+            $this era:offsetAccuracies/rdf:rest* ?cell .
+            ?cell rdf:first ?m1 ;
+                  rdf:rest  ?c2 .
+            ?c2   rdf:first ?m2 ;
+                  rdf:rest  ?c3 .
+            ?c3   rdf:first ?m3 .
+
+            ?m1 era:offset ?o1 .
+            ?m2 era:offset ?value .
+            ?m3 era:offset ?o3 .
+
+            # a peak or a valley: the middle member is a turning point. Equal
+            # adjacent offsets satisfy neither branch and are ENG-DP-010a's.
+            FILTER (   ( ?o1 < ?value && ?value > ?o3 )
+                    || ( ?o1 > ?value && ?value < ?o3 ) )
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-011  (E-03)  The assets a track usage path lists must lie on that path.
+#
+#     for all tup:
+#         let P = elements( tup.pathBody )
+#                 = startsAt.onLinearElement
+#                 U endsAt.onLinearElement
+#                 U hasSequence
+#
+#         (a)  for all d in tup.derailers:
+#                  d.netPointReference.hasTopoCoordinate.onLinearElement in P
+#
+#         (b)  for all s in tup.switches:
+#                  elements(s) INTERSECT P  is non-empty
+#
+#         (c)  for all lx in tup.levelCrossings:
+#                  elements(lx) INTERSECT P  is non-empty
+#
+#  THE POINT / EXTENT DISTINCTION IS THE WHOLE DIFFICULTY, and getting it wrong in
+#  either direction ruins the rule.
+#
+#  A DERAILER IS A POINT. It has one topological coordinate and therefore one
+#  element, and that element must be on the path - plain membership, as in
+#  ENG-DP-003.
+#
+#  A SWITCH AND A LEVEL CROSSING ARE EXTENDED, and this is where the naive reading
+#  fails. A switch reaches three elements: a common track and two divergences. A
+#  path runs in along one and out along another - so the THIRD element is, by the
+#  very definition of a switch, NOT on the path. Requiring every element of the
+#  switch to lie on the path would therefore report every correctly-recorded switch
+#  in the dataset. The same holds for a level crossing, which spans the several
+#  tracks it crosses while the path uses only one of them.
+#
+#  What must hold for those two is that the asset and the path SHARE at least one
+#  element - that the path actually reaches the thing it claims to pass. Hence the
+#  intersection form, and hence sub-rules (b) and (c) are weaker than (a) on
+#  purpose rather than by oversight.
+#
+#  Rationale: a track usage path lists the assets a movement over it encounters,
+#  and a route-setting system uses that list to decide what must be positioned,
+#  locked and proved clear before the movement is authorised. An asset that is not
+#  on the path at all is either attached to the wrong path or positioned wrongly.
+#  Both readings are dangerous in the same direction: the movement is authorised
+#  with attention paid to a switch it will not traverse, and none paid to one it
+#  will.
+#
+#  THREE SUB-RULES, NOT ONE, because each asset type states its position by a
+#  different route - the trap that ENG-DP-003 and ENG-DP-004 were both built to
+#  avoid:
+#
+#      Derailer       netPointReference / hasTopoCoordinate / onLinearElement
+#      Switch         (leftBranch|rightBranch) / (elementA|elementB)
+#      LevelCrossing  areaReference / includes / {startsAt, endsAt, hasSequence}
+#
+#  A single query using one path for all three would silently match nothing for two
+#  of them and pass everything.
+#
+#  GUARDS, and there are two kinds.
+#
+#    Every sub-rule first requires the PATH to yield at least one element. pathBody
+#    is 1..1 and a NetLinearReference always has startsAt and endsAt, so failing
+#    that means the infra half is absent or structurally incomplete; judging assets
+#    against an empty path would report all of them.
+#
+#    Sub-rule (b) additionally requires BOTH switch branches to resolve, for the
+#    reason established in ENG-DP-005: with only one branch known, the intersection
+#    is computed against half the switch, and a switch whose shared leg happens to
+#    be the unresolved one is falsely accused. Sub-rule (c) likewise requires the
+#    crossing's areaReference to be present.
+#
+#  CROSS-MODULE THROUGHOUT. pathBody, the derailers, the switch branch relations and
+#  the crossing areas are all infra's. Validated without infra data these rules are
+#  silent for want of the other half.
+#
+#  LIMITATION - element membership, not offset. A derailer on the right element but
+#  outside the stretch the path actually covers is accepted, as in DP-005, DP-014
+#  and ENG-DP-003. And for (b) and (c), sharing ONE element is all that is asked:
+#  the rule does not check that the path passes through the switch in a way the
+#  switch permits, which is what infra's DP-012 and DP-013 reason about.
+#
+#  REPORTING - all three properties are REFERENCES, so the assets carry IRIs a
+#  preparer can look up and sh:value is the offending asset itself.
+#
+################################################################################
+
+eng-dp:TrackUsagePath-ENGDP011
+    a sh:NodeShape ;
+    sh:targetClass era:TrackUsagePath ;
+    rdfs:label "ENG-DP-011 the assets a path lists must lie on that path"@en ;
+    sh:sparql
+        eng-dp:ENGDP011a-derailerOffThePath ,
+        eng-dp:ENGDP011b-switchOffThePath ,
+        eng-dp:ENGDP011c-levelCrossingOffThePath ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:ENGDP011a-derailerOffThePath
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-011a"@en ;
+    sh:message "ENG-DP-011a: this Derailer stands on a LinearElement that is not part of the TrackUsagePath's pathBody. A path lists the assets a movement over it encounters, and a route-setting system positions and proves those assets before authorising the movement; a derailer that is not on the path is either attached to the wrong path or positioned wrongly, and either way attention is paid to an asset the movement will not reach. Either move the derailer, or attach it to the path it really stands on."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value
+        WHERE {
+            $this era:derailers ?value .
+
+            # a derailer is a POINT: one coordinate, through a NetPointReference
+            ?value era:netPointReference/era:hasTopoCoordinate/era:onLinearElement ?dle .
+
+            # the path must yield at least one element, or every asset would be
+            # reported for want of anything to compare against
+            FILTER EXISTS {
+                $this era:pathBody ?pb0 .
+                {   ?pb0 era:startsAt/era:hasTopoCoordinate/era:onLinearElement ?any0 . }
+                UNION
+                {   ?pb0 era:endsAt/era:hasTopoCoordinate/era:onLinearElement ?any0 . }
+                UNION
+                {   ?pb0 era:hasSequence/rdf:rest*/rdf:first ?any0 . }
+            }
+
+            FILTER NOT EXISTS {
+                $this era:pathBody ?pb .
+                {   ?pb era:startsAt/era:hasTopoCoordinate/era:onLinearElement ?dle . }
+                UNION
+                {   ?pb era:endsAt/era:hasTopoCoordinate/era:onLinearElement ?dle . }
+                UNION
+                {   ?pb era:hasSequence/rdf:rest*/rdf:first ?dle . }
+            }
+        }
+    """ ;
+    .
+
+eng-dp:ENGDP011b-switchOffThePath
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-011b"@en ;
+    sh:message "ENG-DP-011b: none of the LinearElements this Switch connects is part of the TrackUsagePath's pathBody, so the path does not reach the switch at all. Note the rule asks only that the switch and the path SHARE an element: a switch's third leg necessarily leaves the path, so it is not required to be on it. Sharing nothing means the switch is attached to the wrong path, or the path body is wrong. A route-setting system would position and lock a switch the movement never traverses, and leave unattended one it does."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value
+        WHERE {
+            $this era:switches ?value .
+
+            # the path must yield at least one element
+            FILTER EXISTS {
+                $this era:pathBody ?pb0 .
+                {   ?pb0 era:startsAt/era:hasTopoCoordinate/era:onLinearElement ?any0 . }
+                UNION
+                {   ?pb0 era:endsAt/era:hasTopoCoordinate/era:onLinearElement ?any0 . }
+                UNION
+                {   ?pb0 era:hasSequence/rdf:rest*/rdf:first ?any0 . }
+            }
+
+            # BOTH branches must resolve, as in ENG-DP-005: half a switch's extent
+            # would turn a missing relation into a false accusation
+            FILTER EXISTS { $this era:switches ?value . ?value era:leftBranch/(era:elementA|era:elementB) ?anyL }
+            FILTER EXISTS { $this era:switches ?value . ?value era:rightBranch/(era:elementA|era:elementB) ?anyR }
+
+            # a switch is EXTENDED: sharing ONE element with the path is enough,
+            # because its third leg is by definition off the path
+            FILTER NOT EXISTS {
+                ?value (era:leftBranch|era:rightBranch)/(era:elementA|era:elementB) ?sle .
+                $this era:pathBody ?pb .
+                {   ?pb era:startsAt/era:hasTopoCoordinate/era:onLinearElement ?sle . }
+                UNION
+                {   ?pb era:endsAt/era:hasTopoCoordinate/era:onLinearElement ?sle . }
+                UNION
+                {   ?pb era:hasSequence/rdf:rest*/rdf:first ?sle . }
+            }
+        }
+    """ ;
+    .
+
+eng-dp:ENGDP011c-levelCrossingOffThePath
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-011c"@en ;
+    sh:message "ENG-DP-011c: none of the LinearElements in this LevelCrossing's areaReference is part of the TrackUsagePath's pathBody, so the path does not reach the crossing at all. As with switches, the rule asks only that the two SHARE an element - a crossing spans the several tracks it crosses while the path uses one of them. Sharing nothing means the crossing is attached to the wrong path, or the path body is wrong, and a movement would be authorised without regard to a crossing it will traverse."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value
+        WHERE {
+            $this era:levelCrossings ?value .
+
+            # the path must yield at least one element
+            FILTER EXISTS {
+                $this era:pathBody ?pb0 .
+                {   ?pb0 era:startsAt/era:hasTopoCoordinate/era:onLinearElement ?any0 . }
+                UNION
+                {   ?pb0 era:endsAt/era:hasTopoCoordinate/era:onLinearElement ?any0 . }
+                UNION
+                {   ?pb0 era:hasSequence/rdf:rest*/rdf:first ?any0 . }
+            }
+
+            # areaReference comes from the INFRA description of the crossing; absent,
+            # the crossing's extent is unknown and it must not be judged
+            FILTER EXISTS { $this era:levelCrossings ?value . ?value era:areaReference ?anyArea }
+
+            # a level crossing is EXTENDED: sharing ONE element is enough
+            FILTER NOT EXISTS {
+                ?value era:areaReference/era:includes ?lr .
+                {   ?lr era:startsAt/era:hasTopoCoordinate/era:onLinearElement ?xle . }
+                UNION
+                {   ?lr era:endsAt/era:hasTopoCoordinate/era:onLinearElement ?xle . }
+                UNION
+                {   ?lr era:hasSequence/rdf:rest*/rdf:first ?xle . }
+
+                $this era:pathBody ?pb .
+                {   ?pb era:startsAt/era:hasTopoCoordinate/era:onLinearElement ?xle . }
+                UNION
+                {   ?pb era:endsAt/era:hasTopoCoordinate/era:onLinearElement ?xle . }
+                UNION
+                {   ?pb era:hasSequence/rdf:rest*/rdf:first ?xle . }
+            }
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-012  (E-04)  Sleepers must not contradict one another over shared track.
+#
+#     for all s1, s2 of class Sleepers with s1 != s2,
+#     for all sec1 in s1.linearElementSections, sec2 in s2.linearElementSections:
+#         (  sec1.onElement = sec2.onElement
+#            and sec1 overlaps sec2 )
+#         =>  s1.sleepersType = s2.sleepersType
+#
+#     where overlap is STRICT.
+#
+#  THE FIFTH BRANCH OF INFRA'S DP-035, written here because the class is eng's.
+#  DP-035 covers LinearElementGauge, LinearElementLoadingGauge, TractionSystem and
+#  CurrentLimitation - the infra classes whose value is exclusive over a stretch of
+#  track. Sleepers is eng's only class of that shape, and sleepersType is exclusive
+#  in exactly the same way: a stretch of track is laid on ONE kind of sleeper.
+#
+#  Every decision is inherited from DP-035 deliberately, so that the two behave
+#  identically and a preparer who has learned one has learned the other:
+#
+#    STRICT OVERLAP - sections that merely touch at a boundary do not report.
+#    Laying sections end to end is exactly how a changing property along an element
+#    is described, and flagging every boundary would bury the real findings.
+#
+#    MALFORMED SECTIONS ARE SKIPPED - a guard requires start <= end on both. A
+#    reversed section is infra's DP-010 to report, and overlap arithmetic on one is
+#    meaningless.
+#
+#    ONLY A DIFFERENCE IS A CONTRADICTION - two Sleepers objects with the SAME type
+#    over shared track are redundant, not conflicting, and are not reported.
+#
+#    EACH CONFLICTING PAIR ONCE - the pattern matches in both orders and an ordering
+#    filter keeps one.
+#
+#    sh:value IS THE LINEAR ELEMENT, not either object. Sleepers has an id and so an
+#    IRI, unlike DP-035's four classes which are all compositions - but the element
+#    is what the two objects are arguing about, and both Sleepers are named in the
+#    message, so the report stays consistent with DP-035 and loses nothing.
+#
+#  Rationale: sleeper type determines what the track can carry and how it behaves -
+#  it feeds track stiffness, permitted axle load and maintenance regime. Two records
+#  claiming different types over ground they share is a flat contradiction, and
+#  neither object is wrong on its own: each is internally consistent, each satisfies
+#  DP-010 and DP-011, and only holding the two against one another reveals it. A
+#  consumer resolves it by picking one, so the answer depends on traversal order.
+#
+#  A NOTE ON EngArea.defaultSleepersType, which is NOT involved. The area carries a
+#  default and the Sleepers objects state exceptions to it; a Sleepers object that
+#  merely restates the default is redundant but not contradictory, and nothing here
+#  compares an object against the default. Whether such restatements are worth
+#  reporting is a separate question.
+#
+#  APPLIES ACROSS THE WHOLE DATASET, not within one EngArea. Two Sleepers objects in
+#  different areas that contradict one another over the same element are still a
+#  contradiction. Validating one area at a time sees only that area, as with DP-035.
+#
+################################################################################
+
+eng-dp:Sleepers-ENGDP012
+    a sh:NodeShape ;
+    sh:targetClass era:Sleepers ;
+    rdfs:label "ENG-DP-012 sleepers must not conflict over shared track"@en ;
+    sh:sparql eng-dp:ENGDP012-conflictingSleeperTypeOverSharedTrack ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:ENGDP012-conflictingSleeperTypeOverSharedTrack
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-012"@en ;
+    sh:message "ENG-DP-012: this Sleepers object and {?other} claim different sleeper types over the same stretch of LinearElement {?value}. One covers [{?a1}, {?b1}] m with {?v1}, the other covers [{?a2}, {?b2}] m with {?v2}, and the two ranges overlap. A stretch of track is laid on one kind of sleeper, so the two cannot both hold; sleeper type feeds track stiffness, permitted axle load and maintenance regime, so the disagreement propagates into all three. Neither object is wrong on its own, which is why nothing else reports this - a consumer will resolve it by picking one, and which one may differ from run to run. Reconcile the types, or move a boundary so the ranges meet without overlapping; ranges that touch at a single offset are accepted."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value ?other ?v1 ?v2 ?a1 ?b1 ?a2 ?b2
+        WHERE {
+            ?other a era:Sleepers .
+            FILTER ( !sameTerm($this, ?other) )
+
+            $this  era:sleepersType ?v1 .
+            ?other era:sleepersType ?v2 .
+
+            # only a DIFFERENCE is a contradiction; the same type over shared track
+            # is redundant, not conflicting
+            FILTER ( ?v1 != ?v2 )
+
+            $this  era:linearElementSections ?s1 .
+            ?other era:linearElementSections ?s2 .
+
+            ?s1 era:onElement ?value ;
+                era:startOffsetFromOrigin ?a1 ;
+                era:endOffsetFromOrigin   ?b1 .
+            ?s2 era:onElement ?le2 ;
+                era:startOffsetFromOrigin ?a2 ;
+                era:endOffsetFromOrigin   ?b2 .
+            FILTER ( sameTerm(?value, ?le2) )
+
+            # a reversed section is infra's DP-010 to report; overlap arithmetic on
+            # one is meaningless, so skip both here
+            FILTER ( ?a1 <= ?b1 && ?a2 <= ?b2 )
+
+            # STRICT overlap: sections that merely touch at a boundary are allowed
+            FILTER ( ?a1 < ?b2 && ?a2 < ?b1 )
+
+            # the pair matches in both orders; keep one of the two
+            FILTER ( STR($this) < STR(?other) )
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-013  (E-05)  No two balises in a group may claim the same position.
+#
+#     for all bg, for all b1, b2 in bg.balises with b1 != b2:
+#         b1.n_pig != b2.n_pig
+#
+#  Recorded as NOT COVERED under ENG-DP-006, which bounds each n_pig from above but
+#  says nothing about the set as a whole. A three-balise group numbered 0, 1, 1
+#  satisfies ENG-DP-006 completely while being just as unreadable on board: the
+#  on-board is told to expect a balise at position 2 that never arrives, and is
+#  handed position 1 twice.
+#
+#  DISTINCTNESS ALONE IS ENOUGH - the proposal asked for the values to be distinct
+#  AND to cover 0 .. n-1 exactly, but the second follows from the first and is not
+#  implemented separately. Given ENG-DP-006, every n_pig in a group of n balises
+#  lies in 0 .. n-1. If the n values are also pairwise distinct then n distinct
+#  values occupy a range of exactly n positions, so by the pigeonhole principle they
+#  are precisely 0 .. n-1 with nothing missing. Writing a second coverage rule would
+#  add nothing but a second finding for the same defect.
+#
+#  Note this holds only WITH ENG-DP-006. On data that breaks the upper bound, both
+#  rules fire and each says something different: ENG-DP-006 that a position is
+#  outside the group, this one that two balises claim the same position.
+#
+#  Rationale: n_pig is how the on-board tells one balise of a group from another as
+#  it passes over them. Two balises claiming one position leave it unable to say
+#  which it has read; combined with the group's expected size it will also be
+#  waiting for a position that is never transmitted, so the group is never completed
+#  and the reading is discarded. A balise group that cannot be read is a position
+#  reference lost at exactly the point where it was meant to be gained.
+#
+#  CROSS-MODULE, split as in ENG-DP-006: n_pig belongs to eng.json's Balise, the
+#  balises list to infra.json's BaliseGroup. Both halves must be in the graph.
+#
+#  A REPEATED BALISE IS NOT A COLLISION. If one balise appears twice in the list it
+#  is one node, so !sameTerm excludes the pair and nothing is reported. The
+#  repetition is a defect but not this one, and manufacturing a finding from it
+#  would mislead - the same reasoning that made ENG-DP-006 count list SLOTS rather
+#  than distinct balises.
+#
+#  BOTH BALISES ARE REPORTED, not one per pair. Unlike ENG-DP-012, where the finding
+#  is about an element two objects are arguing over, here each balise carries a
+#  value that may be the wrong one and a preparer has to look at both to decide
+#  which to change. This follows DP-006, DP-007 and DP-008, which likewise report
+#  each object at a shared position.
+#
+#  Serialisation: both the list form and the plain multi-valued form are matched, as
+#  in ENG-DP-006. No order is involved, so no rdf:List walk is strictly required -
+#  but the list form must still be reached through it.
+#
+################################################################################
+
+eng-dp:BaliseGroup-ENGDP013
+    a sh:NodeShape ;
+    sh:targetClass era:BaliseGroup ;
+    rdfs:label "ENG-DP-013 no two balises in a group at the same position"@en ;
+    sh:sparql eng-dp:ENGDP013-duplicateNPigInGroup ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:ENGDP013-duplicateNPigInGroup
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-013"@en ;
+    sh:message "ENG-DP-013: this Balise carries n_pig {?npig}, and another balise in the same BaliseGroup carries it too. n_pig is how an on-board tells one balise of a group from another as it passes over them, so two balises claiming one position leave it unable to say which it has read - and, since it also knows how many balises to expect, it will wait for a position that is never transmitted, so the group is never completed and the reading is discarded. Renumber whichever balise is wrong; the positions of a group of n balises must be 0 to n-1, each used once."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value ?npig
+        WHERE {
+            # ?value is the offending BALISE, so that sh:value names the object a
+            # preparer must look at - as DP-006, DP-007 and DP-008 do. The position
+            # itself is carried as ?npig for the message.
+            {   $this era:balises/rdf:rest*/rdf:first ?value . }
+            UNION
+            {   $this era:balises ?value . }
+
+            {   $this era:balises/rdf:rest*/rdf:first ?other . }
+            UNION
+            {   $this era:balises ?other . }
+
+            # a balise repeated in the list is ONE node, so it cannot collide with
+            # itself; that repetition is a defect but not this one
+            FILTER ( !sameTerm(?value, ?other) )
+
+            # n_pig comes from the ENG description of each balise; absent, no row
+            ?value era:n_pig ?npig .
+            ?other era:n_pig ?n2 .
+
+            FILTER ( ?npig = ?n2 )
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-014  (E-06)  A route must not require a switch in both positions.
+#
+#     for all sw:
+#         sw.routeRequiresPointRight  INTERSECT  sw.routeRequiresPointLeft  =  {}
+#
+#  A TrackUsagePath appearing in BOTH lists requires the switch to be set right and
+#  left for one and the same route. That cannot be satisfied by any physical switch,
+#  and the data offers nothing to choose between the two.
+#
+#  Rationale: these two properties are what a route-setting system reads to decide
+#  which way to move a switch before authorising a movement over a path. Faced with
+#  a path in both lists it will either detect the contradiction and refuse the route
+#  - turning a usable route into a barrier - or take whichever it happens to read
+#  first, which means the switch is set correctly for some movements over that path
+#  and wrongly for others, depending on nothing more than triple order. The second
+#  outcome is the dangerous one, because it is intermittent: the route works, until
+#  it does not.
+#
+#  Neither list is wrong on its own. Each is a perfectly ordinary collection of
+#  paths, and only holding the two against one another reveals the conflict - the
+#  same character as DP-035 and ENG-DP-012, though far cheaper to check.
+#
+#  PURE SHACL CORE, and the cheapest rule in either file: sh:disjoint states that
+#  the value sets of two properties share no member. No SPARQL, so no prefix
+#  concerns and no query to get wrong. sh:value is the shared TrackUsagePath, which
+#  is exactly the thing to look at.
+#
+#  NOT CROSS-MODULE - both properties belong to eng.json's Switch, so unlike
+#  ENG-DP-005 and ENG-DP-011b this rule needs no infra data at all and is just as
+#  effective on an eng fragment validated alone. It also does not care whether the
+#  paths themselves are in the graph: the contradiction is in the switch's own
+#  statement about them.
+#
+#  SCOPE - both properties are 0..*, so a switch naming no routes at all, or routes
+#  in only one direction, is entirely ordinary and is not reported.
+#
+#  NOT COVERED - nothing here checks the CONVERSE direction of the relationship:
+#  that a TrackUsagePath naming this switch in its own switches list is among the
+#  routes the switch declares, or the other way about. That coherence check would be
+#  a rule of its own.
+#
+################################################################################
+
+eng-dp:Switch-ENGDP014
+    a sh:NodeShape ;
+    sh:targetClass era:Switch ;
+    rdfs:label "ENG-DP-014 a route must not require a switch in both positions"@en ;
+    sh:property eng-dp:ENGDP014-routePositionsDisjoint ;
+    .
+
+eng-dp:ENGDP014-routePositionsDisjoint
+    a sh:PropertyShape ;
+    rdfs:label "ENG-DP-014"@en ;
+    sh:path era:routeRequiresPointRight ;
+    sh:disjoint era:routeRequiresPointLeft ;
+    sh:message "ENG-DP-014: this TrackUsagePath appears in BOTH routeRequiresPointRight and routeRequiresPointLeft of the same Switch, so one route requires the switch to be set right and left at once. No physical switch can satisfy that, and nothing in the data says which was meant. A route-setting system will either refuse the route outright, or take whichever it reads first - in which case the switch is set correctly for some movements over this path and wrongly for others, depending on nothing more than the order the data happens to be read in. Remove the path from whichever list is wrong."@en ;
+    sh:severity sh:Violation ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-015  (E-07)  A buffer stop's danger point must stand on the buffer stop's
+#                      own linear element.
+#
+#     for all bs with bs.dangerPoint = dp:
+#         dp.topologicalCoordinate.onLinearElement
+#             =  bs.netPointReference.hasTopoCoordinate.onLinearElement
+#
+#  Recorded as NOT COVERED under ENG-DP-003, and the last member of the
+#  danger-point / fouling-point family: ENG-DP-003 places a level crossing's danger
+#  points within its area, ENG-DP-004 and ENG-DP-005 place fouling points on a
+#  crossing and on a switch, and this places a buffer stop's danger point on the
+#  buffer stop.
+#
+#  IT IS THE STRICTEST OF THE FOUR, and necessarily so. A crossing, a switch and a
+#  level crossing are all EXTENDED - they offer two or three elements, and the rule
+#  asks for membership in that set. A buffer stop is a POINT: it has exactly one
+#  netPointReference and therefore exactly one element, so "on the buffer stop's
+#  element" admits no set at all and the check is plain equality.
+#
+#  CROSS-MODULE ON ONE NODE, as ENG-DP-003 and ENG-DP-004 are. eng.json's BufferStop
+#  declares id, dangerPoint, lengthOfBufferStop and bsType; netPointReference belongs
+#  to infra.json's BufferStop. One node carries both, and both module descriptions
+#  must be in the graph. The guard makes the rule silent when the infra half is
+#  absent - silence for want of the other half, not a clean bill of health.
+#
+#  MIND THE PATHS, which differ in LENGTH on the two sides - the same trap as
+#  ENG-DP-003:
+#
+#      DangerPoint  era:topologicalCoordinate / era:onLinearElement
+#      BufferStop   era:netPointReference / era:hasTopoCoordinate / era:onLinearElement
+#
+#  A danger point carries its coordinate DIRECTLY, as a Balise does; the buffer stop
+#  goes through a NetPointReference, as a Derailer does. Using one path for both
+#  would silently match nothing and pass everything.
+#
+#  Rationale: a buffer stop terminates the track, and its danger point is the place
+#  beyond which a vehicle must not proceed - it is what the overlap behind a signal
+#  is measured to, and what an approach is braked against. A danger point on some
+#  other element describes a limit on track the buffer stop does not terminate, so
+#  the braking distance is computed to the wrong place. The failure is in the
+#  permissive direction whenever the other element is longer, which is the direction
+#  that matters for a stop block.
+#
+#  SCOPE - dangerPoint is 0..1, so a buffer stop without one is entirely ordinary and
+#  the rule is vacuous on it.
+#
+#  LIMITATION, AND AN OPEN QUESTION. The rule asks only that the two share an
+#  ELEMENT. A danger point 400 m from its buffer stop, at the far end of the same
+#  element, is accepted. Bounding the DISTANCE would be more useful still, but needs
+#  a figure from you - and it is the same open question left by ENG-DP-004 and
+#  ENG-DP-005, so one answer would settle all three.
+#
+#  REPORTING - dangerPoint is a REFERENCE, so the point carries an IRI a preparer can
+#  look up and sh:value is the offending danger point itself.
+#
+################################################################################
+
+eng-dp:BufferStop-ENGDP015
+    a sh:NodeShape ;
+    sh:targetClass era:BufferStop ;
+    rdfs:label "ENG-DP-015 a buffer stop's danger point must be on its own element"@en ;
+    sh:sparql eng-dp:ENGDP015-dangerPointOffTheBufferStop ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:ENGDP015-dangerPointOffTheBufferStop
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-015"@en ;
+    sh:message "ENG-DP-015: this DangerPoint stands on a LinearElement other than the one its BufferStop stands on. A buffer stop terminates the track and its danger point is the limit beyond which a vehicle must not proceed - the place an overlap is measured to and an approach braked against. On a different element the limit describes track the buffer stop does not terminate, so the braking distance is computed to the wrong place, and whenever that other element is the longer one the error is in the permissive direction. Either move the danger point onto the buffer stop's element, or attach it to the buffer stop it really belongs to."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value
+        WHERE {
+            $this era:dangerPoint ?value .
+
+            # a danger point carries its coordinate DIRECTLY - no NetPointReference
+            ?value era:topologicalCoordinate/era:onLinearElement ?dle .
+
+            # the buffer stop goes THROUGH a NetPointReference. This comes from the
+            # INFRA description of the same node; absent, do not judge.
+            $this era:netPointReference/era:hasTopoCoordinate/era:onLinearElement ?ble .
+
+            # a buffer stop is a POINT: one element, so plain equality rather than
+            # the set membership used for crossings and switches
+            FILTER ( !sameTerm(?dle, ?ble) )
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-016  (E-09)  Kilometre values must run in order along the list.
+#
+#     for all lek: reading the kilometer values of lek.kilometricPosts in list order
+#     gives a sequence that is STRICTLY MONOTONIC - increasing throughout, or
+#     decreasing throughout.
+#
+#  The companion of ENG-DP-002, which does the same for pos. Recorded as NOT COVERED
+#  there: a sound sequence of positions can still carry kilometre values that jump
+#  about, and nothing until now looked at them.
+#
+#  EITHER DIRECTION IS ALLOWED, and here that is not merely the byIndex convention
+#  but a physical necessity: a line's kilometre reference may run against the
+#  direction in which the element's offsets grow, so kilometre values may perfectly
+#  well DECREASE as pos increases. The rule therefore says nothing about the relation
+#  between the two directions - only that each is internally consistent. Whether a
+#  particular pairing is legitimate remains open, and is the one question this rule
+#  deliberately does not answer.
+#
+#  WHY THIS SURVIVES THE OBJECTION THAT KILLED THE "km change tracks pos change"
+#  IDEA. A stronger rule suggests itself: both pos and kilometer are in metres, so
+#  between consecutive posts |change in kilometer| ought to equal |change in pos|.
+#  That was rejected because KILOMETRE DISCONTINUITIES ARE REAL - a line's reference
+#  may jump at a boundary, and posts are often placed exactly there to record it, so
+#  the stronger rule would report the very thing it is meant to describe.
+#
+#  Monotonicity is not troubled by that. A jump from 105000 to 107000 m is still an
+#  increase; the sequence stays ordered, it merely has a gap. So this rule catches
+#  values that are genuinely out of order while remaining blind to legitimate
+#  discontinuities - which is exactly the line to draw.
+#
+#  THE RESIDUAL RISK, stated plainly: a REVERSING discontinuity, where the reference
+#  runs backwards part way along ONE element, would be reported. Such reversals occur
+#  where two lines with different references meet, but a LinearElement is by
+#  definition an uninterrupted stretch of track without divergence, so a reference
+#  reversal within one is unusual. If your data has them, this rule should be
+#  demoted to sh:Warning - a one-line change - rather than rewritten.
+#
+#  SPLIT IN TWO, as ENG-DP-002 is:
+#
+#    ENG-DP-016a  two ADJACENT posts with the same kilometre value. The kilometre
+#                 reference is then FLAT between them: every position in that stretch
+#                 maps to one kilometre, so the interpolation has no resolution at all
+#                 and a distance measured in kilometres across it comes out as zero.
+#
+#    ENG-DP-016b  the list CHANGES DIRECTION, detected over three consecutive posts
+#                 as a peak or a valley. Reporting the turning value names the post to
+#                 correct.
+#
+#  RELIES ON THE rdf:LIST, unavoidably, as ENG-DP-002 does: order is not a property a
+#  plain multi-valued property has.
+#
+#  INDEPENDENT OF ENG-DP-002. A list may be sound in pos and unsound in kilometer, or
+#  the reverse, and the two rules report separately so the finding says which side is
+#  at fault. NOT CROSS-MODULE: no infra data is needed.
+#
+################################################################################
+
+eng-dp:LinearElementKm-ENGDP016
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementKm ;
+    rdfs:label "ENG-DP-016 kilometre values must run in order along the list"@en ;
+    sh:sparql
+        eng-dp:ENGDP016a-adjacentKilometresEqual ,
+        eng-dp:ENGDP016b-kilometresChangeDirection ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:ENGDP016a-adjacentKilometresEqual
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-016a"@en ;
+    sh:message "ENG-DP-016a: two KilometricPosts that follow one another in this LinearElementKm's list carry the same kilometer value, {?value} m. The kilometre reference is then flat over the stretch between them: every position there maps to one kilometre, so interpolation has no resolution and any distance measured in kilometres across that stretch comes out as zero. Correct whichever value was copied, or remove the redundant post."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value ?cell
+        WHERE {
+            $this era:kilometricPosts/rdf:rest* ?cell .
+            ?cell rdf:first ?k1 ;
+                  rdf:rest  ?c2 .
+            ?c2   rdf:first ?k2 .
+
+            ?k1 era:kilometer ?value .
+            ?k2 era:kilometer ?v2 .
+
+            FILTER ( ?value = ?v2 )
+        }
+    """ ;
+    .
+
+eng-dp:ENGDP016b-kilometresChangeDirection
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-016b"@en ;
+    sh:message "ENG-DP-016b: this LinearElementKm's kilometre values change direction at {?value} m - the three consecutive posts reading {?v1}, {?value} and {?v3} m turn back on themselves. A kilometre reference runs consistently along an element, in whichever direction the line is measured; it may jump at a discontinuity, which leaves it still ordered, but it must not reverse part way. Correct the post reading {?value} m, or reorder the list if the posts themselves are out of sequence."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value ?v1 ?v3 ?cell
+        WHERE {
+            # three consecutive posts
+            $this era:kilometricPosts/rdf:rest* ?cell .
+            ?cell rdf:first ?k1 ;
+                  rdf:rest  ?c2 .
+            ?c2   rdf:first ?k2 ;
+                  rdf:rest  ?c3 .
+            ?c3   rdf:first ?k3 .
+
+            ?k1 era:kilometer ?v1 .
+            ?k2 era:kilometer ?value .
+            ?k3 era:kilometer ?v3 .
+
+            # a peak or a valley. Equal adjacent values satisfy neither branch and
+            # are ENG-DP-016a's business. A DISCONTINUITY - a jump in one direction -
+            # leaves the sequence ordered and is deliberately not reported.
+            FILTER (   ( ?v1 < ?value && ?value > ?v3 )
+                    || ( ?v1 > ?value && ?value < ?v3 ) )
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-017  (E-10)  A balise's sleeper type must match the sleepers it sits on.
+#
+#     for all b, for all s of class Sleepers, for all sec in s.linearElementSections:
+#         (  sec.onElement = b.topologicalCoordinate.onLinearElement
+#            and sec.startOffsetFromOrigin
+#                  <= b.topologicalCoordinate.offsetFromOrigin
+#                  <= sec.endOffsetFromOrigin )
+#         =>  exists such a section whose s.sleepersType = b.sleepersType
+#
+#  TWO INDEPENDENT RECORDS OF ONE PHYSICAL FACT, which is what makes this worth
+#  checking and what makes it checkable at all. The balise records what it is
+#  mounted on; the Sleepers object records what the track is laid on. You have
+#  confirmed the two are recorded INDEPENDENTLY, so a disagreement is a real fault
+#  in one of them rather than a transcription slip in a derived copy.
+#
+#  That confirmation is the whole reason this rule exists. The same question was
+#  asked of a proposed rule comparing sampled and parametrised geometry, and there
+#  the answer was not available - so that rule was dropped rather than written on an
+#  assumption. Here the answer is yes, and the rule follows.
+#
+#  Neither record is wrong on its own, which is why nothing else can see this: the
+#  balise's sleepersType is a valid concept, the Sleepers object is internally
+#  consistent and satisfies DP-010, DP-011 and ENG-DP-012, and only holding the two
+#  against one another reveals the disagreement.
+#
+#  Rationale: sleeper type governs how a balise is fixed to the trackbed - the
+#  fastening, the mounting system and the permitted position all differ between
+#  concrete, wood and steel. A balise whose record disagrees with the track it
+#  stands on will be maintained, replaced or re-fixed to the wrong specification,
+#  and the error surfaces in the field rather than in the data.
+#
+#  BOUNDARIES ARE HANDLED BY THE FORM OF THE RULE, not by a half-open interval.
+#  Containment is INCLUSIVE at both ends, so a balise exactly at the join between a
+#  concrete section ending at 800 and a wooden one starting at 800 falls in BOTH.
+#  Rather than pick one, the rule asks whether ANY containing section agrees with
+#  the balise: at such a join a balise recording either type is accepted, and only
+#  one recording a third type is reported. A half-open interval would have forced an
+#  arbitrary choice at every boundary and left the far end of the last section
+#  uncovered.
+#
+#  SCOPE - a balise standing on track no Sleepers object covers is NOT reported.
+#  Sleepers records are 0..* on EngArea and need not cover the whole network, so an
+#  uncovered balise means only that nothing is known about the track there. The
+#  guard is implicit: with no containing section, the pattern binds nothing.
+#
+#  CROSS-MODULE - the balise's position comes from infra, its sleepersType from eng,
+#  and the Sleepers sections are infra LinearElementSections held by an eng class.
+#  All must be in the graph; otherwise the rule is silent for want of data.
+#
+#  MALFORMED SECTIONS - a section with start > end contains nothing under an
+#  inclusive test, so it silently drops out. That reversal is infra's DP-010 to
+#  report.
+#
+#  REPORTING - the focus node is the BALISE, which carries an IRI, and sh:value is
+#  its own sleepersType: the value under dispute. The conflicting Sleepers object
+#  and its type are named in the message, so both sides of the disagreement are in
+#  the finding.
+#
+################################################################################
+
+eng-dp:Balise-ENGDP017
+    a sh:NodeShape ;
+    sh:targetClass era:Balise ;
+    rdfs:label "ENG-DP-017 a balise's sleeper type must match the track it sits on"@en ;
+    sh:sparql eng-dp:ENGDP017-sleeperTypeDisagreesWithTrack ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:ENGDP017-sleeperTypeDisagreesWithTrack
+    a sh:SPARQLConstraint ;
+    sh:prefixes eng-dp:PrefixDeclarations ;
+    rdfs:label "ENG-DP-017"@en ;
+    sh:message "ENG-DP-017: this Balise records sleepersType {?value}, but it stands at offset {?off} m on LinearElement {?le}, which {?other} records as laid on {?st}. The two are recorded independently, so one of them is wrong. Sleeper type governs how a balise is fixed to the trackbed - fastening, mounting system and permitted position all differ between concrete, wood and steel - so the balise will be maintained or re-fixed to the wrong specification, and the error surfaces in the field rather than in the data. Note that where sections meet, a balise recording EITHER adjoining type is accepted; this one matches neither."@en ;
+    sh:select """
+        SELECT DISTINCT $this ?value ?st ?other ?le ?off
+        WHERE {
+            # the balise's own record, from the ENG description
+            $this era:sleepersType ?value .
+
+            # its position, from the INFRA description - one coordinate node, so
+            # the element and offset cannot come from different coordinates
+            $this era:topologicalCoordinate ?tc .
+            ?tc era:onLinearElement  ?le ;
+                era:offsetFromOrigin ?off .
+
+            # a Sleepers record containing that position. Binding it here rather
+            # than in a FILTER EXISTS gives the message both sides of the dispute,
+            # and doubles as the guard: a balise on track no record covers binds
+            # nothing and is not reported.
+            ?other a era:Sleepers ;
+                   era:sleepersType ?st ;
+                   era:linearElementSections ?sec .
+            ?sec era:onElement ?le ;
+                 era:startOffsetFromOrigin ?a ;
+                 era:endOffsetFromOrigin   ?b .
+            # INCLUSIVE at both ends. A reversed section contains nothing and so
+            # drops out; that is DP-010's to report.
+            FILTER ( ?a <= ?off && ?off <= ?b )
+
+            # report only if NO containing record agrees with the balise. At a join
+            # between two sections this accepts either adjoining type.
+            FILTER NOT EXISTS {
+                ?agree a era:Sleepers ;
+                       era:sleepersType ?value ;
+                       era:linearElementSections ?asec .
+                ?asec era:onElement ?le ;
+                      era:startOffsetFromOrigin ?aa ;
+                      era:endOffsetFromOrigin   ?ab .
+                FILTER ( ?aa <= ?off && ?off <= ?ab )
+            }
+        }
+    """ ;
+    .
+
+
+################################################################################
+#
+#  ENG-DP-018  (E-11)  Physical magnitudes must be greater than zero.
+#
+#     bs.lengthOfBufferStop > 0        oa.accuracy > 0   (advisory)
+#     sw.tipShift           > 0
+#     sw.bladeLength        > 0
+#
+#  All four are physical dimensions, and all four are SHACL Core - sh:minExclusive
+#  on a double, so no SPARQL and no prefix concerns. Being exclusive, one check
+#  covers both zero and negative: a negative length is not a length at all.
+#
+#  SEVERITY IS SPLIT, and deliberately. The question raised when this was proposed
+#  was whether zero has a defensible reading, and the answer differs by attribute:
+#
+#    VIOLATION for the three dimensions of physical objects. A buffer stop of zero
+#    length is not a buffer stop; a switch whose blade has zero length has no blade;
+#    a tip shift of zero means the blade does not move, which is to say the switch
+#    does not switch. None of these describes anything that could exist, so unlike
+#    DP-037's stop-train limits - where zero could mean "out of use" - there is no
+#    reading under which the data would be right.
+#
+#    WARNING for accuracy. Zero accuracy claims a position known exactly, which no
+#    survey delivers - but it is a plausible way of writing "treat this as exact" or
+#    "no uncertainty recorded", and a consumer reading it as a tolerance of zero
+#    merely becomes over-confident rather than wrong. That ambiguity is what an
+#    advisory is for: draw attention, leave the judgement.
+#
+#  Rationale beyond "zero is odd": each of these feeds a calculation.
+#  lengthOfBufferStop is subtracted from an approach when working out where a train
+#  must stop; bladeLength and tipShift determine switch geometry and therefore the
+#  speed permitted through the diverging route; accuracy is the margin every other
+#  position on the element is trusted within. A zero propagates into each of those
+#  as a silently optimistic answer.
+#
+#  NOTE ON WHAT IS ALREADY COVERED. Neither eng-shapes.ttl nor infra-shapes.ttl
+#  bounds any of these: none carries a "range" tag in eng.json, so the generator
+#  emits only sh:datatype. The floor is genuinely absent until this rule.
+#
+################################################################################
+
+eng-dp:BufferStop-ENGDP018
+    a sh:NodeShape ;
+    sh:targetClass era:BufferStop ;
+    rdfs:label "ENG-DP-018 a buffer stop must have positive length"@en ;
+    sh:property eng-dp:ENGDP018a-bufferStopLengthPositive ;
+    .
+
+eng-dp:ENGDP018a-bufferStopLengthPositive
+    a sh:PropertyShape ;
+    rdfs:label "ENG-DP-018a"@en ;
+    sh:path era:lengthOfBufferStop ;
+    sh:minExclusive 0 ;
+    sh:message "ENG-DP-018a: lengthOfBufferStop is zero or negative. A buffer stop occupies a physical length of track, and that length is subtracted from an approach when working out where a train must be brought to a stand; zero makes the stop block occupy no track at all and the stopping point is computed too far along. Unlike a stop-train limit, zero has no defensible reading here."@en ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:Switch-ENGDP018
+    a sh:NodeShape ;
+    sh:targetClass era:Switch ;
+    rdfs:label "ENG-DP-018 a switch's blade dimensions must be positive"@en ;
+    sh:property
+        eng-dp:ENGDP018b-tipShiftPositive ,
+        eng-dp:ENGDP018c-bladeLengthPositive ;
+    .
+
+eng-dp:ENGDP018b-tipShiftPositive
+    a sh:PropertyShape ;
+    rdfs:label "ENG-DP-018b"@en ;
+    sh:path era:tipShift ;
+    sh:minExclusive 0 ;
+    sh:message "ENG-DP-018b: tipShift is zero or negative. The tip shift is how far the blade moves between its two positions; zero means the blade does not move, which is to say the switch does not switch. It also feeds the switch geometry from which the speed permitted through the diverging route is derived."@en ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:ENGDP018c-bladeLengthPositive
+    a sh:PropertyShape ;
+    rdfs:label "ENG-DP-018c"@en ;
+    sh:path era:bladeLength ;
+    sh:minExclusive 0 ;
+    sh:message "ENG-DP-018c: bladeLength is zero or negative. A switch blade has a physical length, and together with tipShift it determines the switch geometry and therefore the speed permitted through the diverging route. A blade of zero length describes a switch that cannot exist."@en ;
+    sh:severity sh:Violation ;
+    .
+
+eng-dp:OffsetAccuracy-ENGDP018
+    a sh:NodeShape ;
+    sh:targetClass era:OffsetAccuracy ;
+    rdfs:label "ENG-DP-018 an accuracy of zero is probably a placeholder"@en ;
+    sh:property eng-dp:ENGDP018d-accuracyPositive ;
+    .
+
+eng-dp:ENGDP018d-accuracyPositive
+    a sh:PropertyShape ;
+    rdfs:label "ENG-DP-018d"@en ;
+    sh:path era:accuracy ;
+    sh:minExclusive 0 ;
+    sh:message "ENG-DP-018d (advisory): accuracy is zero or negative. Zero claims a position known exactly, which no survey delivers - though it may be an intended way of writing 'treat as exact' or 'no uncertainty recorded'. It is raised as advice rather than as a fault because that reading is defensible; a negative value is not, and is always wrong. Note accuracy is the margin within which every other position on this element is trusted, so an over-confident value propagates widely."@en ;
+    sh:severity sh:Warning ;
+    .

@@ -1,0 +1,4733 @@
+# SPDX-License-Identifier: EUPL-1.2
+#
+# Copyright (c) 2026 LAWCON Consulting GmbH
+#
+# Licensed under the EUPL, Version 1.2 or – as soon as they are approved
+# by the European Commission – subsequent versions of the EUPL (the "Licence");
+# You may not use this work except in compliance with the Licence.
+# You may obtain a copy of the Licence at:
+#
+# https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the Licence is distributed on an "AS IS" basis,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix qudt:    <http://qudt.org/schema/qudt/> .
+@prefix unit:    <http://qudt.org/vocab/unit/> .
+@prefix era:     <http://data.europa.eu/949/> .
+
+@prefix infra-sh: <http://data.europa.eu/949/shapes/infra#> .
+
+
+########################################################################
+#  SPARQL prefix declarations
+#
+#  SHACL 5.3: the Turtle @prefix declarations above do NOT apply inside
+#  sh:select - only sh:prefixes does. Without this, a query writing era:...
+#  fails with "Unknown namespace prefix : era" on any data graph that does
+#  not itself bind the same prefix (e.g. data written with full IRIs).
+########################################################################
+
+infra-sh:PrefixDeclarations
+    a owl:Ontology ;
+    rdfs:label "Prefixes available to every sh:select in this file"@en ;
+    sh:declare
+        [ sh:prefix "era"  ; sh:namespace "http://data.europa.eu/949/"^^xsd:anyURI ] ,
+        [ sh:prefix "rdf"  ; sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI ] ,
+        [ sh:prefix "rdfs" ; sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ] ,
+        [ sh:prefix "xsd"  ; sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI ] ,
+        [ sh:prefix "skos" ; sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ] ;
+    .
+
+########################################################################
+#  infra node shapes
+########################################################################
+### TopoArea ##########################################################
+infra-sh:TopoAreaShape
+    a sh:NodeShape ;
+    sh:targetClass era:TopoArea ;
+    sh:name "TopoArea" ;
+    sh:description "Defines a container for rail network topology" ;
+    rdfs:comment "sub-package: topology" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:TopoArea-taVersionTimestamp ;
+    sh:property infra-sh:TopoArea-linearElements ;
+    sh:property infra-sh:TopoArea-netRelations ;
+    sh:property infra-sh:TopoArea-name ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TopoArea-taVersionTimestamp
+    a sh:PropertyShape ;
+    sh:path era:taVersionTimestamp ;
+    sh:name "taVersionTimestamp" ;
+    sh:description "version information of the topo-area which is valid since timestamp" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TopoArea-linearElements
+    a sh:PropertyShape ;
+    sh:path era:linearElements ;
+    sh:name "linearElements" ;
+    sh:description "composes of linear elements = Edges in the graph" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:LinearElementShape ;
+    sh:message "linearElements must be a well-formed LinearElement (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TopoArea-netRelations
+    a sh:PropertyShape ;
+    sh:path era:netRelations ;
+    sh:name "netRelations" ;
+    sh:description "composes of net relations = links between edges in the graph" ;
+    sh:order 4 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:NetRelationShape ;
+    sh:message "netRelations must be a well-formed NetRelation (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TopoArea-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 5 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### LinearElement #####################################################
+infra-sh:LinearElementShape
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElement ;
+    sh:name "LinearElement" ;
+    sh:description "A linear element is an uninterrupted stretch of railway track, without divergence or convergence." ;
+    rdfs:comment "sub-package: topology" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:LinearElement-lengthOfNetLinearElement ;
+    sh:property infra-sh:LinearElement-name ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElement-lengthOfNetLinearElement
+    a sh:PropertyShape ;
+    sh:path era:lengthOfNetLinearElement ;
+    sh:name "lengthOfNetLinearElement" ;
+    sh:description "Defines the distance along the LinearElement's track centre line." ;
+    sh:order 2 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElement-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### NetRelation #######################################################
+infra-sh:NetRelationShape
+    a sh:NodeShape ;
+    sh:targetClass era:NetRelation ;
+    sh:name "NetRelation" ;
+    sh:description "Defines a relation between two elements." ;
+    rdfs:comment "sub-package: topology" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:NetRelation-elementA ;
+    sh:property infra-sh:NetRelation-elementB ;
+    sh:property infra-sh:NetRelation-isOnOriginOfElementA ;
+    sh:property infra-sh:NetRelation-isOnOriginOfElementB ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:NetRelation-elementA
+    a sh:PropertyShape ;
+    sh:path era:elementA ;
+    sh:name "elementA" ;
+    sh:description "References the first linear element in an oriented relation." ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "elementA must reference an existing era:LinearElement by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:NetRelation-elementB
+    a sh:PropertyShape ;
+    sh:path era:elementB ;
+    sh:name "elementB" ;
+    sh:description "References the second linear element in an oriented relation." ;
+    sh:order 3 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "elementB must reference an existing era:LinearElement by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:NetRelation-isOnOriginOfElementA
+    a sh:PropertyShape ;
+    sh:path era:isOnOriginOfElementA ;
+    sh:name "isOnOriginOfElementA" ;
+    sh:description "Determines if the position of the topological element A in a relation is the origin of element A." ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:NetRelation-isOnOriginOfElementB
+    a sh:PropertyShape ;
+    sh:path era:isOnOriginOfElementB ;
+    sh:name "isOnOriginOfElementB" ;
+    sh:description "Determines if the position of the topological element B in a relation is the origin of element B." ;
+    sh:order 5 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### NetPointReference #################################################
+infra-sh:NetPointReferenceShape
+    a sh:NodeShape ;
+    sh:targetClass era:NetPointReference ;
+    sh:name "NetPointReference" ;
+    sh:description "Represents a point reference in the network." ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    sh:property infra-sh:NetPointReference-hasTopoCoordinate ;
+    sh:property infra-sh:NetPointReference-appliesToDirection ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:NetPointReference-hasTopoCoordinate
+    a sh:PropertyShape ;
+    sh:path era:hasTopoCoordinate ;
+    sh:name "hasTopoCoordinate" ;
+    sh:description "Defines the topological coordinate of a network point reference" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TopologicalCoordinateShape ;
+    sh:message "hasTopoCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:NetPointReference-appliesToDirection
+    a sh:PropertyShape ;
+    sh:path era:appliesToDirection ;
+    sh:name "appliesToDirection" ;
+    sh:description "The direction relative to the origin of the linear element towards the point reference applies" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/orientations/02> <http://data.europa.eu/949/concepts/orientations/00> <http://data.europa.eu/949/concepts/orientations/01> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped OrientationDirections concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### TopologicalCoordinate #############################################
+infra-sh:TopologicalCoordinateShape
+    a sh:NodeShape ;
+    sh:targetClass era:TopologicalCoordinate ;
+    sh:name "TopologicalCoordinate" ;
+    sh:description "Defines a topological coordinate on the track" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    sh:property infra-sh:TopologicalCoordinate-onLinearElement ;
+    sh:property infra-sh:TopologicalCoordinate-offsetFromOrigin ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TopologicalCoordinate-onLinearElement
+    a sh:PropertyShape ;
+    sh:path era:onLinearElement ;
+    sh:name "onLinearElement" ;
+    sh:description "is positioned on linear element" ;
+    sh:order 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "onLinearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TopologicalCoordinate-offsetFromOrigin
+    a sh:PropertyShape ;
+    sh:path era:offsetFromOrigin ;
+    sh:name "offsetFromOrigin" ;
+    sh:description "position on the associated NetElement" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### LinearElementSection ##############################################
+infra-sh:LinearElementSectionShape
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementSection ;
+    sh:name "LinearElementSection" ;
+    sh:description "Defines adirected linear object (with a linear extension) located on a LinearElement" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    sh:property infra-sh:LinearElementSection-onElement ;
+    sh:property infra-sh:LinearElementSection-startOffsetFromOrigin ;
+    sh:property infra-sh:LinearElementSection-endOffsetFromOrigin ;
+    sh:property infra-sh:LinearElementSection-appliesInBothDirections ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementSection-onElement
+    a sh:PropertyShape ;
+    sh:path era:onElement ;
+    sh:name "onElement" ;
+    sh:description "Specifies the linear element a section belongs to." ;
+    sh:order 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "onElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementSection-startOffsetFromOrigin
+    a sh:PropertyShape ;
+    sh:path era:startOffsetFromOrigin ;
+    sh:name "startOffsetFromOrigin" ;
+    sh:description "Defines the start offset from the origin" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementSection-endOffsetFromOrigin
+    a sh:PropertyShape ;
+    sh:path era:endOffsetFromOrigin ;
+    sh:name "endOffsetFromOrigin" ;
+    sh:description "Defines the end offset from the origin" ;
+    sh:order 3 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementSection-appliesInBothDirections
+    a sh:PropertyShape ;
+    sh:path era:appliesInBothDirections ;
+    sh:name "appliesInBothDirections" ;
+    sh:description "Defines if the section applies in both directions" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### NetLinearReference ################################################
+infra-sh:NetLinearReferenceShape
+    a sh:NodeShape ;
+    sh:targetClass era:NetLinearReference ;
+    sh:name "NetLinearReference" ;
+    sh:description "Defines a linked path on the topology" ;
+    sh:sparql infra-sh:NetLinearReference-hasSequence-listWellFormed ;
+    sh:property infra-sh:NetLinearReference-startsAt ;
+    sh:property infra-sh:NetLinearReference-endsAt ;
+    sh:property infra-sh:NetLinearReference-hasSequence ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:NetLinearReference-startsAt
+    a sh:PropertyShape ;
+    sh:path era:startsAt ;
+    sh:name "startsAt" ;
+    sh:description "Definesthe starting point of a linear reference" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:NetPointReferenceShape ;
+    sh:message "startsAt must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:NetLinearReference-endsAt
+    a sh:PropertyShape ;
+    sh:path era:endsAt ;
+    sh:name "endsAt" ;
+    sh:description "Specifies the ending point of a linear reference" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:NetPointReferenceShape ;
+    sh:message "endsAt must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:NetLinearReference-hasSequence
+    a sh:PropertyShape ;
+    sh:path era:hasSequence ;
+    sh:name "hasSequence" ;
+    sh:description "The ordered sequence of topological linear elements which create a linear net reference." ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    sh:message "hasSequence is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:node infra-sh:NetLinearReference-hasSequence-items ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:NetLinearReference-hasSequence-listWellFormed
+    a sh:SPARQLConstraint ;
+    sh:prefixes infra-sh:PrefixDeclarations ;
+    sh:message "era:hasSequence is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:select """
+            SELECT DISTINCT $this
+            WHERE {
+                $this era:hasSequence ?head .
+                ?head rdf:rest* ?cell .
+                FILTER ( ?cell != rdf:nil )
+                { FILTER NOT EXISTS { ?cell rdf:first ?f } }
+                UNION
+                { FILTER NOT EXISTS { ?cell rdf:rest ?r } }
+                UNION
+                { ?cell rdf:first ?f1, ?f2 . FILTER ( ?f1 != ?f2 ) }
+                UNION
+                { ?cell rdf:rest ?r1, ?r2 . FILTER ( ?r1 != ?r2 ) }
+            }
+        """ ;
+    .
+
+infra-sh:NetLinearReference-hasSequence-items
+    a sh:NodeShape ;
+    rdfs:label "Items of the rdf:List carried by era:hasSequence"@en ;
+    sh:property [
+        a sh:PropertyShape ;
+        sh:path ( [ sh:zeroOrMorePath rdf:rest ] rdf:first ) ;
+        sh:nodeKind sh:IRI ;
+        sh:class era:LinearElement ;
+        sh:message "hasSequence must reference an existing era:LinearElement by IRI."@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    .
+
+### NetAreaReference ##################################################
+infra-sh:NetAreaReferenceShape
+    a sh:NodeShape ;
+    sh:targetClass era:NetAreaReference ;
+    sh:name "NetAreaReference" ;
+    sh:description "Represents an area reference in the network." ;
+    sh:property infra-sh:NetAreaReference-includes ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:NetAreaReference-includes
+    a sh:PropertyShape ;
+    sh:path era:includes ;
+    sh:name "includes" ;
+    sh:description "List of linear references included in an network area reference." ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:NetLinearReferenceShape ;
+    sh:message "includes must be a well-formed NetLinearReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### GeometryArea ######################################################
+infra-sh:GeometryAreaShape
+    a sh:NodeShape ;
+    sh:targetClass era:GeometryArea ;
+    sh:name "GeometryArea" ;
+    sh:description "Defines the container geometry area within INFRA Domain" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:GeometryArea-topoArea ;
+    sh:property infra-sh:GeometryArea-gaVersionTimestamp ;
+    sh:property infra-sh:GeometryArea-alignment3d ;
+    sh:property infra-sh:GeometryArea-linearElementGeometries ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:GeometryArea-topoArea
+    a sh:PropertyShape ;
+    sh:path era:topoArea ;
+    sh:name "topoArea" ;
+    sh:description "reference to the corresponding TopoArea" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:TopoArea ;
+    sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:GeometryArea-gaVersionTimestamp
+    a sh:PropertyShape ;
+    sh:path era:gaVersionTimestamp ;
+    sh:name "gaVersionTimestamp" ;
+    sh:description "version information of the geometry area which is valid since timestamp" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:GeometryArea-alignment3d
+    a sh:PropertyShape ;
+    sh:path era:alignment3d ;
+    sh:name "alignment3d" ;
+    sh:description "Defines the 3d alignment information for the geometry area. if true, all positions and length calculated on 3d line. if false - on 2d projection" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:GeometryArea-linearElementGeometries
+    a sh:PropertyShape ;
+    sh:path era:linearElementGeometries ;
+    sh:name "linearElementGeometries" ;
+    sh:description "composes of linear element geometries" ;
+    sh:order 5 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:LinearElementGeometryShape ;
+    sh:message "linearElementGeometries must be a well-formed LinearElementGeometry (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+### LinearElementGeometry #############################################
+infra-sh:LinearElementGeometryShape
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementGeometry ;
+    sh:name "LinearElementGeometry" ;
+    sh:description "Defines the geometry of the linear element centre line as a list of parametrised curves. The geometry is smooth; no discontinuities in azimuth or inclination." ;
+    rdfs:comment "sub-package: geometry" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:sparql infra-sh:LinearElementGeometry-horizontalAlignments-listWellFormed ;
+    sh:sparql infra-sh:LinearElementGeometry-horizontalAlignments-listItemCount ;
+    sh:sparql infra-sh:LinearElementGeometry-verticalAlignments-listWellFormed ;
+    sh:sparql infra-sh:LinearElementGeometry-verticalAlignments-listItemCount ;
+    sh:sparql infra-sh:LinearElementGeometry-cantPoints-listWellFormed ;
+    sh:property infra-sh:LinearElementGeometry-linearElement ;
+    sh:property infra-sh:LinearElementGeometry-horizontalAlignments ;
+    sh:property infra-sh:LinearElementGeometry-verticalAlignments ;
+    sh:property infra-sh:LinearElementGeometry-cantPoints ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementGeometry-linearElement
+    a sh:PropertyShape ;
+    sh:path era:linearElement ;
+    sh:name "linearElement" ;
+    sh:description "reference to the corresponding LinearElement" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "linearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementGeometry-horizontalAlignments
+    a sh:PropertyShape ;
+    sh:path era:horizontalAlignments ;
+    sh:name "horizontalAlignments" ;
+    sh:description "Defines a sequence of geometric primitives, i.e. arc, line or clothoid, that compose this track geometry" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "horizontalAlignments is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:node infra-sh:LinearElementGeometry-horizontalAlignments-items ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementGeometry-verticalAlignments
+    a sh:PropertyShape ;
+    sh:path era:verticalAlignments ;
+    sh:name "verticalAlignments" ;
+    sh:description "Defines a sequence of geometric primitives, i.e. arc, line or clothoid, that compose this track geometry" ;
+    sh:order 4 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "verticalAlignments is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:node infra-sh:LinearElementGeometry-verticalAlignments-items ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementGeometry-cantPoints
+    a sh:PropertyShape ;
+    sh:path era:cantPoints ;
+    sh:name "cantPoints" ;
+    sh:description "Defines the cant points along the linear element. The linear element must be completely defined, at least at beginning and end. Empty means undefined" ;
+    sh:order 5 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    sh:message "cantPoints is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:node infra-sh:LinearElementGeometry-cantPoints-items ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementGeometry-horizontalAlignments-listWellFormed
+    a sh:SPARQLConstraint ;
+    sh:prefixes infra-sh:PrefixDeclarations ;
+    sh:message "era:horizontalAlignments is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:select """
+            SELECT DISTINCT $this
+            WHERE {
+                $this era:horizontalAlignments ?head .
+                ?head rdf:rest* ?cell .
+                FILTER ( ?cell != rdf:nil )
+                { FILTER NOT EXISTS { ?cell rdf:first ?f } }
+                UNION
+                { FILTER NOT EXISTS { ?cell rdf:rest ?r } }
+                UNION
+                { ?cell rdf:first ?f1, ?f2 . FILTER ( ?f1 != ?f2 ) }
+                UNION
+                { ?cell rdf:rest ?r1, ?r2 . FILTER ( ?r1 != ?r2 ) }
+            }
+        """ ;
+    .
+
+infra-sh:LinearElementGeometry-horizontalAlignments-listItemCount
+    a sh:SPARQLConstraint ;
+    sh:prefixes infra-sh:PrefixDeclarations ;
+    sh:message "The single rdf:List carried by era:horizontalAlignments must hold at least 1 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:select """
+            SELECT $this (COUNT(?item) AS ?itemCount)
+            WHERE {
+                $this era:horizontalAlignments ?head .
+                OPTIONAL {
+                    ?head rdf:rest* ?cell .
+                    FILTER ( ?cell != rdf:nil )
+                    BIND ( ?cell AS ?item )
+                }
+            }
+            GROUP BY $this
+            HAVING ( COUNT(?item) < 1 )
+        """ ;
+    .
+
+infra-sh:LinearElementGeometry-verticalAlignments-listWellFormed
+    a sh:SPARQLConstraint ;
+    sh:prefixes infra-sh:PrefixDeclarations ;
+    sh:message "era:verticalAlignments is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:select """
+            SELECT DISTINCT $this
+            WHERE {
+                $this era:verticalAlignments ?head .
+                ?head rdf:rest* ?cell .
+                FILTER ( ?cell != rdf:nil )
+                { FILTER NOT EXISTS { ?cell rdf:first ?f } }
+                UNION
+                { FILTER NOT EXISTS { ?cell rdf:rest ?r } }
+                UNION
+                { ?cell rdf:first ?f1, ?f2 . FILTER ( ?f1 != ?f2 ) }
+                UNION
+                { ?cell rdf:rest ?r1, ?r2 . FILTER ( ?r1 != ?r2 ) }
+            }
+        """ ;
+    .
+
+infra-sh:LinearElementGeometry-verticalAlignments-listItemCount
+    a sh:SPARQLConstraint ;
+    sh:prefixes infra-sh:PrefixDeclarations ;
+    sh:message "The single rdf:List carried by era:verticalAlignments must hold at least 1 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:select """
+            SELECT $this (COUNT(?item) AS ?itemCount)
+            WHERE {
+                $this era:verticalAlignments ?head .
+                OPTIONAL {
+                    ?head rdf:rest* ?cell .
+                    FILTER ( ?cell != rdf:nil )
+                    BIND ( ?cell AS ?item )
+                }
+            }
+            GROUP BY $this
+            HAVING ( COUNT(?item) < 1 )
+        """ ;
+    .
+
+infra-sh:LinearElementGeometry-cantPoints-listWellFormed
+    a sh:SPARQLConstraint ;
+    sh:prefixes infra-sh:PrefixDeclarations ;
+    sh:message "era:cantPoints is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:select """
+            SELECT DISTINCT $this
+            WHERE {
+                $this era:cantPoints ?head .
+                ?head rdf:rest* ?cell .
+                FILTER ( ?cell != rdf:nil )
+                { FILTER NOT EXISTS { ?cell rdf:first ?f } }
+                UNION
+                { FILTER NOT EXISTS { ?cell rdf:rest ?r } }
+                UNION
+                { ?cell rdf:first ?f1, ?f2 . FILTER ( ?f1 != ?f2 ) }
+                UNION
+                { ?cell rdf:rest ?r1, ?r2 . FILTER ( ?r1 != ?r2 ) }
+            }
+        """ ;
+    .
+
+infra-sh:LinearElementGeometry-horizontalAlignments-items
+    a sh:NodeShape ;
+    rdfs:label "Items of the rdf:List carried by era:horizontalAlignments"@en ;
+    sh:property [
+        a sh:PropertyShape ;
+        sh:path ( [ sh:zeroOrMorePath rdf:rest ] rdf:first ) ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node infra-sh:HorizontalSegmentShape ;
+        sh:message "horizontalAlignments must be a well-formed HorizontalSegment (blank node or IRI)."@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    .
+
+infra-sh:LinearElementGeometry-verticalAlignments-items
+    a sh:NodeShape ;
+    rdfs:label "Items of the rdf:List carried by era:verticalAlignments"@en ;
+    sh:property [
+        a sh:PropertyShape ;
+        sh:path ( [ sh:zeroOrMorePath rdf:rest ] rdf:first ) ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node infra-sh:VerticalSegmentShape ;
+        sh:message "verticalAlignments must be a well-formed VerticalSegment (blank node or IRI)."@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    .
+
+infra-sh:LinearElementGeometry-cantPoints-items
+    a sh:NodeShape ;
+    rdfs:label "Items of the rdf:List carried by era:cantPoints"@en ;
+    sh:property [
+        a sh:PropertyShape ;
+        sh:path ( [ sh:zeroOrMorePath rdf:rest ] rdf:first ) ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node infra-sh:CantPointShape ;
+        sh:message "cantPoints must be a well-formed CantPoint (blank node or IRI)."@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    .
+
+### HorizontalSegment #################################################
+infra-sh:HorizontalSegmentShape
+    a sh:NodeShape ;
+    sh:targetClass era:HorizontalSegment ;
+    sh:name "HorizontalSegment" ;
+    sh:description "Defines a curvi-linear geometric primitive, mathematically represents a horizontal segment of the centre line of a railway track" ;
+    rdfs:comment "sub-package: geometry" ;
+    sh:xone (
+        infra-sh:HorizontalSegment-horizontalSegmentLine-present
+        infra-sh:HorizontalSegment-horizontalSegmentArc-present
+        infra-sh:HorizontalSegment-horizontalSegmentTransition-present
+    ) ;
+    sh:message "HorizontalSegment is a union: exactly one of (horizontalSegmentLine, horizontalSegmentArc, horizontalSegmentTransition) must be present."@en ;
+    sh:property infra-sh:HorizontalSegment-horizontalSegmentLine ;
+    sh:property infra-sh:HorizontalSegment-horizontalSegmentArc ;
+    sh:property infra-sh:HorizontalSegment-horizontalSegmentTransition ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:HorizontalSegment-horizontalSegmentLine
+    a sh:PropertyShape ;
+    sh:path era:horizontalSegmentLine ;
+    sh:name "horizontalSegmentLine" ;
+    sh:description "composes of lines" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:HorizontalLineShape ;
+    sh:message "horizontalSegmentLine must be a well-formed HorizontalLine (blank node or IRI)."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:HorizontalSegment-horizontalSegmentArc
+    a sh:PropertyShape ;
+    sh:path era:horizontalSegmentArc ;
+    sh:name "horizontalSegmentArc" ;
+    sh:description "composes of arcs" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:HorizontalArcShape ;
+    sh:message "horizontalSegmentArc must be a well-formed HorizontalArc (blank node or IRI)."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:HorizontalSegment-horizontalSegmentTransition
+    a sh:PropertyShape ;
+    sh:path era:horizontalSegmentTransition ;
+    sh:name "horizontalSegmentTransition" ;
+    sh:description "composes of transition curves" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:HorizontalTransitionShape ;
+    sh:message "horizontalSegmentTransition must be a well-formed HorizontalTransition (blank node or IRI)."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:HorizontalSegment-horizontalSegmentLine-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:horizontalSegmentLine is present"@en ;
+    sh:property infra-sh:HorizontalSegment-horizontalSegmentLine-required ;
+    .
+
+infra-sh:HorizontalSegment-horizontalSegmentLine-required
+    a sh:PropertyShape ;
+    sh:path era:horizontalSegmentLine ;
+    sh:minCount 1 ;
+    .
+
+infra-sh:HorizontalSegment-horizontalSegmentArc-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:horizontalSegmentArc is present"@en ;
+    sh:property infra-sh:HorizontalSegment-horizontalSegmentArc-required ;
+    .
+
+infra-sh:HorizontalSegment-horizontalSegmentArc-required
+    a sh:PropertyShape ;
+    sh:path era:horizontalSegmentArc ;
+    sh:minCount 1 ;
+    .
+
+infra-sh:HorizontalSegment-horizontalSegmentTransition-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:horizontalSegmentTransition is present"@en ;
+    sh:property infra-sh:HorizontalSegment-horizontalSegmentTransition-required ;
+    .
+
+infra-sh:HorizontalSegment-horizontalSegmentTransition-required
+    a sh:PropertyShape ;
+    sh:path era:horizontalSegmentTransition ;
+    sh:minCount 1 ;
+    .
+
+### HorizontalLine ####################################################
+infra-sh:HorizontalLineShape
+    a sh:NodeShape ;
+    sh:targetClass era:HorizontalLine ;
+    sh:name "HorizontalLine" ;
+    sh:description "Defines the geometric primitive for a horizontal linear segment" ;
+    rdfs:comment "sub-package: geometry" ;
+    sh:property infra-sh:HorizontalLine-elementGeometryPos ;
+    sh:property infra-sh:HorizontalLine-azimuth ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:HorizontalLine-elementGeometryPos
+    a sh:PropertyShape ;
+    sh:path era:elementGeometryPos ;
+    sh:name "elementGeometryPos" ;
+    sh:description "Defines the position on the associated Linear Element" ;
+    sh:order 1 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:HorizontalLine-azimuth
+    a sh:PropertyShape ;
+    sh:path era:azimuth ;
+    sh:name "azimuth" ;
+    sh:description "Defines the azimuth at pos, i.e. bearing measured clockwise with respect to geographic north" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:DEG ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minInclusive 0 ;
+    sh:maxInclusive 360 ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### HorizontalArc #####################################################
+infra-sh:HorizontalArcShape
+    a sh:NodeShape ;
+    sh:targetClass era:HorizontalArc ;
+    sh:name "HorizontalArc" ;
+    sh:description "Defines the geometric primitive for a horizontal arc of circle" ;
+    rdfs:comment "sub-package: geometry" ;
+    sh:property infra-sh:HorizontalArc-elementGeometryPos ;
+    sh:property infra-sh:HorizontalArc-azimuth ;
+    sh:property infra-sh:HorizontalArc-radius ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:HorizontalArc-elementGeometryPos
+    a sh:PropertyShape ;
+    sh:path era:elementGeometryPos ;
+    sh:name "elementGeometryPos" ;
+    sh:description "position on the associated LinearElement" ;
+    sh:order 1 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:HorizontalArc-azimuth
+    a sh:PropertyShape ;
+    sh:path era:azimuth ;
+    sh:name "azimuth" ;
+    sh:description "Defines the azimuth at pos, i.e. bearing measured clockwise with respect to geographic north" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:DEG ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minInclusive 0 ;
+    sh:maxInclusive 360 ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:HorizontalArc-radius
+    a sh:PropertyShape ;
+    sh:path era:radius ;
+    sh:name "radius" ;
+    sh:description "Defines the radius at pos, negative-counter-clockwise/left-curve, positive-clockwise/right-curve" ;
+    sh:order 3 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### HorizontalTransition ##############################################
+infra-sh:HorizontalTransitionShape
+    a sh:NodeShape ;
+    sh:targetClass era:HorizontalTransition ;
+    sh:name "HorizontalTransition" ;
+    sh:description "Defines a geometric primitive for a horizontal transition curve, a clothoid." ;
+    rdfs:comment "sub-package: geometry" ;
+    sh:property infra-sh:HorizontalTransition-elementGeometryPos ;
+    sh:property infra-sh:HorizontalTransition-azimuth ;
+    sh:property infra-sh:HorizontalTransition-radius ;
+    sh:property infra-sh:HorizontalTransition-transitionType ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:HorizontalTransition-elementGeometryPos
+    a sh:PropertyShape ;
+    sh:path era:elementGeometryPos ;
+    sh:name "elementGeometryPos" ;
+    sh:description "position on the associated Linear Element" ;
+    sh:order 1 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:HorizontalTransition-azimuth
+    a sh:PropertyShape ;
+    sh:path era:azimuth ;
+    sh:name "azimuth" ;
+    sh:description "Defines the azimuth at pos, i.e. bearing measured clockwise with respect to geographic north" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:DEG ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minInclusive 0 ;
+    sh:maxInclusive 360 ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:HorizontalTransition-radius
+    a sh:PropertyShape ;
+    sh:path era:radius ;
+    sh:name "radius" ;
+    sh:description "Defines the radius at pos, negative-counter-clockwise/left-curve, positive-clockwise/right-curve" ;
+    sh:order 3 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:HorizontalTransition-transitionType
+    a sh:PropertyShape ;
+    sh:path era:transitionType ;
+    sh:name "transitionType" ;
+    sh:description "defines different transition types" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/transition-type/clothoidCurve> <http://data.europa.eu/949/concepts/transition-type/biquadraticParabola> <http://data.europa.eu/949/concepts/transition-type/blossCurve> <http://data.europa.eu/949/concepts/transition-type/cosineCurve> <http://data.europa.eu/949/concepts/transition-type/cubicParabola> <http://data.europa.eu/949/concepts/transition-type/sineCurve> <http://data.europa.eu/949/concepts/transition-type/wienerBogen> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped TransitionType concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### VerticalSegment ###################################################
+infra-sh:VerticalSegmentShape
+    a sh:NodeShape ;
+    sh:targetClass era:VerticalSegment ;
+    sh:name "VerticalSegment" ;
+    sh:description "Defines a curvi-linear geometric primitive, mathematically represents a vertical segment of the centre line of a railway track" ;
+    rdfs:comment "sub-package: geometry" ;
+    sh:xone (
+        infra-sh:VerticalSegment-verticalSegmentLine-present
+        infra-sh:VerticalSegment-verticalSegmentArc-present
+    ) ;
+    sh:message "VerticalSegment is a union: exactly one of (verticalSegmentLine, verticalSegmentArc) must be present."@en ;
+    sh:property infra-sh:VerticalSegment-verticalSegmentLine ;
+    sh:property infra-sh:VerticalSegment-verticalSegmentArc ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:VerticalSegment-verticalSegmentLine
+    a sh:PropertyShape ;
+    sh:path era:verticalSegmentLine ;
+    sh:name "verticalSegmentLine" ;
+    sh:description "composes of lines" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:VerticalLineShape ;
+    sh:message "verticalSegmentLine must be a well-formed VerticalLine (blank node or IRI)."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:VerticalSegment-verticalSegmentArc
+    a sh:PropertyShape ;
+    sh:path era:verticalSegmentArc ;
+    sh:name "verticalSegmentArc" ;
+    sh:description "composes of arcs" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:VerticalArcShape ;
+    sh:message "verticalSegmentArc must be a well-formed VerticalArc (blank node or IRI)."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:VerticalSegment-verticalSegmentLine-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:verticalSegmentLine is present"@en ;
+    sh:property infra-sh:VerticalSegment-verticalSegmentLine-required ;
+    .
+
+infra-sh:VerticalSegment-verticalSegmentLine-required
+    a sh:PropertyShape ;
+    sh:path era:verticalSegmentLine ;
+    sh:minCount 1 ;
+    .
+
+infra-sh:VerticalSegment-verticalSegmentArc-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:verticalSegmentArc is present"@en ;
+    sh:property infra-sh:VerticalSegment-verticalSegmentArc-required ;
+    .
+
+infra-sh:VerticalSegment-verticalSegmentArc-required
+    a sh:PropertyShape ;
+    sh:path era:verticalSegmentArc ;
+    sh:minCount 1 ;
+    .
+
+### VerticalLine ######################################################
+infra-sh:VerticalLineShape
+    a sh:NodeShape ;
+    sh:targetClass era:VerticalLine ;
+    sh:name "VerticalLine" ;
+    sh:description "Defines the geometric primitive for vertical linear segment" ;
+    rdfs:comment "sub-package: geometry" ;
+    sh:property infra-sh:VerticalLine-elementGeometryPos ;
+    sh:property infra-sh:VerticalLine-slope ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:VerticalLine-elementGeometryPos
+    a sh:PropertyShape ;
+    sh:path era:elementGeometryPos ;
+    sh:name "elementGeometryPos" ;
+    sh:description "position on the associated LinearElement" ;
+    sh:order 1 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:VerticalLine-slope
+    a sh:PropertyShape ;
+    sh:path era:slope ;
+    sh:name "slope" ;
+    sh:description "Defines the vertical slope at pos, between the horizon and the track centre line. Viewed in the direction of the linear element. Positive for rising slope and negative for falling slope." ;
+    sh:order 2 ;
+    qudt:hasUnit unit:MilliM-PER-M ;
+    rdfs:comment "scaling exponent -1 (stored value x 10^-1 = physical value)"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:int ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### VerticalArc #######################################################
+infra-sh:VerticalArcShape
+    a sh:NodeShape ;
+    sh:targetClass era:VerticalArc ;
+    sh:name "VerticalArc" ;
+    sh:description "Defines the geometric primitive for a vertical arc." ;
+    rdfs:comment "sub-package: geometry" ;
+    sh:property infra-sh:VerticalArc-elementGeometryPos ;
+    sh:property infra-sh:VerticalArc-slope ;
+    sh:property infra-sh:VerticalArc-radius ;
+    sh:property infra-sh:VerticalArc-arcType ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:VerticalArc-elementGeometryPos
+    a sh:PropertyShape ;
+    sh:path era:elementGeometryPos ;
+    sh:name "elementGeometryPos" ;
+    sh:description "position on the associated LinearElement" ;
+    sh:order 1 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:VerticalArc-slope
+    a sh:PropertyShape ;
+    sh:path era:slope ;
+    sh:name "slope" ;
+    sh:description "Defines the vertical slope at pos, between the horizon and the track centre line. Viewed in the direction of the linear element. Positive for rising slope and negative for falling slope." ;
+    sh:order 2 ;
+    qudt:hasUnit unit:MilliM-PER-M ;
+    rdfs:comment "scaling exponent -1 (stored value x 10^-1 = physical value)"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:int ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:VerticalArc-radius
+    a sh:PropertyShape ;
+    sh:path era:radius ;
+    sh:name "radius" ;
+    sh:description "Defines the radius at pos" ;
+    sh:order 3 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:VerticalArc-arcType
+    a sh:PropertyShape ;
+    sh:path era:arcType ;
+    sh:name "arcType" ;
+    sh:description "Defines the type of Arc. For more details see https://ifc43-docs.standards.buildingsmart.org/IFC/RELEASE/IFC4x3/HTML/lexical/IfcAlignmentVerticalSegmentTypeEnum.htm" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/arc-type/circularArc> <http://data.europa.eu/949/concepts/arc-type/parabola> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped ArcType concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### CantPoint #########################################################
+infra-sh:CantPointShape
+    a sh:NodeShape ;
+    sh:targetClass era:CantPoint ;
+    sh:name "CantPoint" ;
+    sh:description "Defines Cant (Superelevation) at the locations of start and end Cant Ramps on the track." ;
+    sh:property infra-sh:CantPoint-elementGeometryPos ;
+    sh:property infra-sh:CantPoint-appliedCant ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:CantPoint-elementGeometryPos
+    a sh:PropertyShape ;
+    sh:path era:elementGeometryPos ;
+    sh:name "elementGeometryPos" ;
+    sh:description "position on the associated LinearElement" ;
+    sh:order 1 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:CantPoint-appliedCant
+    a sh:PropertyShape ;
+    sh:path era:appliedCant ;
+    sh:name "appliedCant" ;
+    sh:description "Height of the outer rail minus the inner rail. Outer rail and inner rail are defined according to the direction of curve. Rollangle=(arcsin(cant/gauge)), gauge is distance between middle of the railheads, e.g. 1500mm for EU-standard gauge '1435mm' ; The applied cant is defined for the start" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:MilliM ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:int ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### SampledGeometryArea ###############################################
+infra-sh:SampledGeometryAreaShape
+    a sh:NodeShape ;
+    sh:targetClass era:SampledGeometryArea ;
+    sh:name "SampledGeometryArea" ;
+    sh:description "Defines the container sampled geometry area within INFRA Domain" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:SampledGeometryArea-topoArea ;
+    sh:property infra-sh:SampledGeometryArea-sgaVersionTimestamp ;
+    sh:property infra-sh:SampledGeometryArea-sampledLinearElementGeometries ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SampledGeometryArea-topoArea
+    a sh:PropertyShape ;
+    sh:path era:topoArea ;
+    sh:name "topoArea" ;
+    sh:description "reference to the corresponding TopoArea" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:TopoArea ;
+    sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SampledGeometryArea-sgaVersionTimestamp
+    a sh:PropertyShape ;
+    sh:path era:sgaVersionTimestamp ;
+    sh:name "sgaVersionTimestamp" ;
+    sh:description "version information of the samples geometry area which is valid since timestamp" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SampledGeometryArea-sampledLinearElementGeometries
+    a sh:PropertyShape ;
+    sh:path era:sampledLinearElementGeometries ;
+    sh:name "sampledLinearElementGeometries" ;
+    sh:description "composes of sampled linear element geometries" ;
+    sh:order 4 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:SampledLinearElementGeometryShape ;
+    sh:message "sampledLinearElementGeometries must be a well-formed SampledLinearElementGeometry (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### SampledLinearElementGeometry ######################################
+infra-sh:SampledLinearElementGeometryShape
+    a sh:NodeShape ;
+    sh:targetClass era:SampledLinearElementGeometry ;
+    sh:name "SampledLinearElementGeometry" ;
+    sh:description "Defines the container sampled linear element geometry within INFRA Domain" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:sparql infra-sh:SampledLinearElementGeometry-slopes-listWellFormed ;
+    sh:sparql infra-sh:SampledLinearElementGeometry-slopes-listItemCount ;
+    sh:sparql infra-sh:SampledLinearElementGeometry-curves-listWellFormed ;
+    sh:sparql infra-sh:SampledLinearElementGeometry-curves-listItemCount ;
+    sh:sparql infra-sh:SampledLinearElementGeometry-cants-listWellFormed ;
+    sh:sparql infra-sh:SampledLinearElementGeometry-cants-listItemCount ;
+    sh:property infra-sh:SampledLinearElementGeometry-linearElement ;
+    sh:property infra-sh:SampledLinearElementGeometry-slopes ;
+    sh:property infra-sh:SampledLinearElementGeometry-curves ;
+    sh:property infra-sh:SampledLinearElementGeometry-cants ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SampledLinearElementGeometry-linearElement
+    a sh:PropertyShape ;
+    sh:path era:linearElement ;
+    sh:name "linearElement" ;
+    sh:description "reference to the corresponding LinearElement" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "linearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SampledLinearElementGeometry-slopes
+    a sh:PropertyShape ;
+    sh:path era:slopes ;
+    sh:name "slopes" ;
+    sh:description "composes of slope sample points" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "slopes is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:node infra-sh:SampledLinearElementGeometry-slopes-items ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SampledLinearElementGeometry-curves
+    a sh:PropertyShape ;
+    sh:path era:curves ;
+    sh:name "curves" ;
+    sh:description "composes of curve sample points" ;
+    sh:order 4 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "curves is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:node infra-sh:SampledLinearElementGeometry-curves-items ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SampledLinearElementGeometry-cants
+    a sh:PropertyShape ;
+    sh:path era:cants ;
+    sh:name "cants" ;
+    sh:description "composes of cant sample points" ;
+    sh:order 5 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "cants is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:node infra-sh:SampledLinearElementGeometry-cants-items ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SampledLinearElementGeometry-slopes-listWellFormed
+    a sh:SPARQLConstraint ;
+    sh:prefixes infra-sh:PrefixDeclarations ;
+    sh:message "era:slopes is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:select """
+            SELECT DISTINCT $this
+            WHERE {
+                $this era:slopes ?head .
+                ?head rdf:rest* ?cell .
+                FILTER ( ?cell != rdf:nil )
+                { FILTER NOT EXISTS { ?cell rdf:first ?f } }
+                UNION
+                { FILTER NOT EXISTS { ?cell rdf:rest ?r } }
+                UNION
+                { ?cell rdf:first ?f1, ?f2 . FILTER ( ?f1 != ?f2 ) }
+                UNION
+                { ?cell rdf:rest ?r1, ?r2 . FILTER ( ?r1 != ?r2 ) }
+            }
+        """ ;
+    .
+
+infra-sh:SampledLinearElementGeometry-slopes-listItemCount
+    a sh:SPARQLConstraint ;
+    sh:prefixes infra-sh:PrefixDeclarations ;
+    sh:message "The single rdf:List carried by era:slopes must hold at least 1 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:select """
+            SELECT $this (COUNT(?item) AS ?itemCount)
+            WHERE {
+                $this era:slopes ?head .
+                OPTIONAL {
+                    ?head rdf:rest* ?cell .
+                    FILTER ( ?cell != rdf:nil )
+                    BIND ( ?cell AS ?item )
+                }
+            }
+            GROUP BY $this
+            HAVING ( COUNT(?item) < 1 )
+        """ ;
+    .
+
+infra-sh:SampledLinearElementGeometry-curves-listWellFormed
+    a sh:SPARQLConstraint ;
+    sh:prefixes infra-sh:PrefixDeclarations ;
+    sh:message "era:curves is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:select """
+            SELECT DISTINCT $this
+            WHERE {
+                $this era:curves ?head .
+                ?head rdf:rest* ?cell .
+                FILTER ( ?cell != rdf:nil )
+                { FILTER NOT EXISTS { ?cell rdf:first ?f } }
+                UNION
+                { FILTER NOT EXISTS { ?cell rdf:rest ?r } }
+                UNION
+                { ?cell rdf:first ?f1, ?f2 . FILTER ( ?f1 != ?f2 ) }
+                UNION
+                { ?cell rdf:rest ?r1, ?r2 . FILTER ( ?r1 != ?r2 ) }
+            }
+        """ ;
+    .
+
+infra-sh:SampledLinearElementGeometry-curves-listItemCount
+    a sh:SPARQLConstraint ;
+    sh:prefixes infra-sh:PrefixDeclarations ;
+    sh:message "The single rdf:List carried by era:curves must hold at least 1 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:select """
+            SELECT $this (COUNT(?item) AS ?itemCount)
+            WHERE {
+                $this era:curves ?head .
+                OPTIONAL {
+                    ?head rdf:rest* ?cell .
+                    FILTER ( ?cell != rdf:nil )
+                    BIND ( ?cell AS ?item )
+                }
+            }
+            GROUP BY $this
+            HAVING ( COUNT(?item) < 1 )
+        """ ;
+    .
+
+infra-sh:SampledLinearElementGeometry-cants-listWellFormed
+    a sh:SPARQLConstraint ;
+    sh:prefixes infra-sh:PrefixDeclarations ;
+    sh:message "era:cants is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:select """
+            SELECT DISTINCT $this
+            WHERE {
+                $this era:cants ?head .
+                ?head rdf:rest* ?cell .
+                FILTER ( ?cell != rdf:nil )
+                { FILTER NOT EXISTS { ?cell rdf:first ?f } }
+                UNION
+                { FILTER NOT EXISTS { ?cell rdf:rest ?r } }
+                UNION
+                { ?cell rdf:first ?f1, ?f2 . FILTER ( ?f1 != ?f2 ) }
+                UNION
+                { ?cell rdf:rest ?r1, ?r2 . FILTER ( ?r1 != ?r2 ) }
+            }
+        """ ;
+    .
+
+infra-sh:SampledLinearElementGeometry-cants-listItemCount
+    a sh:SPARQLConstraint ;
+    sh:prefixes infra-sh:PrefixDeclarations ;
+    sh:message "The single rdf:List carried by era:cants must hold at least 1 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:select """
+            SELECT $this (COUNT(?item) AS ?itemCount)
+            WHERE {
+                $this era:cants ?head .
+                OPTIONAL {
+                    ?head rdf:rest* ?cell .
+                    FILTER ( ?cell != rdf:nil )
+                    BIND ( ?cell AS ?item )
+                }
+            }
+            GROUP BY $this
+            HAVING ( COUNT(?item) < 1 )
+        """ ;
+    .
+
+infra-sh:SampledLinearElementGeometry-slopes-items
+    a sh:NodeShape ;
+    rdfs:label "Items of the rdf:List carried by era:slopes"@en ;
+    sh:property [
+        a sh:PropertyShape ;
+        sh:path ( [ sh:zeroOrMorePath rdf:rest ] rdf:first ) ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node infra-sh:SlopeSamplePointShape ;
+        sh:message "slopes must be a well-formed SlopeSamplePoint (blank node or IRI)."@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    .
+
+infra-sh:SampledLinearElementGeometry-curves-items
+    a sh:NodeShape ;
+    rdfs:label "Items of the rdf:List carried by era:curves"@en ;
+    sh:property [
+        a sh:PropertyShape ;
+        sh:path ( [ sh:zeroOrMorePath rdf:rest ] rdf:first ) ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node infra-sh:CurveSamplePointShape ;
+        sh:message "curves must be a well-formed CurveSamplePoint (blank node or IRI)."@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    .
+
+infra-sh:SampledLinearElementGeometry-cants-items
+    a sh:NodeShape ;
+    rdfs:label "Items of the rdf:List carried by era:cants"@en ;
+    sh:property [
+        a sh:PropertyShape ;
+        sh:path ( [ sh:zeroOrMorePath rdf:rest ] rdf:first ) ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node infra-sh:CantSamplePointShape ;
+        sh:message "cants must be a well-formed CantSamplePoint (blank node or IRI)."@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    .
+
+### SlopeSamplePoint ##################################################
+infra-sh:SlopeSamplePointShape
+    a sh:NodeShape ;
+    sh:targetClass era:SlopeSamplePoint ;
+    sh:name "SlopeSamplePoint" ;
+    sh:description "Defines the Slope (gradient) of the track at a given location on the track." ;
+    sh:property infra-sh:SlopeSamplePoint-elementGeometryPos ;
+    sh:property infra-sh:SlopeSamplePoint-samplePointSlope ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SlopeSamplePoint-elementGeometryPos
+    a sh:PropertyShape ;
+    sh:path era:elementGeometryPos ;
+    sh:name "elementGeometryPos" ;
+    sh:description "position on the associated LinearElement" ;
+    sh:order 1 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SlopeSamplePoint-samplePointSlope
+    a sh:PropertyShape ;
+    sh:path era:samplePointSlope ;
+    sh:name "samplePointSlope" ;
+    sh:description "Defines the vertical slope at pos, between the horizon and the track centre line. Viewed in the direction of the LinearElement. Positive for rising slope and negative for falling slope." ;
+    sh:order 2 ;
+    qudt:hasUnit unit:MilliM-PER-M ;
+    rdfs:comment "scaling exponent -1 (stored value x 10^-1 = physical value)"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:int ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### CantSamplePoint ###################################################
+infra-sh:CantSamplePointShape
+    a sh:NodeShape ;
+    sh:targetClass era:CantSamplePoint ;
+    sh:name "CantSamplePoint" ;
+    sh:description "Defines the cant(superelevation) of the track at a given location on the track." ;
+    sh:property infra-sh:CantSamplePoint-elementGeometryPos ;
+    sh:property infra-sh:CantSamplePoint-samplePointCant ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:CantSamplePoint-elementGeometryPos
+    a sh:PropertyShape ;
+    sh:path era:elementGeometryPos ;
+    sh:name "elementGeometryPos" ;
+    sh:description "position on the associated LinearElement" ;
+    sh:order 1 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:CantSamplePoint-samplePointCant
+    a sh:PropertyShape ;
+    sh:path era:samplePointCant ;
+    sh:name "samplePointCant" ;
+    sh:description "Defines the height of the outer rail minus the inner rail. Outer rail and inner rail are defined according to the direction of curve. Rollangle=(arcsin(cant/gauge), gauge is distance between centers of rail-heads, e.g. 1500mm for EU-standard gauge." ;
+    sh:order 2 ;
+    qudt:hasUnit unit:MilliM ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:int ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### CurveSamplePoint ##################################################
+infra-sh:CurveSamplePointShape
+    a sh:NodeShape ;
+    sh:targetClass era:CurveSamplePoint ;
+    sh:name "CurveSamplePoint" ;
+    sh:description "Defines curve (radius) of the track at a given location on the track." ;
+    sh:property infra-sh:CurveSamplePoint-elementGeometryPos ;
+    sh:property infra-sh:CurveSamplePoint-sampleCurveRadius ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:CurveSamplePoint-elementGeometryPos
+    a sh:PropertyShape ;
+    sh:path era:elementGeometryPos ;
+    sh:name "elementGeometryPos" ;
+    sh:description "position on the associated LinearElement" ;
+    sh:order 1 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:CurveSamplePoint-sampleCurveRadius
+    a sh:PropertyShape ;
+    sh:path era:sampleCurveRadius ;
+    sh:name "sampleCurveRadius" ;
+    sh:description "Defines the radius at a specific location along the linear element, negative-counter-clockwise/left-curve, positive-clockwise/right-curve" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### Switch ############################################################
+infra-sh:SwitchShape
+    a sh:NodeShape ;
+    sh:targetClass era:Switch ;
+    sh:name "Switch" ;
+    sh:description "A unit of track comprising two fixed rails (stock rails) and two movable rails (switch rails) used to direct vehicles from one track to another track." ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:Switch-reversalTime ;
+    sh:property infra-sh:Switch-leftBranch ;
+    sh:property infra-sh:Switch-rightBranch ;
+    sh:property infra-sh:Switch-name ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Switch-reversalTime
+    a sh:PropertyShape ;
+    sh:path era:reversalTime ;
+    sh:name "reversalTime" ;
+    sh:description "Defines the time in seconds to switch from one position to the other" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:SEC ;
+    rdfs:comment "scaling exponent -1 (stored value x 10^-1 = physical value)"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Switch-leftBranch
+    a sh:PropertyShape ;
+    sh:path era:leftBranch ;
+    sh:name "leftBranch" ;
+    sh:description "NetRelation referencing the left side of the switch in the facing direction of the switch" ;
+    sh:order 3 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:NetRelation ;
+    sh:message "leftBranch must reference an existing era:NetRelation by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Switch-rightBranch
+    a sh:PropertyShape ;
+    sh:path era:rightBranch ;
+    sh:name "rightBranch" ;
+    sh:description "NetRelation referencing the right side of the switch in the facing direction of the switch" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:NetRelation ;
+    sh:message "rightBranch must reference an existing era:NetRelation by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Switch-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 5 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### SlipCrossing ######################################################
+infra-sh:SlipCrossingShape
+    a sh:NodeShape ;
+    sh:targetClass era:SlipCrossing ;
+    sh:name "SlipCrossing" ;
+    sh:description "Defines the physical track asset Slip Crossing ; 2 instances switch point define a single slip crossing and 4 instances of switch point defined a double slip crossing ; Reversal time is the maximum of known reversal times of switches. If the reversal time of at least one switch in the slip point is unknown, the reversal time of the slip point is unknown as well." ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:or (
+        [ sh:property [ sh:path era:switches ; sh:minCount 2 ; sh:maxCount 2 ] ]
+        [ sh:property [ sh:path era:switches ; sh:minCount 4 ; sh:maxCount 4 ] ]
+    ) ;
+    sh:message "A SlipCrossing must reference exactly two switches (single slip crossing) or exactly four switches (double slip crossing) - never three (see formatNote on SlipCrossing.switches)."@en ;
+    sh:property infra-sh:SlipCrossing-switches ;
+    sh:property infra-sh:SlipCrossing-crossing ;
+    sh:property infra-sh:SlipCrossing-name ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SlipCrossing-switches
+    a sh:PropertyShape ;
+    sh:path era:switches ;
+    sh:name "switches" ;
+    sh:description "Consists of simple points" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:Switch ;
+    sh:message "switches must reference an existing era:Switch by IRI."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SlipCrossing-crossing
+    a sh:PropertyShape ;
+    sh:path era:crossing ;
+    sh:name "crossing" ;
+    sh:description "Consists of crossing" ;
+    sh:order 3 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:Crossing ;
+    sh:message "crossing must reference an existing era:Crossing by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SlipCrossing-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### Derailer ##########################################################
+infra-sh:DerailerShape
+    a sh:NodeShape ;
+    sh:targetClass era:Derailer ;
+    sh:name "Derailer" ;
+    sh:description "Defines the physical track asset Derailer" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:Derailer-netPointReference ;
+    sh:property infra-sh:Derailer-reversalTime ;
+    sh:property infra-sh:Derailer-derailToRight ;
+    sh:property infra-sh:Derailer-name ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Derailer-netPointReference
+    a sh:PropertyShape ;
+    sh:path era:netPointReference ;
+    sh:name "netPointReference" ;
+    sh:description "Defines position on LinearElement" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:NetPointReferenceShape ;
+    sh:message "netPointReference must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Derailer-reversalTime
+    a sh:PropertyShape ;
+    sh:path era:reversalTime ;
+    sh:name "reversalTime" ;
+    sh:description "Defines the time in seconds to switch from one position to the other" ;
+    sh:order 3 ;
+    qudt:hasUnit unit:SEC ;
+    rdfs:comment "scaling exponent -1 (stored value x 10^-1 = physical value)"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Derailer-derailToRight
+    a sh:PropertyShape ;
+    sh:path era:derailToRight ;
+    sh:name "derailToRight" ;
+    sh:description "Defines the side on which the derailer derails. If false = derailToLeft" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Derailer-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 5 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### Crossing ##########################################################
+infra-sh:CrossingShape
+    a sh:NodeShape ;
+    sh:targetClass era:Crossing ;
+    sh:name "Crossing" ;
+    sh:description "Defines the physical track asset Crossing without possibility to switch between two linear elements" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:Crossing-topologicalCoordinates ;
+    sh:property infra-sh:Crossing-isSwitchable ;
+    sh:property infra-sh:Crossing-name ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Crossing-topologicalCoordinates
+    a sh:PropertyShape ;
+    sh:path era:topologicalCoordinates ;
+    sh:name "topologicalCoordinates" ;
+    sh:description "composes of topological coordinates" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TopologicalCoordinateShape ;
+    sh:message "topologicalCoordinates must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:minCount 2 ;
+    sh:maxCount 2 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Crossing-isSwitchable
+    a sh:PropertyShape ;
+    sh:path era:isSwitchable ;
+    sh:name "isSwitchable" ;
+    sh:description "True: If the crossing is switchable ; False: If the crossing is not switchable ; https://commons.wikimedia.org/wiki/Category:Switched_diamond_crossings" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Crossing-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### BaliseGroup #######################################################
+infra-sh:BaliseGroupShape
+    a sh:NodeShape ;
+    sh:targetClass era:BaliseGroup ;
+    sh:name "BaliseGroup" ;
+    sh:description "Defines a group of balises on the railway trackbed." ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:sparql infra-sh:BaliseGroup-balises-listWellFormed ;
+    sh:sparql infra-sh:BaliseGroup-balises-listItemCount ;
+    sh:property infra-sh:BaliseGroup-nid_bg ;
+    sh:property infra-sh:BaliseGroup-nid_c ;
+    sh:property infra-sh:BaliseGroup-balises ;
+    sh:property infra-sh:BaliseGroup-bgFunction ;
+    sh:property infra-sh:BaliseGroup-linkOrientationDirection ;
+    sh:property infra-sh:BaliseGroup-etcsMarker ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:BaliseGroup-nid_bg
+    a sh:PropertyShape ;
+    sh:path era:nid_bg ;
+    sh:name "nid_bg" ;
+    sh:description "national identifier of the balise group" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minInclusive 0 ;
+    sh:maxInclusive 16383 ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:BaliseGroup-nid_c
+    a sh:PropertyShape ;
+    sh:path era:nid_c ;
+    sh:name "nid_c" ;
+    sh:description "country identifier of the balise group" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minInclusive 0 ;
+    sh:maxInclusive 1023 ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:BaliseGroup-balises
+    a sh:PropertyShape ;
+    sh:path era:balises ;
+    sh:name "balises" ;
+    sh:description "Defines the balises within the balise group. ETCS-positionInGroup is equal to the position this array" ;
+    sh:order 4 ;
+    rdfs:comment "ERTMS subset variable: Balise"@en ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "balises is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:node infra-sh:BaliseGroup-balises-items ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:BaliseGroup-bgFunction
+    a sh:PropertyShape ;
+    sh:path era:bgFunction ;
+    sh:name "bgFunction" ;
+    sh:description "Defines the function of the balise. To be clarified, if derivable from baliseTelegram" ;
+    sh:order 5 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/balise-group-function/location> <http://data.europa.eu/949/concepts/balise-group-function/sessionManagement> <http://data.europa.eu/949/concepts/balise-group-function/networkRegistration> <http://data.europa.eu/949/concepts/balise-group-function/levelTransitionAnnouncement> <http://data.europa.eu/949/concepts/balise-group-function/stopIfInStaffResponsible> <http://data.europa.eu/949/concepts/balise-group-function/temporarySpeedRestrictionAnnouncement> <http://data.europa.eu/949/concepts/balise-group-function/border> <http://data.europa.eu/949/concepts/balise-group-function/handover> <http://data.europa.eu/949/concepts/balise-group-function/infill> <http://data.europa.eu/949/concepts/balise-group-function/temporarySpeedRestrictionRevocation> <http://data.europa.eu/949/concepts/balise-group-function/sessionEstablishment> <http://data.europa.eu/949/concepts/balise-group-function/sessionTermination> <http://data.europa.eu/949/concepts/balise-group-function/levelTransitionOrder> <http://data.europa.eu/949/concepts/balise-group-function/stopIfInShunting> <http://data.europa.eu/949/concepts/balise-group-function/levelTransitionCancellation> <http://data.europa.eu/949/concepts/balise-group-function/reference> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped BaliseGroupFunction concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:BaliseGroup-linkOrientationDirection
+    a sh:PropertyShape ;
+    sh:path era:linkOrientationDirection ;
+    sh:name "linkOrientationDirection" ;
+    sh:description "defines linking orientation direction along the LinearElement" ;
+    sh:order 6 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/orientations/02> <http://data.europa.eu/949/concepts/orientations/00> <http://data.europa.eu/949/concepts/orientations/01> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped OrientationDirections concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:BaliseGroup-etcsMarker
+    a sh:PropertyShape ;
+    sh:path era:etcsMarker ;
+    sh:name "etcsMarker" ;
+    sh:description "defines the etcs marker board reference for the balise" ;
+    sh:order 7 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:ETCSMarker ;
+    sh:message "etcsMarker must reference an existing era:ETCSMarker by IRI."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:BaliseGroup-balises-listWellFormed
+    a sh:SPARQLConstraint ;
+    sh:prefixes infra-sh:PrefixDeclarations ;
+    sh:message "era:balises is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:select """
+            SELECT DISTINCT $this
+            WHERE {
+                $this era:balises ?head .
+                ?head rdf:rest* ?cell .
+                FILTER ( ?cell != rdf:nil )
+                { FILTER NOT EXISTS { ?cell rdf:first ?f } }
+                UNION
+                { FILTER NOT EXISTS { ?cell rdf:rest ?r } }
+                UNION
+                { ?cell rdf:first ?f1, ?f2 . FILTER ( ?f1 != ?f2 ) }
+                UNION
+                { ?cell rdf:rest ?r1, ?r2 . FILTER ( ?r1 != ?r2 ) }
+            }
+        """ ;
+    .
+
+infra-sh:BaliseGroup-balises-listItemCount
+    a sh:SPARQLConstraint ;
+    sh:prefixes infra-sh:PrefixDeclarations ;
+    sh:message "The single rdf:List carried by era:balises must hold between 1 and 8 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:select """
+            SELECT $this (COUNT(?item) AS ?itemCount)
+            WHERE {
+                $this era:balises ?head .
+                OPTIONAL {
+                    ?head rdf:rest* ?cell .
+                    FILTER ( ?cell != rdf:nil )
+                    BIND ( ?cell AS ?item )
+                }
+            }
+            GROUP BY $this
+            HAVING ( COUNT(?item) < 1 || COUNT(?item) > 8 )
+        """ ;
+    .
+
+infra-sh:BaliseGroup-balises-items
+    a sh:NodeShape ;
+    rdfs:label "Items of the rdf:List carried by era:balises"@en ;
+    sh:property [
+        a sh:PropertyShape ;
+        sh:path ( [ sh:zeroOrMorePath rdf:rest ] rdf:first ) ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node infra-sh:BaliseShape ;
+        sh:message "balises must be a well-formed Balise (blank node or IRI)."@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    .
+
+### Balise ############################################################
+infra-sh:BaliseShape
+    a sh:NodeShape ;
+    sh:targetClass era:Balise ;
+    sh:name "Balise" ;
+    sh:description "Defines a technical device on the railway trackbed" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:Balise-topologicalCoordinate ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Balise-topologicalCoordinate
+    a sh:PropertyShape ;
+    sh:path era:topologicalCoordinate ;
+    sh:name "topologicalCoordinate" ;
+    sh:description "defines the location on Linear Element" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TopologicalCoordinateShape ;
+    sh:message "topologicalCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### PropertiesArea ####################################################
+infra-sh:PropertiesAreaShape
+    a sh:NodeShape ;
+    sh:targetClass era:PropertiesArea ;
+    sh:name "PropertiesArea" ;
+    sh:description "Defines the container properties area within INFRA Domain" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:PropertiesArea-topoArea ;
+    sh:property infra-sh:PropertiesArea-paVersionTimestamp ;
+    sh:property infra-sh:PropertiesArea-gauge ;
+    sh:property infra-sh:PropertiesArea-loadingGaugeTypes ;
+    sh:property infra-sh:PropertiesArea-defaultVoltage ;
+    sh:property infra-sh:PropertiesArea-defaultMaxCurrent ;
+    sh:property infra-sh:PropertiesArea-linearElementSpeedProfiles ;
+    sh:property infra-sh:PropertiesArea-linearElementGauges ;
+    sh:property infra-sh:PropertiesArea-linearElementLoadingGauges ;
+    sh:property infra-sh:PropertiesArea-trackConditions ;
+    sh:property infra-sh:PropertiesArea-currentLimitations ;
+    sh:property infra-sh:PropertiesArea-permittedBrakingDistances ;
+    sh:property infra-sh:PropertiesArea-tractionSystems ;
+    sh:property infra-sh:PropertiesArea-dynamicBrakeForceInhibitionAreas ;
+    sh:property infra-sh:PropertiesArea-limitedDynamicBrakeForces ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PropertiesArea-topoArea
+    a sh:PropertyShape ;
+    sh:path era:topoArea ;
+    sh:name "topoArea" ;
+    sh:description "reference to the corresponding TopoArea" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:TopoArea ;
+    sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PropertiesArea-paVersionTimestamp
+    a sh:PropertyShape ;
+    sh:path era:paVersionTimestamp ;
+    sh:name "paVersionTimestamp" ;
+    sh:description "version information of the properties-area which is valid since timestamp" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PropertiesArea-gauge
+    a sh:PropertyShape ;
+    sh:path era:gauge ;
+    sh:name "gauge" ;
+    sh:description "Defines the default gauge in the area. Deviations are covered in linearElementGauges" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/nominal-track-gauges/10> <http://data.europa.eu/949/concepts/nominal-track-gauges/80> <http://data.europa.eu/949/concepts/nominal-track-gauges/20> <http://data.europa.eu/949/concepts/nominal-track-gauges/30> <http://data.europa.eu/949/concepts/nominal-track-gauges/40> <http://data.europa.eu/949/concepts/nominal-track-gauges/50> <http://data.europa.eu/949/concepts/nominal-track-gauges/60> <http://data.europa.eu/949/concepts/nominal-track-gauges/70> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped NominalTrackGauges concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PropertiesArea-loadingGaugeTypes
+    a sh:PropertyShape ;
+    sh:path era:loadingGaugeTypes ;
+    sh:name "loadingGaugeTypes" ;
+    sh:description "Defines a list of supported loading gauges per default" ;
+    sh:order 5 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/loading-gauge-type/loadingGaugeIncompatible> <http://data.europa.eu/949/concepts/loading-gauge-type/g1> <http://data.europa.eu/949/concepts/loading-gauge-type/gA> <http://data.europa.eu/949/concepts/loading-gauge-type/gB> <http://data.europa.eu/949/concepts/loading-gauge-type/gC> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped LoadingGaugeType concepts."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PropertiesArea-defaultVoltage
+    a sh:PropertyShape ;
+    sh:path era:defaultVoltage ;
+    sh:name "defaultVoltage" ;
+    sh:description "defines default Voltage" ;
+    sh:order 6 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/energy-supply-systems/notFitted> <http://data.europa.eu/949/concepts/energy-supply-systems/AC10> <http://data.europa.eu/949/concepts/energy-supply-systems/AC20> <http://data.europa.eu/949/concepts/energy-supply-systems/DC30> <http://data.europa.eu/949/concepts/energy-supply-systems/DC40> <http://data.europa.eu/949/concepts/energy-supply-systems/DC80> <http://data.europa.eu/949/concepts/energy-supply-systems/DC70> <http://data.europa.eu/949/concepts/energy-supply-systems/DC60> <http://data.europa.eu/949/concepts/energy-supply-systems/DC90> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped EnergySupplySystems concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PropertiesArea-defaultMaxCurrent
+    a sh:PropertyShape ;
+    sh:path era:defaultMaxCurrent ;
+    sh:name "defaultMaxCurrent" ;
+    sh:description "Defines the deafult maximun current for the section of track. Used in ATO & ETCS.packet40" ;
+    sh:order 7 ;
+    qudt:hasUnit unit:A ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PropertiesArea-linearElementSpeedProfiles
+    a sh:PropertyShape ;
+    sh:path era:linearElementSpeedProfiles ;
+    sh:name "linearElementSpeedProfiles" ;
+    sh:description "composes of linear element speed profiles" ;
+    sh:order 8 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:LinearElementSpeedProfileShape ;
+    sh:message "linearElementSpeedProfiles must be a well-formed LinearElementSpeedProfile (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PropertiesArea-linearElementGauges
+    a sh:PropertyShape ;
+    sh:path era:linearElementGauges ;
+    sh:name "linearElementGauges" ;
+    sh:description "composes of linear element gauges" ;
+    sh:order 9 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:LinearElementGaugeShape ;
+    sh:message "linearElementGauges must be a well-formed LinearElementGauge (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PropertiesArea-linearElementLoadingGauges
+    a sh:PropertyShape ;
+    sh:path era:linearElementLoadingGauges ;
+    sh:name "linearElementLoadingGauges" ;
+    sh:description "composes of linear element loading gauges" ;
+    sh:order 10 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:LinearElementLoadingGaugeShape ;
+    sh:message "linearElementLoadingGauges must be a well-formed LinearElementLoadingGauge (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PropertiesArea-trackConditions
+    a sh:PropertyShape ;
+    sh:path era:trackConditions ;
+    sh:name "trackConditions" ;
+    sh:description "composes of track conditions" ;
+    sh:order 11 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TrackConditionShape ;
+    sh:message "trackConditions must be a well-formed TrackCondition (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PropertiesArea-currentLimitations
+    a sh:PropertyShape ;
+    sh:path era:currentLimitations ;
+    sh:name "currentLimitations" ;
+    sh:description "composes of current limitation" ;
+    sh:order 12 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:CurrentLimitationShape ;
+    sh:message "currentLimitations must be a well-formed CurrentLimitation (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PropertiesArea-permittedBrakingDistances
+    a sh:PropertyShape ;
+    sh:path era:permittedBrakingDistances ;
+    sh:name "permittedBrakingDistances" ;
+    sh:description "composes of permitted braking distances" ;
+    sh:order 13 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:PermittedBrakingDistanceShape ;
+    sh:message "permittedBrakingDistances must be a well-formed PermittedBrakingDistance (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PropertiesArea-tractionSystems
+    a sh:PropertyShape ;
+    sh:path era:tractionSystems ;
+    sh:name "tractionSystems" ;
+    sh:description "composes of traction systems" ;
+    sh:order 14 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TractionSystemShape ;
+    sh:message "tractionSystems must be a well-formed TractionSystem (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PropertiesArea-dynamicBrakeForceInhibitionAreas
+    a sh:PropertyShape ;
+    sh:path era:dynamicBrakeForceInhibitionAreas ;
+    sh:name "dynamicBrakeForceInhibitionAreas" ;
+    sh:description "composes of areas with Dynamic Brake force inhibition" ;
+    sh:order 15 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:LinearElementSectionShape ;
+    sh:message "dynamicBrakeForceInhibitionAreas must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PropertiesArea-limitedDynamicBrakeForces
+    a sh:PropertyShape ;
+    sh:path era:limitedDynamicBrakeForces ;
+    sh:name "limitedDynamicBrakeForces" ;
+    sh:description "composes of areas with limited Dynamic Brake force" ;
+    sh:order 16 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:LimitedDynamicBrakeForceShape ;
+    sh:message "limitedDynamicBrakeForces must be a well-formed LimitedDynamicBrakeForce (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+### LinearElementGauge ################################################
+infra-sh:LinearElementGaugeShape
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementGauge ;
+    sh:name "LinearElementGauge" ;
+    sh:description "Defines the inner distance between two rails, e.g. 1432 for EU-standard-rails" ;
+    sh:property infra-sh:LinearElementGauge-linearElementSections ;
+    sh:property infra-sh:LinearElementGauge-gauge ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementGauge-linearElementSections
+    a sh:PropertyShape ;
+    sh:path era:linearElementSections ;
+    sh:name "linearElementSections" ;
+    sh:description "composes of linear element sections" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:LinearElementSectionShape ;
+    sh:message "linearElementSections must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementGauge-gauge
+    a sh:PropertyShape ;
+    sh:path era:gauge ;
+    sh:name "gauge" ;
+    sh:description "defines different track gauges" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/nominal-track-gauges/10> <http://data.europa.eu/949/concepts/nominal-track-gauges/80> <http://data.europa.eu/949/concepts/nominal-track-gauges/20> <http://data.europa.eu/949/concepts/nominal-track-gauges/30> <http://data.europa.eu/949/concepts/nominal-track-gauges/40> <http://data.europa.eu/949/concepts/nominal-track-gauges/50> <http://data.europa.eu/949/concepts/nominal-track-gauges/60> <http://data.europa.eu/949/concepts/nominal-track-gauges/70> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped NominalTrackGauges concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### LinearElementLoadingGauge #########################################
+infra-sh:LinearElementLoadingGaugeShape
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementLoadingGauge ;
+    sh:name "LinearElementLoadingGauge" ;
+    sh:description "Defines linear element loading gauge on the track" ;
+    sh:property infra-sh:LinearElementLoadingGauge-linearElementSections ;
+    sh:property infra-sh:LinearElementLoadingGauge-loadingGaugeType ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementLoadingGauge-linearElementSections
+    a sh:PropertyShape ;
+    sh:path era:linearElementSections ;
+    sh:name "linearElementSections" ;
+    sh:description "composes of linear element sections" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:LinearElementSectionShape ;
+    sh:message "linearElementSections must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementLoadingGauge-loadingGaugeType
+    a sh:PropertyShape ;
+    sh:path era:loadingGaugeType ;
+    sh:name "loadingGaugeType" ;
+    sh:description "Defining the loading gauge profile of a train (refer to LOC&PAS TSI). see ss026, 7.5.1.68 M_LOADINGGAUGE" ;
+    sh:order 2 ;
+    rdfs:comment "ERTMS subset variable: M_LOADINGGAUGE"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/loading-gauge-type/loadingGaugeIncompatible> <http://data.europa.eu/949/concepts/loading-gauge-type/g1> <http://data.europa.eu/949/concepts/loading-gauge-type/gA> <http://data.europa.eu/949/concepts/loading-gauge-type/gB> <http://data.europa.eu/949/concepts/loading-gauge-type/gC> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped LoadingGaugeType concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### TrackCondition ####################################################
+infra-sh:TrackConditionShape
+    a sh:NodeShape ;
+    sh:targetClass era:TrackCondition ;
+    sh:name "TrackCondition" ;
+    sh:description "Defines the TrackConditions for a section of track" ;
+    sh:property infra-sh:TrackCondition-linearElementSections ;
+    sh:property infra-sh:TrackCondition-conditionType ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TrackCondition-linearElementSections
+    a sh:PropertyShape ;
+    sh:path era:linearElementSections ;
+    sh:name "linearElementSections" ;
+    sh:description "composes of linear element sections" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:LinearElementSectionShape ;
+    sh:message "linearElementSections must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TrackCondition-conditionType
+    a sh:PropertyShape ;
+    sh:path era:conditionType ;
+    sh:name "conditionType" ;
+    sh:description "defines different track conditions" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-a> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-b> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-e> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-h> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-c> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-g> <http://data.europa.eu/949/concepts/transmitted-tcs/bigMetalMasses> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-d> <http://data.europa.eu/949/concepts/transmitted-tcs/switchOffRegenerativeBrake> <http://data.europa.eu/949/concepts/transmitted-tcs/switchOffEddyCurrentBrakeForServiceBrake> <http://data.europa.eu/949/concepts/transmitted-tcs/switchOffEddyCurrentBrakeForEmergencyBrake> <http://data.europa.eu/949/concepts/transmitted-tcs/switchOffMagneticShoeBrake> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped TransmittedTrackConditions concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### LimitedDynamicBrakeForce ##########################################
+infra-sh:LimitedDynamicBrakeForceShape
+    a sh:NodeShape ;
+    sh:targetClass era:LimitedDynamicBrakeForce ;
+    sh:name "LimitedDynamicBrakeForce" ;
+    sh:description "Defines the area with limited dynamic brake force information for a segment profile" ;
+    sh:property infra-sh:LimitedDynamicBrakeForce-linearElementSection ;
+    sh:property infra-sh:LimitedDynamicBrakeForce-dynamicBrakeForceLimit ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LimitedDynamicBrakeForce-linearElementSection
+    a sh:PropertyShape ;
+    sh:path era:linearElementSection ;
+    sh:name "linearElementSection" ;
+    sh:description "composes of linear element section" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:LinearElementSectionShape ;
+    sh:message "linearElementSection must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LimitedDynamicBrakeForce-dynamicBrakeForceLimit
+    a sh:PropertyShape ;
+    sh:path era:dynamicBrakeForceLimit ;
+    sh:name "dynamicBrakeForceLimit" ;
+    sh:description "Maximum Brake Force [kN] to be applied by the Dynamic Brake" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:KiloN ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minInclusive 0 ;
+    sh:maxInclusive 3000 ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### CurrentLimitation #################################################
+infra-sh:CurrentLimitationShape
+    a sh:NodeShape ;
+    sh:targetClass era:CurrentLimitation ;
+    sh:name "CurrentLimitation" ;
+    sh:description "Defines max current for a list of track sections" ;
+    sh:property infra-sh:CurrentLimitation-linearElementSections ;
+    sh:property infra-sh:CurrentLimitation-maxCurrent ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:CurrentLimitation-linearElementSections
+    a sh:PropertyShape ;
+    sh:path era:linearElementSections ;
+    sh:name "linearElementSections" ;
+    sh:description "composes of linear element sections" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:LinearElementSectionShape ;
+    sh:message "linearElementSections must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:CurrentLimitation-maxCurrent
+    a sh:PropertyShape ;
+    sh:path era:maxCurrent ;
+    sh:name "maxCurrent" ;
+    sh:description "defines max current value" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:A ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### PermittedBrakingDistance ##########################################
+infra-sh:PermittedBrakingDistanceShape
+    a sh:NodeShape ;
+    sh:targetClass era:PermittedBrakingDistance ;
+    sh:name "PermittedBrakingDistance" ;
+    sh:description "Defines max allowed braking distance for a list of linear element sections" ;
+    sh:property infra-sh:PermittedBrakingDistance-linearElementSections ;
+    sh:property infra-sh:PermittedBrakingDistance-distance ;
+    sh:property infra-sh:PermittedBrakingDistance-byEmergencyBrake ;
+    sh:property infra-sh:PermittedBrakingDistance-gradientValue ;
+    sh:property infra-sh:PermittedBrakingDistance-sameDir ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PermittedBrakingDistance-linearElementSections
+    a sh:PropertyShape ;
+    sh:path era:linearElementSections ;
+    sh:name "linearElementSections" ;
+    sh:description "Defines the set of linear element sections composing the application area" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:LinearElementSectionShape ;
+    sh:message "linearElementSections must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PermittedBrakingDistance-distance
+    a sh:PropertyShape ;
+    sh:path era:distance ;
+    sh:name "distance" ;
+    sh:description "Defines the applicable permitted braking distance" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PermittedBrakingDistance-byEmergencyBrake
+    a sh:PropertyShape ;
+    sh:path era:byEmergencyBrake ;
+    sh:name "byEmergencyBrake" ;
+    sh:description "Whether the permitted braking distance is to be achieved with the Service Brake or Emergency Brake. True if Braking is to be achieved using Emergency brake ; False if braking is to be achieved by service brake" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PermittedBrakingDistance-gradientValue
+    a sh:PropertyShape ;
+    sh:path era:gradientValue ;
+    sh:name "gradientValue" ;
+    sh:description "Defines the gradient value. Required Resolution is 0.1 permill; positiv: uphill, negative: downhill" ;
+    sh:order 4 ;
+    qudt:hasUnit unit:MilliM-PER-M ;
+    rdfs:comment "scaling exponent -1 (stored value x 10^-1 = physical value); ERTMS subset variable: G_New_Gradient"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:int ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PermittedBrakingDistance-sameDir
+    a sh:PropertyShape ;
+    sh:path era:sameDir ;
+    sh:name "sameDir" ;
+    sh:description "Defines the usage direction of the linear element ;true: active in same direction as linear element, false: active in opposite direction" ;
+    sh:order 5 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### TractionSystem ####################################################
+infra-sh:TractionSystemShape
+    a sh:NodeShape ;
+    sh:targetClass era:TractionSystem ;
+    sh:name "TractionSystem" ;
+    sh:description "Defines the equipped traction system on the track" ;
+    sh:property infra-sh:TractionSystem-linearElementSections ;
+    sh:property infra-sh:TractionSystem-voltageType ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TractionSystem-linearElementSections
+    a sh:PropertyShape ;
+    sh:path era:linearElementSections ;
+    sh:name "linearElementSections" ;
+    sh:description "composes of linear element sections" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:LinearElementSectionShape ;
+    sh:message "linearElementSections must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TractionSystem-voltageType
+    a sh:PropertyShape ;
+    sh:path era:voltageType ;
+    sh:name "voltageType" ;
+    sh:description "defines the different voltage types" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/energy-supply-systems/notFitted> <http://data.europa.eu/949/concepts/energy-supply-systems/AC10> <http://data.europa.eu/949/concepts/energy-supply-systems/AC20> <http://data.europa.eu/949/concepts/energy-supply-systems/DC30> <http://data.europa.eu/949/concepts/energy-supply-systems/DC40> <http://data.europa.eu/949/concepts/energy-supply-systems/DC80> <http://data.europa.eu/949/concepts/energy-supply-systems/DC70> <http://data.europa.eu/949/concepts/energy-supply-systems/DC60> <http://data.europa.eu/949/concepts/energy-supply-systems/DC90> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped EnergySupplySystems concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### TrackUsageArea ####################################################
+infra-sh:TrackUsageAreaShape
+    a sh:NodeShape ;
+    sh:targetClass era:TrackUsageArea ;
+    sh:name "TrackUsageArea" ;
+    sh:description "Defines the preferred usage specification, most usable for TMS and planning" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:TrackUsageArea-topoArea ;
+    sh:property infra-sh:TrackUsageArea-tuaVersionTimestamp ;
+    sh:property infra-sh:TrackUsageArea-secondaryTracks ;
+    sh:property infra-sh:TrackUsageArea-shuntingTracks ;
+    sh:property infra-sh:TrackUsageArea-preferredSameDir ;
+    sh:property infra-sh:TrackUsageArea-preferredOppositeDir ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TrackUsageArea-topoArea
+    a sh:PropertyShape ;
+    sh:path era:topoArea ;
+    sh:name "topoArea" ;
+    sh:description "reference to the corresponding TopoArea" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:TopoArea ;
+    sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TrackUsageArea-tuaVersionTimestamp
+    a sh:PropertyShape ;
+    sh:path era:tuaVersionTimestamp ;
+    sh:name "tuaVersionTimestamp" ;
+    sh:description "version information of the track usage area which is valid since timestamp" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TrackUsageArea-secondaryTracks
+    a sh:PropertyShape ;
+    sh:path era:secondaryTracks ;
+    sh:name "secondaryTracks" ;
+    sh:description "Defines the list of secondary tracks. All tracks except 'shuntingTracks' and 'secondaryTracks' are 'mainTracks'" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "secondaryTracks must reference an existing era:LinearElement by IRI."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TrackUsageArea-shuntingTracks
+    a sh:PropertyShape ;
+    sh:path era:shuntingTracks ;
+    sh:name "shuntingTracks" ;
+    sh:description "Defines the list of shunting tracks. All tracks except 'shuntingTracks' and 'secondaryTracks' are 'mainTracks'" ;
+    sh:order 5 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "shuntingTracks must reference an existing era:LinearElement by IRI."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TrackUsageArea-preferredSameDir
+    a sh:PropertyShape ;
+    sh:path era:preferredSameDir ;
+    sh:name "preferredSameDir" ;
+    sh:description "Defines the list of linear elements with preferred direction identical to the Linear element-Direction" ;
+    sh:order 6 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "preferredSameDir must reference an existing era:LinearElement by IRI."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TrackUsageArea-preferredOppositeDir
+    a sh:PropertyShape ;
+    sh:path era:preferredOppositeDir ;
+    sh:name "preferredOppositeDir" ;
+    sh:description "Defines the list of linear elements with preferred direction opposite to the Linear element-Direction" ;
+    sh:order 7 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "preferredOppositeDir must reference an existing era:LinearElement by IRI."@en ;
+    sh:severity sh:Violation ;
+    .
+
+### LinearElementSpeedProfile #########################################
+infra-sh:LinearElementSpeedProfileShape
+    a sh:NodeShape ;
+    sh:targetClass era:LinearElementSpeedProfile ;
+    sh:name "LinearElementSpeedProfile" ;
+    sh:description "Defines the permitted speeds for a linear element in both directions" ;
+    rdfs:comment "sub-package: PropertiesArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:LinearElementSpeedProfile-linearElement ;
+    sh:property infra-sh:LinearElementSpeedProfile-sameDirProfile ;
+    sh:property infra-sh:LinearElementSpeedProfile-oppositeDirProfile ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementSpeedProfile-linearElement
+    a sh:PropertyShape ;
+    sh:path era:linearElement ;
+    sh:name "linearElement" ;
+    sh:description "reference to the corresponding LinearElement" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "linearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementSpeedProfile-sameDirProfile
+    a sh:PropertyShape ;
+    sh:path era:sameDirProfile ;
+    sh:name "sameDirProfile" ;
+    sh:description "Defines the speed profile valid in the same direction as the Linear element" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:SpeedProfileShape ;
+    sh:message "sameDirProfile must be a well-formed SpeedProfile (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LinearElementSpeedProfile-oppositeDirProfile
+    a sh:PropertyShape ;
+    sh:path era:oppositeDirProfile ;
+    sh:name "oppositeDirProfile" ;
+    sh:description "Defines the applicable speed profile for the opposite direction of travel with reference to linear element. valid in the opposite direction as the Linear Element. Skip if the same in both directions." ;
+    sh:order 4 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:SpeedProfileShape ;
+    sh:message "oppositeDirProfile must be a well-formed SpeedProfile (blank node or IRI)."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### SpeedProfile ######################################################
+infra-sh:SpeedProfileShape
+    a sh:NodeShape ;
+    sh:targetClass era:SpeedProfile ;
+    sh:name "SpeedProfile" ;
+    sh:description "Defines the different applicable speed profiles on the sections of track" ;
+    sh:property infra-sh:SpeedProfile-staticSpeedProfile ;
+    sh:property infra-sh:SpeedProfile-axleLoadSpeedProfiles ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SpeedProfile-staticSpeedProfile
+    a sh:PropertyShape ;
+    sh:path era:staticSpeedProfile ;
+    sh:name "staticSpeedProfile" ;
+    sh:description "composes of static speed profiles" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:StaticSpeedLimitShape ;
+    sh:message "staticSpeedProfile must be a well-formed StaticSpeedLimit (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SpeedProfile-axleLoadSpeedProfiles
+    a sh:PropertyShape ;
+    sh:path era:axleLoadSpeedProfiles ;
+    sh:name "axleLoadSpeedProfiles" ;
+    sh:description "composes of axle load speed profiles" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:AxleLoadSpeedProfileShape ;
+    sh:message "axleLoadSpeedProfiles must be a well-formed AxleLoadSpeedProfile (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+### StaticSpeedLimit ##################################################
+infra-sh:StaticSpeedLimitShape
+    a sh:NodeShape ;
+    sh:targetClass era:StaticSpeedLimit ;
+    sh:name "StaticSpeedLimit" ;
+    sh:description "Defines the static speed profile for a section of linear element or segment profile" ;
+    rdfs:comment "sub-package: PropertiesArea" ;
+    sh:property infra-sh:StaticSpeedLimit-pos ;
+    sh:property infra-sh:StaticSpeedLimit-speed ;
+    sh:property infra-sh:StaticSpeedLimit-specificStaticSpeedLimits ;
+    sh:property infra-sh:StaticSpeedLimit-trainEndApplicability ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:StaticSpeedLimit-pos
+    a sh:PropertyShape ;
+    sh:path era:pos ;
+    sh:name "pos" ;
+    sh:description "position on the associated LinearElement" ;
+    sh:order 1 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:StaticSpeedLimit-speed
+    a sh:PropertyShape ;
+    sh:path era:speed ;
+    sh:name "speed" ;
+    sh:description "Defines the applicable speed for the section of track" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:KiloM-PER-HR ;
+    rdfs:comment "ERTMS subset variable: V_STATIC"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:StaticSpeedLimit-specificStaticSpeedLimits
+    a sh:PropertyShape ;
+    sh:path era:specificStaticSpeedLimits ;
+    sh:name "specificStaticSpeedLimits" ;
+    sh:description "composes of specific static speed profiles" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:SpecificStaticSpeedLimitShape ;
+    sh:message "specificStaticSpeedLimits must be a well-formed SpecificStaticSpeedLimit (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:StaticSpeedLimit-trainEndApplicability
+    a sh:PropertyShape ;
+    sh:path era:trainEndApplicability ;
+    sh:name "trainEndApplicability" ;
+    sh:description "Indicates if a speed limit given for a profile element is to be applied until the front of the train (no train length delay) or the end of the train (train length delay) has left the element." ;
+    sh:order 4 ;
+    rdfs:comment "ERTMS subset variable: Q_FRONT"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/train-end-applicability/lengthDelay> <http://data.europa.eu/949/concepts/train-end-applicability/noLengthDelay> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped TrainEndApplicability concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### SpecificStaticSpeedLimit ##########################################
+infra-sh:SpecificStaticSpeedLimitShape
+    a sh:NodeShape ;
+    sh:targetClass era:SpecificStaticSpeedLimit ;
+    sh:name "SpecificStaticSpeedLimit" ;
+    sh:description "Defines the specific static speed profile for a section of track" ;
+    rdfs:comment "sub-package: PropertiesArea" ;
+    sh:property infra-sh:SpecificStaticSpeedLimit-absolutePositiveSpeed ;
+    sh:property infra-sh:SpecificStaticSpeedLimit-speedLimitCategory ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SpecificStaticSpeedLimit-absolutePositiveSpeed
+    a sh:PropertyShape ;
+    sh:path era:absolutePositiveSpeed ;
+    sh:name "absolutePositiveSpeed" ;
+    sh:description "Defines the absolute Positive Speed associated to a train category" ;
+    sh:order 1 ;
+    qudt:hasUnit unit:KiloM-PER-HR ;
+    rdfs:comment "ERTMS subset variable: V_DIFF"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SpecificStaticSpeedLimit-speedLimitCategory
+    a sh:PropertyShape ;
+    sh:path era:speedLimitCategory ;
+    sh:name "speedLimitCategory" ;
+    sh:description "defines different specific speed limit categories" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:SpeedLimitCategoryShape ;
+    sh:message "speedLimitCategory must be a well-formed SpeedLimitCategory (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### SpeedLimitCategory ################################################
+infra-sh:SpeedLimitCategoryShape
+    a sh:NodeShape ;
+    sh:targetClass era:SpeedLimitCategory ;
+    sh:name "SpeedLimitCategory" ;
+    sh:description "Defines the different applicable speed limit categories on the sections of track" ;
+    sh:xone (
+        infra-sh:SpeedLimitCategory-otherCategoryReplacesCantDeficiencySSP-present
+        infra-sh:SpeedLimitCategory-otherCategoryDoesNotReplaceCantDeficiencySSP-present
+        infra-sh:SpeedLimitCategory-cantDeficiencyCategory-present
+    ) ;
+    sh:message "SpeedLimitCategory is a union: exactly one of (otherCategoryReplacesCantDeficiencySSP, otherCategoryDoesNotReplaceCantDeficiencySSP, cantDeficiencyCategory) must be present."@en ;
+    sh:property infra-sh:SpeedLimitCategory-otherCategoryReplacesCantDeficiencySSP ;
+    sh:property infra-sh:SpeedLimitCategory-otherCategoryDoesNotReplaceCantDeficiencySSP ;
+    sh:property infra-sh:SpeedLimitCategory-cantDeficiencyCategory ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SpeedLimitCategory-otherCategoryReplacesCantDeficiencySSP
+    a sh:PropertyShape ;
+    sh:path era:otherCategoryReplacesCantDeficiencySSP ;
+    sh:name "otherCategoryReplacesCantDeficiencySSP" ;
+    sh:description "is of type other Category Replaces Cant Deficiency SSP" ;
+    sh:order 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_freightTrainP> <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_freightTrainG> <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_passengerTrain> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped OtherSpecificStaticSpeedProfileCategory concepts."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SpeedLimitCategory-otherCategoryDoesNotReplaceCantDeficiencySSP
+    a sh:PropertyShape ;
+    sh:path era:otherCategoryDoesNotReplaceCantDeficiencySSP ;
+    sh:name "otherCategoryDoesNotReplaceCantDeficiencySSP" ;
+    sh:description "is of type other Category Replaces Cant Deficiency SSP" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_freightTrainP> <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_freightTrainG> <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_passengerTrain> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped OtherSpecificStaticSpeedProfileCategory concepts."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SpeedLimitCategory-cantDeficiencyCategory
+    a sh:PropertyShape ;
+    sh:path era:cantDeficiencyCategory ;
+    sh:name "cantDeficiencyCategory" ;
+    sh:description "is of type Cant Deficiency Category" ;
+    sh:order 3 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/cant-deficiencies/80> <http://data.europa.eu/949/concepts/cant-deficiencies/100> <http://data.europa.eu/949/concepts/cant-deficiencies/130> <http://data.europa.eu/949/concepts/cant-deficiencies/150> <http://data.europa.eu/949/concepts/cant-deficiencies/165> <http://data.europa.eu/949/concepts/cant-deficiencies/180> <http://data.europa.eu/949/concepts/cant-deficiencies/210> <http://data.europa.eu/949/concepts/cant-deficiencies/225> <http://data.europa.eu/949/concepts/cant-deficiencies/245> <http://data.europa.eu/949/concepts/cant-deficiencies/275> <http://data.europa.eu/949/concepts/cant-deficiencies/300> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped CantDeficiencies concepts."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SpeedLimitCategory-otherCategoryReplacesCantDeficiencySSP-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:otherCategoryReplacesCantDeficiencySSP is present"@en ;
+    sh:property infra-sh:SpeedLimitCategory-otherCategoryReplacesCantDeficiencySSP-required ;
+    .
+
+infra-sh:SpeedLimitCategory-otherCategoryReplacesCantDeficiencySSP-required
+    a sh:PropertyShape ;
+    sh:path era:otherCategoryReplacesCantDeficiencySSP ;
+    sh:minCount 1 ;
+    .
+
+infra-sh:SpeedLimitCategory-otherCategoryDoesNotReplaceCantDeficiencySSP-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:otherCategoryDoesNotReplaceCantDeficiencySSP is present"@en ;
+    sh:property infra-sh:SpeedLimitCategory-otherCategoryDoesNotReplaceCantDeficiencySSP-required ;
+    .
+
+infra-sh:SpeedLimitCategory-otherCategoryDoesNotReplaceCantDeficiencySSP-required
+    a sh:PropertyShape ;
+    sh:path era:otherCategoryDoesNotReplaceCantDeficiencySSP ;
+    sh:minCount 1 ;
+    .
+
+infra-sh:SpeedLimitCategory-cantDeficiencyCategory-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:cantDeficiencyCategory is present"@en ;
+    sh:property infra-sh:SpeedLimitCategory-cantDeficiencyCategory-required ;
+    .
+
+infra-sh:SpeedLimitCategory-cantDeficiencyCategory-required
+    a sh:PropertyShape ;
+    sh:path era:cantDeficiencyCategory ;
+    sh:minCount 1 ;
+    .
+
+### AxleLoadSpeedProfile ##############################################
+infra-sh:AxleLoadSpeedProfileShape
+    a sh:NodeShape ;
+    sh:targetClass era:AxleLoadSpeedProfile ;
+    sh:name "AxleLoadSpeedProfile" ;
+    sh:description "Defines the axle load speed profile for a section of track" ;
+    rdfs:comment "sub-package: PropertiesArea" ;
+    sh:property infra-sh:AxleLoadSpeedProfile-startPos ;
+    sh:property infra-sh:AxleLoadSpeedProfile-endPos ;
+    sh:property infra-sh:AxleLoadSpeedProfile-axleLoadSpeedRestriction ;
+    sh:property infra-sh:AxleLoadSpeedProfile-axleLoadCategory ;
+    sh:property infra-sh:AxleLoadSpeedProfile-trainEndApplicability ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:AxleLoadSpeedProfile-startPos
+    a sh:PropertyShape ;
+    sh:path era:startPos ;
+    sh:name "startPos" ;
+    sh:description "Defines the start position on the associated Linear element" ;
+    sh:order 1 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:AxleLoadSpeedProfile-endPos
+    a sh:PropertyShape ;
+    sh:path era:endPos ;
+    sh:name "endPos" ;
+    sh:description "Defines the end position on the associated Linear element" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:AxleLoadSpeedProfile-axleLoadSpeedRestriction
+    a sh:PropertyShape ;
+    sh:path era:axleLoadSpeedRestriction ;
+    sh:name "axleLoadSpeedRestriction" ;
+    sh:description "Defines the applicable speed for the section of track ; Resolution as defined in SS126 = 5 km/h" ;
+    sh:order 3 ;
+    qudt:hasUnit unit:KiloM-PER-HR ;
+    rdfs:comment "ERTMS subset variable: V_New_Speed_Level"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:AxleLoadSpeedProfile-axleLoadCategory
+    a sh:PropertyShape ;
+    sh:path era:axleLoadCategory ;
+    sh:name "axleLoadCategory" ;
+    sh:description "Axle load category (The values allocated below correspond to a list of increasing axle load categories (i.e. B1 > HS17, B2 > B1, D2 > C4, ….etc) and it is used by the on-board equipment to compare its axle load category with the axle load category sent by trackside.For the underlying meaning of the axle load categories listed (with the exception of HS17) refer to CR INF TSI.The category HS17 (axle load <= 17t) corresponds to a static load per axle only, as specified in HS RST TSI clause 4.2.3.2. The introduction of this artefact is necessary to ensure backward compatibility, without any negative performance impact, in case ASPs are used on lines operated with system version X = 1).see ss026, 7.5.1.62 M_AXLELOADCAT" ;
+    sh:order 4 ;
+    rdfs:comment "ERTMS subset variable: M_AXLELOADCAT"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/load-capability-line-categories/10> <http://data.europa.eu/949/concepts/load-capability-line-categories/230> <http://data.europa.eu/949/concepts/load-capability-line-categories/20> <http://data.europa.eu/949/concepts/load-capability-line-categories/30> <http://data.europa.eu/949/concepts/load-capability-line-categories/40> <http://data.europa.eu/949/concepts/load-capability-line-categories/50> <http://data.europa.eu/949/concepts/load-capability-line-categories/60> <http://data.europa.eu/949/concepts/load-capability-line-categories/70> <http://data.europa.eu/949/concepts/load-capability-line-categories/80> <http://data.europa.eu/949/concepts/load-capability-line-categories/90> <http://data.europa.eu/949/concepts/load-capability-line-categories/100> <http://data.europa.eu/949/concepts/load-capability-line-categories/110> <http://data.europa.eu/949/concepts/load-capability-line-categories/120> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped LoadCapabilityLineCategories concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:AxleLoadSpeedProfile-trainEndApplicability
+    a sh:PropertyShape ;
+    sh:path era:trainEndApplicability ;
+    sh:name "trainEndApplicability" ;
+    sh:description "Indicates if a speed limit given for a profile element is to be applied until the front of the train (no train length delay) or the end of the train (train length delay) has left the element." ;
+    sh:order 5 ;
+    rdfs:comment "ERTMS subset variable: Q_FRONT"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/train-end-applicability/lengthDelay> <http://data.europa.eu/949/concepts/train-end-applicability/noLengthDelay> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped TrainEndApplicability concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### ETCSMarker ########################################################
+infra-sh:ETCSMarkerShape
+    a sh:NodeShape ;
+    sh:targetClass era:ETCSMarker ;
+    sh:name "ETCSMarker" ;
+    sh:description "Defines the ETCS Marker Boards" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:ETCSMarker-netPointReference ;
+    sh:property infra-sh:ETCSMarker-markerFunctionStop ;
+    sh:property infra-sh:ETCSMarker-name ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:ETCSMarker-netPointReference
+    a sh:PropertyShape ;
+    sh:path era:netPointReference ;
+    sh:name "netPointReference" ;
+    sh:description "Defines position on LinearElement" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:NetPointReferenceShape ;
+    sh:message "netPointReference must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:ETCSMarker-markerFunctionStop
+    a sh:PropertyShape ;
+    sh:path era:markerFunctionStop ;
+    sh:name "markerFunctionStop" ;
+    sh:description "Defines the function associated with the ETCS marker board. true=stop, false=location (when the ETCS marker is a location marker)" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:ETCSMarker-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### SegmentProfile ####################################################
+infra-sh:SegmentProfileShape
+    a sh:NodeShape ;
+    sh:targetClass era:SegmentProfile ;
+    sh:name "SegmentProfile" ;
+    sh:description "Defines a Segment Profile along a Linear Element" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    sh:property infra-sh:SegmentProfile-nidSP ;
+    sh:property infra-sh:SegmentProfile-onLinearElement ;
+    sh:property infra-sh:SegmentProfile-eoaOffset ;
+    sh:property infra-sh:SegmentProfile-atotsInstance ;
+    sh:property infra-sh:SegmentProfile-adjacentAtotsInstance ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SegmentProfile-nidSP
+    a sh:PropertyShape ;
+    sh:path era:nidSP ;
+    sh:name "Segment Profile Identity" ;
+    sh:description "defines national identifier for the segment profile" ;
+    sh:order 1 ;
+    rdfs:comment "ERTMS subset variable: NID_SP"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SegmentProfile-onLinearElement
+    a sh:PropertyShape ;
+    sh:path era:onLinearElement ;
+    sh:name "onLinearElement" ;
+    sh:description "reference to the corresponding linear elemen" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:LinearElement ;
+    sh:message "onLinearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SegmentProfile-eoaOffset
+    a sh:PropertyShape ;
+    sh:path era:eoaOffset ;
+    sh:name "End of Authority Offset" ;
+    sh:description "defines End of Authority EoA offset for the segment profile" ;
+    sh:order 3 ;
+    qudt:hasUnit unit:CentiM ;
+    rdfs:comment "ERTMS subset variable: D_EoA_Offset"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SegmentProfile-atotsInstance
+    a sh:PropertyShape ;
+    sh:path era:atotsInstance ;
+    sh:name "ATO-TS Instance" ;
+    sh:description "Defines the ATO-TS instance to which the SP belongs" ;
+    sh:order 4 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:AtoTSInstanceShape ;
+    sh:message "atotsInstance must be a well-formed AtoTSInstance (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:SegmentProfile-adjacentAtotsInstance
+    a sh:PropertyShape ;
+    sh:path era:adjacentAtotsInstance ;
+    sh:name "Adjacent ATO-TS Instance" ;
+    sh:description "defines the adjacent ATO-TS to which the SP belongs" ;
+    sh:order 5 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:AtoTSInstanceShape ;
+    sh:message "adjacentAtotsInstance must be a well-formed AtoTSInstance (blank node or IRI)."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### AtoTSInstance #####################################################
+infra-sh:AtoTSInstanceShape
+    a sh:NodeShape ;
+    sh:targetClass era:AtoTSInstance ;
+    sh:name "AtoTSInstance" ;
+    sh:description "Defines an ATO-TS Instance for the Segment Profiles" ;
+    sh:property infra-sh:AtoTSInstance-nidATOTS ;
+    sh:property infra-sh:AtoTSInstance-atotsNidC ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:AtoTSInstance-nidATOTS
+    a sh:PropertyShape ;
+    sh:path era:nidATOTS ;
+    sh:name "ATO-TS Identifier" ;
+    sh:description "defines national identifier for the ATO-TS" ;
+    sh:order 1 ;
+    rdfs:comment "ERTMS subset variable: NID_ATOTS"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:AtoTSInstance-atotsNidC
+    a sh:PropertyShape ;
+    sh:path era:atotsNidC ;
+    sh:name "ATO-TS Country Identifier" ;
+    sh:description "defines county identifier for the segment profile" ;
+    sh:order 2 ;
+    rdfs:comment "ERTMS subset variable: NID_C"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### StopLocation ######################################################
+infra-sh:StopLocationShape
+    a sh:NodeShape ;
+    sh:targetClass era:StopLocation ;
+    sh:name "StopLocation" ;
+    sh:description "Defines the stop locations" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:StopLocation-netPointReference ;
+    sh:property infra-sh:StopLocation-stopTrainLimit ;
+    sh:property infra-sh:StopLocation-trainLoadType ;
+    sh:property infra-sh:StopLocation-doorOpeningSide ;
+    sh:property infra-sh:StopLocation-name ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:StopLocation-netPointReference
+    a sh:PropertyShape ;
+    sh:path era:netPointReference ;
+    sh:name "netPointReference" ;
+    sh:description "Defines position on LinearElement" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:NetPointReferenceShape ;
+    sh:message "netPointReference must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:StopLocation-stopTrainLimit
+    a sh:PropertyShape ;
+    sh:path era:stopTrainLimit ;
+    sh:name "stopTrainLimit" ;
+    sh:description "composes of stop train limits" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:StopTrainLimitShape ;
+    sh:message "stopTrainLimit must be a well-formed StopTrainLimit (blank node or IRI)."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:StopLocation-trainLoadType
+    a sh:PropertyShape ;
+    sh:path era:trainLoadType ;
+    sh:name "trainLoadType" ;
+    sh:description "composes of train load types" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/train-load-type/passengerTrain> <http://data.europa.eu/949/concepts/train-load-type/freightTrain> <http://data.europa.eu/949/concepts/train-load-type/anyTrain> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped TrainLoadType concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:StopLocation-doorOpeningSide
+    a sh:PropertyShape ;
+    sh:path era:doorOpeningSide ;
+    sh:name "doorOpeningSide" ;
+    sh:description "defines different train opening sides" ;
+    sh:order 5 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/door-opening-side/noSide> <http://data.europa.eu/949/concepts/door-opening-side/leftSide> <http://data.europa.eu/949/concepts/door-opening-side/rightSide> <http://data.europa.eu/949/concepts/door-opening-side/bothSides> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped DoorOpeningSide concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:StopLocation-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 6 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### StopTrainLimit ####################################################
+infra-sh:StopTrainLimitShape
+    a sh:NodeShape ;
+    sh:targetClass era:StopTrainLimit ;
+    sh:name "StopTrainLimit" ;
+    sh:description "Defines the different stop limits for train on the track" ;
+    sh:property infra-sh:StopTrainLimit-trainMaxLength ;
+    sh:property infra-sh:StopTrainLimit-trainMaxAxles ;
+    sh:property infra-sh:StopTrainLimit-trainMaxWagons ;
+    sh:property infra-sh:StopTrainLimit-trainMaxSize ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:StopTrainLimit-trainMaxLength
+    a sh:PropertyShape ;
+    sh:path era:trainMaxLength ;
+    sh:name "trainMaxLength" ;
+    sh:description "Defines the maximum train length associated with stop train limit. use zero if not defined" ;
+    sh:order 1 ;
+    qudt:hasUnit unit:M ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:StopTrainLimit-trainMaxAxles
+    a sh:PropertyShape ;
+    sh:path era:trainMaxAxles ;
+    sh:name "trainMaxAxles" ;
+    sh:description "Defines the maximum train axles associated with stop train limit. use zero if not defined" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:StopTrainLimit-trainMaxWagons
+    a sh:PropertyShape ;
+    sh:path era:trainMaxWagons ;
+    sh:name "trainMaxWagons" ;
+    sh:description "Defines the maximum train wagons associated with stope train limit. including Locomotives, use zero if not defined" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:StopTrainLimit-trainMaxSize
+    a sh:PropertyShape ;
+    sh:path era:trainMaxSize ;
+    sh:name "trainMaxSize" ;
+    sh:description "Defines the size of train applicable for this stop train limit. use undefinedTrainSize if not defined" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/train-size/undefinedTrainSize> <http://data.europa.eu/949/concepts/train-size/shortTrain> <http://data.europa.eu/949/concepts/train-size/halfTrain> <http://data.europa.eu/949/concepts/train-size/fullTrain> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped TrainSize concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### PlatformEdge ######################################################
+infra-sh:PlatformEdgeShape
+    a sh:NodeShape ;
+    sh:targetClass era:PlatformEdge ;
+    sh:name "PlatformEdge" ;
+    sh:description "Platform for the purpose of RINF is understood as a platform edge. A platform concerns only the part of the structure neighbouring to the track (interfaced with trains)." ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    sh:property infra-sh:PlatformEdge-platformId ;
+    sh:property infra-sh:PlatformEdge-name ;
+    sh:property infra-sh:PlatformEdge-linearReference ;
+    sh:property infra-sh:PlatformEdge-stopLocations ;
+    sh:property infra-sh:PlatformEdge-platformHeight ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PlatformEdge-platformId
+    a sh:PropertyShape ;
+    sh:path era:platformId ;
+    sh:name "platformId" ;
+    sh:description "Unique platform edge identification or unique platform edge number within an Operational Point." ;
+    sh:order 1 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PlatformEdge-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PlatformEdge-linearReference
+    a sh:PropertyShape ;
+    sh:path era:linearReference ;
+    sh:name "linearReference" ;
+    sh:description "composes of linked path" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:NetLinearReferenceShape ;
+    sh:message "linearReference must be a well-formed NetLinearReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PlatformEdge-stopLocations
+    a sh:PropertyShape ;
+    sh:path era:stopLocations ;
+    sh:name "stopLocations" ;
+    sh:description "Defines the stop locations. Add only, if stopLocation can be used on that PlatformEdge for passenger/freight exchange" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:StopLocation ;
+    sh:message "stopLocations must reference an existing era:StopLocation by IRI."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:PlatformEdge-platformHeight
+    a sh:PropertyShape ;
+    sh:path era:platformHeight ;
+    sh:name "platformHeight" ;
+    sh:description "Distance between the upper surface of platform and running surface of the neighbouring track. It is the nominal value expressed in millimetres." ;
+    sh:order 5 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/platform-heights/50> <http://data.europa.eu/949/concepts/platform-heights/60> <http://data.europa.eu/949/concepts/platform-heights/220> <http://data.europa.eu/949/concepts/platform-heights/10> <http://data.europa.eu/949/concepts/platform-heights/20> <http://data.europa.eu/949/concepts/platform-heights/300> <http://data.europa.eu/949/concepts/platform-heights/350> <http://data.europa.eu/949/concepts/platform-heights/380> <http://data.europa.eu/949/concepts/platform-heights/30> <http://data.europa.eu/949/concepts/platform-heights/70> <http://data.europa.eu/949/concepts/platform-heights/80> <http://data.europa.eu/949/concepts/platform-heights/90> <http://data.europa.eu/949/concepts/platform-heights/100> <http://data.europa.eu/949/concepts/platform-heights/40> <http://data.europa.eu/949/concepts/platform-heights/110> <http://data.europa.eu/949/concepts/platform-heights/120> <http://data.europa.eu/949/concepts/platform-heights/130> <http://data.europa.eu/949/concepts/platform-heights/140> <http://data.europa.eu/949/concepts/platform-heights/150> <http://data.europa.eu/949/concepts/platform-heights/160> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped PlatformHeights concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### Platform ##########################################################
+infra-sh:PlatformShape
+    a sh:NodeShape ;
+    sh:targetClass era:Platform ;
+    sh:name "Platform" ;
+    sh:description "Defines the object platform" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:Platform-name ;
+    sh:property infra-sh:Platform-platformEdges ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Platform-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Platform-platformEdges
+    a sh:PropertyShape ;
+    sh:path era:platformEdges ;
+    sh:name "platformEdges" ;
+    sh:description "composes of platform edges" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:PlatformEdgeShape ;
+    sh:message "platformEdges must be a well-formed PlatformEdge (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### OperationalPoint ##################################################
+infra-sh:OperationalPointShape
+    a sh:NodeShape ;
+    sh:targetClass era:OperationalPoint ;
+    sh:name "OperationalPoint" ;
+    sh:description "An operational point (OP) means any location for train service operations, where train services may begin and end or change route, and where passenger or freight services may be provided; operational point also means any location at boundaries between Member States or infrastructure managers. In https://eur-lex.europa.eu/eli/reg_impl/2019/773/oj 2.1.2 Principal locations (stations, yards, junctions, freight terminals)." ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "Globally identified by 'uopid'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:sparql infra-sh:OperationalPoint-platforms-listWellFormed ;
+    sh:property infra-sh:OperationalPoint-uopid ;
+    sh:property infra-sh:OperationalPoint-opName ;
+    sh:property infra-sh:OperationalPoint-travelTimeMeasurementPoints ;
+    sh:property infra-sh:OperationalPoint-opType ;
+    sh:property infra-sh:OperationalPoint-platforms ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:OperationalPoint-uopid
+    a sh:PropertyShape ;
+    sh:path era:uopid ;
+    sh:name "uopid" ;
+    sh:description "Code composed of country code and alphanumeric operational point code." ;
+    sh:order 1 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[A-Z]{2}[A-Za-z0-9]{1,10}$" ;
+    sh:message "uopid must have the form CCAAAAAAAAAA: a two-letter ISO 3166-1 country code followed by 1 to 10 alphanumeric characters identifying the operational point within the Member State."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:OperationalPoint-opName
+    a sh:PropertyShape ;
+    sh:path era:opName ;
+    sh:name "opName" ;
+    sh:description "Name normally related to the town or village or to traffic control purpose." ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:OperationalPoint-travelTimeMeasurementPoints
+    a sh:PropertyShape ;
+    sh:path era:travelTimeMeasurementPoints ;
+    sh:name "travelTimeMeasurementPoints" ;
+    sh:description "Defined to measure/define timestamps for passing trains. Stopping-timingPoints can be found via platforms.platformEdges.stopLocations and timingPoint.stopLocation" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TravelTimeMeasurementPointShape ;
+    sh:message "travelTimeMeasurementPoints must be a well-formed TravelTimeMeasurementPoint (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:OperationalPoint-opType
+    a sh:PropertyShape ;
+    sh:path era:opType ;
+    sh:name "opType" ;
+    sh:description "Defines the Type of operational point in relation to the dominating operational functions." ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/op-types/10> <http://data.europa.eu/949/concepts/op-types/50> <http://data.europa.eu/949/concepts/op-types/130> <http://data.europa.eu/949/concepts/op-types/60> <http://data.europa.eu/949/concepts/op-types/100> <http://data.europa.eu/949/concepts/op-types/90> <http://data.europa.eu/949/concepts/op-types/110> <http://data.europa.eu/949/concepts/op-types/140> <http://data.europa.eu/949/concepts/op-types/40> <http://data.europa.eu/949/concepts/op-types/80> <http://data.europa.eu/949/concepts/op-types/70> <http://data.europa.eu/949/concepts/op-types/30> <http://data.europa.eu/949/concepts/op-types/120> <http://data.europa.eu/949/concepts/op-types/20> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped OperationalPointTypes concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:OperationalPoint-platforms
+    a sh:PropertyShape ;
+    sh:path era:platforms ;
+    sh:name "platforms" ;
+    sh:description "Defines the sequence (one after the another) of platforms according to the real location, so neighbours are the same in array and reality" ;
+    sh:order 5 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    sh:message "platforms is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:node infra-sh:OperationalPoint-platforms-items ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:OperationalPoint-platforms-listWellFormed
+    a sh:SPARQLConstraint ;
+    sh:prefixes infra-sh:PrefixDeclarations ;
+    sh:message "era:platforms is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:select """
+            SELECT DISTINCT $this
+            WHERE {
+                $this era:platforms ?head .
+                ?head rdf:rest* ?cell .
+                FILTER ( ?cell != rdf:nil )
+                { FILTER NOT EXISTS { ?cell rdf:first ?f } }
+                UNION
+                { FILTER NOT EXISTS { ?cell rdf:rest ?r } }
+                UNION
+                { ?cell rdf:first ?f1, ?f2 . FILTER ( ?f1 != ?f2 ) }
+                UNION
+                { ?cell rdf:rest ?r1, ?r2 . FILTER ( ?r1 != ?r2 ) }
+            }
+        """ ;
+    .
+
+infra-sh:OperationalPoint-platforms-items
+    a sh:NodeShape ;
+    rdfs:label "Items of the rdf:List carried by era:platforms"@en ;
+    sh:property [
+        a sh:PropertyShape ;
+        sh:path ( [ sh:zeroOrMorePath rdf:rest ] rdf:first ) ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:node infra-sh:PlatformShape ;
+        sh:message "platforms must be a well-formed Platform (blank node or IRI)."@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    .
+
+### TravelTimeMeasurementPoint ########################################
+infra-sh:TravelTimeMeasurementPointShape
+    a sh:NodeShape ;
+    sh:targetClass era:TravelTimeMeasurementPoint ;
+    sh:name "TravelTimeMeasurementPoint" ;
+    sh:description "a preciselydefined location within an OperationalPoint where the actual passing time of a train is measured or recorded. It provides a topological reference used for running-time calculation, performance monitoring, and comparison with planned timetable data." ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:TravelTimeMeasurementPoint-topologicalCoordinate ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TravelTimeMeasurementPoint-topologicalCoordinate
+    a sh:PropertyShape ;
+    sh:path era:topologicalCoordinate ;
+    sh:name "topologicalCoordinate" ;
+    sh:description "defines the location on linear element" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TopologicalCoordinateShape ;
+    sh:message "topologicalCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### TimingPoint #######################################################
+infra-sh:TimingPointShape
+    a sh:NodeShape ;
+    sh:targetClass era:TimingPoint ;
+    sh:name "TimingPoint" ;
+    sh:description "Defines a fixed point on the infrastructure" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:TimingPoint-topologicalCoordinate ;
+    sh:property infra-sh:TimingPoint-activeObject ;
+    sh:property infra-sh:TimingPoint-nidTP ;
+    sh:property infra-sh:TimingPoint-tpName ;
+    sh:property infra-sh:TimingPoint-stopLocationTolerance ;
+    sh:property infra-sh:TimingPoint-stoppingPointReachDistance ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TimingPoint-topologicalCoordinate
+    a sh:PropertyShape ;
+    sh:path era:topologicalCoordinate ;
+    sh:name "topologicalCoordinate" ;
+    sh:description "defines the location on linear element" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TopologicalCoordinateShape ;
+    sh:message "topologicalCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TimingPoint-activeObject
+    a sh:PropertyShape ;
+    sh:path era:activeObject ;
+    sh:name "activeObject" ;
+    sh:description "Defines the functional object infront of which a TimingPoint is located and is active" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TPActiveObjectShape ;
+    sh:message "activeObject must be a well-formed TPActiveObject (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TimingPoint-nidTP
+    a sh:PropertyShape ;
+    sh:path era:nidTP ;
+    sh:name "nidTP" ;
+    sh:description "defines national identifier for the timing point" ;
+    sh:order 4 ;
+    rdfs:comment "ERTMS subset variable: NID_TP"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:unsignedInt ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TimingPoint-tpName
+    a sh:PropertyShape ;
+    sh:path era:tpName ;
+    sh:name "tpName" ;
+    sh:description "User-friendly name for the timing point" ;
+    sh:order 5 ;
+    rdfs:comment "ERTMS subset variable: X_TEXT"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TimingPoint-stopLocationTolerance
+    a sh:PropertyShape ;
+    sh:path era:stopLocationTolerance ;
+    sh:name "stopLocationTolerance" ;
+    sh:description "Defines the required stopping tolerance for a Timing Point" ;
+    sh:order 6 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/stop-location-tolerance/T_10cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_20cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_30cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_40cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_50cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_1m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_150cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_2m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_250cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_3m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_5m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_750cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_10m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_15m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_20m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_25m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_30m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_50m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_75m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_100m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_Undefined> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped StopLocationTolerance concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TimingPoint-stoppingPointReachDistance
+    a sh:PropertyShape ;
+    sh:path era:stoppingPointReachDistance ;
+    sh:name "stoppingPointReachDistance" ;
+    sh:description "Defines the distance from a stopping point to consider it as reached." ;
+    sh:order 7 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/stop-location-tolerance/T_10cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_20cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_30cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_40cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_50cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_1m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_150cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_2m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_250cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_3m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_5m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_750cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_10m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_15m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_20m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_25m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_30m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_50m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_75m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_100m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_Undefined> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped StopLocationTolerance concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### TPActiveObject ####################################################
+infra-sh:TPActiveObjectShape
+    a sh:NodeShape ;
+    sh:targetClass era:TPActiveObject ;
+    sh:name "TPActiveObject" ;
+    sh:description "Defines a functional object infront of which a TimingPoint is located and active" ;
+    sh:xone (
+        infra-sh:TPActiveObject-etcsMarker-present
+        infra-sh:TPActiveObject-stopLocation-present
+        infra-sh:TPActiveObject-timeMeasurePoint-present
+    ) ;
+    sh:message "TPActiveObject is a union: exactly one of (etcsMarker, stopLocation, timeMeasurePoint) must be present."@en ;
+    sh:property infra-sh:TPActiveObject-etcsMarker ;
+    sh:property infra-sh:TPActiveObject-stopLocation ;
+    sh:property infra-sh:TPActiveObject-timeMeasurePoint ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TPActiveObject-etcsMarker
+    a sh:PropertyShape ;
+    sh:path era:etcsMarker ;
+    sh:name "etcsMarker" ;
+    sh:description "refers to ETCS marker" ;
+    sh:order 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:ETCSMarker ;
+    sh:message "etcsMarker must reference an existing era:ETCSMarker by IRI."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TPActiveObject-stopLocation
+    a sh:PropertyShape ;
+    sh:path era:stopLocation ;
+    sh:name "stopLocation" ;
+    sh:description "refers to stop location" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:StopLocation ;
+    sh:message "stopLocation must reference an existing era:StopLocation by IRI."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TPActiveObject-timeMeasurePoint
+    a sh:PropertyShape ;
+    sh:path era:timeMeasurePoint ;
+    sh:name "timeMeasurePoint" ;
+    sh:description "refers to travel time measurement point" ;
+    sh:order 3 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:TravelTimeMeasurementPoint ;
+    sh:message "timeMeasurePoint must reference an existing era:TravelTimeMeasurementPoint by IRI."@en ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TPActiveObject-etcsMarker-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:etcsMarker is present"@en ;
+    sh:property infra-sh:TPActiveObject-etcsMarker-required ;
+    .
+
+infra-sh:TPActiveObject-etcsMarker-required
+    a sh:PropertyShape ;
+    sh:path era:etcsMarker ;
+    sh:minCount 1 ;
+    .
+
+infra-sh:TPActiveObject-stopLocation-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:stopLocation is present"@en ;
+    sh:property infra-sh:TPActiveObject-stopLocation-required ;
+    .
+
+infra-sh:TPActiveObject-stopLocation-required
+    a sh:PropertyShape ;
+    sh:path era:stopLocation ;
+    sh:minCount 1 ;
+    .
+
+infra-sh:TPActiveObject-timeMeasurePoint-present
+    a sh:NodeShape ;
+    rdfs:label "Union alternative: era:timeMeasurePoint is present"@en ;
+    sh:property infra-sh:TPActiveObject-timeMeasurePoint-required ;
+    .
+
+infra-sh:TPActiveObject-timeMeasurePoint-required
+    a sh:PropertyShape ;
+    sh:path era:timeMeasurePoint ;
+    sh:minCount 1 ;
+    .
+
+### Tunnel ############################################################
+infra-sh:TunnelShape
+    a sh:NodeShape ;
+    sh:targetClass era:Tunnel ;
+    sh:name "Tunnel" ;
+    sh:description "A railway tunnel is an excavation or a construction around the track provided to allow the railway to pass for example higher land, buildings or water." ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "Globally identified by 'tunnelIdentification'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:Tunnel-tunnelIdentification ;
+    sh:property infra-sh:Tunnel-name ;
+    sh:property infra-sh:Tunnel-tunnelTubes ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Tunnel-tunnelIdentification
+    a sh:PropertyShape ;
+    sh:path era:tunnelIdentification ;
+    sh:name "tunnelIdentification" ;
+    sh:description "Unique tunnel identification or unique tunnel number within Member State" ;
+    sh:order 1 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Tunnel-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Tunnel-tunnelTubes
+    a sh:PropertyShape ;
+    sh:path era:tunnelTubes ;
+    sh:name "tunnelTubes" ;
+    sh:description "composes of tunnel tubes" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TunnelTubeShape ;
+    sh:message "tunnelTubes must be a well-formed TunnelTube (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### TunnelTube ########################################################
+infra-sh:TunnelTubeShape
+    a sh:NodeShape ;
+    sh:targetClass era:TunnelTube ;
+    sh:name "TunnelTube" ;
+    sh:description "Defines the tunnels tubes within a tunnel. Main Use-Case identify emergency management with rescue into neighbour tube" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    sh:property infra-sh:TunnelTube-areaReference ;
+    sh:property infra-sh:TunnelTube-crossSection ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TunnelTube-areaReference
+    a sh:PropertyShape ;
+    sh:path era:areaReference ;
+    sh:name "areaReference" ;
+    sh:description "composes of track area" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:NetAreaReferenceShape ;
+    sh:message "areaReference must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TunnelTube-crossSection
+    a sh:PropertyShape ;
+    sh:path era:crossSection ;
+    sh:name "crossSection" ;
+    sh:description "Defines the standard Cross section dimensions of a tunnel tube for calculation of air-resistance" ;
+    sh:order 2 ;
+    qudt:hasUnit unit:M2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### Bridge ############################################################
+infra-sh:BridgeShape
+    a sh:NodeShape ;
+    sh:targetClass era:Bridge ;
+    sh:name "Bridge" ;
+    sh:description "It is a structure constructed for the exclusive purpose of carrying railroad traffic across an obstruction. It can be used for defining non-stopping areas, big metal mass, resistance to traffic load etc." ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:Bridge-name ;
+    sh:property infra-sh:Bridge-areaReference ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Bridge-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Bridge-areaReference
+    a sh:PropertyShape ;
+    sh:path era:areaReference ;
+    sh:name "areaReference" ;
+    sh:description "composes of track area" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:NetAreaReferenceShape ;
+    sh:message "areaReference must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### Underpass #########################################################
+infra-sh:UnderpassShape
+    a sh:NodeShape ;
+    sh:targetClass era:Underpass ;
+    sh:name "Underpass" ;
+    sh:description "Defines the civil infrastructure object Underpass" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:Underpass-name ;
+    sh:property infra-sh:Underpass-areaReference ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Underpass-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Underpass-areaReference
+    a sh:PropertyShape ;
+    sh:path era:areaReference ;
+    sh:name "areaReference" ;
+    sh:description "composes of track area" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:NetAreaReferenceShape ;
+    sh:message "areaReference must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### TvpSection ########################################################
+infra-sh:TvpSectionShape
+    a sh:NodeShape ;
+    sh:targetClass era:TvpSection ;
+    sh:name "TvpSection" ;
+    sh:description "Defines the train vacancy proving section" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:TvpSection-name ;
+    sh:property infra-sh:TvpSection-linkedArea ;
+    sh:property infra-sh:TvpSection-trainDetectors ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TvpSection-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 2 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TvpSection-linkedArea
+    a sh:PropertyShape ;
+    sh:path era:linkedArea ;
+    sh:name "linkedArea" ;
+    sh:description "composes of linked area" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:NetAreaReferenceShape ;
+    sh:message "linkedArea must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TvpSection-trainDetectors
+    a sh:PropertyShape ;
+    sh:path era:trainDetectors ;
+    sh:name "trainDetectors" ;
+    sh:description "Defines the set of train detectors" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:TrainDetectionSystem ;
+    sh:message "trainDetectors must reference an existing era:TrainDetectionSystem by IRI."@en ;
+    sh:severity sh:Violation ;
+    .
+
+### TrainDetectionSystem ##############################################
+infra-sh:TrainDetectionSystemShape
+    a sh:NodeShape ;
+    sh:targetClass era:TrainDetectionSystem ;
+    sh:name "TrainDetectionSystem" ;
+    sh:description "Safety system used to detect the presence of vehicles on the railway track." ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:TrainDetectionSystem-topologicalCoordinate ;
+    sh:property infra-sh:TrainDetectionSystem-trainDetectionSystemType ;
+    sh:property infra-sh:TrainDetectionSystem-referenceDir ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TrainDetectionSystem-topologicalCoordinate
+    a sh:PropertyShape ;
+    sh:path era:topologicalCoordinate ;
+    sh:name "topologicalCoordinate" ;
+    sh:description "defines the location on linear element" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TopologicalCoordinateShape ;
+    sh:message "topologicalCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TrainDetectionSystem-trainDetectionSystemType
+    a sh:PropertyShape ;
+    sh:path era:trainDetectionSystemType ;
+    sh:name "trainDetectionSystemType" ;
+    sh:description "Defines the train detection system applicable for the TVPS" ;
+    sh:order 3 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/train-detection/20> <http://data.europa.eu/949/concepts/train-detection/10> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped TrainDetectionSystems concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:TrainDetectionSystem-referenceDir
+    a sh:PropertyShape ;
+    sh:path era:referenceDir ;
+    sh:name "referenceDir" ;
+    sh:description "Reference direction corresponding to linear element in which the train detector detects trains: same/opposite for axleCounter, both for trackCircuit" ;
+    sh:order 4 ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://data.europa.eu/949/concepts/orientations/02> <http://data.europa.eu/949/concepts/orientations/00> <http://data.europa.eu/949/concepts/orientations/01> ) ;
+    sh:message "Value must be one of the CCSTMS-scoped OrientationDirections concepts."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### LevelCrossing #####################################################
+infra-sh:LevelCrossingShape
+    a sh:NodeShape ;
+    sh:targetClass era:LevelCrossing ;
+    sh:name "LevelCrossing" ;
+    sh:description "A level crossing is an intersection where a railway line crosses a road or a path at the same level. It can be used for the implementation of the ETCS trackside or to identify potential collision scenarios" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:LevelCrossing-areaReference ;
+    sh:property infra-sh:LevelCrossing-name ;
+    sh:property infra-sh:LevelCrossing-isProtected ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LevelCrossing-areaReference
+    a sh:PropertyShape ;
+    sh:path era:areaReference ;
+    sh:name "areaReference" ;
+    sh:description "composes of track area" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:NetAreaReferenceShape ;
+    sh:message "areaReference must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LevelCrossing-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:LevelCrossing-isProtected
+    a sh:PropertyShape ;
+    sh:path era:isProtected ;
+    sh:name "isProtected" ;
+    sh:description "True if the level crossing is protected, False - if the level crossing is unprotected" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### NationalBorder ####################################################
+infra-sh:NationalBorderShape
+    a sh:NodeShape ;
+    sh:targetClass era:NationalBorder ;
+    sh:name "NationalBorder" ;
+    sh:description "Defines a border point is used to separate the railway network due to different reasons. Typical examples are country borders, the change of owning infrastructure manager or the border of a station" ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:NationalBorder-topologicalCoordinate ;
+    sh:property infra-sh:NationalBorder-fromCountryCode ;
+    sh:property infra-sh:NationalBorder-toCountryCode ;
+    sh:property infra-sh:NationalBorder-name ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:NationalBorder-topologicalCoordinate
+    a sh:PropertyShape ;
+    sh:path era:topologicalCoordinate ;
+    sh:name "topologicalCoordinate" ;
+    sh:description "defines the location on linear element" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TopologicalCoordinateShape ;
+    sh:message "topologicalCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:NationalBorder-fromCountryCode
+    a sh:PropertyShape ;
+    sh:path era:fromCountryCode ;
+    sh:name "fromCountryCode" ;
+    sh:description "Defines the from country code for the national border in the direction of linear element" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[A-Z]{2}$" ;
+    sh:message "fromCountryCode must be a two-letter ISO 3166-1 alpha-2 country code (upper case)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:NationalBorder-toCountryCode
+    a sh:PropertyShape ;
+    sh:path era:toCountryCode ;
+    sh:name "toCountryCode" ;
+    sh:description "Defines the to country code for the national border in the direction of linear element" ;
+    sh:order 4 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[A-Z]{2}$" ;
+    sh:message "toCountryCode must be a two-letter ISO 3166-1 alpha-2 country code (upper case)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:NationalBorder-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 5 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### BufferStop ########################################################
+infra-sh:BufferStopShape
+    a sh:NodeShape ;
+    sh:targetClass era:BufferStop ;
+    sh:name "BufferStop" ;
+    sh:description "An infrastructure element installed at the end of a track to prevent rolling stock from moving beyond the track termination. It serves as the physical end point of the track and may provide energy absorption in the event of a train overrun." ;
+    rdfs:comment "sub-package: FunctionalArea" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:BufferStop-netPointReference ;
+    sh:property infra-sh:BufferStop-name ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:BufferStop-netPointReference
+    a sh:PropertyShape ;
+    sh:path era:netPointReference ;
+    sh:name "netPointReference" ;
+    sh:description "Defines position corresponding to the buffers of the buffer stop on LinearElement" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:NetPointReferenceShape ;
+    sh:message "netPointReference must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:BufferStop-name
+    a sh:PropertyShape ;
+    sh:path era:name ;
+    sh:name "name" ;
+    sh:description "User-friendly name, only if different from id" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+### FunctionalArea ####################################################
+infra-sh:FunctionalAreaShape
+    a sh:NodeShape ;
+    sh:targetClass era:FunctionalArea ;
+    sh:name "FunctionalArea" ;
+    sh:description "Defines the container functional area within INFRA Domain" ;
+    rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
+    rdfs:comment "Globally identified by 'id'."@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property infra-sh:FunctionalArea-topoArea ;
+    sh:property infra-sh:FunctionalArea-faVersionTimestamp ;
+    sh:property infra-sh:FunctionalArea-opPoints ;
+    sh:property infra-sh:FunctionalArea-switches ;
+    sh:property infra-sh:FunctionalArea-slipCrossings ;
+    sh:property infra-sh:FunctionalArea-derailers ;
+    sh:property infra-sh:FunctionalArea-crossings ;
+    sh:property infra-sh:FunctionalArea-trainDetectors ;
+    sh:property infra-sh:FunctionalArea-baliseGroups ;
+    sh:property infra-sh:FunctionalArea-etcsMarkers ;
+    sh:property infra-sh:FunctionalArea-segmentProfile ;
+    sh:property infra-sh:FunctionalArea-stopLocations ;
+    sh:property infra-sh:FunctionalArea-tunnels ;
+    sh:property infra-sh:FunctionalArea-bridges ;
+    sh:property infra-sh:FunctionalArea-underpasses ;
+    sh:property infra-sh:FunctionalArea-tvps ;
+    sh:property infra-sh:FunctionalArea-levelCrossings ;
+    sh:property infra-sh:FunctionalArea-nationalBorders ;
+    sh:property infra-sh:FunctionalArea-bufferStops ;
+    sh:property infra-sh:FunctionalArea-timingPoints ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-topoArea
+    a sh:PropertyShape ;
+    sh:path era:topoArea ;
+    sh:name "topoArea" ;
+    sh:description "reference to the corresponding TopoArea" ;
+    sh:order 2 ;
+    sh:nodeKind sh:IRI ;
+    sh:class era:TopoArea ;
+    sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-faVersionTimestamp
+    a sh:PropertyShape ;
+    sh:path era:faVersionTimestamp ;
+    sh:name "faVersionTimestamp" ;
+    sh:description "version information of the functional area which is valid since timestamp" ;
+    sh:order 3 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-opPoints
+    a sh:PropertyShape ;
+    sh:path era:opPoints ;
+    sh:name "opPoints" ;
+    sh:description "Defines the set of operational points" ;
+    sh:order 4 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:OperationalPointShape ;
+    sh:message "opPoints must be a well-formed OperationalPoint (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-switches
+    a sh:PropertyShape ;
+    sh:path era:switches ;
+    sh:name "switches" ;
+    sh:description "Defines the set of switches" ;
+    sh:order 5 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:SwitchShape ;
+    sh:message "switches must be a well-formed Switch (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-slipCrossings
+    a sh:PropertyShape ;
+    sh:path era:slipCrossings ;
+    sh:name "slipCrossings" ;
+    sh:description "Defines the set of slip crossings" ;
+    sh:order 6 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:SlipCrossingShape ;
+    sh:message "slipCrossings must be a well-formed SlipCrossing (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-derailers
+    a sh:PropertyShape ;
+    sh:path era:derailers ;
+    sh:name "derailers" ;
+    sh:description "Defines the set of derailers" ;
+    sh:order 7 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:DerailerShape ;
+    sh:message "derailers must be a well-formed Derailer (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-crossings
+    a sh:PropertyShape ;
+    sh:path era:crossings ;
+    sh:name "crossings" ;
+    sh:description "Defines the set of crossings" ;
+    sh:order 8 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:CrossingShape ;
+    sh:message "crossings must be a well-formed Crossing (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-trainDetectors
+    a sh:PropertyShape ;
+    sh:path era:trainDetectors ;
+    sh:name "trainDetectors" ;
+    sh:description "Defines the set of train detectors" ;
+    sh:order 9 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TrainDetectionSystemShape ;
+    sh:message "trainDetectors must be a well-formed TrainDetectionSystem (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-baliseGroups
+    a sh:PropertyShape ;
+    sh:path era:baliseGroups ;
+    sh:name "baliseGroups" ;
+    sh:description "Defines the set of balise groups" ;
+    sh:order 10 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:BaliseGroupShape ;
+    sh:message "baliseGroups must be a well-formed BaliseGroup (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-etcsMarkers
+    a sh:PropertyShape ;
+    sh:path era:etcsMarkers ;
+    sh:name "etcsMarkers" ;
+    sh:description "Defines the set of etcs markers" ;
+    sh:order 11 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:ETCSMarkerShape ;
+    sh:message "etcsMarkers must be a well-formed ETCSMarker (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-segmentProfile
+    a sh:PropertyShape ;
+    sh:path era:segmentProfile ;
+    sh:name "segmentProfile" ;
+    sh:description "Defines the set of segment profiles" ;
+    sh:order 12 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:SegmentProfileShape ;
+    sh:message "segmentProfile must be a well-formed SegmentProfile (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-stopLocations
+    a sh:PropertyShape ;
+    sh:path era:stopLocations ;
+    sh:name "stopLocations" ;
+    sh:description "Defines the set of stop locations where the train is allowed to stop" ;
+    sh:order 13 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:StopLocationShape ;
+    sh:message "stopLocations must be a well-formed StopLocation (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-tunnels
+    a sh:PropertyShape ;
+    sh:path era:tunnels ;
+    sh:name "tunnels" ;
+    sh:description "Defines the set of tunnels" ;
+    sh:order 14 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TunnelShape ;
+    sh:message "tunnels must be a well-formed Tunnel (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-bridges
+    a sh:PropertyShape ;
+    sh:path era:bridges ;
+    sh:name "bridges" ;
+    sh:description "Defines the set of bridges" ;
+    sh:order 15 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:BridgeShape ;
+    sh:message "bridges must be a well-formed Bridge (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-underpasses
+    a sh:PropertyShape ;
+    sh:path era:underpasses ;
+    sh:name "underpasses" ;
+    sh:description "Defines the set of underpasses" ;
+    sh:order 16 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:UnderpassShape ;
+    sh:message "underpasses must be a well-formed Underpass (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-tvps
+    a sh:PropertyShape ;
+    sh:path era:tvps ;
+    sh:name "tvps" ;
+    sh:description "Defines the set of track vacancy proving sections" ;
+    sh:order 17 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TvpSectionShape ;
+    sh:message "tvps must be a well-formed TvpSection (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-levelCrossings
+    a sh:PropertyShape ;
+    sh:path era:levelCrossings ;
+    sh:name "levelCrossings" ;
+    sh:description "Defines the set of level crossings" ;
+    sh:order 18 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:LevelCrossingShape ;
+    sh:message "levelCrossings must be a well-formed LevelCrossing (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-nationalBorders
+    a sh:PropertyShape ;
+    sh:path era:nationalBorders ;
+    sh:name "nationalBorders" ;
+    sh:description "Defines the set of national borders" ;
+    sh:order 19 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:NationalBorderShape ;
+    sh:message "nationalBorders must be a well-formed NationalBorder (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-bufferStops
+    a sh:PropertyShape ;
+    sh:path era:bufferStops ;
+    sh:name "bufferStops" ;
+    sh:description "Defines the set of buffer stops" ;
+    sh:order 20 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:BufferStopShape ;
+    sh:message "bufferStops must be a well-formed BufferStop (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:FunctionalArea-timingPoints
+    a sh:PropertyShape ;
+    sh:path era:timingPoints ;
+    sh:name "timingPoints" ;
+    sh:description "Defines the set of timing points, at which TMS would calculate train positions" ;
+    sh:order 21 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TimingPointShape ;
+    sh:message "timingPoints must be a well-formed TimingPoint (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+### Infrastructure ####################################################
+infra-sh:InfrastructureShape
+    a sh:NodeShape ;
+    sh:targetClass era:Infrastructure ;
+    sh:name "Infrastructure" ;
+    sh:description "Defines the Containter for Infrastructure (INFRA)" ;
+    sh:property infra-sh:Infrastructure-topoAreas ;
+    sh:property infra-sh:Infrastructure-geometryAreas ;
+    sh:property infra-sh:Infrastructure-sampledGeometryAreas ;
+    sh:property infra-sh:Infrastructure-functionalAreas ;
+    sh:property infra-sh:Infrastructure-propertiesAreas ;
+    sh:property infra-sh:Infrastructure-trackUsageAreas ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Infrastructure-topoAreas
+    a sh:PropertyShape ;
+    sh:path era:topoAreas ;
+    sh:name "topoAreas" ;
+    sh:description "Defines the set of topo areas" ;
+    sh:order 1 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TopoAreaShape ;
+    sh:message "topoAreas must be a well-formed TopoArea (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Infrastructure-geometryAreas
+    a sh:PropertyShape ;
+    sh:path era:geometryAreas ;
+    sh:name "geometryAreas" ;
+    sh:description "Defines the set of geometry areas" ;
+    sh:order 2 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:GeometryAreaShape ;
+    sh:message "geometryAreas must be a well-formed GeometryArea (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Infrastructure-sampledGeometryAreas
+    a sh:PropertyShape ;
+    sh:path era:sampledGeometryAreas ;
+    sh:name "sampledGeometryAreas" ;
+    sh:description "Defines the set of sampled geometry areas" ;
+    sh:order 3 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:SampledGeometryAreaShape ;
+    sh:message "sampledGeometryAreas must be a well-formed SampledGeometryArea (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Infrastructure-functionalAreas
+    a sh:PropertyShape ;
+    sh:path era:functionalAreas ;
+    sh:name "functionalAreas" ;
+    sh:description "Defines the set of functional areas" ;
+    sh:order 4 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:FunctionalAreaShape ;
+    sh:message "functionalAreas must be a well-formed FunctionalArea (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Infrastructure-propertiesAreas
+    a sh:PropertyShape ;
+    sh:path era:propertiesAreas ;
+    sh:name "propertiesAreas" ;
+    sh:description "Defines the set of properties areas" ;
+    sh:order 5 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:PropertiesAreaShape ;
+    sh:message "propertiesAreas must be a well-formed PropertiesArea (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
+
+infra-sh:Infrastructure-trackUsageAreas
+    a sh:PropertyShape ;
+    sh:path era:trackUsageAreas ;
+    sh:name "trackUsageAreas" ;
+    sh:description "Defines the set of track usage areas" ;
+    sh:order 6 ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:node infra-sh:TrackUsageAreaShape ;
+    sh:message "trackUsageAreas must be a well-formed TrackUsageArea (blank node or IRI)."@en ;
+    sh:severity sh:Violation ;
+    .
