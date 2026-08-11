@@ -28,7 +28,6 @@
 @prefix eng-sh: <http://data.europa.eu/949/shapes/eng#> .
 
 
-
 ########################################################################
 #  SPARQL prefix declarations
 #
@@ -8509,20 +8508,20 @@ eng-sh:KmAreaShape
     rdfs:comment "The 'id' attribute is not asserted as a property: in the ontology it is carried by the IRI."@en ;
     rdfs:comment "Globally identified by 'id'."@en ;
     sh:nodeKind sh:IRI ;
-    sh:property eng-sh:KmArea-linearElement ;
+    sh:property eng-sh:KmArea-topoArea ;
     sh:property eng-sh:KmArea-linearElementKm ;
     sh:severity sh:Violation ;
     .
 
-eng-sh:KmArea-linearElement
+eng-sh:KmArea-topoArea
     a sh:PropertyShape ;
-    sh:path era:linearElement ;
-    sh:name "linearElement" ;
-    sh:description "reference to the corresponding LinearElement" ;
+    sh:path era:topoArea ;
+    sh:name "topoArea" ;
+    sh:description "reference to the corresponding TopoArea" ;
     sh:order 2 ;
     sh:nodeKind sh:IRI ;
-    sh:class era:LinearElement ;
-    sh:message "linearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:class era:TopoArea ;
+    sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;

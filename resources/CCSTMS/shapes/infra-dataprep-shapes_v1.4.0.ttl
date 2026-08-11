@@ -24,7 +24,7 @@
 
 @prefix infra-dp: <http://data.europa.eu/949/shapes/infra-dataprep#> .
 
-    .
+
 
 ################################################################################
 #
@@ -2216,9 +2216,30 @@ infra-dp:DP026b-listChangesDirection
 #  Testing existence rather than computing MIN and MAX also avoids the nested
 #  aggregate that pySHACL rejects when $this is pre-bound.
 #
-#  Positions compare BY VALUE, so a point written 0 satisfies the origin test as
-#  well as one written "0.0"^^xsd:double. Equality with the length is EXACT, as in
-#  DP-024; both are authored values.
+#  THE TWO ENDS ARE MATCHED DIFFERENTLY, and deliberately.
+#
+#    DP-027a, the ORIGIN, is matched EXACTLY. Zero is exactly representable in
+#    xsd:double, and a cant point at the start of an element is authored as 0 rather
+#    than derived from anything, so there is nothing for a tolerance to absorb.
+#    Positions still compare BY VALUE, so a point written 0 satisfies the test as
+#    well as one written "0.0"^^xsd:double.
+#
+#    DP-027b, the FAR END, is matched within +/- 1 m. Here the target is not a
+#    constant but lengthOfNetLinearElement, a second authored double from a
+#    different part of the model - and, unlike the origin, one that is frequently
+#    computed rather than typed. The cant series and the element length commonly
+#    come from different sources or are rounded to different precisions, and a cant
+#    point at 640.0 m on an element recorded as 640.02 m long is plainly the closing
+#    point, not a missing one.
+#
+#  The tolerance is the same +/- 1 m adopted for DP-024, and it absorbs the same
+#  thing: AUTHORING precision, not floating-point rounding, which at these
+#  magnitudes would need only about 1e-6 m. A metre is small against any real
+#  element, so the window cannot reach past the end of one element into another.
+#
+#  THE COST, stated plainly: an element whose cant series stops a metre short is now
+#  accepted. Given that the element length is itself only accurate to about that,
+#  the alternative was reporting elements whose cant is in fact complete.
 #
 ################################################################################
 
@@ -2261,7 +2282,7 @@ infra-dp:DP027b-noCantAtFarEnd
     a sh:SPARQLConstraint ;
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-027b"@en ;
-    sh:message "DP-027b: this LinearElementGeometry defines cant points but none of them is at the far end of the element, whose lengthOfNetLinearElement is {?len} m, so the cant is undefined from the last point onwards. The model requires the element to be completely defined, at least at beginning and end. Add a cant point at the element's length."@en ;
+    sh:message "DP-027b: this LinearElementGeometry defines cant points but none of them lies within 1 m of the far end of the element, whose lengthOfNetLinearElement is {?len} m, so the cant is undefined from the last point onwards. The model requires the element to be completely defined, at least at beginning and end. The match allows +/- 1 m to absorb differences in authoring precision between the cant series and the recorded element length, so the last cant point is more than a metre short. Add a cant point at the element's end."@en ;
     sh:select """
         SELECT DISTINCT $this ?len
         WHERE {
@@ -2278,7 +2299,11 @@ infra-dp:DP027b-noCantAtFarEnd
                 UNION
                 {   $this era:cantPoints ?cp . }
                 ?cp era:elementGeometryPos ?pos .
-                FILTER ( ?pos = ?len )
+                # ---- TOLERANCE: single point of change ------------------- #
+                # A cant point within 1 m of the element's end closes the series.
+                # Absorbs authoring precision between two independently recorded
+                # doubles, NOT floating-point rounding. See the block comment.
+                FILTER ( ABS(?pos - ?len) <= 1.0 )
             }
         }
     """ ;
