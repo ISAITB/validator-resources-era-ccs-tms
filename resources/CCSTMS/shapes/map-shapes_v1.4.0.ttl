@@ -1497,6 +1497,7 @@ map-sh:LinearElementCoordinate-pos
     qudt:hasUnit unit:M ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:double ;
+	sh:minInclusive 0.0 ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
