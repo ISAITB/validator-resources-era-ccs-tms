@@ -2,8 +2,8 @@
 #
 # Copyright (c) 2026 LAWCON Consulting GmbH
 #
-# Licensed under the EUPL, Version 1.2 or – as soon as they are approved
-# by the European Commission – subsequent versions of the EUPL (the "Licence");
+# Licensed under the EUPL, Version 1.2 or - as soon as they are approved
+# by the European Commission - subsequent versions of the EUPL (the "Licence");
 # You may not use this work except in compliance with the Licence.
 # You may obtain a copy of the Licence at:
 #
@@ -24,10 +24,16 @@
 # ===== Crossing FoulingPoint LinearElement Constraint =====
 era:CrossingFoulingPointLinearElementShape a sh:NodeShape ;
     sh:targetClass era:Crossing ;
+    era:additionalInfo "[BUSINESS RULE] This error might be because a FoulingPoint associated with this Crossing (via the foulingPoints reference) lies on a LinearElement — determined through its topologicalCoordinate.onLinearElement — that is not referenced by any of the Crossing's own topologicalCoordinates. Every FoulingPoint belonging to a Crossing must be positioned on a LinearElement that the Crossing itself also references through one of its topological coordinates."@en ;
+    era:additionalInfo "[GESCHÄFTSREGEL] Dieser Fehler könnte daran liegen, dass ein FoulingPoint, der mit dieser Kreuzung verknüpft ist (über die foulingPoints-Referenz), auf einem LinearElement liegt — ermittelt über topologicalCoordinate.onLinearElement —, das in keiner der topologicalCoordinates der Kreuzung referenziert ist. Jeder FoulingPoint einer Kreuzung muss auf einem LinearElement positioniert sein, das die Kreuzung selbst ebenfalls über eine ihrer topologischen Koordinaten referenziert."@de ;
+    era:additionalInfo "[RÈGLE MÉTIER] Cette erreur peut être due au fait qu''un FoulingPoint associé à ce Crossing (via la référence foulingPoints) se trouve sur un LinearElement — déterminé via topologicalCoordinate.onLinearElement — qui n''est référencé par aucune des topologicalCoordinates du Crossing. Chaque FoulingPoint appartenant à un Crossing doit être positionné sur un LinearElement que le Crossing lui-même référence également via l''une de ses coordonnées topologiques."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "All FoulingPoints associated with a Crossing must be positioned on LinearElements that are also referenced in the Crossing's topologicalCoordinates." ;
+        sh:message "All FoulingPoints associated with a Crossing must be positioned on LinearElements that are also referenced in the Crossing's topologicalCoordinates."@en ;
+        sh:message "Alle FoulingPoints einer Kreuzung müssen auf LinearElements positioniert sein, die auch in den topologicalCoordinates der Kreuzung referenziert sind."@de ;
+        sh:message "Tous les FoulingPoints associés à un Crossing doivent être positionnés sur des LinearElements également référencés dans les topologicalCoordinates du Crossing."@fr ;
+        
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -51,10 +57,16 @@ era:CrossingFoulingPointLinearElementShape a sh:NodeShape ;
 # ===== KilometricPost Position Within LinearElement Length Constraint =====
 era:KilometricPostPositionWithinLengthShape a sh:NodeShape ;
     sh:targetClass era:LinearElementKm ;
+    era:additionalInfo "[BUSINESS RULE] This error might be because the pos of a KilometricPost in this LinearElementKm's kilometricPosts list exceeds the lengthOfNetLinearElement of the corresponding LinearElement (referenced via the linearElement property). A kilometric post position is measured in metres from the start of the LinearElement and cannot go beyond its physical end. Check the pos value of the reported KilometricPost and confirm lengthOfNetLinearElement on the linked LinearElement is set correctly before assuming the kilometric post's position is wrong."@en ;
+    era:additionalInfo "[GESCHÄFTSREGEL] Dieser Fehler könnte daran liegen, dass der pos eines KilometricPost in der kilometricPosts-Liste dieses LinearElementKm die lengthOfNetLinearElement des entsprechenden LinearElements (referenziert über die linearElement-Eigenschaft) überschreitet. Eine Kilometerpunktposition wird in Metern ab dem Anfang des LinearElements gemessen und darf dessen physisches Ende nicht überschreiten. Prüfen Sie den pos-Wert des gemeldeten KilometricPost und stellen Sie sicher, dass lengthOfNetLinearElement am verknüpften LinearElement korrekt gesetzt ist."@de ;
+    era:additionalInfo "[RÈGLE MÉTIER] Cette erreur peut être due au fait que le pos d''un KilometricPost dans la liste kilometricPosts de ce LinearElementKm dépasse la lengthOfNetLinearElement du LinearElement correspondant (référencé via la propriété linearElement). Une position de point kilométrique est mesurée en mètres depuis le début du LinearElement et ne peut pas dépasser sa fin physique. Vérifiez la valeur pos du KilometricPost signalé et assurez-vous que lengthOfNetLinearElement est correctement défini sur le LinearElement lié."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The position (pos) of every KilometricPost in a LinearElementKm must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:message "The position (pos) of every KilometricPost in a LinearElementKm must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement."@en ;
+        sh:message "Die Position (pos) jedes KilometricPost in einem LinearElementKm darf die Länge (lengthOfNetLinearElement) des entsprechenden LinearElements nicht überschreiten."@de ;
+        sh:message "La position (pos) de chaque KilometricPost dans un LinearElementKm ne doit pas dépasser la longueur (lengthOfNetLinearElement) du LinearElement correspondant."@fr ;
+        
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -80,13 +92,26 @@ era:KilometricPostPositionWithinLengthShape a sh:NodeShape ;
 era:LevelCrossingDangerPointCoverageConstraint
     a sh:NodeShape ;
     sh:targetClass era:LevelCrossing ;
-
+    era:additionalInfo "[BUSINESS RULE] This error might be because a DangerPoint associated with this LevelCrossing (via the dangerPoints reference, multiplicity 1..*) lies on a LinearElement not covered by the LevelCrossing's areaReference, or because the DangerPoint's offsetFromOrigin (from its topologicalCoordinate) falls outside the start-to-end bounds of the matching NetLinearReference within that areaReference. The areaReference defines the precise geometric extent of the LevelCrossing across one or more LinearElements — every DangerPoint must be positioned strictly within that extent, either on the start element (at or after startOffset), on the end element (at or before endOffset), on the same single element between both offsets, or on an intermediate element listed in hasSequence."@en ;
+    era:additionalInfo "[GESCHÄFTSREGEL] Dieser Fehler könnte daran liegen, dass ein DangerPoint, der mit diesem Bahnübergang verknüpft ist (über die dangerPoints-Referenz, Multiplizität 1..*), auf einem LinearElement liegt, das nicht vom areaReference des Bahnübergangs abgedeckt wird, oder weil der offsetFromOrigin des DangerPoints (aus seiner topologicalCoordinate) außerhalb der Start-bis-Ende-Grenzen der passenden NetLinearReference innerhalb dieses areaReference liegt. Das areaReference definiert die genaue geometrische Ausdehnung des Bahnübergangs über ein oder mehrere LinearElements — jeder DangerPoint muss strikt innerhalb dieser Ausdehnung positioniert sein, entweder auf dem Startelement (ab startOffset), auf dem Endelement (bis endOffset), auf demselben einzelnen Element zwischen beiden Offsets, oder auf einem in hasSequence aufgeführten Zwischenelement."@de ;
+    era:additionalInfo "[RÈGLE MÉTIER] Cette erreur peut être due au fait qu''un DangerPoint associé à ce LevelCrossing (via la référence dangerPoints, multiplicité 1..*) se trouve sur un LinearElement non couvert par l''areaReference du LevelCrossing, ou parce que l''offsetFromOrigin du DangerPoint (issu de sa topologicalCoordinate) est en dehors des limites début-fin de la NetLinearReference correspondante dans cet areaReference. L''areaReference définit l''étendue géométrique précise du LevelCrossing sur un ou plusieurs LinearElements — chaque DangerPoint doit être positionné strictement dans cette étendue, soit sur l''élément de départ (à partir de startOffset), sur l''élément de fin (jusqu''à endOffset), sur le même élément unique entre les deux offsets, ou sur un élément intermédiaire listé dans hasSequence."@fr ;
+    
     sh:sparql [
         sh:message """
         Each DangerPoint must lie on a LinearElement segment that is fully
         covered by the LevelCrossing's areaReference. The offsetFromOrigin
         must fall within the start -> end bounds of a matching NetLinearReference.
-        """ ;
+        """@en ;
+        sh:message """
+        Jeder DangerPoint muss auf einem LinearElement-Segment liegen, das 
+        vollständig vom areaReference des Bahnübergangs abgedeckt ist. Der offsetFromOrigin 
+        muss innerhalb der Start-bis-Ende-Grenzen einer passenden NetLinearReference liegen.
+        """@de ;
+        sh:message """
+        Chaque DangerPoint doit se trouver sur un segment LinearElement entièrement couvert par 
+        l''areaReference du LevelCrossing. L''offsetFromOrigin doit être compris dans les limites 
+        début-fin d''une NetLinearReference correspondante.
+        """@fr ;
         sh:severity sh:Violation ;
 
         sh:select """
@@ -128,7 +153,7 @@ era:LevelCrossingDangerPointCoverageConstraint
 
             FILTER NOT EXISTS {
 
-                # CASE 1 — DP on SAME LE between start and end
+                # CASE 1 - DP on SAME LE between start and end
                 {
                     FILTER(?linearElement = ?startLE && ?linearElement = ?endLE)
                     FILTER(?dpOffset >= ?startOffset && ?dpOffset <= ?endOffset)
@@ -136,7 +161,7 @@ era:LevelCrossingDangerPointCoverageConstraint
 
                 UNION
 
-                # CASE 2 — DP on START element only (multi-element path)
+                # CASE 2 - DP on START element only (multi-element path)
                 {
                     FILTER(?linearElement = ?startLE && ?startLE != ?endLE)
                     FILTER(?dpOffset >= ?startOffset)
@@ -144,7 +169,7 @@ era:LevelCrossingDangerPointCoverageConstraint
 
                 UNION
 
-                # CASE 3 — DP on END element only
+                # CASE 3 - DP on END element only
                 {
                     FILTER(?linearElement = ?endLE && ?startLE != ?endLE)
                     FILTER(?dpOffset <= ?endOffset)
@@ -152,7 +177,7 @@ era:LevelCrossingDangerPointCoverageConstraint
 
                 UNION
 
-                # CASE 4 — DP on intermediate element via hasSequence
+                # CASE 4 - DP on intermediate element via hasSequence
                 {
                     ?lr era:hasSequence ?seqList .
                     ?seqList rdf:rest*/rdf:first ?linearElement .
@@ -168,10 +193,16 @@ era:LevelCrossingDangerPointCoverageConstraint
 # ===== Switch FoulingPoint LinearElement Constraint =====
 era:SwitchFoulingPointLinearElementShape a sh:NodeShape ;
     sh:targetClass era:Switch ;
+    era:additionalInfo "[BUSINESS RULE] This error might be because a FoulingPoint associated with this Switch (via the foulingPoints reference, multiplicity 1..*) lies on a LinearElement that is not directly connected via the Switch's leftBranch or rightBranch NetRelations. Every FoulingPoint must be positioned on a LinearElement that appears as either elementA or elementB of one of those two NetRelations — the fouling point marks the limit beyond which a vehicle would conflict with a movement through the switch, so it must lie on a track directly involved in the switch geometry."@en ;
+    era:additionalInfo "[GESCHÄFTSREGEL] Dieser Fehler könnte daran liegen, dass ein FoulingPoint, der mit dieser Weiche verknüpft ist (über die foulingPoints-Referenz, Multiplizität 1..*), auf einem LinearElement liegt, das nicht direkt über die leftBranch- oder rightBranch-NetRelationen der Weiche verbunden ist. Jeder FoulingPoint muss auf einem LinearElement positioniert sein, das als elementA oder elementB einer dieser beiden NetRelationen erscheint — der Gefährdungspunkt markiert die Grenze, ab der ein Fahrzeug eine Bewegung durch die Weiche behindern würde, und muss daher auf einem direkt an der Weichengeometrie beteiligten Gleis liegen."@de ;
+    era:additionalInfo "[RÈGLE MÉTIER] Cette erreur peut être due au fait qu''un FoulingPoint associé à cet aiguillage (via la référence foulingPoints, multiplicité 1..*) se trouve sur un LinearElement qui n''est pas directement connecté via les NetRelations leftBranch ou rightBranch de l''aiguillage. Chaque FoulingPoint doit être positionné sur un LinearElement apparaissant comme elementA ou elementB de l''une de ces deux NetRelations — le point d''enveloppe marque la limite au-delà de laquelle un véhicule entrerait en conflit avec un mouvement à travers l''aiguillage, et doit donc se trouver sur une voie directement impliquée dans la géométrie de l''aiguillage."@fr ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
         sh:message "All FoulingPoints associated with a Switch must be positioned on LinearElements that are directly connected via the Switch's leftBranch or rightBranch NetRelations (i.e., on elementA or elementB of these NetRelations)." ;
+        sh:message "Alle FoulingPoints einer Weiche müssen auf LinearElements positioniert sein, die direkt über die leftBranch- oder rightBranch-NetRelationen der Weiche verbunden sind (d. h. als elementA oder elementB dieser NetRelationen)."@de ;
+        sh:message "Tous les FoulingPoints associés à un aiguillage doivent être positionnés sur des LinearElements directement connectés via les NetRelations leftBranch ou rightBranch de l''aiguillage (c''est-à-dire sur elementA ou elementB de ces NetRelations)."@fr ;  
+        
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             

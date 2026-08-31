@@ -25,7 +25,9 @@ era:LinearElementCoordinatePositionWithinLengthShape a sh:NodeShape ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The position (pos) of every LinearElementCoordinate in a LinearElementProjection must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement." ;
+        sh:message "The position (pos) of every LinearElementCoordinate in a LinearElementProjection must not exceed the length (lengthOfNetLinearElement) of the corresponding LinearElement."@en ;
+        sh:message "Die Position (pos) jeder LinearElementCoordinate in einer LinearElementProjection darf die Länge (lengthOfNetLinearElement) des entsprechenden LinearElements nicht überschreiten."@de ;
+        sh:message "La position (pos) de chaque LinearElementCoordonnée dans un LinearElementProjection ne doit pas dépasser la longueur (lengthOfNetLinearElement) du LinearElement correspondant."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -62,7 +64,9 @@ era:LinearElementProjectionRequiresLinearElementShape a sh:NodeShape ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "Every LinearElementProjection must have a corresponding LinearElement with matching identifier." ;
+        sh:message "Every LinearElementProjection must have a corresponding LinearElement with matching identifier."@en ;
+        sh:message "Jede LinearElementProjection muss über ein entsprechendes LinearElement mit passender Kennung verfügen."@de ;
+        sh:message "Chaque LinearElementProjection doit avoir un LinearElement correspondant avec un identifiant correspondant."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             

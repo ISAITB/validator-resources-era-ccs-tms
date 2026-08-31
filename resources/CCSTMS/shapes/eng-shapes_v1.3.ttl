@@ -29,7 +29,9 @@ era:BaliseGroupShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each BaliseGroup must have exactly one q_updown value (boolean indicating uplink/downlink capability)." ;
+        sh:message "Each BaliseGroup must have exactly one q_updown value (boolean indicating uplink/downlink capability)."@en ;
+        sh:message "Jede BaliseGroup muss genau einen q_updown-Wert haben (boolescher Wert, der die Uplink-/Downlink-Fähigkeit angibt)."@de ;
+        sh:message "Chaque BaliseGroup doit avoir exactement une valeur q_updown (booléen indiquant la capacité de liaison montante/descendante)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -39,7 +41,9 @@ era:BaliseGroupShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each BaliseGroup must have exactly one q_link value (boolean indicating linking information)." ;
+        sh:message "Each BaliseGroup must have exactly one q_link value (boolean indicating linking information)."@en ;
+        sh:message "Jede BaliseGroup muss genau einen q_link-Wert haben (boolescher Wert, der Verknüpfungsinformationen angibt)."@de ;
+        sh:message "Chaque BaliseGroup doit avoir exactement une valeur q_link (booléen indiquant les informations de liaison)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -54,7 +58,9 @@ era:BaliseGroupShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property etcsMVersion must have a value from the defined SKOS concept scheme (v1.0, v1.1, v2.0, or v2.1)." ;
+        sh:message "The property etcsMVersion must have a value from the defined SKOS concept scheme (v1.0, v1.1, v2.0, or v2.1)."@en ;
+        sh:message "Die Eigenschaft etcsMVersion muss einen Wert aus dem definierten SKOS-Konzeptschema (v1.0, v1.1, v2.0 oder v2.1) haben."@de ;
+        sh:message "La propriété etcsMVersion doit avoir une valeur du schéma de concept SKOS défini (v1.0, v1.1, v2.0 ou v2.1)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -68,7 +74,9 @@ era:BaliseShape a sh:NodeShape ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Balise must have exactly one designType (string identifying manufacturer/model)." ;
+        sh:message "Each Balise must have exactly one designType (string identifying manufacturer/model)."@en ;
+        sh:message "Jede Balise muss genau eine designType (Zeichenfolge zur Identifizierung des Herstellers/Modells) haben."@de ;
+        sh:message "Chaque Balise doit avoir exactement un designType (chaîne identifiant le fabricant/modèle)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -78,7 +86,9 @@ era:BaliseShape a sh:NodeShape ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Balise must have exactly one baliseMountingSystem (string describing mounting method)." ;
+        sh:message "Each Balise must have exactly one baliseMountingSystem (string describing mounting method)."@en ;
+        sh:message "Jede Balise muss genau eine baliseMountingSystem (Zeichenfolge, die die Montagemethode beschreibt) haben."@de ;
+        sh:message "Chaque Balise doit avoir exactement un baliseMountingSystem (chaîne décrivant la méthode de montage)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -88,7 +98,9 @@ era:BaliseShape a sh:NodeShape ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Balise must have exactly one sleeperFastening (string describing attachment method)." ;
+        sh:message "Each Balise must have exactly one sleeperFastening (string describing attachment method)."@en ;
+        sh:message "Jede Balise muss genau eine sleeperFastening (Zeichenfolge, die die Befestigungsmethode beschreibt) haben."@de ;
+        sh:message "Chaque Balise doit avoir exactement un sleeperFastening (chaîne décrivant la méthode de pièce jointe)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -98,7 +110,9 @@ era:BaliseShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Balise must have exactly one fixed value (boolean: true for fixed, false for switchable)." ;
+        sh:message "Each Balise must have exactly one fixed value (boolean: true for fixed, false for switchable)."@en ;
+        sh:message "Jede Balise muss genau einen festen Wert haben (boolean: true für fest, false für umschaltbar)."@de ;
+        sh:message "Chaque Balise doit avoir exactement une valeur fixe (booléenne : true pour fixe, false pour commutable)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -108,7 +122,9 @@ era:BaliseShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Balise must have exactly one standardSize value (boolean indicating standard dimensions)." ;
+        sh:message "Each Balise must have exactly one standardSize value (boolean indicating standard dimensions)."@en ;
+        sh:message "Jede Balise muss genau einen standardSize-Wert haben (boolescher Wert, der Standardabmessungen angibt)."@de ;
+        sh:message "Chaque Balise doit avoir exactement une valeur standardSize (booléenne indiquant les dimensions standards)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -118,7 +134,9 @@ era:BaliseShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Balise must have exactly one verticallyOriented value (boolean indicating mounting orientation)." ;
+        sh:message "Each Balise must have exactly one verticallyOriented value (boolean indicating mounting orientation)."@en ;
+        sh:message "Jede Balise muss genau einen verticallyOriented-Wert haben (boolescher Wert, der die Montageausrichtung angibt)."@de ;
+        sh:message "Chaque Balise doit avoir exactement une valeur verticallyOriented (booléen indiquant l'orientation de montage)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -130,7 +148,9 @@ era:BaliseShape a sh:NodeShape ;
         sh:maxInclusive 7 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Balise must have exactly one n_pig value (unsigned integer 0-7, position in balise group)." ;
+        sh:message "Each Balise must have exactly one n_pig value (unsigned integer 0-7, position in balise group)."@en ;
+        sh:message "Jede Balise muss genau einen n_pig-Wert haben (vorzeichenlose Ganzzahl 0-7, Position in der Balise-Gruppe)."@de ;
+        sh:message "Chaque Balise doit avoir exactement une valeur n_pig (entier non signé 0-7, position dans le groupe balise)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -142,7 +162,9 @@ era:BaliseShape a sh:NodeShape ;
         sh:maxInclusive 255 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Balise must have exactly one m_mcount value (unsigned integer 0-255, message counter)." ;
+        sh:message "Each Balise must have exactly one m_mcount value (unsigned integer 0-255, message counter)."@en ;
+        sh:message "Jede Balise muss genau einen m_mcount-Wert (vorzeichenlose Ganzzahl 0-255, Nachrichtenzähler) haben."@de ;
+        sh:message "Chaque Balise doit avoir exactement une valeur m_mcount (entier non signé 0-255, compteur de messages)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -156,7 +178,9 @@ era:BaliseShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property m_dup must have a value from the defined SKOS concept scheme (noDuplicates, duplicateNextBalise, or duplicatePreviousBalise)." ;
+        sh:message "The property m_dup must have a value from the defined SKOS concept scheme (noDuplicates, duplicateNextBalise, or duplicatePreviousBalise)."@en ;
+        sh:message "Die Eigenschaft m_dup muss einen Wert aus dem definierten SKOS-Konzeptschema (noDuplicates, duplicateNextBalise oder duplicatePreviousBalise) haben."@de ;
+        sh:message "La propriété m_dup doit avoir une valeur du schéma de concept SKOS défini (noDuplicates, duplicateNextBalise ou duplicatePreviousBalise)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -166,7 +190,9 @@ era:BaliseShape a sh:NodeShape ;
         sh:datatype xsd:base64Binary ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Balise must have exactly one telegram (base64Binary encoded ETCS data)." ;
+        sh:message "Each Balise must have exactly one telegram (base64Binary encoded ETCS data)."@en ;
+        sh:message "Jede Balise muss genau ein Telegramm (base64Binär kodierte ETCS-Daten) haben."@de ;
+        sh:message "Chaque Balise doit avoir exactement un télégramme (données ETCS codées en base64Binary)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -176,7 +202,9 @@ era:BaliseShape a sh:NodeShape ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Balise must have exactly one telegramChecksum (string for data verification)." ;
+        sh:message "Each Balise must have exactly one telegramChecksum (string for data verification)."@en ;
+        sh:message "Jede Balise muss genau eine telegramChecksum (Zeichenfolge zur Datenüberprüfung) haben."@de ;
+        sh:message "Chaque Balise doit avoir exactement un telegramChecksum (chaîne pour la vérification des données)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -184,7 +212,9 @@ era:BaliseShape a sh:NodeShape ;
     sh:property [ 
         sh:path era:etcsPackets ;
         sh:node era:BalisePacketShape ;
-        sh:message "Balise etcsPackets must reference valid BalisePacket." ;
+        sh:message "Balise etcsPackets must reference valid BalisePacket."@en ;
+        sh:message "Balise etcsPackets muss auf ein gültiges BalisePacket verweisen."@de ;
+        sh:message "Balise etcsPackets doit faire référence à BalisePacket valide."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -203,7 +233,9 @@ era:BufferStopShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property bsType must have a value from the defined SKOS concept scheme (friction, hydraulic, fixated, or other)." ;
+        sh:message "The property bsType must have a value from the defined SKOS concept scheme (friction, hydraulic, fixated, or other)."@en ;
+        sh:message "Die Eigenschaft bsType muss einen Wert aus dem definierten SKOS-Konzeptschema haben (Reibung, hydraulisch, feststehend oder andere)."@de ;
+        sh:message "La propriété bsType doit avoir une valeur issue du schéma conceptuel SKOS défini (friction, hydraulique, fixe ou autre)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -212,7 +244,9 @@ era:BufferStopShape a sh:NodeShape ;
         sh:path era:dangerPoints ;
         sh:class era:DangerPoint ;
 		sh:nodeKind sh:IRI ;
-        sh:message "BufferStop dangerPoints must conform to a valid DangerPoint object" ;
+        sh:message "BufferStop dangerPoints must conform to a valid DangerPoint object"@en ;
+        sh:message "BufferStop dangerPoints muss einem gültigen DangerPoint-Objekt entsprechen"@de ;
+        sh:message "BufferStop dangerPoints doit être conforme à un objet DangerPoint valide"@fr ;
         sh:severity sh:Violation ;
     ] ;
 	
@@ -221,7 +255,9 @@ era:BufferStopShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
 		sh:minCount 1 ;
-        sh:message "BufferStop dangerPoints must conform to valid DangerPoint object." ;
+        sh:message "BufferStop dangerPoints must conform to valid DangerPoint object."@en ;
+        sh:message "BufferStop dangerPoints muss einem gültigen DangerPoint-Objekt entsprechen."@de ;
+        sh:message "BufferStop dangerPoints doit être conforme à un objet DangerPoint valide."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -235,7 +271,9 @@ era:CrossingShape a sh:NodeShape ;
         sh:class era:FoulingPoint ;
 		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
-        sh:message "Each Crossing must have at least one foulingPoint that conform to a valid FoulingPoint object." ;
+        sh:message "Each Crossing must have at least one foulingPoint that conform to a valid FoulingPoint object."@en ;
+        sh:message "Jede Kreuzung muss mindestens ein foulingPoint haben, das einem gültigen FoulingPoint-Objekt entspricht."@de ;
+        sh:message "Chaque croisement doit avoir au moins un foulingPoint conforme à un objet FoulingPoint valide."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -249,7 +287,9 @@ era:DangerPointShape a sh:NodeShape ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DangerPoint must have exactly one name (string)." ;
+        sh:message "Each DangerPoint must have exactly one name (string)."@en ;
+        sh:message "Jeder DangerPoint muss genau einen Namen (String) haben."@de ;
+        sh:message "Chaque DangerPoint doit avoir exactement un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -260,7 +300,9 @@ era:DangerPointShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DangerPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object." ;
+        sh:message "Each DangerPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object."@en ;
+        sh:message "Jeder DangerPoint muss genau ein topologicalCoordinate haben, das dem TopologicalCoordinate-Objekt entspricht."@de ;
+        sh:message "Chaque DangerPoint doit avoir exactement un topologicalCoordinate conforme à l'objet TopologicalCoordonnée."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -273,7 +315,9 @@ era:ETCSEngineeringShape a sh:NodeShape ;
         sh:path era:engAreas ;
         sh:node era:EngAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "ETCSEngineering engAreas must conform to a valid EngArea" ;
+        sh:message "ETCSEngineering engAreas must conform to a valid EngArea"@en ;
+        sh:message "ETCSEngineering engAreas muss einer gültigen EngArea entsprechen"@de ;
+        sh:message "ETCSEngineering engAreas doit être conforme à une EngArea valide"@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -282,7 +326,9 @@ era:ETCSEngineeringShape a sh:NodeShape ;
         sh:path era:locationAccuracyAreas ;
         sh:node era:LocationAccuracyAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "ETCSEngineering locationAccuracyAreas must conform to valid LocationAccuracyArea object." ;
+        sh:message "ETCSEngineering locationAccuracyAreas must conform to valid LocationAccuracyArea object."@en ;
+        sh:message "ETCSEngineering locationAccuracyAreas muss einem gültigen LocationAccuracyArea-Objekt entsprechen."@de ;
+        sh:message "ETCSEngineering locationAccuracyAreas doit être conforme à un objet LocationAccuracyArea valide."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -291,7 +337,9 @@ era:ETCSEngineeringShape a sh:NodeShape ;
         sh:path era:kmAreas ;
         sh:node era:KmAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "ETCSEngineering kmAreas must conform to valid KmArea object." ;
+        sh:message "ETCSEngineering kmAreas must conform to valid KmArea object."@en ;
+        sh:message "ETCSEngineering kmAreas muss einem gültigen KmArea-Objekt entsprechen."@de ;
+        sh:message "ETCSEngineering kmAreas doit être conforme à un objet KmArea valide."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -311,7 +359,9 @@ era:EngAreaShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property defaultSleepersType must have a value from the defined SKOS concept scheme (composite, concrete, steel, wood, or unknown)." ;
+        sh:message "The property defaultSleepersType must have a value from the defined SKOS concept scheme (composite, concrete, steel, wood, or unknown)."@en ;
+        sh:message "Die Eigenschaft defaultSleepersType muss einen Wert aus dem definierten SKOS-Konzeptschema haben (Verbundwerkstoff, Beton, Stahl, Holz oder unbekannt)."@de ;
+        sh:message "La propriété defaultSleepersType doit avoir une valeur issue du schéma conceptuel SKOS défini (composite, béton, acier, bois ou inconnu)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -320,7 +370,9 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:balises ;
         sh:nodeKind sh:BlankNodeOrIRI ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An EngArea may have at most one balises property pointing to an RDF list." ;
+        sh:message "An EngArea may have at most one balises property pointing to an RDF list."@en ;
+        sh:message "Eine EngArea darf höchstens eine balises-Eigenschaft haben, die auf eine RDF-Liste verweist."@de ;
+        sh:message "Une EngArea peut avoir au plus une propriété balises pointant vers une liste RDF."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -329,7 +381,9 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:baliseGroups ;
         sh:node era:BaliseGroupShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea baliseGroups must conform to valid BaliseGroup object." ;
+        sh:message "EngArea baliseGroups must conform to valid BaliseGroup object."@en ;
+        sh:message "EngArea baliseGroups muss einem gültigen BaliseGroup-Objekt entsprechen."@de ;
+        sh:message "EngArea baliseGroups doit être conforme à un objet BaliseGroup valide."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -338,7 +392,9 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:bufferStops ;
         sh:node era:BufferStopShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea bufferStops must conform to a valid BufferStop object." ;
+        sh:message "EngArea bufferStops must conform to a valid BufferStop object."@en ;
+        sh:message "EngArea bufferStops muss einem gültigen BufferStop-Objekt entsprechen."@de ;
+        sh:message "EngArea bufferStops doit être conforme à un objet BufferStop valide."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -347,7 +403,9 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:switches ;
         sh:node era:SwitchShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea switches must conform to valid Switch object." ;
+        sh:message "EngArea switches must conform to valid Switch object."@en ;
+        sh:message "EngArea-Schalter müssen einem gültigen Schalterobjekt entsprechen."@de ;
+        sh:message "Les commutateurs EngArea doivent être conformes à un objet Switch valide."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -356,7 +414,9 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:crossings ;
         sh:node era:CrossingShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea crossings must conform to valid Crossing object." ;
+        sh:message "EngArea crossings must conform to valid Crossing object."@en ;
+        sh:message "EngArea-Kreuzungen müssen einem gültigen Kreuzungsobjekt entsprechen."@de ;
+        sh:message "Les croisements EngArea doivent être conformes à un objet Crossing valide."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -365,7 +425,9 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:levelCrossings ;
         sh:node era:LevelCrossingShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea levelCrossings must conform to valid LevelCrossing object." ;
+        sh:message "EngArea levelCrossings must conform to valid LevelCrossing object."@en ;
+        sh:message "EngArea levelCrossings muss einem gültigen LevelCrossing-Objekt entsprechen."@de ;
+        sh:message "EngArea levelCrossings doit être conforme à un objet LevelCrossing valide."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -374,7 +436,9 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:dangerPoints ;
         sh:node era:DangerPointShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea dangerPoints must conform to valid DangerPoint object." ;
+        sh:message "EngArea dangerPoints must conform to valid DangerPoint object."@en ;
+        sh:message "EngArea dangerPoints muss einem gültigen DangerPoint-Objekt entsprechen."@de ;
+        sh:message "EngArea dangerPoints doit être conforme à un objet DangerPoint valide."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -383,7 +447,9 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:foulingPoints ;
         sh:node era:FoulingPointShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea foulingPoints must conform to valid FoulingPoint object." ;
+        sh:message "EngArea foulingPoints must conform to valid FoulingPoint object."@en ;
+        sh:message "EngArea foulingPoints muss einem gültigen FoulingPoint-Objekt entsprechen."@de ;
+        sh:message "EngArea foulingPoints doit être conforme à un objet FoulingPoint valide."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -392,7 +458,9 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:sleepers ;
         sh:node era:SleepersShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea sleepers must conform to valid Sleepers object." ;
+        sh:message "EngArea sleepers must conform to valid Sleepers object."@en ;
+        sh:message "EngArea-Schwellen müssen einem gültigen Schwellenobjekt entsprechen."@de ;
+        sh:message "Les dormeurs EngArea doivent être conformes à l'objet Sleepers valide."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -401,7 +469,9 @@ era:EngAreaShape a sh:NodeShape ;
         sh:path era:trackUsagePaths ;
         sh:node era:TrackUsagePathShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "EngArea trackUsagePaths must conform to valid TrackUsagePath object." ;
+        sh:message "EngArea trackUsagePaths must conform to valid TrackUsagePath object."@en ;
+        sh:message "EngArea trackUsagePaths muss einem gültigen TrackUsagePath-Objekt entsprechen."@de ;
+        sh:message "EngArea trackUsagePaths doit être conforme à un objet TrackUsagePath valide."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -414,7 +484,9 @@ era:FoulingPointShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A FoulingPoint may have at most one name (string)." ;
+        sh:message "A FoulingPoint may have at most one name (string)."@en ;
+        sh:message "Ein FoulingPoint darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Un FoulingPoint peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -425,7 +497,9 @@ era:FoulingPointShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each FoulingPoint must have exactly one topologicalCoordinate that conforms to valid TopologicalCoordinate object." ;
+        sh:message "Each FoulingPoint must have exactly one topologicalCoordinate that conforms to valid TopologicalCoordinate object."@en ;
+        sh:message "Jeder FoulingPoint muss genau ein topologicalCoordinate haben, das einem gültigen TopologicalCoordinate-Objekt entspricht."@de ;
+        sh:message "Chaque FoulingPoint doit avoir exactement un topologicalCoordinate conforme à un objet TopologicalCoordonnée valide."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -439,7 +513,9 @@ era:KilometricPostShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each KilometricPost must have exactly one pos (position as unsigned integer)." ;
+        sh:message "Each KilometricPost must have exactly one pos (position as unsigned integer)."@en ;
+        sh:message "Jeder KilometricPost muss genau eine Position (Position als vorzeichenlose Ganzzahl) haben."@de ;
+        sh:message "Chaque KilometricPost doit avoir exactement une pos (position sous forme d'entier non signé)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -449,7 +525,9 @@ era:KilometricPostShape a sh:NodeShape ;
         sh:datatype xsd:double ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each KilometricPost must have exactly one kilometer value (double)." ;
+        sh:message "Each KilometricPost must have exactly one kilometer value (double)."@en ;
+        sh:message "Jeder KilometricPost muss genau einen Kilometerwert (double) haben."@de ;
+        sh:message "Chaque KilometricPost doit avoir exactement une valeur kilométrique (double)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -458,7 +536,9 @@ era:KilometricPostShape a sh:NodeShape ;
         sh:path era:kmPostName ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A KilometricPost may have at most one kmPostName (string)." ;
+        sh:message "A KilometricPost may have at most one kmPostName (string)."@en ;
+        sh:message "Ein KilometricPost darf höchstens einen kmPostName (String) haben."@de ;
+        sh:message "Un KilometricPost peut avoir au plus un kmPostName (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -471,7 +551,9 @@ era:KmAreaShape a sh:NodeShape ;
         sh:path era:linearElementKm ;
         sh:node era:LinearElementKmShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "KmArea linearElementKm must conform to valid LinearElementKm object." ;
+        sh:message "KmArea linearElementKm must conform to valid LinearElementKm object."@en ;
+        sh:message "KmArea linearElementKm muss einem gültigen LinearElementKm-Objekt entsprechen."@de ;
+        sh:message "KmArea linearElementKm doit être conforme à un objet LinearElementKm valide."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -485,7 +567,9 @@ era:LevelCrossingShape a sh:NodeShape ;
         sh:class era:DangerPoint ;
 		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
-        sh:message "Each LevelCrossing must have at least one dangerPoints that conform to DangerPoint object." ;
+        sh:message "Each LevelCrossing must have at least one dangerPoints that conform to DangerPoint object."@en ;
+        sh:message "Jedes LevelCrossing muss mindestens ein dangerPoints haben, das dem DangerPoint-Objekt entspricht."@de ;
+        sh:message "Chaque LevelCrossing doit avoir au moins un dangerPoints conforme à l'objet DangerPoint."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -498,14 +582,18 @@ era:LinearElementAccuracyProfileShape a sh:NodeShape ;
         sh:path era:offsetAccuracies ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A LinearElementAccuracyProfile may have at most one offsetAccuracies property pointing to an RDF list." ;
+        sh:message "A LinearElementAccuracyProfile may have at most one offsetAccuracies property pointing to an RDF list."@en ;
+        sh:message "Ein LinearElementAccuracyProfile darf höchstens eine offsetAccuracies-Eigenschaft haben, die auf eine RDF-Liste verweist."@de ;
+        sh:message "Un LinearElementAccuracyProfile peut avoir au plus une propriété offsetAccuracies pointant vers une liste RDF."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
     # SPARQL constraint to validate all offsetAccuracies list items are OffsetAccuracy instances
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the offsetAccuracies list must be instances of era:OffsetAccuracy that conform to OffsetAccuracyShape." ;
+        sh:message "All items in the offsetAccuracies list must be instances of era:OffsetAccuracy that conform to OffsetAccuracyShape."@en ;
+        sh:message "Alle Elemente in der Liste offsetAccuracies müssen Instanzen von era:OffsetAccuracy sein, die OffsetAccuracyShape entsprechen."@de ;
+        sh:message "Tous les éléments de la liste offsetAccuracies doivent être des instances de era:OffsetAccuracy conformes à OffsetAccuracyShape."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -532,7 +620,9 @@ era:LinearElementKmShape a sh:NodeShape ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElementKm must have exactly one linearElement that conforms to LinearElementShape." ;
+        sh:message "Each LinearElementKm must have exactly one linearElement that conforms to LinearElementShape."@en ;
+        sh:message "Jedes LinearElementKm muss genau ein linearElement haben, das LinearElementShape entspricht."@de ;
+        sh:message "Chaque LinearElementKm doit avoir exactement un linearElement conforme à LinearElementShape."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -541,14 +631,18 @@ era:LinearElementKmShape a sh:NodeShape ;
         sh:path era:kilometricPosts ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A LinearElementKm may have at most one kilometricPosts property pointing to an RDF list." ;
+        sh:message "A LinearElementKm may have at most one kilometricPosts property pointing to an RDF list."@en ;
+        sh:message "Ein LinearElementKm darf höchstens eine kilometricPosts-Eigenschaft haben, die auf eine RDF-Liste verweist."@de ;
+        sh:message "Un LinearElementKm peut avoir au plus une propriété kilometricPosts pointant vers une liste RDF."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
     # SPARQL constraint to validate all kilometricPosts list items are KilometricPost instances
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the kilometricPosts list must be instances of era:KilometricPost that conform to KilometricPostShape." ;
+        sh:message "All items in the kilometricPosts list must be instances of era:KilometricPost that conform to KilometricPostShape."@en ;
+        sh:message "Alle Elemente in der Liste kilometricPosts müssen Instanzen von era:KilometricPost sein, die KilometricPostShape entsprechen."@de ;
+        sh:message "Tous les éléments de la liste kilometricPosts doivent être des instances de era:KilometricPost conformes à KilometricPostShape."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -573,7 +667,9 @@ era:LocationAccuracyAreaShape a sh:NodeShape ;
         sh:path era:accuracyProfiles ;
         sh:node era:LinearElementAccuracyProfileShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "LocationAccuracyArea accuracyProfiles must conform to valid LinearElementAccuracyProfile object." ;
+        sh:message "LocationAccuracyArea accuracyProfiles must conform to valid LinearElementAccuracyProfile object."@en ;
+        sh:message "LocationAccuracyArea accuracyProfiles muss einem gültigen LinearElementAccuracyProfile-Objekt entsprechen."@de ;
+        sh:message "LocationAccuracyArea accuracyProfiles doit être conforme à un objet LinearElementAccuracyProfile valide."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -587,7 +683,9 @@ era:OffsetAccuracyShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each OffsetAccuracy must have exactly one offset (unsigned integer, in meters)." ;
+        sh:message "Each OffsetAccuracy must have exactly one offset (unsigned integer, in meters)."@en ;
+        sh:message "Jede OffsetAccuracy muss genau einen Offset (vorzeichenlose Ganzzahl in Metern) haben."@de ;
+        sh:message "Chaque OffsetAccuracy doit avoir exactement un décalage (entier non signé, en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -597,7 +695,9 @@ era:OffsetAccuracyShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each OffsetAccuracy must have exactly one accuracy value (unsigned integer, in meters)." ;
+        sh:message "Each OffsetAccuracy must have exactly one accuracy value (unsigned integer, in meters)."@en ;
+        sh:message "Jede OffsetAccuracy muss genau einen Genauigkeitswert haben (vorzeichenlose Ganzzahl in Metern)."@de ;
+        sh:message "Chaque OffsetAccuracy doit avoir exactement une valeur de précision (entier non signé, en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -617,7 +717,9 @@ era:SleepersShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property sleepersType must have a value from the defined SKOS concept scheme (composite, concrete, steel, wood, or unknown)." ;
+        sh:message "The property sleepersType must have a value from the defined SKOS concept scheme (composite, concrete, steel, wood, or unknown)."@en ;
+        sh:message "Die Eigenschaft sleepersType muss einen Wert aus dem definierten SKOS-Konzeptschema haben (Verbundwerkstoff, Beton, Stahl, Holz oder unbekannt)."@de ;
+        sh:message "La propriété sleepersType doit avoir une valeur issue du schéma conceptuel SKOS défini (composite, béton, acier, bois ou inconnu)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -627,7 +729,9 @@ era:SleepersShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each Sleepers must have at least one linearElementSection that conform to valid LinearElementSection object." ;
+        sh:message "Each Sleepers must have at least one linearElementSection that conform to valid LinearElementSection object."@en ;
+        sh:message "Jeder Schwellenwert muss mindestens ein linearElementSection haben, das einem gültigen LinearElementSection-Objekt entspricht."@de ;
+        sh:message "Chaque Sleeper doit avoir au moins un linearElementSection conforme à un objet LinearElementSection valide."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -642,7 +746,9 @@ era:SwitchShape a sh:NodeShape ;
         sh:minExclusive 0.0 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Switch must have exactly one bladeLength (double > 0, in meters)." ;
+        sh:message "Each Switch must have exactly one bladeLength (double > 0, in meters)."@en ;
+        sh:message "Jeder Switch muss genau einen bladeLength haben (double > 0, in Metern)."@de ;
+        sh:message "Chaque Switch doit avoir exactement un bladeLength (double > 0, en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -652,7 +758,9 @@ era:SwitchShape a sh:NodeShape ;
         sh:datatype xsd:double ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Switch must have exactly one tipShift value (double, in meters)." ;
+        sh:message "Each Switch must have exactly one tipShift value (double, in meters)."@en ;
+        sh:message "Jeder Switch muss genau einen tipShift-Wert haben (doppelt, in Metern)."@de ;
+        sh:message "Chaque commutateur doit avoir exactement une valeur tipShift (double, en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -662,7 +770,9 @@ era:SwitchShape a sh:NodeShape ;
         sh:class era:FoulingPoint ;
 		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
-        sh:message "Each Switch must have at least one foulingPoints that conform to valid FoulingPoint object." ;
+        sh:message "Each Switch must have at least one foulingPoints that conform to valid FoulingPoint object."@en ;
+        sh:message "Jeder Switch muss mindestens ein foulingPoints haben, das einem gültigen FoulingPoint-Objekt entspricht."@de ;
+        sh:message "Chaque commutateur doit avoir au moins un foulingPoints conforme à un objet FoulingPoint valide."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -671,7 +781,9 @@ era:SwitchShape a sh:NodeShape ;
         sh:path era:routeRequiresPointLeft ;
         sh:class era:TrackUsagePath ;
 		sh:nodeKind sh:IRI ;
-        sh:message "Switch routeRequiresPointLeft must conform to TrackUsagePath object." ;
+        sh:message "Switch routeRequiresPointLeft must conform to TrackUsagePath object."@en ;
+        sh:message "Schalter routeRequiresPointLeft muss dem TrackUsagePath-Objekt entsprechen."@de ;
+        sh:message "Le commutateur routeRequiresPointLeft doit être conforme à l'objet TrackUsagePath."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -680,7 +792,9 @@ era:SwitchShape a sh:NodeShape ;
         sh:path era:routeRequiresPointRight ;
         sh:class era:TrackUsagePath ;
 		sh:nodeKind sh:IRI ;
-        sh:message "Switch routeRequiresPointRight must conform to valid TrackUsagePath object." ;
+        sh:message "Switch routeRequiresPointRight must conform to valid TrackUsagePath object."@en ;
+        sh:message "Schalter routeRequiresPointRight muss einem gültigen TrackUsagePath-Objekt entsprechen."@de ;
+        sh:message "Le commutateur routeRequiresPointRight doit être conforme à un objet TrackUsagePath valide."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -695,7 +809,9 @@ era:TrackUsagePathShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TrackUsagePath must have exactly one pathBody that conforms to valid NetLinearReference object." ;
+        sh:message "Each TrackUsagePath must have exactly one pathBody that conforms to valid NetLinearReference object."@en ;
+        sh:message "Jeder TrackUsagePath muss genau ein pathBody haben, das einem gültigen NetLinearReference-Objekt entspricht."@de ;
+        sh:message "Chaque TrackUsagePath doit avoir exactement un pathBody conforme à un objet NetLinearReference valide."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -705,7 +821,9 @@ era:TrackUsagePathShape a sh:NodeShape ;
         sh:class era:TrackUsagePath ;
 		sh:nodeKind sh:IRI ;
         sh:maxCount 1 ;
-        sh:message "A TrackUsagePath may have at most one hasPreceededTrackUsagePath that conforms to valid TrackUsagePath object." ;
+        sh:message "A TrackUsagePath may have at most one hasPreceededTrackUsagePath that conforms to valid TrackUsagePath object."@en ;
+        sh:message "Ein TrackUsagePath kann höchstens ein hasPreceededTrackUsagePath haben, das einem gültigen TrackUsagePath-Objekt entspricht."@de ;
+        sh:message "Un TrackUsagePath peut avoir au plus un hasPreceededTrackUsagePath conforme à un objet TrackUsagePath valide."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -714,7 +832,9 @@ era:TrackUsagePathShape a sh:NodeShape ;
         sh:path era:switches ;
         sh:class era:Switch ;
 		sh:nodeKind sh:IRI ;
-        sh:message "TrackUsagePath switches must conform to SwitchShape." ;
+        sh:message "TrackUsagePath switches must conform to SwitchShape."@en ;
+        sh:message "TrackUsagePath-Schalter müssen SwitchShape entsprechen."@de ;
+        sh:message "Les commutateurs TrackUsagePath doivent être conformes à SwitchShape."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -723,7 +843,9 @@ era:TrackUsagePathShape a sh:NodeShape ;
         sh:path era:derailers ;
         sh:class era:Derailer ;
 		sh:nodeKind sh:IRI ;
-        sh:message "TrackUsagePath derailers must conform to DerailerShape." ;
+        sh:message "TrackUsagePath derailers must conform to DerailerShape."@en ;
+        sh:message "TrackUsagePath-Entgleiser müssen DerailerShape entsprechen."@de ;
+        sh:message "Les dérailleurs TrackUsagePath doivent être conformes à DerailerShape."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -732,7 +854,9 @@ era:TrackUsagePathShape a sh:NodeShape ;
         sh:path era:levelCrossings ;
         sh:class era:LevelCrossing ;
 		sh:nodeKind sh:IRI ;
-        sh:message "TrackUsagePath levelCrossings must conform to LevelCrossingShape." ;
+        sh:message "TrackUsagePath levelCrossings must conform to LevelCrossingShape."@en ;
+        sh:message "TrackUsagePath levelCrossings muss LevelCrossingShape entsprechen."@de ;
+        sh:message "TrackUsagePath levelCrossings doit être conforme à LevelCrossingShape."@fr ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -748,7 +872,9 @@ era:LinearElementSectionShape a sh:NodeShape ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElementSection must have exactly one onElement that conforms to a valid LinearElement." ;
+        sh:message "Each LinearElementSection must have exactly one onElement that conforms to a valid LinearElement."@en ;
+        sh:message "Jeder LinearElementSection muss genau ein onElement haben, das einem gültigen LinearElement entspricht."@de ;
+        sh:message "Chaque LinearElementSection doit avoir exactement un onElement conforme à un LinearElement valide."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -759,7 +885,9 @@ era:LinearElementSectionShape a sh:NodeShape ;
         sh:minInclusive 0.0 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElementSection must have exactly one startOffsetFromOrigin (non-negative double, in meters)." ;
+        sh:message "Each LinearElementSection must have exactly one startOffsetFromOrigin (non-negative double, in meters)."@en ;
+        sh:message "Jeder LinearElementSection muss genau ein startOffsetFromOrigin (nicht negatives Double, in Metern) haben."@de ;
+        sh:message "Chaque LinearElementSection doit avoir exactement un startOffsetFromOrigin (double non négatif, en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -770,7 +898,9 @@ era:LinearElementSectionShape a sh:NodeShape ;
         sh:minInclusive 0.0 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElementSection must have exactly one endOffsetFromOrigin (non-negative double, in meters)." ;
+        sh:message "Each LinearElementSection must have exactly one endOffsetFromOrigin (non-negative double, in meters)."@en ;
+        sh:message "Jeder LinearElementSection muss genau ein endOffsetFromOrigin (nicht negatives Double, in Metern) haben."@de ;
+        sh:message "Chaque LinearElementSection doit avoir exactement un endOffsetFromOrigin (double non négatif, en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -780,14 +910,18 @@ era:LinearElementSectionShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElementSection must have exactly one appliesInBothDirections value (boolean)." ;
+        sh:message "Each LinearElementSection must have exactly one appliesInBothDirections value (boolean)."@en ;
+        sh:message "Jeder LinearElementSection muss genau einen appliesInBothDirections-Wert (boolean) haben."@de ;
+        sh:message "Chaque LinearElementSection doit avoir exactement une valeur appliesInBothDirections (booléenne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
     # SPARQL constraint: startOffsetFromOrigin must be less than endOffsetFromOrigin
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The startOffsetFromOrigin must be less than endOffsetFromOrigin." ;
+        sh:message "The startOffsetFromOrigin must be less than endOffsetFromOrigin."@en ;
+        sh:message "Der startOffsetFromOrigin muss kleiner als endOffsetFromOrigin sein."@de ;
+        sh:message "Le startOffsetFromOrigin doit être inférieur à endOffsetFromOrigin."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -818,7 +952,9 @@ era:AtLeastOneETCSEngineeringClassShape a sh:NodeShape ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The data must contain at least one instance of the required ETCS Engineering classes (e.g., BufferStop, Switch, BaliseGroup, TrackUsagePath, etc.). This error may indicate that the provided data significantly deviates from the expected ETCS Engineering model as defined in the extended ERA ontology." ;
+        sh:message "The data must contain at least one instance of the required ETCS Engineering classes (e.g., BufferStop, Switch, BaliseGroup, TrackUsagePath, etc.). This error may indicate that the provided data significantly deviates from the expected ETCS Engineering model as defined in the extended ERA ontology."@en ;
+        sh:message "Die Daten müssen mindestens eine Instanz der erforderlichen ETCS Engineering-Klassen enthalten (z. B. BufferStop, Switch, BaliseGroup, TrackUsagePath usw.). Dieser Fehler kann darauf hinweisen, dass die bereitgestellten Daten erheblich vom erwarteten ETCS-Engineering-Modell abweichen, wie es in der erweiterten ERA-Ontologie definiert ist."@de ;
+        sh:message "Les données doivent contenir au moins une instance des classes d'ingénierie ETCS requises (par exemple, BufferStop, Switch, BaliseGroup, TrackUsagePath, etc.). Cette erreur peut indiquer que les données fournies s'écartent considérablement du modèle d'ingénierie ETCS attendu tel que défini dans l'ontologie ERA étendue."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

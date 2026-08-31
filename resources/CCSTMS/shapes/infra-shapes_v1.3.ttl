@@ -21,7 +21,9 @@
 
 era:AxleLoadSpeedProfileShape a sh:NodeShape ;
     sh:targetClass era:AxleLoadSpeedProfile ;
-    sh:message "Validates the structure and constraints of an AxleLoadSpeedProfile instance according to the ERA ontology." ;
+    sh:message "Validates the structure and constraints of an AxleLoadSpeedProfile instance according to the ERA ontology."@en ;
+    sh:message "Validiert die Struktur und Einschränkungen einer AxleLoadSpeedProfile-Instanz gemäß der ERA-Ontologie."@de ;
+    sh:message "Valide la structure et les contraintes d'une instance AxleLoadSpeedProfile selon l'ontologie ERA."@fr ;
     
     # Start Position (required, unsigned integer)
     sh:property [ 
@@ -29,7 +31,9 @@ era:AxleLoadSpeedProfileShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each AxleLoadSpeedProfile must have exactly one startPos (unsigned integer)." ;
+        sh:message "Each AxleLoadSpeedProfile must have exactly one startPos (unsigned integer)."@en ;
+        sh:message "Jedes AxleLoadSpeedProfile muss genau eine startPos (vorzeichenlose Ganzzahl) haben."@de ;
+        sh:message "Chaque AxleLoadSpeedProfile doit avoir exactement un startPos (entier non signé)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -39,7 +43,9 @@ era:AxleLoadSpeedProfileShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each AxleLoadSpeedProfile must have exactly one endPos (unsigned integer)." ;
+        sh:message "Each AxleLoadSpeedProfile must have exactly one endPos (unsigned integer)."@en ;
+        sh:message "Jedes AxleLoadSpeedProfile muss genau eine endPos (vorzeichenlose Ganzzahl) haben."@de ;
+        sh:message "Chaque AxleLoadSpeedProfile doit avoir exactement un endPos (entier non signé)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -49,7 +55,9 @@ era:AxleLoadSpeedProfileShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each AxleLoadSpeedProfile must have exactly one speed (unsigned integer)." ;
+        sh:message "Each AxleLoadSpeedProfile must have exactly one speed (unsigned integer)."@en ;
+        sh:message "Jedes AxleLoadSpeedProfile muss genau eine Geschwindigkeit (vorzeichenlose Ganzzahl) haben."@de ;
+        sh:message "Chaque AxleLoadSpeedProfile doit avoir exactement une vitesse (entier non signé)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -73,14 +81,18 @@ era:AxleLoadSpeedProfileShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property axleLoadCategory must have a value from the defined SKOS concept scheme." ;
+        sh:message "The property axleLoadCategory must have a value from the defined SKOS concept scheme."@en ;
+        sh:message "Die Eigenschaft axleLoadCategory muss einen Wert aus dem definierten SKOS-Konzeptschema haben."@de ;
+        sh:message "La propriété axleLoadCategory doit avoir une valeur issue du schéma conceptuel SKOS défini."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
     # SPARQL constraint: startPos must be less than endPos
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The startPos must be less than endPos." ;
+        sh:message "The startPos must be less than endPos."@en ;
+        sh:message "Der startPos muss kleiner als endPos sein."@de ;
+        sh:message "Le startPos doit être inférieur à endPos."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -97,6 +109,7 @@ era:AxleLoadSpeedProfileShape a sh:NodeShape ;
 
 era:BaliseGroupShape a sh:NodeShape ;
     sh:targetClass era:BaliseGroup ;
+    era:additionalInfo "This finding relates to the BaliseGroup structural constraints. Possible causes: (1) era:nid_bg is missing or outside the range 0-16383. (2) era:nid_c is missing or outside the range 0-1023. (3) era:etcsMarker references an invalid ETCSMarker instance. (4) era:linkOrientationDirection has a value not from the defined concept scheme (both, same, or opposite). (5) era:bgFunction has a value not from the defined concept scheme. (6) era:balises is missing, appears more than once, or does not point to an RDF list." ;
     
     # NID_BG: Balise Group Identity Number (0-16383)
     sh:property [ 
@@ -107,7 +120,9 @@ era:BaliseGroupShape a sh:NodeShape ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:severity sh:Violation ;
-        sh:message "nid_bg must be an unsigned integer between 0 and 16383." ;
+        sh:message "nid_bg must be an unsigned integer between 0 and 16383."@en ;
+        sh:message "nid_bg muss eine vorzeichenlose Ganzzahl zwischen 0 und 16383 sein."@de ;
+        sh:message "nid_bg doit être un entier non signé compris entre 0 et 16383."@fr ;
     ] ;
     
     # NID_C: Country/Region Identity Number (0-1023)
@@ -119,7 +134,9 @@ era:BaliseGroupShape a sh:NodeShape ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:severity sh:Violation ;
-        sh:message "nid_c must be an unsigned integer between 0 and 1023." ;
+        sh:message "nid_c must be an unsigned integer between 0 and 1023."@en ;
+        sh:message "nid_c muss eine vorzeichenlose Ganzzahl zwischen 0 und 1023 sein."@de ;
+        sh:message "nid_c doit être un entier non signé compris entre 0 et 1023."@fr ;
     ] ;
     
     # ETCS Marker reference
@@ -129,7 +146,9 @@ era:BaliseGroupShape a sh:NodeShape ;
 		sh:nodeKind sh:IRI ;
         sh:maxCount 1 ;
         sh:severity sh:Violation ;
-        sh:message "etcsMarker must reference an instance of a proper era:ETCSMarker." ;
+        sh:message "etcsMarker must reference an instance of a proper era:ETCSMarker."@en ;
+        sh:message "etcsMarker muss auf eine Instanz eines richtigen era:ETCSMarker verweisen."@de ;
+        sh:message "etcsMarker doit faire référence à une instance d'un era:ETCSMarker approprié."@fr ;
     ] ;
     
     # Link Orientation Direction (required, controlled vocabulary)
@@ -143,7 +162,9 @@ era:BaliseGroupShape a sh:NodeShape ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:severity sh:Violation ;
-        sh:message "linkOrientationDirection must have a value from the defined SKOS concept scheme (both, same, or opposite)." ;
+        sh:message "linkOrientationDirection must have a value from the defined SKOS concept scheme (both, same, or opposite)."@en ;
+        sh:message "linkOrientationDirection muss einen Wert aus dem definierten SKOS-Konzeptschema haben (beide, gleich oder entgegengesetzt)."@de ;
+        sh:message "linkOrientationDirection doit avoir une valeur du schéma conceptuel SKOS défini (les deux, identique ou opposé)."@fr ;
     ] ;
     
     # Balise Group Function (required, controlled vocabulary)
@@ -157,23 +178,29 @@ era:BaliseGroupShape a sh:NodeShape ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:severity sh:Violation ;
-        sh:message "bgFunction must have a value from the defined SKOS concept scheme." ;
+        sh:message "bgFunction must have a value from the defined SKOS concept scheme."@en ;
+        sh:message "bgFunction muss einen Wert aus dem definierten SKOS-Konzeptschema haben."@de ;
+        sh:message "bgFunction doit avoir une valeur du schéma conceptuel SKOS défini."@fr ;
     ] ;
     
     # Balises list (RDF list containing 1-8 Balise instances)
-    sh:property [ 
+    sh:property [
         sh:path era:balises ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:severity sh:Violation ;
-        sh:message "A BaliseGroup must have exactly one era:balises property pointing to an RDF list." ;
-    ] ;
+        sh:message "A BaliseGroup must have exactly one era:balises property pointing to an RDF list."@en ;
+        sh:message "Eine BaliseGroup muss genau eine era:balises-Eigenschaft haben, die auf eine RDF-Liste verweist."@de ;
+        sh:message "Un BaliseGroup doit avoir exactement une propriété era:balises pointant vers une liste RDF."@fr ;
+    ] ;   
     
     # SPARQL constraint to validate list length (1-8 items)
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "The era:balises list must contain between 1 and 8 items." ;
+        sh:message "The era:balises list must contain between 1 and 8 items."@en ;
+        sh:message "Die Liste era:balises muss zwischen 1 und 8 Elemente enthalten."@de ;
+        sh:message "La liste era:balises doit contenir entre 1 et 8 éléments."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -200,7 +227,9 @@ era:BaliseGroupShape a sh:NodeShape ;
     # SPARQL constraint to validate each list item is a Balise
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the era:balises list must be instances of era:Balise." ;
+        sh:message "All items in the era:balises list must be instances of era:Balise."@en ;
+        sh:message "Alle Elemente in der Liste era:balises müssen Instanzen von era:Balise sein."@de ;
+        sh:message "Tous les éléments de la liste era:balises doivent être des instances de era:Balise."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -228,7 +257,9 @@ era:BaliseShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Balise must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object." ;
+        sh:message "Each Balise must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object."@en ;
+        sh:message "Jede Balise muss genau ein topologicalCoordinate haben, das dem TopologicalCoordinate-Objekt entspricht."@de ;
+        sh:message "Chaque Balise doit avoir exactement un topologicalCoordinate conforme à l'objet TopologicalCoordonnée."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -243,7 +274,9 @@ era:BridgeShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Bridge must have exactly one areaReference that conforms to NetAreaReference object." ;
+        sh:message "Each Bridge must have exactly one areaReference that conforms to NetAreaReference object."@en ;
+        sh:message "Jede Bridge muss genau ein areaReference haben, das dem NetAreaReference-Objekt entspricht."@de ;
+        sh:message "Chaque pont doit avoir exactement un areaReference conforme à l'objet NetAreaReference."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -252,7 +285,9 @@ era:BridgeShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A Bridge may have at most one name (string)." ;
+        sh:message "A Bridge may have at most one name (string)."@en ;
+        sh:message "Eine Bridge darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Un Bridge peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -265,7 +300,9 @@ era:BufferStopShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A BufferStop may have at most one name (string)." ;
+        sh:message "A BufferStop may have at most one name (string)."@en ;
+        sh:message "Ein BufferStop darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Un BufferStop peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -276,7 +313,9 @@ era:BufferStopShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each BufferStop must have exactly one netPointReference that conforms to NetPointReference object." ;
+        sh:message "Each BufferStop must have exactly one netPointReference that conforms to NetPointReference object."@en ;
+        sh:message "Jeder BufferStop muss genau ein netPointReference haben, das dem NetPointReference-Objekt entspricht."@de ;
+        sh:message "Chaque BufferStop doit avoir exactement un netPointReference conforme à l'objet NetPointReference."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -290,7 +329,9 @@ era:CantPointShape a sh:NodeShape ;
         sh:datatype xsd:double ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each CantPoint must have exactly one elementGeometryPos (double)." ;
+        sh:message "Each CantPoint must have exactly one elementGeometryPos (double)."@en ;
+        sh:message "Jeder CantPoint muss genau ein elementGeometryPos (double) haben."@de ;
+        sh:message "Chaque CantPoint doit avoir exactement un elementGeometryPos (double)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -300,7 +341,9 @@ era:CantPointShape a sh:NodeShape ;
         sh:datatype xsd:double ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each CantPoint must have exactly one appliedCant value (double)." ;
+        sh:message "Each CantPoint must have exactly one appliedCant value (double)."@en ;
+        sh:message "Jeder CantPoint muss genau einen appliedCant-Wert (double) haben."@de ;
+        sh:message "Chaque CantPoint doit avoir exactement une valeur appliedCant (double)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -314,7 +357,9 @@ era:CantSamplePointShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each CantSamplePoint must have exactly one pos (position as unsigned integer)." ;
+        sh:message "Each CantSamplePoint must have exactly one pos (position as unsigned integer)."@en ;
+        sh:message "Jeder CantSamplePoint muss genau eine Position (Position als vorzeichenlose Ganzzahl) haben."@de ;
+        sh:message "Chaque CantSamplePoint doit avoir exactement une position (position sous forme d'entier non signé)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -324,7 +369,9 @@ era:CantSamplePointShape a sh:NodeShape ;
         sh:datatype xsd:int ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each CantSamplePoint must have exactly one samplePointCant value (signed integer)." ;
+        sh:message "Each CantSamplePoint must have exactly one samplePointCant value (signed integer)."@en ;
+        sh:message "Jeder CantSamplePoint muss genau einen samplePointCant-Wert (vorzeichenbehaftete Ganzzahl) haben."@de ;
+        sh:message "Chaque CantSamplePoint doit avoir exactement une valeur samplePointCant (entier signé)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -337,7 +384,9 @@ era:CrossingShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A Crossing may have at most one name (string)." ;
+        sh:message "A Crossing may have at most one name (string)."@en ;
+        sh:message "Eine Kreuzung darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Un croisement peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -347,7 +396,9 @@ era:CrossingShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Crossing must have exactly one isSwitchable value (boolean)." ;
+        sh:message "Each Crossing must have exactly one isSwitchable value (boolean)."@en ;
+        sh:message "Jede Kreuzung muss genau einen isSwitchable-Wert (boolean) haben."@de ;
+        sh:message "Chaque croisement doit avoir exactement une valeur isSwitchable (booléenne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -358,7 +409,9 @@ era:CrossingShape a sh:NodeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 2 ;
         sh:maxCount 2 ;
-        sh:message "Each Crossing must have exactly 2 topologicalCoordinates that conform to TopologicalCoordinate object." ;
+        sh:message "Each Crossing must have exactly 2 topologicalCoordinates that conform to TopologicalCoordinate object."@en ;
+        sh:message "Jede Kreuzung muss genau 2 topologicalCoordinates haben, die dem TopologicalCoordinate-Objekt entsprechen."@de ;
+        sh:message "Chaque croisement doit avoir exactement 2 topologicalCoordinates conformes à l'objet TopologicalCoordonnée."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -372,7 +425,9 @@ era:CurrentLimitationShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each CurrentLimitation must have exactly one maxCurrent value (unsigned integer)." ;
+        sh:message "Each CurrentLimitation must have exactly one maxCurrent value (unsigned integer)."@en ;
+        sh:message "Jede CurrentLimitation muss genau einen maxCurrent-Wert (vorzeichenlose Ganzzahl) haben."@de ;
+        sh:message "Chaque CurrentLimitation doit avoir exactement une valeur maxCurrent (entier non signé)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -382,7 +437,9 @@ era:CurrentLimitationShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each CurrentLimitation must have at least one linearElementSections that conform to LinearElementSection object." ;
+        sh:message "Each CurrentLimitation must have at least one linearElementSections that conform to LinearElementSection object."@en ;
+        sh:message "Jede CurrentLimitation muss mindestens ein linearElementSections haben, das dem LinearElementSection-Objekt entspricht."@de ;
+        sh:message "Chaque CurrentLimitation doit avoir au moins un linearElementSections conforme à l'objet LinearElementSection."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -396,7 +453,9 @@ era:CurveSamplePointShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each CurveSamplePoint must have exactly one pos (position as unsigned integer)." ;
+        sh:message "Each CurveSamplePoint must have exactly one pos (position as unsigned integer)."@en ;
+        sh:message "Jeder CurveSamplePoint muss genau eine Position (Position als vorzeichenlose Ganzzahl) haben."@de ;
+        sh:message "Chaque CurveSamplePoint doit avoir exactement une position (position sous forme d'entier non signé)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -406,7 +465,9 @@ era:CurveSamplePointShape a sh:NodeShape ;
         sh:datatype xsd:int ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each CurveSamplePoint must have exactly one sampleCurveRadius value (signed integer)." ;
+        sh:message "Each CurveSamplePoint must have exactly one sampleCurveRadius value (signed integer)."@en ;
+        sh:message "Jeder CurveSamplePoint muss genau einen sampleCurveRadius-Wert (vorzeichenbehaftete Ganzzahl) haben."@de ;
+        sh:message "Chaque CurveSamplePoint doit avoir exactement une valeur sampleCurveRadius (entier signé)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -419,7 +480,9 @@ era:DerailerShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A Derailer may have at most one name (string)." ;
+        sh:message "A Derailer may have at most one name (string)."@en ;
+        sh:message "Ein Derailer darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Un dérailleur peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -430,7 +493,9 @@ era:DerailerShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Derailer must have exactly one netPointReference that conforms to NetPointReference object." ;
+        sh:message "Each Derailer must have exactly one netPointReference that conforms to NetPointReference object."@en ;
+        sh:message "Jeder Derailer muss genau ein netPointReference haben, das dem NetPointReference-Objekt entspricht."@de ;
+        sh:message "Chaque dérailleur doit avoir exactement un netPointReference conforme à l'objet NetPointReference."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -440,7 +505,9 @@ era:DerailerShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Derailer must have exactly one derailToRight value (boolean)." ;
+        sh:message "Each Derailer must have exactly one derailToRight value (boolean)."@en ;
+        sh:message "Jeder Derailer muss genau einen derailToRight-Wert (boolean) haben."@de ;
+        sh:message "Chaque dérailleur doit avoir exactement une valeur derailToRight (booléenne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -450,7 +517,9 @@ era:DerailerShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Derailer must have exactly one reversalTime value (unsigned integer)." ;
+        sh:message "Each Derailer must have exactly one reversalTime value (unsigned integer)."@en ;
+        sh:message "Jeder Derailer muss genau einen reversalTime-Wert (vorzeichenlose Ganzzahl) haben."@de ;
+        sh:message "Chaque dérailleur doit avoir exactement une valeur reversalTime (entier non signé)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -463,7 +532,9 @@ era:ETCSMarkerShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "An ETCSMarker may have at most one name (string)." ;
+        sh:message "An ETCSMarker may have at most one name (string)."@en ;
+        sh:message "Ein ETCSMarker darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Un ETCSMarker peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -474,7 +545,9 @@ era:ETCSMarkerShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each ETCSMarker must have exactly one netPointReference that conforms to NetPointReference object." ;
+        sh:message "Each ETCSMarker must have exactly one netPointReference that conforms to NetPointReference object."@en ;
+        sh:message "Jeder ETCSMarker muss genau ein netPointReference haben, das dem NetPointReference-Objekt entspricht."@de ;
+        sh:message "Chaque ETCSMarker doit avoir exactement un netPointReference conforme à l'objet NetPointReference."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -484,7 +557,9 @@ era:ETCSMarkerShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each ETCSMarker must have exactly one markerFunctionStop value (boolean)." ;
+        sh:message "Each ETCSMarker must have exactly one markerFunctionStop value (boolean)."@en ;
+        sh:message "Jeder ETCSMarker muss genau einen markerFunctionStop-Wert (boolean) haben."@de ;
+        sh:message "Chaque ETCSMarker doit avoir exactement une valeur markerFunctionStop (booléenne)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -498,7 +573,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:datatype xsd:dateTime ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each FunctionalArea must have exactly one versionTimestamp (dateTime)." ;
+        sh:message "Each FunctionalArea must have exactly one versionTimestamp (dateTime)."@en ;
+        sh:message "Jede FunctionalArea muss genau ein versionTimestamp (dateTime) haben."@de ;
+        sh:message "Chaque FunctionalArea doit avoir exactement un versionTimestamp (dateTime)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -507,7 +584,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:opPoints ;
         sh:node era:OperationalPointShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea opPoints must conform to OperationalPoint object." ;
+        sh:message "FunctionalArea opPoints must conform to OperationalPoint object."@en ;
+        sh:message "FunctionalArea opPoints muss dem OperationalPoint-Objekt entsprechen."@de ;
+        sh:message "FunctionalArea opPoints doit être conforme à l'objet OperationalPoint."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -516,7 +595,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:tvps ;
         sh:node era:TvpSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea tvps must conform to TvpSection object." ;
+        sh:message "FunctionalArea tvps must conform to TvpSection object."@en ;
+        sh:message "FunctionalArea tvps muss dem TvpSection-Objekt entsprechen."@de ;
+        sh:message "Les tvps FunctionalArea doivent être conformes à l'objet TvpSection."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -525,7 +606,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:nationalBorders ;
         sh:node era:NationalBorderShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea nationalBorders must conform to NationalBorder object." ;
+        sh:message "FunctionalArea nationalBorders must conform to NationalBorder object."@en ;
+        sh:message "FunctionalArea nationalBorders muss dem NationalBorder-Objekt entsprechen."@de ;
+        sh:message "FunctionalArea nationalBorders doit être conforme à l'objet NationalBorder."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -534,7 +617,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:bridges ;
         sh:node era:BridgeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea bridges must conform to Bridge object." ;
+        sh:message "FunctionalArea bridges must conform to Bridge object."@en ;
+        sh:message "FunctionalArea-Brücken müssen dem Bridge-Objekt entsprechen."@de ;
+        sh:message "Les ponts FunctionalArea doivent être conformes à l’objet Bridge."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -543,7 +628,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:tunnels ;
         sh:node era:TunnelShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea tunnels must conform to Tunnel object." ;
+        sh:message "FunctionalArea tunnels must conform to Tunnel object."@en ;
+        sh:message "FunctionalArea-Tunnel müssen dem Tunnelobjekt entsprechen."@de ;
+        sh:message "Les tunnels FunctionalArea doivent être conformes à l’objet Tunnel."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -552,7 +639,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:levelCrossings ;
         sh:node era:LevelCrossingShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea levelCrossings must conform to LevelCrossing object." ;
+        sh:message "FunctionalArea levelCrossings must conform to LevelCrossing object."@en ;
+        sh:message "FunctionalArea levelCrossings muss dem LevelCrossing-Objekt entsprechen."@de ;
+        sh:message "FunctionalArea levelCrossings doit être conforme à l'objet LevelCrossing."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -561,7 +650,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:underpasses ;
         sh:node era:UnderpassShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea underpasses must conform to Underpass object." ;
+        sh:message "FunctionalArea underpasses must conform to Underpass object."@en ;
+        sh:message "FunctionalArea-Unterführungen müssen dem Underpass-Objekt entsprechen."@de ;
+        sh:message "Les passages inférieurs FunctionalArea doivent être conformes à l'objet Underpass."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -570,7 +661,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:baliseGroups ;
         sh:node era:BaliseGroupShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea baliseGroups must conform to BaliseGroup object." ;
+        sh:message "FunctionalArea baliseGroups must conform to BaliseGroup object."@en ;
+        sh:message "FunctionalArea baliseGroups muss dem BaliseGroup-Objekt entsprechen."@de ;
+        sh:message "FunctionalArea baliseGroups doit être conforme à l'objet BaliseGroup."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -579,7 +672,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:etcsMarkers ;
         sh:node era:ETCSMarkerShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea etcsMarkers must conform to ETCSMarker object." ;
+        sh:message "FunctionalArea etcsMarkers must conform to ETCSMarker object."@en ;
+        sh:message "FunctionalArea etcsMarkers muss dem ETCSMarker-Objekt entsprechen."@de ;
+        sh:message "FunctionalArea etcsMarkers doit être conforme à l'objet ETCSMarker."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -588,7 +683,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:switches ;
         sh:class era:Switch ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea switches must conform to Switch object." ;
+        sh:message "FunctionalArea switches must conform to Switch object."@en ;
+        sh:message "FunctionalArea-Schalter müssen dem Switch-Objekt entsprechen."@de ;
+        sh:message "Les commutateurs FunctionalArea doivent être conformes à l’objet Switch."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -597,7 +694,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:derailers ;
         sh:node era:DerailerShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea derailers must conform to Derailer object." ;
+        sh:message "FunctionalArea derailers must conform to Derailer object."@en ;
+        sh:message "FunctionalArea-Entgleiser müssen dem Derailer-Objekt entsprechen."@de ;
+        sh:message "Les dérailleurs FunctionalArea doivent être conformes à l’objet Derailer."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -606,7 +705,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:crossings ;
         sh:node era:CrossingShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea crossings must conform to Crossing object." ;
+        sh:message "FunctionalArea crossings must conform to Crossing object."@en ;
+        sh:message "FunctionalArea-Kreuzungen müssen dem Crossing-Objekt entsprechen."@de ;
+        sh:message "Les croisements FunctionalArea doivent être conformes à l’objet Crossing."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -615,7 +716,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:slipCrossings ;
         sh:node era:SlipCrossingShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea slipCrossings must conform to SlipCrossing object." ;
+        sh:message "FunctionalArea slipCrossings must conform to SlipCrossing object."@en ;
+        sh:message "FunctionalArea slipCrossings muss dem SlipCrossing-Objekt entsprechen."@de ;
+        sh:message "FunctionalArea slipCrossings doit être conforme à l'objet SlipCrossing."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -624,7 +727,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:bufferStops ;
         sh:node era:BufferStopShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea bufferStops must conform to BufferStop object." ;
+        sh:message "FunctionalArea bufferStops must conform to BufferStop object."@en ;
+        sh:message "FunctionalArea bufferStops muss dem BufferStop-Objekt entsprechen."@de ;
+        sh:message "FunctionalArea bufferStops doit être conforme à l'objet BufferStop."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -633,7 +738,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:stopLocations ;
         sh:node era:StopLocationShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea stopLocations must conform to StopLocation object." ;
+        sh:message "FunctionalArea stopLocations must conform to StopLocation object."@en ;
+        sh:message "FunctionalArea stopLocations muss dem StopLocation-Objekt entsprechen."@de ;
+        sh:message "FunctionalArea stopLocations doit être conforme à l'objet StopLocation."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -642,7 +749,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:timingPoints ;
         sh:node era:TimingPointShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea timingPoints must conform to TimingPoint object." ;
+        sh:message "FunctionalArea timingPoints must conform to TimingPoint object."@en ;
+        sh:message "FunctionalArea timingPoints muss dem TimingPoint-Objekt entsprechen."@de ;
+        sh:message "FunctionalArea timingPoints doit être conforme à l'objet TimingPoint."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -651,7 +760,9 @@ era:FunctionalAreaShape a sh:NodeShape ;
         sh:path era:trainDetectors ;
         sh:node era:TrainDetectorShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "FunctionalArea trainDetectors must conform to TrainDetector object." ;
+        sh:message "FunctionalArea trainDetectors must conform to TrainDetector object."@en ;
+        sh:message "FunctionalArea trainDetectors muss dem TrainDetector-Objekt entsprechen."@de ;
+        sh:message "FunctionalArea trainDetectors doit être conforme à l'objet TrainDetector."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -665,7 +776,9 @@ era:GeometryAreaShape a sh:NodeShape ;
         sh:datatype xsd:dateTime ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each GeometryArea must have exactly one versionTimestamp (dateTime)." ;
+        sh:message "Each GeometryArea must have exactly one versionTimestamp (dateTime)."@en ;
+        sh:message "Jede GeometryArea muss genau ein versionTimestamp (dateTime) haben."@de ;
+        sh:message "Chaque GeometryArea doit avoir exactement un versionTimestamp (dateTime)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -675,7 +788,9 @@ era:GeometryAreaShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each GeometryArea must have exactly one alignment3d value (boolean)." ;
+        sh:message "Each GeometryArea must have exactly one alignment3d value (boolean)."@en ;
+        sh:message "Jede GeometryArea muss genau einen Alignment3D-Wert (boolean) haben."@de ;
+        sh:message "Chaque GeometryArea doit avoir exactement une valeur d’alignement3d (booléenne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -684,7 +799,9 @@ era:GeometryAreaShape a sh:NodeShape ;
         sh:path era:linearElementGeometries ;
         sh:node era:LinearElementGeometryShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "GeometryArea linearElementGeometries must conform to LinearElementGeometry object." ;
+        sh:message "GeometryArea linearElementGeometries must conform to LinearElementGeometry object."@en ;
+        sh:message "GeometryArea linearElementGeometries muss dem LinearElementGeometry-Objekt entsprechen."@de ;
+        sh:message "GeometryArea linearElementGeometries doit être conforme à l'objet LinearElementGeometry."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -698,7 +815,9 @@ era:HorizontalArcShape a sh:NodeShape ;
         sh:datatype xsd:double ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each HorizontalArc must have exactly one elementGeometryPos (double)." ;
+        sh:message "Each HorizontalArc must have exactly one elementGeometryPos (double)."@en ;
+        sh:message "Jeder HorizontalArc muss genau ein elementGeometryPos (doppelt) haben."@de ;
+        sh:message "Chaque HorizontalArc doit avoir exactement un elementGeometryPos (double)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -710,7 +829,9 @@ era:HorizontalArcShape a sh:NodeShape ;
         sh:maxInclusive 360.0 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each HorizontalArc must have exactly one azimuth value (double, 0-360 degrees)." ;
+        sh:message "Each HorizontalArc must have exactly one azimuth value (double, 0-360 degrees)."@en ;
+        sh:message "Jeder HorizontalArc muss genau einen Azimutwert haben (double, 0-360 Grad)."@de ;
+        sh:message "Chaque HorizontalArc doit avoir exactement une valeur d'azimut (double, 0-360 degrés)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -720,7 +841,9 @@ era:HorizontalArcShape a sh:NodeShape ;
         sh:datatype xsd:double ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each HorizontalArc must have exactly one radius value (double)." ;
+        sh:message "Each HorizontalArc must have exactly one radius value (double)."@en ;
+        sh:message "Jeder HorizontalArc muss genau einen Radiuswert (double) haben."@de ;
+        sh:message "Chaque HorizontalArc doit avoir exactement une valeur de rayon (double)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -734,7 +857,9 @@ era:HorizontalLineShape a sh:NodeShape ;
         sh:datatype xsd:double ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each HorizontalLine must have exactly one elementGeometryPos (double)." ;
+        sh:message "Each HorizontalLine must have exactly one elementGeometryPos (double)."@en ;
+        sh:message "Jede HorizontalLine muss genau ein elementGeometryPos (doppelt) haben."@de ;
+        sh:message "Chaque HorizontalLine doit avoir exactement un elementGeometryPos (double)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -746,14 +871,18 @@ era:HorizontalLineShape a sh:NodeShape ;
         sh:maxInclusive 360.0 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each HorizontalLine must have exactly one azimuth value (double, 0-360 degrees)." ;
+        sh:message "Each HorizontalLine must have exactly one azimuth value (double, 0-360 degrees)."@en ;
+        sh:message "Jede HorizontalLine muss genau einen Azimutwert haben (double, 0-360 Grad)."@de ;
+        sh:message "Chaque ligne horizontale doit avoir exactement une valeur d'azimut (double, 0-360 degrés)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Horizontal Segment Shape =====
 era:HorizontalSegmentShape a sh:NodeShape ;
     sh:targetClass era:HorizontalSegment ;
-    sh:message "A HorizontalSegment must have exactly one of: horizontalSegmentArc, horizontalSegmentLine, or horizontalSegmentTransition." ;
+    sh:message "A HorizontalSegment must have exactly one of: horizontalSegmentArc, horizontalSegmentLine, or horizontalSegmentTransition."@en ;
+    sh:message "Ein HorizontalSegment muss genau eines von: horizontalSegmentArc, horizontalSegmentLine oder horizontalSegmentTransition haben."@de ;
+    sh:message "Un HorizontalSegment doit avoir exactement l'un des éléments suivants : horizontalSegmentArc, horizontalSegmentLine ou horizontalSegmentTransition."@fr ;
     
     # Exactly one of the three horizontal segment types must be present
     sh:xone (
@@ -764,7 +893,9 @@ era:HorizontalSegmentShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, horizontalSegmentArc must conform to HorizontalArc object." ;
+            sh:message "If present, horizontalSegmentArc must conform to HorizontalArc object."@en ;
+            sh:message "Falls vorhanden, muss horizontalSegmentArc dem HorizontalArc-Objekt entsprechen."@de ;
+            sh:message "S'il est présent, horizontalSegmentArc doit être conforme à l'objet HorizontalArc."@fr ;
             sh:severity sh:Violation ;
         ]
         
@@ -775,7 +906,9 @@ era:HorizontalSegmentShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, horizontalSegmentLine must conform to HorizontalLine object." ;
+            sh:message "If present, horizontalSegmentLine must conform to HorizontalLine object."@en ;
+            sh:message "Falls vorhanden, muss horizontalSegmentLine dem HorizontalLine-Objekt entsprechen."@de ;
+            sh:message "S'il est présent, horizontalSegmentLine doit être conforme à l'objet HorizontalLine."@fr ;
             sh:severity sh:Violation ;
         ]
         
@@ -786,7 +919,9 @@ era:HorizontalSegmentShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, horizontalSegmentTransition must conform to HorizontalTransition object." ;
+            sh:message "If present, horizontalSegmentTransition must conform to HorizontalTransition object."@en ;
+            sh:message "Falls vorhanden, muss horizontalSegmentTransition dem HorizontalTransition-Objekt entsprechen."@de ;
+            sh:message "S'il est présent, horizontalSegmentTransition doit être conforme à l'objet HorizontalTransition."@fr ;
             sh:severity sh:Violation ;
         ]
     ) .
@@ -801,7 +936,9 @@ era:HorizontalTransitionShape a sh:NodeShape ;
         sh:datatype xsd:double ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each HorizontalTransition must have exactly one elementGeometryPos (double)." ;
+        sh:message "Each HorizontalTransition must have exactly one elementGeometryPos (double)."@en ;
+        sh:message "Jeder HorizontalTransition muss genau ein elementGeometryPos (doppelt) haben."@de ;
+        sh:message "Chaque HorizontalTransition doit avoir exactement un elementGeometryPos (double)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -813,7 +950,9 @@ era:HorizontalTransitionShape a sh:NodeShape ;
         sh:maxInclusive 360.0 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each HorizontalTransition must have exactly one azimuth value (double, 0-360 degrees)." ;
+        sh:message "Each HorizontalTransition must have exactly one azimuth value (double, 0-360 degrees)."@en ;
+        sh:message "Jeder HorizontalTransition muss genau einen Azimutwert haben (doppelt, 0–360 Grad)."@de ;
+        sh:message "Chaque HorizontalTransition doit avoir exactement une valeur d'azimut (double, 0-360 degrés)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -823,7 +962,9 @@ era:HorizontalTransitionShape a sh:NodeShape ;
         sh:datatype xsd:double ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each HorizontalTransition must have exactly one radius value (double)." ;
+        sh:message "Each HorizontalTransition must have exactly one radius value (double)."@en ;
+        sh:message "Jeder HorizontalTransition muss genau einen Radiuswert (double) haben."@de ;
+        sh:message "Chaque HorizontalTransition doit avoir exactement une valeur de rayon (double)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -841,21 +982,27 @@ era:HorizontalTransitionShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property transitionType must have a value from the defined SKOS concept scheme (clothoidCurve, biquadraticParabola, blossCurve, cosineCurve, cubicParabola, sineCurve, or wienerBogen)." ;
+        sh:message "The property transitionType must have a value from the defined SKOS concept scheme (clothoidCurve, biquadraticParabola, blossCurve, cosineCurve, cubicParabola, sineCurve, or wienerBogen)."@en ;
+        sh:message "Die Eigenschaft transitionType muss einen Wert aus dem definierten SKOS-Konzeptschema (clothoidCurve, biquadraticParabola, blossCurve, cosineCurve, cubicParabola, sineCurve oder wienerBogen) haben."@de ;
+        sh:message "La propriété transitionType doit avoir une valeur du schéma de concepts SKOS défini (clothoidCurve, biquadraticParabola, blossCurve, cosineCurve, cubicParabola, sineCurve ou wienerBogen)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Infrastructure Shape =====
 era:InfrastructureShape a sh:NodeShape ;
     sh:targetClass era:Infrastructure ;
-    sh:message "Top-level container for complete railway infrastructure model organized by functional areas." ;
+    sh:message "Top-level container for complete railway infrastructure model organized by functional areas."@en ;
+    sh:message "Top-Level-Container für ein vollständiges Eisenbahninfrastrukturmodell, geordnet nach Funktionsbereichen."@de ;
+    sh:message "Conteneur de niveau supérieur pour un modèle complet d'infrastructure ferroviaire organisé par domaines fonctionnels."@fr ;
     
     # Topology Areas (optional, multiple topology definitions)
     sh:property [ 
         sh:path era:topoAreas ;
         sh:node era:TopoAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An Infrastructure may contain multiple validated topoAreas (track network topology and connectivity)." ;
+        sh:message "An Infrastructure may contain multiple validated topoAreas (track network topology and connectivity)."@en ;
+        sh:message "Eine Infrastruktur kann mehrere validierte topoAreas enthalten (Netzwerktopologie und Konnektivität verfolgen)."@de ;
+        sh:message "Une infrastructure peut contenir plusieurs topoAreas validés (suivre la topologie et la connectivité du réseau)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -864,7 +1011,9 @@ era:InfrastructureShape a sh:NodeShape ;
         sh:path era:functionalAreas ;
         sh:node era:FunctionalAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An Infrastructure may contain multiple validated functionalAreas (operational elements like switches, balises, platforms)." ;
+        sh:message "An Infrastructure may contain multiple validated functionalAreas (operational elements like switches, balises, platforms)."@en ;
+        sh:message "Eine Infrastruktur kann mehrere validierte functionalAreas (Betriebselemente wie Switches, Balisen, Plattformen) enthalten."@de ;
+        sh:message "Une infrastructure peut contenir plusieurs functionalAreas validés (éléments opérationnels tels que des commutateurs, des balises, des plates-formes)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -873,7 +1022,9 @@ era:InfrastructureShape a sh:NodeShape ;
         sh:path era:geometryAreas ;
         sh:node era:GeometryAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An Infrastructure may contain multiple validated geometryAreas (track alignment geometry, gradients, curves)." ;
+        sh:message "An Infrastructure may contain multiple validated geometryAreas (track alignment geometry, gradients, curves)."@en ;
+        sh:message "Eine Infrastruktur kann mehrere validierte geometryAreas (Gleisausrichtungsgeometrie, Steigungen, Kurven) enthalten."@de ;
+        sh:message "Une infrastructure peut contenir plusieurs geometryAreas validés (géométrie d'alignement de voie, pentes, courbes)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -882,7 +1033,9 @@ era:InfrastructureShape a sh:NodeShape ;
         sh:path era:sampledGeometryAreas ;
         sh:node era:SampledGeometryAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An Infrastructure may contain multiple validated sampledGeometryAreas (discretized track geometry at regular intervals)." ;
+        sh:message "An Infrastructure may contain multiple validated sampledGeometryAreas (discretized track geometry at regular intervals)."@en ;
+        sh:message "Eine Infrastruktur kann mehrere validierte sampledGeometryAreas (diskretisierte Gleisgeometrie in regelmäßigen Abständen) enthalten."@de ;
+        sh:message "Une infrastructure peut contenir plusieurs sampledGeometryAreas validés (géométrie de piste discrétisée à intervalles réguliers)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -891,7 +1044,9 @@ era:InfrastructureShape a sh:NodeShape ;
         sh:path era:propertiesAreas ;
         sh:node era:PropertiesAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An Infrastructure may contain multiple validated propertiesAreas (track characteristics like gauge, loading limits, speed restrictions)." ;
+        sh:message "An Infrastructure may contain multiple validated propertiesAreas (track characteristics like gauge, loading limits, speed restrictions)."@en ;
+        sh:message "Eine Infrastruktur kann mehrere validierte propertiesAreas enthalten (Gleiseigenschaften wie Spurweite, Ladegrenzen, Geschwindigkeitsbeschränkungen)."@de ;
+        sh:message "Une infrastructure peut contenir plusieurs propertiesAreas validés (caractéristiques de la voie telles que l'écartement, les limites de chargement, les restrictions de vitesse)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -900,14 +1055,18 @@ era:InfrastructureShape a sh:NodeShape ;
         sh:path era:trackUsageAreas ;
         sh:node era:TrackUsageAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An Infrastructure may contain multiple validated trackUsageAreas (operational usage patterns and constraints)." ;
+        sh:message "An Infrastructure may contain multiple validated trackUsageAreas (operational usage patterns and constraints)."@en ;
+        sh:message "Eine Infrastruktur kann mehrere validierte trackUsageAreas (betriebliche Nutzungsmuster und Einschränkungen) enthalten."@de ;
+        sh:message "Une infrastructure peut contenir plusieurs trackUsageAreas validés (modèles d'utilisation opérationnelle et contraintes)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Level Crossing Shape =====
 era:LevelCrossingShape a sh:NodeShape ;
     sh:targetClass era:LevelCrossing ;
-    sh:message "Road-rail intersection requiring protection and potentially drive protection sections for flank safety." ;
+    sh:message "Road-rail intersection requiring protection and potentially drive protection sections for flank safety."@en ;
+    sh:message "Schutzbedürftige Straße-Schiene-Kreuzung und möglicherweise Fahrschutzabschnitte zur Flankensicherheit."@de ;
+    sh:message "Intersection rail-route nécessitant une protection et potentiellement des sections de protection de conduite pour la sécurité des flancs."@fr ;
     
     # Area Reference (required, geographic location)
     sh:property [ 
@@ -916,7 +1075,9 @@ era:LevelCrossingShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LevelCrossing must reference exactly one areaReference that conforms to NetAreaReference object (geographic extent of the crossing)." ;
+        sh:message "Each LevelCrossing must reference exactly one areaReference that conforms to NetAreaReference object (geographic extent of the crossing)."@en ;
+        sh:message "Jeder LevelCrossing muss genau einen areaReference referenzieren, der dem NetAreaReference-Objekt (geografische Ausdehnung des Übergangs) entspricht."@de ;
+        sh:message "Chaque LevelCrossing doit référencer exactement un areaReference conforme à l'objet NetAreaReference (étendue géographique du passage)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -925,7 +1086,9 @@ era:LevelCrossingShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A LevelCrossing may have at most one name (string, crossing identifier or location description)." ;
+        sh:message "A LevelCrossing may have at most one name (string, crossing identifier or location description)."@en ;
+        sh:message "Ein LevelCrossing darf höchstens einen Namen haben (Zeichenfolge, Kreuzungskennung oder Ortsbeschreibung)."@de ;
+        sh:message "Un LevelCrossing peut avoir au plus un nom (chaîne, identifiant de passage ou description de localisation)."@fr ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -949,7 +1112,9 @@ era:LinearElementGaugeShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property gauge must have a value from the defined SKOS concept scheme (750mm, 1000mm, 1435mm, 1520mm, 1524mm, 1600mm, 1668mm, or unknown)." ;
+        sh:message "The property gauge must have a value from the defined SKOS concept scheme (750mm, 1000mm, 1435mm, 1520mm, 1524mm, 1600mm, 1668mm, or unknown)."@en ;
+        sh:message "Die Eigenschaftsbreite muss einen Wert aus dem definierten SKOS-Konzeptschema haben (750 mm, 1000 mm, 1435 mm, 1520 mm, 1524 mm, 1600 mm, 1668 mm oder unbekannt)."@de ;
+        sh:message "La jauge de propriété doit avoir une valeur issue du schéma conceptuel SKOS défini (750 mm, 1 000 mm, 1 435 mm, 1 520 mm, 1 524 mm, 1 600 mm, 1 668 mm ou inconnu)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -959,7 +1124,9 @@ era:LinearElementGaugeShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each LinearElementGauge must have at least one linearElementSections that conform to LinearElementSection object." ;
+        sh:message "Each LinearElementGauge must have at least one linearElementSections that conform to LinearElementSection object."@en ;
+        sh:message "Jedes LinearElementGauge muss mindestens ein linearElementSections haben, das dem LinearElementSection-Objekt entspricht."@de ;
+        sh:message "Chaque LinearElementGauge doit avoir au moins un linearElementSections conforme à l'objet LinearElementSection."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -972,7 +1139,9 @@ era:LinearElementGeometryShape a sh:NodeShape ;
         sh:path era:horizontalAlignments ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A LinearElementGeometry may have at most one horizontalAlignments property pointing to an RDF list." ;
+        sh:message "A LinearElementGeometry may have at most one horizontalAlignments property pointing to an RDF list."@en ;
+        sh:message "Eine LinearElementGeometry darf höchstens eine horizontalAlignments-Eigenschaft haben, die auf eine RDF-Liste verweist."@de ;
+        sh:message "Un LinearElementGeometry peut avoir au plus une propriété horizontalAlignments pointant vers une liste RDF."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -981,7 +1150,9 @@ era:LinearElementGeometryShape a sh:NodeShape ;
         sh:path era:verticalAlignments ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A LinearElementGeometry may have at most one verticalAlignments property pointing to an RDF list." ;
+        sh:message "A LinearElementGeometry may have at most one verticalAlignments property pointing to an RDF list."@en ;
+        sh:message "Eine LinearElementGeometry darf höchstens eine verticalAlignments-Eigenschaft haben, die auf eine RDF-Liste verweist."@de ;
+        sh:message "Un LinearElementGeometry peut avoir au plus une propriété verticalAlignments pointant vers une liste RDF."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -990,14 +1161,18 @@ era:LinearElementGeometryShape a sh:NodeShape ;
         sh:path era:cantPoints ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A LinearElementGeometry may have at most one cantPoints property pointing to an RDF list." ;
+        sh:message "A LinearElementGeometry may have at most one cantPoints property pointing to an RDF list."@en ;
+        sh:message "Eine LinearElementGeometry darf höchstens eine cantPoints-Eigenschaft haben, die auf eine RDF-Liste verweist."@de ;
+        sh:message "Un LinearElementGeometry peut avoir au plus une propriété cantPoints pointant vers une liste RDF."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
     # SPARQL constraint to validate horizontal alignment list items
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the horizontalAlignments list must be instances of era:HorizontalSegment that conform to HorizontalSegment object." ;
+        sh:message "All items in the horizontalAlignments list must be instances of era:HorizontalSegment that conform to HorizontalSegment object."@en ;
+        sh:message "Alle Elemente in der Liste horizontalAlignments müssen Instanzen von era:HorizontalSegment sein, die dem HorizontalSegment-Objekt entsprechen."@de ;
+        sh:message "Tous les éléments de la liste horizontalAlignments doivent être des instances de era:HorizontalSegment conformes à l'objet HorizontalSegment."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1017,7 +1192,9 @@ era:LinearElementGeometryShape a sh:NodeShape ;
     # SPARQL constraint to validate vertical alignment list items
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the verticalAlignments list must be instances of era:VerticalSegment that conform to VerticalSegment object." ;
+        sh:message "All items in the verticalAlignments list must be instances of era:VerticalSegment that conform to VerticalSegment object."@en ;
+        sh:message "Alle Elemente in der Liste verticalAlignments müssen Instanzen von era:VerticalSegment sein, die dem VerticalSegment-Objekt entsprechen."@de ;
+        sh:message "Tous les éléments de la liste verticalAlignments doivent être des instances de era:VerticalSegment conformes à l'objet VerticalSegment."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1037,7 +1214,9 @@ era:LinearElementGeometryShape a sh:NodeShape ;
     # SPARQL constraint to validate cant point list items
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the cantPoints list must be instances of era:CantPoint that conform to CantPoint object." ;
+        sh:message "All items in the cantPoints list must be instances of era:CantPoint that conform to CantPoint object."@en ;
+        sh:message "Alle Elemente in der Liste cantPoints müssen Instanzen von era:CantPoint sein, die dem CantPoint-Objekt entsprechen."@de ;
+        sh:message "Tous les éléments de la liste cantPoints doivent être des instances de era:CantPoint conformes à l'objet CantPoint."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1070,7 +1249,9 @@ era:LinearElementLoadingGaugeShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property loadingGaugeType must have a value from the defined SKOS concept scheme (G1, GA, GB, GC, or incompatible)." ;
+        sh:message "The property loadingGaugeType must have a value from the defined SKOS concept scheme (G1, GA, GB, GC, or incompatible)."@en ;
+        sh:message "Die Eigenschaft loadingGaugeType muss einen Wert aus dem definierten SKOS-Konzeptschema haben (G1, GA, GB, GC oder inkompatibel)."@de ;
+        sh:message "La propriété loadingGaugeType doit avoir une valeur du schéma de concept SKOS défini (G1, GA, GB, GC ou incompatible)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1080,7 +1261,9 @@ era:LinearElementLoadingGaugeShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each LinearElementLoadingGauge must have at least one linearElementSections that conform to LinearElementSection object." ;
+        sh:message "Each LinearElementLoadingGauge must have at least one linearElementSections that conform to LinearElementSection object."@en ;
+        sh:message "Jedes LinearElementLoadingGauge muss mindestens ein linearElementSections haben, das dem LinearElementSection-Objekt entspricht."@de ;
+        sh:message "Chaque LinearElementLoadingGauge doit avoir au moins un linearElementSections conforme à l'objet LinearElementSection."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1095,7 +1278,9 @@ era:LinearElementSectionShape a sh:NodeShape ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElementSection must have exactly one onElement that conforms to LinearElement object." ;
+        sh:message "Each LinearElementSection must have exactly one onElement that conforms to LinearElement object."@en ;
+        sh:message "Jeder LinearElementSection muss genau ein onElement haben, das dem LinearElement-Objekt entspricht."@de ;
+        sh:message "Chaque LinearElementSection doit avoir exactement un onElement conforme à l'objet LinearElement."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1106,7 +1291,9 @@ era:LinearElementSectionShape a sh:NodeShape ;
         sh:minInclusive 0.0 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElementSection must have exactly one startOffsetFromOrigin (non-negative double, in meters)." ;
+        sh:message "Each LinearElementSection must have exactly one startOffsetFromOrigin (non-negative double, in meters)."@en ;
+        sh:message "Jeder LinearElementSection muss genau ein startOffsetFromOrigin (nicht negatives Double, in Metern) haben."@de ;
+        sh:message "Chaque LinearElementSection doit avoir exactement un startOffsetFromOrigin (double non négatif, en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1117,7 +1304,9 @@ era:LinearElementSectionShape a sh:NodeShape ;
         sh:minInclusive 0.0 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElementSection must have exactly one endOffsetFromOrigin (non-negative double, in meters)." ;
+        sh:message "Each LinearElementSection must have exactly one endOffsetFromOrigin (non-negative double, in meters)."@en ;
+        sh:message "Jeder LinearElementSection muss genau ein endOffsetFromOrigin (nicht negatives Double, in Metern) haben."@de ;
+        sh:message "Chaque LinearElementSection doit avoir exactement un endOffsetFromOrigin (double non négatif, en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1127,14 +1316,18 @@ era:LinearElementSectionShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElementSection must have exactly one appliesInBothDirections value (boolean)." ;
+        sh:message "Each LinearElementSection must have exactly one appliesInBothDirections value (boolean)."@en ;
+        sh:message "Jeder LinearElementSection muss genau einen appliesInBothDirections-Wert (boolean) haben."@de ;
+        sh:message "Chaque LinearElementSection doit avoir exactement une valeur appliesInBothDirections (booléenne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
     # SPARQL constraint: startOffsetFromOrigin must be less than endOffsetFromOrigin
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The startOffsetFromOrigin must be less than endOffsetFromOrigin." ;
+        sh:message "The startOffsetFromOrigin must be less than endOffsetFromOrigin."@en ;
+        sh:message "Der startOffsetFromOrigin muss kleiner als endOffsetFromOrigin sein."@de ;
+        sh:message "Le startOffsetFromOrigin doit être inférieur à endOffsetFromOrigin."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -1157,7 +1350,9 @@ era:LinearElementShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A LinearElement may have at most one name (string)." ;
+        sh:message "A LinearElement may have at most one name (string)."@en ;
+        sh:message "Ein LinearElement darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Un LinearElement peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1168,14 +1363,18 @@ era:LinearElementShape a sh:NodeShape ;
         sh:minInclusive 0.0 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElement must have exactly one lengthOfNetLinearElement (non-negative double, in meters)." ;
+        sh:message "Each LinearElement must have exactly one lengthOfNetLinearElement (non-negative double, in meters)."@en ;
+        sh:message "Jedes LinearElement muss genau ein lengthOfNetLinearElement (nicht negatives Double, in Metern) haben."@de ;
+        sh:message "Chaque LinearElement doit avoir exactement un lengthOfNetLinearElement (double non négatif, en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
     # SPARQL constraint: lengthOfNetLinearElement must be greater than 0
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The lengthOfNetLinearElement must be greater than 0 meters." ;
+        sh:message "The lengthOfNetLinearElement must be greater than 0 meters."@en ;
+        sh:message "Der lengthOfNetLinearElement muss größer als 0 Meter sein."@de ;
+        sh:message "Le lengthOfNetLinearElement doit être supérieur à 0 mètre."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             
@@ -1199,7 +1398,9 @@ era:LinearElementSpeedProfileShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LinearElementSpeedProfile must have exactly one sameDirProfile that conforms to SpeedProfile object." ;
+        sh:message "Each LinearElementSpeedProfile must have exactly one sameDirProfile that conforms to SpeedProfile object."@en ;
+        sh:message "Jedes LinearElementSpeedProfile muss genau ein sameDirProfile haben, das dem SpeedProfile-Objekt entspricht."@de ;
+        sh:message "Chaque LinearElementSpeedProfile doit avoir exactement un sameDirProfile conforme à l'objet SpeedProfile."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1209,7 +1410,9 @@ era:LinearElementSpeedProfileShape a sh:NodeShape ;
         sh:node era:SpeedProfileShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A LinearElementSpeedProfile may have at most one oppositeDirProfile that conforms to SpeedProfile object." ;
+        sh:message "A LinearElementSpeedProfile may have at most one oppositeDirProfile that conforms to SpeedProfile object."@en ;
+        sh:message "Ein LinearElementSpeedProfile darf höchstens ein oppositeDirProfile haben, das dem SpeedProfile-Objekt entspricht."@de ;
+        sh:message "Un LinearElementSpeedProfile peut avoir au plus un oppositeDirProfile conforme à l'objet SpeedProfile."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1222,7 +1425,9 @@ era:NationalBorderShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A NationalBorder may have at most one name (string)." ;
+        sh:message "A NationalBorder may have at most one name (string)."@en ;
+        sh:message "Ein NationalBorder darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Un NationalBorder peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1233,7 +1438,9 @@ era:NationalBorderShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NationalBorder must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object." ;
+        sh:message "Each NationalBorder must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object."@en ;
+        sh:message "Jeder NationalBorder muss genau ein topologicalCoordinate haben, das dem TopologicalCoordinate-Objekt entspricht."@de ;
+        sh:message "Chaque NationalBorder doit avoir exactement un topologicalCoordinate conforme à l'objet TopologicalCoordonnée."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1244,7 +1451,9 @@ era:NationalBorderShape a sh:NodeShape ;
         sh:pattern "^[A-Z]{2}$" ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NationalBorder must have exactly one fromCountryCode (2-letter uppercase ISO country code)." ;
+        sh:message "Each NationalBorder must have exactly one fromCountryCode (2-letter uppercase ISO country code)."@en ;
+        sh:message "Jede NationalBorder muss genau ein fromCountryCode (zweibuchstabiger ISO-Ländercode in Großbuchstaben) haben."@de ;
+        sh:message "Chaque NationalBorder doit avoir exactement un fromCountryCode (code de pays ISO majuscule à 2 lettres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1255,7 +1464,9 @@ era:NationalBorderShape a sh:NodeShape ;
         sh:pattern "^[A-Z]{2}$" ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NationalBorder must have exactly one toCountryCode (2-letter uppercase ISO country code)." ;
+        sh:message "Each NationalBorder must have exactly one toCountryCode (2-letter uppercase ISO country code)."@en ;
+        sh:message "Jede NationalBorder muss genau ein toCountryCode (zweibuchstabiger ISO-Ländercode in Großbuchstaben) haben."@de ;
+        sh:message "Chaque NationalBorder doit avoir exactement un toCountryCode (code de pays ISO majuscule à 2 lettres)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1269,14 +1480,18 @@ era:NetAreaReferenceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetAreaReference must have exactly one includes property pointing to an RDF list." ;
+        sh:message "Each NetAreaReference must have exactly one includes property pointing to an RDF list."@en ;
+        sh:message "Jede NetAreaReference muss genau eine Includes-Eigenschaft haben, die auf eine RDF-Liste verweist."@de ;
+        sh:message "Chaque NetAreaReference doit avoir exactement une propriété include pointant vers une liste RDF."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
     # SPARQL constraint to validate list has at least 1 item
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "The includes list must contain at least 1 item." ;
+        sh:message "The includes list must contain at least 1 item."@en ;
+        sh:message "Die Includes-Liste muss mindestens 1 Element enthalten."@de ;
+        sh:message "La liste des inclusions doit contenir au moins 1 élément."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1304,7 +1519,9 @@ era:NetAreaReferenceShape a sh:NodeShape ;
     # SPARQL constraint to validate all list items are NetLinearReference instances
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the includes list must be instances of era:NetLinearReference that conform to NetLinearReferenceShape." ;
+        sh:message "All items in the includes list must be instances of era:NetLinearReference that conform to NetLinearReferenceShape."@en ;
+        sh:message "Alle Elemente in der Includes-Liste müssen Instanzen von era:NetLinearReference sein, die NetLinearReferenceShape entsprechen."@de ;
+        sh:message "Tous les éléments de la liste d'inclusion doivent être des instances de era:NetLinearReference conformes à NetLinearReferenceShape."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1332,7 +1549,9 @@ era:NetLinearReferenceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetLinearReference must have exactly one startsAt that conforms to TopologicalCoordinate object." ;
+        sh:message "Each NetLinearReference must have exactly one startsAt that conforms to TopologicalCoordinate object."@en ;
+        sh:message "Jede NetLinearReference muss genau ein startsAt haben, das dem TopologicalCoordinate-Objekt entspricht."@de ;
+        sh:message "Chaque NetLinearReference doit avoir exactement un startsAt conforme à l'objet TopologicalCoordonnée."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1343,7 +1562,9 @@ era:NetLinearReferenceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetLinearReference must have exactly one endsAt that conforms to TopologicalCoordinate object." ;
+        sh:message "Each NetLinearReference must have exactly one endsAt that conforms to TopologicalCoordinate object."@en ;
+        sh:message "Jede NetLinearReference muss genau ein endsAt haben, das dem TopologicalCoordinate-Objekt entspricht."@de ;
+        sh:message "Chaque NetLinearReference doit avoir exactement un endsAt conforme à l'objet TopologicalCoordonnée."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1352,14 +1573,18 @@ era:NetLinearReferenceShape a sh:NodeShape ;
         sh:path era:hasSequence ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A NetLinearReference may have at most one hasSequence property pointing to an RDF list." ;
+        sh:message "A NetLinearReference may have at most one hasSequence property pointing to an RDF list."@en ;
+        sh:message "Eine NetLinearReference darf höchstens eine hasSequence-Eigenschaft haben, die auf eine RDF-Liste verweist."@de ;
+        sh:message "Une NetLinearReference peut avoir au plus une propriété hasSequence pointant vers une liste RDF."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
     # SPARQL constraint to validate all list items are LinearElement instances
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the hasSequence list must be instances of era:LinearElement that conform to LinearElement object." ;
+        sh:message "All items in the hasSequence list must be instances of era:LinearElement that conform to LinearElement object."@en ;
+        sh:message "Alle Elemente in der Liste hasSequence müssen Instanzen von era:LinearElement sein, die dem LinearElement-Objekt entsprechen."@de ;
+        sh:message "Tous les éléments de la liste hasSequence doivent être des instances de era:LinearElement conformes à l'objet LinearElement."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1387,7 +1612,9 @@ era:NetPointReferenceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetPointReference must have exactly one hasTopoCoordinate that conforms to TopologicalCoordinate object." ;
+        sh:message "Each NetPointReference must have exactly one hasTopoCoordinate that conforms to TopologicalCoordinate object."@en ;
+        sh:message "Jede NetPointReference muss genau ein hasTopoCoordinate haben, das dem TopologicalCoordinate-Objekt entspricht."@de ;
+        sh:message "Chaque NetPointReference doit avoir exactement un hasTopoCoordinate conforme à l'objet TopologicalCoordonnée."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1401,7 +1628,9 @@ era:NetPointReferenceShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property appliesToDirection must have a value from the defined SKOS concept scheme (both, same, or opposite)." ;
+        sh:message "The property appliesToDirection must have a value from the defined SKOS concept scheme (both, same, or opposite)."@en ;
+        sh:message "Die Eigenschaft appliesToDirection muss einen Wert aus dem definierten SKOS-Konzeptschema haben (beide, gleich oder entgegengesetzt)."@de ;
+        sh:message "La propriété appliesToDirection doit avoir une valeur du schéma conceptuel SKOS défini (les deux, identique ou opposé)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1416,7 +1645,9 @@ era:NetRelationShape a sh:NodeShape ;
 		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetRelation must have exactly one elementA that conforms to LinearElement object." ;
+        sh:message "Each NetRelation must have exactly one elementA that conforms to LinearElement object."@en ;
+        sh:message "Jede NetRelation muss genau ein elementA haben, das dem LinearElement-Objekt entspricht."@de ;
+        sh:message "Chaque NetRelation doit avoir exactement un elementA conforme à l'objet LinearElement."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1426,7 +1657,9 @@ era:NetRelationShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetRelation must have exactly one isOnOriginOfElementA value (boolean)." ;
+        sh:message "Each NetRelation must have exactly one isOnOriginOfElementA value (boolean)."@en ;
+        sh:message "Jede NetRelation muss genau einen isOnOriginOfElementA-Wert (boolean) haben."@de ;
+        sh:message "Chaque NetRelation doit avoir exactement une valeur isOnOriginOfElementA (booléenne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1437,7 +1670,9 @@ era:NetRelationShape a sh:NodeShape ;
 		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetRelation must have exactly one elementB that conforms to LinearElement object." ;
+        sh:message "Each NetRelation must have exactly one elementB that conforms to LinearElement object."@en ;
+        sh:message "Jede NetRelation muss genau ein elementB haben, das dem LinearElement-Objekt entspricht."@de ;
+        sh:message "Chaque NetRelation doit avoir exactement un elementB conforme à l'objet LinearElement."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1447,7 +1682,9 @@ era:NetRelationShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each NetRelation must have exactly one isOnOriginOfElementB value (boolean)." ;
+        sh:message "Each NetRelation must have exactly one isOnOriginOfElementB value (boolean)."@en ;
+        sh:message "Jede NetRelation muss genau einen isOnOriginOfElementB-Wert (boolean) haben."@de ;
+        sh:message "Chaque NetRelation doit avoir exactement une valeur isOnOriginOfElementB (booléenne)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1462,7 +1699,9 @@ era:OperationalPointShape a sh:NodeShape ;
 		sh:pattern "^[A-Z]{2}.{0,10}$" ; # Example: DE12345, FR67890
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
-		sh:message "Each OperationalPoint must have exactly one uopid following the format: 2-letter country code + alphanumeric ID (e.g., DE12345)." ;
+		sh:message "Each OperationalPoint must have exactly one uopid following the format: 2-letter country code + alphanumeric ID (e.g., DE12345)."@en ;
+		sh:message "Jeder OperationalPoint muss genau eine UOPID haben, die dem Format folgt: 2-Buchstaben-Ländercode + alphanumerische ID (z. B. DE12345)."@de ;
+		sh:message "Chaque OperationalPoint doit avoir exactement un uopid suivant le format : code de pays à 2 lettres + identifiant alphanumérique (par exemple, DE12345)."@fr ;
 		sh:severity sh:Violation ;
 	] ;
     # Operational Point Name (optional, string)
@@ -1470,7 +1709,9 @@ era:OperationalPointShape a sh:NodeShape ;
         sh:path era:opName ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "An OperationalPoint may have at most one opName (string)." ;
+        sh:message "An OperationalPoint may have at most one opName (string)."@en ;
+        sh:message "Ein OperationalPoint darf höchstens einen opName (String) haben."@de ;
+        sh:message "Un OperationalPoint peut avoir au plus un opName (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1493,7 +1734,9 @@ era:OperationalPointShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property opType must have a value from the defined SKOS concept scheme." ;
+        sh:message "The property opType must have a value from the defined SKOS concept scheme."@en ;
+        sh:message "Die Eigenschaft opType muss einen Wert aus dem definierten SKOS-Konzeptschema haben."@de ;
+        sh:message "La propriété opType doit avoir une valeur issue du schéma conceptuel SKOS défini."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1502,7 +1745,9 @@ era:OperationalPointShape a sh:NodeShape ;
         sh:path era:platforms ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "An OperationalPoint may have at most one platforms property pointing to an RDF list." ;
+        sh:message "An OperationalPoint may have at most one platforms property pointing to an RDF list."@en ;
+        sh:message "Ein OperationalPoint kann höchstens eine Plattformeigenschaft haben, die auf eine RDF-Liste verweist."@de ;
+        sh:message "Un OperationalPoint peut avoir au plus une propriété de plates-formes pointant vers une liste RDF."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1511,14 +1756,18 @@ era:OperationalPointShape a sh:NodeShape ;
         sh:path era:travelTimeMeasurementPoints ;
         sh:node era:TravelTimeMeasurementPointShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "OperationalPoint travelTimeMeasurementPoints must conform to TravelTimeMeasurementPoint object." ;
+        sh:message "OperationalPoint travelTimeMeasurementPoints must conform to TravelTimeMeasurementPoint object."@en ;
+        sh:message "OperationalPoint travelTimeMeasurementPoints muss dem TravelTimeMeasurementPoint-Objekt entsprechen."@de ;
+        sh:message "OperationalPoint travelTimeMeasurementPoints doit être conforme à l'objet TravelTimeMeasurementPoint."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
     # SPARQL constraint to validate all platform list items are Platform instances
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the platforms list must be instances of era:Platform that conform to Platform object." ;
+        sh:message "All items in the platforms list must be instances of era:Platform that conform to Platform object."@en ;
+        sh:message "Alle Elemente in der Plattformliste müssen Instanzen von era:Platform sein, die dem Plattformobjekt entsprechen."@de ;
+        sh:message "Tous les éléments de la liste des plates-formes doivent être des instances de era:Platform conformes à l'objet Platform."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1545,7 +1794,9 @@ era:PermittedBrakingDistanceShape a sh:NodeShape ;
         sh:datatype xsd:int ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each PermittedBrakingDistance must have exactly one gradientValue (signed integer, per mille)." ;
+        sh:message "Each PermittedBrakingDistance must have exactly one gradientValue (signed integer, per mille)."@en ;
+        sh:message "Jeder PermittedBrakingDistance muss genau eine gradientValue (vorzeichenbehaftete Ganzzahl, Promille) haben."@de ;
+        sh:message "Chaque PermitteBrakingDistance doit avoir exactement un gradientValue (entier signé, pour mille)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1555,7 +1806,9 @@ era:PermittedBrakingDistanceShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each PermittedBrakingDistance must have exactly one distance (unsigned integer, in meters)." ;
+        sh:message "Each PermittedBrakingDistance must have exactly one distance (unsigned integer, in meters)."@en ;
+        sh:message "Jeder PermittedBrakingDistance muss genau eine Distanz (vorzeichenlose Ganzzahl in Metern) haben."@de ;
+        sh:message "Chaque PermitteBrakingDistance doit avoir exactement une distance (entier non signé, en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1565,7 +1818,9 @@ era:PermittedBrakingDistanceShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each PermittedBrakingDistance must have exactly one sameDir value (boolean)." ;
+        sh:message "Each PermittedBrakingDistance must have exactly one sameDir value (boolean)."@en ;
+        sh:message "Jeder PermittedBrakingDistance muss genau einen sameDir-Wert (boolean) haben."@de ;
+        sh:message "Chaque PermitteBrakingDistance doit avoir exactement une valeur sameDir (booléenne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1578,7 +1833,9 @@ era:PermittedBrakingDistanceShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property brakeType must have a value from the defined SKOS concept scheme (serviceBrake or emergencyBrake)." ;
+        sh:message "The property brakeType must have a value from the defined SKOS concept scheme (serviceBrake or emergencyBrake)."@en ;
+        sh:message "Die Eigenschaft brakeType muss einen Wert aus dem definierten SKOS-Konzeptschema (serviceBrake oder emergencyBrake) haben."@de ;
+        sh:message "La propriété brakeType doit avoir une valeur du schéma de concept SKOS défini (serviceBrake ou emergencyBrake)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1588,7 +1845,9 @@ era:PermittedBrakingDistanceShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each PermittedBrakingDistance must have at least one linearElementSections that conform to LinearElementSection object." ;
+        sh:message "Each PermittedBrakingDistance must have at least one linearElementSections that conform to LinearElementSection object."@en ;
+        sh:message "Jeder PermittedBrakingDistance muss mindestens einen linearElementSections haben, der dem LinearElementSection-Objekt entspricht."@de ;
+        sh:message "Chaque PermitteBrakingDistance doit avoir au moins un linearElementSections conforme à l'objet LinearElementSection."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1602,7 +1861,9 @@ era:PlatformEdgeShape a sh:NodeShape ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each PlatformEdge must have exactly one platformId (string)." ;
+        sh:message "Each PlatformEdge must have exactly one platformId (string)."@en ;
+        sh:message "Jeder PlatformEdge muss genau einen platformId (String) haben."@de ;
+        sh:message "Chaque PlatformEdge doit avoir exactement un platformId (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1611,7 +1872,9 @@ era:PlatformEdgeShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A PlatformEdge may have at most one name (string)." ;
+        sh:message "A PlatformEdge may have at most one name (string)."@en ;
+        sh:message "Ein PlatformEdge darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Un PlatformEdge peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1622,7 +1885,9 @@ era:PlatformEdgeShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each PlatformEdge must have exactly one linearReference that conforms to NetLinearReference object." ;
+        sh:message "Each PlatformEdge must have exactly one linearReference that conforms to NetLinearReference object."@en ;
+        sh:message "Jeder PlatformEdge muss genau ein linearReference haben, das dem NetLinearReference-Objekt entspricht."@de ;
+        sh:message "Chaque PlatformEdge doit avoir exactement un linearReference conforme à l'objet NetLinearReference."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1647,7 +1912,9 @@ era:PlatformEdgeShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property platformHeight must have a value from the defined SKOS concept scheme." ;
+        sh:message "The property platformHeight must have a value from the defined SKOS concept scheme."@en ;
+        sh:message "Die Eigenschaft platformHeight muss einen Wert aus dem definierten SKOS-Konzeptschema haben."@de ;
+        sh:message "La propriété platformHeight doit avoir une valeur issue du schéma conceptuel SKOS défini."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1657,7 +1924,9 @@ era:PlatformEdgeShape a sh:NodeShape ;
         sh:class era:StopLocation ;
 		sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
-        sh:message "Each PlatformEdge must have at least one stopLocations that conform to validated StopLocation." ;
+        sh:message "Each PlatformEdge must have at least one stopLocations that conform to validated StopLocation."@en ;
+        sh:message "Jeder PlatformEdge muss mindestens einen stopLocations haben, der der validierten StopLocation entspricht."@de ;
+        sh:message "Chaque PlatformEdge doit avoir au moins un stopLocations conforme à StopLocation validé."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1670,7 +1939,9 @@ era:PlatformShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A Platform may have at most one name (string)." ;
+        sh:message "A Platform may have at most one name (string)."@en ;
+        sh:message "Eine Plattform darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Une plateforme peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1680,7 +1951,9 @@ era:PlatformShape a sh:NodeShape ;
         sh:node era:PlatformEdgeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each Platform must have at least one platformEdges that conform to PlatformEdge object." ;
+        sh:message "Each Platform must have at least one platformEdges that conform to PlatformEdge object."@en ;
+        sh:message "Jede Plattform muss mindestens ein platformEdges haben, das dem PlatformEdge-Objekt entspricht."@de ;
+        sh:message "Chaque plate-forme doit avoir au moins un platformEdges conforme à l'objet PlatformEdge."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1694,7 +1967,9 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:datatype xsd:dateTime ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each PropertiesArea must have exactly one versionTimestamp (dateTime)." ;
+        sh:message "Each PropertiesArea must have exactly one versionTimestamp (dateTime)."@en ;
+        sh:message "Jede PropertiesArea muss genau ein versionTimestamp (dateTime) haben."@de ;
+        sh:message "Chaque PropertiesArea doit avoir exactement un versionTimestamp (dateTime)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1713,7 +1988,9 @@ era:PropertiesAreaShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property gauge must have a value from the defined SKOS concept scheme (750mm, 1000mm, 1435mm, 1520mm, 1524mm, 1600mm, 1668mm, or unknown)." ;
+        sh:message "The property gauge must have a value from the defined SKOS concept scheme (750mm, 1000mm, 1435mm, 1520mm, 1524mm, 1600mm, 1668mm, or unknown)."@en ;
+        sh:message "Die Eigenschaftsbreite muss einen Wert aus dem definierten SKOS-Konzeptschema haben (750 mm, 1000 mm, 1435 mm, 1520 mm, 1524 mm, 1600 mm, 1668 mm oder unbekannt)."@de ;
+        sh:message "La jauge de propriété doit avoir une valeur issue du schéma conceptuel SKOS défini (750 mm, 1 000 mm, 1 435 mm, 1 520 mm, 1 524 mm, 1 600 mm, 1 668 mm ou inconnu)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1733,7 +2010,9 @@ era:PropertiesAreaShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property defaultVoltage must have a value from the defined SKOS concept scheme." ;
+        sh:message "The property defaultVoltage must have a value from the defined SKOS concept scheme."@en ;
+        sh:message "Die Eigenschaft defaultVoltage muss einen Wert aus dem definierten SKOS-Konzeptschema haben."@de ;
+        sh:message "La propriété defaultVoltage doit avoir une valeur issue du schéma conceptuel SKOS défini."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1743,7 +2022,9 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each PropertiesArea must have exactly one defaultMaxCurrent (unsigned integer, in Amperes)." ;
+        sh:message "Each PropertiesArea must have exactly one defaultMaxCurrent (unsigned integer, in Amperes)."@en ;
+        sh:message "Jeder PropertiesArea muss genau eine defaultMaxCurrent (vorzeichenlose Ganzzahl in Ampere) haben."@de ;
+        sh:message "Chaque PropertiesArea doit avoir exactement un defaultMaxCurrent (entier non signé, en ampères)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1757,7 +2038,9 @@ era:PropertiesAreaShape a sh:NodeShape ;
             <http://data.europa.eu/949/concepts/loading-gauge-type/gB>
             <http://data.europa.eu/949/concepts/loading-gauge-type/gC>
         ) ;
-        sh:message "The property loadingGaugeTypes must have values from the defined SKOS concept scheme (G1, GA, GB, GC, or incompatible)." ;
+        sh:message "The property loadingGaugeTypes must have values from the defined SKOS concept scheme (G1, GA, GB, GC, or incompatible)."@en ;
+        sh:message "Die Eigenschaft loadingGaugeTypes muss Werte aus dem definierten SKOS-Konzeptschema haben (G1, GA, GB, GC oder inkompatibel)."@de ;
+        sh:message "La propriété loadingGaugeTypes doit avoir des valeurs du schéma de concept SKOS défini (G1, GA, GB, GC ou incompatible)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1766,7 +2049,9 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:path era:linearElementGauges ;
         sh:node era:LinearElementGaugeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "PropertiesArea linearElementGauges must conform to LinearElementGauge object." ;
+        sh:message "PropertiesArea linearElementGauges must conform to LinearElementGauge object."@en ;
+        sh:message "PropertiesArea linearElementGauges muss dem LinearElementGauge-Objekt entsprechen."@de ;
+        sh:message "PropertiesArea linearElementGauges doit être conforme à l'objet LinearElementGauge."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1775,7 +2060,9 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:path era:linearElementLoadingGauges ;
         sh:node era:LinearElementLoadingGaugeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "PropertiesArea linearElementLoadingGauges must conform to validated LinearElementLoadingGauge." ;
+        sh:message "PropertiesArea linearElementLoadingGauges must conform to validated LinearElementLoadingGauge."@en ;
+        sh:message "PropertiesArea linearElementLoadingGauges muss dem validierten LinearElementLoadingGauge entsprechen."@de ;
+        sh:message "PropertiesArea linearElementLoadingGauges doit être conforme à LinearElementLoadingGauge validé."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1784,7 +2071,9 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:path era:linearElementSpeedProfiles ;
         sh:node era:LinearElementSpeedProfileShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "PropertiesArea linearElementSpeedProfiles must conform to validated LinearElementSpeedProfile." ;
+        sh:message "PropertiesArea linearElementSpeedProfiles must conform to validated LinearElementSpeedProfile."@en ;
+        sh:message "PropertiesArea linearElementSpeedProfiles muss dem validierten LinearElementSpeedProfile entsprechen."@de ;
+        sh:message "PropertiesArea linearElementSpeedProfiles doit être conforme au LinearElementSpeedProfile validé."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1793,7 +2082,9 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:path era:tractionSystems ;
         sh:node era:TractionSystemShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "PropertiesArea tractionSystems must conform to TractionSystem object." ;
+        sh:message "PropertiesArea tractionSystems must conform to TractionSystem object."@en ;
+        sh:message "PropertiesArea tractionSystems muss dem TractionSystem-Objekt entsprechen."@de ;
+        sh:message "PropertiesArea tractionSystems doit être conforme à l'objet TractionSystem."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1802,7 +2093,9 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:path era:currentLimitations ;
         sh:node era:CurrentLimitationShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "PropertiesArea currentLimitations must conform to CurrentLimitation object." ;
+        sh:message "PropertiesArea currentLimitations must conform to CurrentLimitation object."@en ;
+        sh:message "PropertiesArea currentLimitations muss dem CurrentLimitation-Objekt entsprechen."@de ;
+        sh:message "PropertiesArea currentLimitations doit être conforme à l'objet CurrentLimitation."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1811,7 +2104,9 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:path era:permittedBrakingDistances ;
         sh:node era:PermittedBrakingDistanceShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "PropertiesArea permittedBrakingDistances must conform to validated PermittedBrakingDistance." ;
+        sh:message "PropertiesArea permittedBrakingDistances must conform to validated PermittedBrakingDistance."@en ;
+        sh:message "PropertiesArea permittedBrakingDistances muss der validierten PermittedBrakingDistance entsprechen."@de ;
+        sh:message "PropertiesArea permittedBrakingDistances doit être conforme à la PermitteBrakingDistance validée."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1820,7 +2115,9 @@ era:PropertiesAreaShape a sh:NodeShape ;
         sh:path era:trackConditions ;
         sh:node era:TrackConditionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "PropertiesArea trackConditions must conform to validated TrackCondition." ;
+        sh:message "PropertiesArea trackConditions must conform to validated TrackCondition."@en ;
+        sh:message "PropertiesArea trackConditions muss der validierten TrackCondition entsprechen."@de ;
+        sh:message "PropertiesArea trackConditions doit être conforme à TrackCondition validée."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1834,7 +2131,9 @@ era:SampledGeometryAreaShape a sh:NodeShape ;
         sh:datatype xsd:dateTime ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SampledGeometryArea must have exactly one versionTimestamp (dateTime)." ;
+        sh:message "Each SampledGeometryArea must have exactly one versionTimestamp (dateTime)."@en ;
+        sh:message "Jede SampledGeometryArea muss genau ein versionTimestamp (dateTime) haben."@de ;
+        sh:message "Chaque SampledGeometryArea doit avoir exactement un versionTimestamp (dateTime)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1844,7 +2143,9 @@ era:SampledGeometryAreaShape a sh:NodeShape ;
         sh:node era:SampledLinearElementGeometryShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each SampledGeometryArea must have at least one sampledLinearElementGeometries that conform to SampledLinearElementGeometry object." ;
+        sh:message "Each SampledGeometryArea must have at least one sampledLinearElementGeometries that conform to SampledLinearElementGeometry object."@en ;
+        sh:message "Jede SampledGeometryArea muss mindestens ein sampledLinearElementGeometries haben, das dem SampledLinearElementGeometry-Objekt entspricht."@de ;
+        sh:message "Chaque SampledGeometryArea doit avoir au moins un sampledLinearElementGeometries conforme à l'objet SampledLinearElementGeometry."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -1858,7 +2159,9 @@ era:SampledLinearElementGeometryShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SampledLinearElementGeometry must have exactly one curves property pointing to an RDF list." ;
+        sh:message "Each SampledLinearElementGeometry must have exactly one curves property pointing to an RDF list."@en ;
+        sh:message "Jede SampledLinearElementGeometry muss genau eine Kurveneigenschaft haben, die auf eine RDF-Liste zeigt."@de ;
+        sh:message "Chaque SampledLinearElementGeometry doit avoir exactement une propriété de courbes pointant vers une liste RDF."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1868,7 +2171,9 @@ era:SampledLinearElementGeometryShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SampledLinearElementGeometry must have exactly one cants property pointing to an RDF list." ;
+        sh:message "Each SampledLinearElementGeometry must have exactly one cants property pointing to an RDF list."@en ;
+        sh:message "Jede SampledLinearElementGeometry muss genau eine Cants-Eigenschaft haben, die auf eine RDF-Liste verweist."@de ;
+        sh:message "Chaque SampledLinearElementGeometry doit avoir exactement une propriété cants pointant vers une liste RDF."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1878,14 +2183,18 @@ era:SampledLinearElementGeometryShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SampledLinearElementGeometry must have exactly one slopes property pointing to an RDF list." ;
+        sh:message "Each SampledLinearElementGeometry must have exactly one slopes property pointing to an RDF list."@en ;
+        sh:message "Jede SampledLinearElementGeometry muss genau eine Pisteneigenschaft haben, die auf eine RDF-Liste verweist."@de ;
+        sh:message "Chaque SampledLinearElementGeometry doit avoir exactement une propriété de pentes pointant vers une liste RDF."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
     # SPARQL constraint to validate curves list has at least 1 item
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "The curves list must contain at least 1 item." ;
+        sh:message "The curves list must contain at least 1 item."@en ;
+        sh:message "Die Kurvenliste muss mindestens 1 Element enthalten."@de ;
+        sh:message "La liste des courbes doit contenir au moins 1 élément."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1914,7 +2223,9 @@ era:SampledLinearElementGeometryShape a sh:NodeShape ;
     # SPARQL constraint to validate all curves list items are CurveSamplePoint instances
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the curves list must be instances of era:CurveSamplePoint that conform to CurveSamplePoint object." ;
+        sh:message "All items in the curves list must be instances of era:CurveSamplePoint that conform to CurveSamplePoint object."@en ;
+        sh:message "Alle Elemente in der Kurvenliste müssen Instanzen von era:CurveSamplePoint sein, die dem CurveSamplePoint-Objekt entsprechen."@de ;
+        sh:message "Tous les éléments de la liste des courbes doivent être des instances de era:CurveSamplePoint conformes à l'objet CurveSamplePoint."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1934,7 +2245,9 @@ era:SampledLinearElementGeometryShape a sh:NodeShape ;
     # SPARQL constraint to validate cants list has at least 1 item
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "The cants list must contain at least 1 item." ;
+        sh:message "The cants list must contain at least 1 item."@en ;
+        sh:message "Die Cants-Liste muss mindestens 1 Element enthalten."@de ;
+        sh:message "La liste des dévers doit contenir au moins 1 élément."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1963,7 +2276,9 @@ era:SampledLinearElementGeometryShape a sh:NodeShape ;
     # SPARQL constraint to validate all cants list items are CantSamplePoint instances
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the cants list must be instances of era:CantSamplePoint that conform to CantSamplePoint object." ;
+        sh:message "All items in the cants list must be instances of era:CantSamplePoint that conform to CantSamplePoint object."@en ;
+        sh:message "Alle Elemente in der Cants-Liste müssen Instanzen von era:CantSamplePoint sein, die dem CantSamplePoint-Objekt entsprechen."@de ;
+        sh:message "Tous les éléments de la liste des dévers doivent être des instances de era:CantSamplePoint conformes à l'objet CantSamplePoint."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1983,7 +2298,9 @@ era:SampledLinearElementGeometryShape a sh:NodeShape ;
     # SPARQL constraint to validate slopes list has at least 1 item
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "The slopes list must contain at least 1 item." ;
+        sh:message "The slopes list must contain at least 1 item."@en ;
+        sh:message "Die Pistenliste muss mindestens 1 Element enthalten."@de ;
+        sh:message "La liste des pistes doit contenir au moins 1 élément."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -2011,7 +2328,9 @@ era:SampledLinearElementGeometryShape a sh:NodeShape ;
     # SPARQL constraint to validate all slopes list items are SlopeSamplePoint instances
     sh:sparql [ 
         a sh:SPARQLConstraint ;
-        sh:message "All items in the slopes list must be instances of era:SlopeSamplePoint that conform to SlopeSamplePoint object." ;
+        sh:message "All items in the slopes list must be instances of era:SlopeSamplePoint that conform to SlopeSamplePoint object."@en ;
+        sh:message "Alle Elemente in der Pistenliste müssen Instanzen von era:SlopeSamplePoint sein, die dem SlopeSamplePoint-Objekt entsprechen."@de ;
+        sh:message "Tous les éléments de la liste des pentes doivent être des instances de era:SlopeSamplePoint conformes à l'objet SlopeSamplePoint."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -2037,7 +2356,9 @@ era:SlipCrossingShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A SlipCrossing may have at most one name (string)." ;
+        sh:message "A SlipCrossing may have at most one name (string)."@en ;
+        sh:message "Ein SlipCrossing darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Un SlipCrossing peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2048,7 +2369,9 @@ era:SlipCrossingShape a sh:NodeShape ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SlipCrossing must have exactly one crossing that conforms to a validated Crossing object." ;
+        sh:message "Each SlipCrossing must have exactly one crossing that conforms to a validated Crossing object."@en ;
+        sh:message "Jeder SlipCrossing muss genau eine Kreuzung haben, die einem validierten Crossing-Objekt entspricht."@de ;
+        sh:message "Chaque SlipCrossing doit avoir exactement un croisement conforme à un objet Crossing validé."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2059,7 +2382,9 @@ era:SlipCrossingShape a sh:NodeShape ;
 		sh:nodeKind sh:IRI ;
         sh:minCount 2 ;
         sh:maxCount 4 ;
-        sh:message "Each SlipCrossing must have between 2 and 4 switches that conform to Switch object." ;
+        sh:message "Each SlipCrossing must have between 2 and 4 switches that conform to Switch object."@en ;
+        sh:message "Jeder SlipCrossing muss zwischen 2 und 4 Schalter haben, die dem Switch-Objekt entsprechen."@de ;
+        sh:message "Chaque SlipCrossing doit avoir entre 2 et 4 commutateurs conformes à l'objet Switch."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2073,7 +2398,9 @@ era:SlopeSamplePointShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SlopeSamplePoint must have exactly one pos (position as unsigned integer)." ;
+        sh:message "Each SlopeSamplePoint must have exactly one pos (position as unsigned integer)."@en ;
+        sh:message "Jeder SlopeSamplePoint muss genau eine Position (Position als vorzeichenlose Ganzzahl) haben."@de ;
+        sh:message "Chaque SlopeSamplePoint doit avoir exactement une position (position sous forme d'entier non signé)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2083,7 +2410,9 @@ era:SlopeSamplePointShape a sh:NodeShape ;
         sh:datatype xsd:int ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SlopeSamplePoint must have exactly one samplePointSlope value (signed integer, per mille)." ;
+        sh:message "Each SlopeSamplePoint must have exactly one samplePointSlope value (signed integer, per mille)."@en ;
+        sh:message "Jeder SlopeSamplePoint muss genau einen samplePointSlope-Wert (vorzeichenbehaftete Ganzzahl, Promille) haben."@de ;
+        sh:message "Chaque SlopeSamplePoint doit avoir exactement une valeur samplePointSlope (entier signé, pour mille)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2098,7 +2427,9 @@ era:SpecificStaticSpeedLimitShape a sh:NodeShape ;
         sh:minInclusive 1 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SpecificStaticSpeedLimit must have exactly one speed value (unsigned integer > 0, in km/h)." ;
+        sh:message "Each SpecificStaticSpeedLimit must have exactly one speed value (unsigned integer > 0, in km/h)."@en ;
+        sh:message "Jedes SpecificStaticSpeedLimit muss genau einen Geschwindigkeitswert haben (vorzeichenlose Ganzzahl > 0, in km/h)."@de ;
+        sh:message "Chaque SpecificStaticSpeedLimit doit avoir exactement une valeur de vitesse (entier non signé > 0, en km/h)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2109,14 +2440,18 @@ era:SpecificStaticSpeedLimitShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SpecificStaticSpeedLimit must have exactly one specificLimitCategory that conforms to SpeedLimitCategory object." ;
+        sh:message "Each SpecificStaticSpeedLimit must have exactly one specificLimitCategory that conforms to SpeedLimitCategory object."@en ;
+        sh:message "Jedes SpecificStaticSpeedLimit muss genau ein specificLimitCategory haben, das dem SpeedLimitCategory-Objekt entspricht."@de ;
+        sh:message "Chaque SpecificStaticSpeedLimit doit avoir exactement un specificLimitCategory conforme à l'objet SpeedLimitCategory."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Speed Limit Category Shape =====
 era:SpeedLimitCategoryShape a sh:NodeShape ;
     sh:targetClass era:SpeedLimitCategory ;
-    sh:message "A SpeedLimitCategory must have exactly one of: cantDeficiencyCategory, otherCategoryReplacesCantDeficiencySSP, or otherCategoryDoesNotReplaceCantDeficiencySSP." ;
+    sh:message "A SpeedLimitCategory must have exactly one of: cantDeficiencyCategory, otherCategoryReplacesCantDeficiencySSP, or otherCategoryDoesNotReplaceCantDeficiencySSP."@en ;
+    sh:message "Eine SpeedLimitCategory muss genau eines der folgenden Elemente haben: cantDeficiencyCategory, otherCategoryReplacesCantDeficiencySSP oder otherCategoryDoesNotReplaceCantDeficiencySSP."@de ;
+    sh:message "Un SpeedLimitCategory doit avoir exactement l'un des éléments suivants : cantDeficiencyCategory, otherCategoryReplacesCantDeficiencySSP ou otherCategoryDoesNotReplaceCantDeficiencySSP."@fr ;
     
     # Exactly one of the three category types must be present
     sh:xone (
@@ -2138,7 +2473,9 @@ era:SpeedLimitCategoryShape a sh:NodeShape ;
             ) ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, cantDeficiencyCategory must have a value from the defined SKOS concept scheme (80-300mm or undefined)." ;
+            sh:message "If present, cantDeficiencyCategory must have a value from the defined SKOS concept scheme (80-300mm or undefined)."@en ;
+            sh:message "Falls vorhanden, muss cantDeficiencyCategory einen Wert aus dem definierten SKOS-Konzeptschema haben (80–300 mm oder undefiniert)."@de ;
+            sh:message "S'il est présent, cantDeficiencyCategory doit avoir une valeur issue du schéma conceptuel SKOS défini (80-300 mm ou non défini)."@fr ;
             sh:severity sh:Violation ;
         ]
         [ 
@@ -2150,7 +2487,9 @@ era:SpeedLimitCategoryShape a sh:NodeShape ;
             ) ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, otherCategoryReplacesCantDeficiencySSP must have a value from the defined SKOS concept scheme (freightTrainP, freightTrainG, or passengerTrain)." ;
+            sh:message "If present, otherCategoryReplacesCantDeficiencySSP must have a value from the defined SKOS concept scheme (freightTrainP, freightTrainG, or passengerTrain)."@en ;
+            sh:message "Falls vorhanden, muss otherCategoryReplacesCantDeficiencySSP einen Wert aus dem definierten SKOS-Konzeptschema (freightTrainP, freightTrainG oder passengerTrain) haben."@de ;
+            sh:message "S'il est présent, otherCategoryReplacesCantDeficiencySSP doit avoir une valeur du schéma conceptuel SKOS défini (freightTrainP, freightTrainG ou passengerTrain)."@fr ;
             sh:severity sh:Violation ;
         ]
         [ 
@@ -2162,7 +2501,9 @@ era:SpeedLimitCategoryShape a sh:NodeShape ;
             ) ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, otherCategoryDoesNotReplaceCantDeficiencySSP must have a value from the defined SKOS concept scheme (freightTrainP, freightTrainG, or passengerTrain)." ;
+            sh:message "If present, otherCategoryDoesNotReplaceCantDeficiencySSP must have a value from the defined SKOS concept scheme (freightTrainP, freightTrainG, or passengerTrain)."@en ;
+            sh:message "Falls vorhanden, muss otherCategoryDoesNotReplaceCantDeficiencySSP einen Wert aus dem definierten SKOS-Konzeptschema (freightTrainP, freightTrainG oder passengerTrain) haben."@de ;
+            sh:message "S'il est présent, otherCategoryDoesNotReplaceCantDeficiencySSP doit avoir une valeur du schéma conceptuel SKOS défini (freightTrainP, freightTrainG ou passengerTrain)."@fr ;
             sh:severity sh:Violation ;
         ]
     ) .
@@ -2177,7 +2518,9 @@ era:SpeedProfileShape a sh:NodeShape ;
         sh:node era:StaticSpeedLimitShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each SpeedProfile must have at least one staticSpeedProfile that conforms to StaticSpeedLimit object." ;
+        sh:message "Each SpeedProfile must have at least one staticSpeedProfile that conforms to StaticSpeedLimit object."@en ;
+        sh:message "Jedes SpeedProfile muss mindestens ein staticSpeedProfile haben, das dem StaticSpeedLimit-Objekt entspricht."@de ;
+        sh:message "Chaque SpeedProfile doit avoir au moins un staticSpeedProfile conforme à l'objet StaticSpeedLimit."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2186,7 +2529,9 @@ era:SpeedProfileShape a sh:NodeShape ;
         sh:path era:axleLoadSpeedProfiles ;
         sh:node era:AxleLoadSpeedProfileShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "SpeedProfile axleLoadSpeedProfiles must conform to AxleLoadSpeedProfile object." ;
+        sh:message "SpeedProfile axleLoadSpeedProfiles must conform to AxleLoadSpeedProfile object."@en ;
+        sh:message "SpeedProfile axleLoadSpeedProfiles muss dem AxleLoadSpeedProfile-Objekt entsprechen."@de ;
+        sh:message "SpeedProfile axleLoadSpeedProfiles doit être conforme à l'objet AxleLoadSpeedProfile."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2200,7 +2545,9 @@ era:StaticSpeedLimitShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each StaticSpeedLimit must have exactly one pos (position as unsigned integer)." ;
+        sh:message "Each StaticSpeedLimit must have exactly one pos (position as unsigned integer)."@en ;
+        sh:message "Jedes StaticSpeedLimit muss genau eine Position (Position als vorzeichenlose Ganzzahl) haben."@de ;
+        sh:message "Chaque StaticSpeedLimit doit avoir exactement une position (position sous forme d'entier non signé)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2210,7 +2557,9 @@ era:StaticSpeedLimitShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each StaticSpeedLimit must have exactly one speed value (unsigned integer > 0, in km/h)." ;
+        sh:message "Each StaticSpeedLimit must have exactly one speed value (unsigned integer > 0, in km/h)."@en ;
+        sh:message "Jedes StaticSpeedLimit muss genau einen Geschwindigkeitswert haben (vorzeichenlose Ganzzahl > 0, in km/h)."@de ;
+        sh:message "Chaque StaticSpeedLimit doit avoir exactement une valeur de vitesse (entier non signé > 0, en km/h)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2219,7 +2568,9 @@ era:StaticSpeedLimitShape a sh:NodeShape ;
         sh:path era:specificStaticSpeedLimits ;
         sh:node era:SpecificStaticSpeedLimitShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "StaticSpeedLimit specificStaticSpeedLimits must conform to validated SpecificStaticSpeedLimit." ;
+        sh:message "StaticSpeedLimit specificStaticSpeedLimits must conform to validated SpecificStaticSpeedLimit."@en ;
+        sh:message "StaticSpeedLimit specificStaticSpeedLimits muss dem validierten SpecificStaticSpeedLimit entsprechen."@de ;
+        sh:message "StaticSpeedLimit specificStaticSpeedLimits doit être conforme à SpecificStaticSpeedLimit validé."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2232,7 +2583,9 @@ era:StopLocationShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A StopLocation may have at most one name (string)." ;
+        sh:message "A StopLocation may have at most one name (string)."@en ;
+        sh:message "Eine StopLocation darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Un StopLocation peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2243,7 +2596,9 @@ era:StopLocationShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each StopLocation must have exactly one netPointReference that conforms to NetPointReference object." ;
+        sh:message "Each StopLocation must have exactly one netPointReference that conforms to NetPointReference object."@en ;
+        sh:message "Jeder StopLocation muss genau ein netPointReference haben, das dem NetPointReference-Objekt entspricht."@de ;
+        sh:message "Chaque StopLocation doit avoir exactement un netPointReference conforme à l'objet NetPointReference."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2257,7 +2612,9 @@ era:StopLocationShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property trainLoadType must have a value from the defined SKOS concept scheme (passengerTrain, freightTrain, or anyTrain)." ;
+        sh:message "The property trainLoadType must have a value from the defined SKOS concept scheme (passengerTrain, freightTrain, or anyTrain)."@en ;
+        sh:message "Die Eigenschaft trainLoadType muss einen Wert aus dem definierten SKOS-Konzeptschema (passengerTrain, freightTrain oder anyTrain) haben."@de ;
+        sh:message "La propriété trainLoadType doit avoir une valeur du schéma de concept SKOS défini (passengerTrain, freightTrain ou anyTrain)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2272,7 +2629,9 @@ era:StopLocationShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property doorOpeningSide must have a value from the defined SKOS concept scheme (noSide, leftSide, rightSide, or bothSides)." ;
+        sh:message "The property doorOpeningSide must have a value from the defined SKOS concept scheme (noSide, leftSide, rightSide, or bothSides)."@en ;
+        sh:message "Die Eigenschaft doorOpeningSide muss einen Wert aus dem definierten SKOS-Konzeptschema (noSide, leftSide, rightSide oder bothSides) haben."@de ;
+        sh:message "La propriété doorOpeningSide doit avoir une valeur du schéma de concept SKOS défini (noSide, leftSide, rightSide ou bothSides)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2282,7 +2641,9 @@ era:StopLocationShape a sh:NodeShape ;
         sh:node era:StopTrainLimitShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A StopLocation may have at most one stopTrainLimit that conforms to validated StopTrainLimit object." ;
+        sh:message "A StopLocation may have at most one stopTrainLimit that conforms to validated StopTrainLimit object."@en ;
+        sh:message "Eine StopLocation kann höchstens einen stopTrainLimit haben, der dem validierten StopTrainLimit-Objekt entspricht."@de ;
+        sh:message "Un StopLocation peut avoir au plus un stopTrainLimit conforme à l'objet StopTrainLimit validé."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2296,7 +2657,9 @@ era:StopTrainLimitShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each StopTrainLimit must have exactly one trainMaxLength (unsigned integer > 0, in meters)." ;
+        sh:message "Each StopTrainLimit must have exactly one trainMaxLength (unsigned integer > 0, in meters)."@en ;
+        sh:message "Jedes StopTrainLimit muss genau eine trainMaxLength (vorzeichenlose Ganzzahl > 0, in Metern) haben."@de ;
+        sh:message "Chaque StopTrainLimit doit avoir exactement un trainMaxLength (entier non signé > 0, en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2306,7 +2669,9 @@ era:StopTrainLimitShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each StopTrainLimit must have exactly one trainMaxAxles (unsigned integer > 0)." ;
+        sh:message "Each StopTrainLimit must have exactly one trainMaxAxles (unsigned integer > 0)."@en ;
+        sh:message "Jedes StopTrainLimit muss genau eine trainMaxAxles (vorzeichenlose Ganzzahl > 0) haben."@de ;
+        sh:message "Chaque StopTrainLimit doit avoir exactement un trainMaxAxles (entier non signé > 0)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2317,7 +2682,9 @@ era:StopTrainLimitShape a sh:NodeShape ;
         sh:minInclusive 1 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each StopTrainLimit must have exactly one trainMaxWagons (unsigned integer > 0)." ;
+        sh:message "Each StopTrainLimit must have exactly one trainMaxWagons (unsigned integer > 0)."@en ;
+        sh:message "Jedes StopTrainLimit muss genau eine trainMaxWagons (vorzeichenlose Ganzzahl > 0) haben."@de ;
+        sh:message "Chaque StopTrainLimit doit avoir exactement un trainMaxWagons (entier non signé > 0)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2332,7 +2699,9 @@ era:StopTrainLimitShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property trainMaxSize must have a value from the defined SKOS concept scheme (undefinedTrainSize, shortTrain, halfTrain, or fullTrain)." ;
+        sh:message "The property trainMaxSize must have a value from the defined SKOS concept scheme (undefinedTrainSize, shortTrain, halfTrain, or fullTrain)."@en ;
+        sh:message "Die Eigenschaft trainMaxSize muss einen Wert aus dem definierten SKOS-Konzeptschema (undefinedTrainSize, shortTrain, halfTrain oder fullTrain) haben."@de ;
+        sh:message "La propriété trainMaxSize doit avoir une valeur du schéma de concept SKOS défini (undefinedTrainSize, shortTrain, halfTrain ou fullTrain)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2345,7 +2714,9 @@ era:SwitchShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A Switch may have at most one name (string)." ;
+        sh:message "A Switch may have at most one name (string)."@en ;
+        sh:message "Ein Switch darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Un Switch peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2356,7 +2727,9 @@ era:SwitchShape a sh:NodeShape ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Switch must have exactly one leftBranch that conforms to NetRelation object." ;
+        sh:message "Each Switch must have exactly one leftBranch that conforms to NetRelation object."@en ;
+        sh:message "Jeder Switch muss genau ein leftBranch haben, das dem NetRelation-Objekt entspricht."@de ;
+        sh:message "Chaque commutateur doit avoir exactement un leftBranch conforme à l'objet NetRelation."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2367,7 +2740,9 @@ era:SwitchShape a sh:NodeShape ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Switch must have exactly one rightBranch that conforms to NetRelation object." ;
+        sh:message "Each Switch must have exactly one rightBranch that conforms to NetRelation object."@en ;
+        sh:message "Jeder Switch muss genau ein rightBranch haben, das dem NetRelation-Objekt entspricht."@de ;
+        sh:message "Chaque commutateur doit avoir exactement un rightBranch conforme à l'objet NetRelation."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2378,7 +2753,9 @@ era:SwitchShape a sh:NodeShape ;
 		# sh:datatype xsd:nonNegativeInteger ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Switch must have exactly one reversalTime (unsigned integer, in seconds)." ;
+        sh:message "Each Switch must have exactly one reversalTime (unsigned integer, in seconds)."@en ;
+        sh:message "Jeder Switch muss genau eine reversalTime (vorzeichenlose Ganzzahl in Sekunden) haben."@de ;
+        sh:message "Chaque Switch doit avoir exactement un reversalTime (entier non signé, en secondes)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2386,7 +2763,9 @@ era:SwitchShape a sh:NodeShape ;
 	# FILTER (?time = 0)
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The reversalTime is 0 seconds. While this may be valid, typical values for modern switches range from 3 to 10 seconds. Please verify this value is correct." ;
+        sh:message "The reversalTime is 0 seconds. While this may be valid, typical values for modern switches range from 3 to 10 seconds. Please verify this value is correct."@en ;
+        sh:message "Der reversalTime beträgt 0 Sekunden. Dies mag zwar zutreffen, typische Werte für moderne Schalter liegen jedoch zwischen 3 und 10 Sekunden. Bitte überprüfen Sie, ob dieser Wert korrekt ist."@de ;
+        sh:message "Le reversalTime est de 0 seconde. Bien que cela puisse être valable, les valeurs typiques des commutateurs modernes vont de 3 à 10 secondes. Veuillez vérifier que cette valeur est correcte."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
 			PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
@@ -2404,7 +2783,9 @@ era:SwitchShape a sh:NodeShape ;
     # SPARQL constraint: Warning if reversalTime is unusually high
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The reversalTime is greater than 30 seconds, which is unusually high for a railway switch. Typical values for modern switches range from 3 to 10 seconds. Please verify this value is correct." ;
+        sh:message "The reversalTime is greater than 30 seconds, which is unusually high for a railway switch. Typical values for modern switches range from 3 to 10 seconds. Please verify this value is correct."@en ;
+        sh:message "Die reversalTime beträgt mehr als 30 Sekunden, was für eine Eisenbahnweiche ungewöhnlich hoch ist. Typische Werte für moderne Schalter liegen zwischen 3 und 10 Sekunden. Bitte überprüfen Sie, ob dieser Wert korrekt ist."@de ;
+        sh:message "Le reversalTime est supérieur à 30 secondes, ce qui est inhabituellement élevé pour un aiguillage ferroviaire. Les valeurs typiques pour les commutateurs modernes vont de 3 à 10 secondes. Veuillez vérifier que cette valeur est correcte."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
 			PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -2421,7 +2802,9 @@ era:SwitchShape a sh:NodeShape ;
 # ===== TP Active Object Shape =====
 era:TPActiveObjectShape a sh:NodeShape ;
     sh:targetClass era:TPActiveObject ;
-    sh:message "A TPActiveObject must have exactly one of: etcsMarker, stopLocation, or timeMeasurePoint." ;
+    sh:message "A TPActiveObject must have exactly one of: etcsMarker, stopLocation, or timeMeasurePoint."@en ;
+    sh:message "Ein TPActiveObject muss genau eines von: etcsMarker, stopLocation oder timeMeasurePoint haben."@de ;
+    sh:message "Un TPActiveObject doit avoir exactement l'un des éléments : etcsMarker, stopLocation ou timeMeasurePoint."@fr ;
     
     # Exactly one of the three object types must be present
     sh:xone (
@@ -2432,7 +2815,9 @@ era:TPActiveObjectShape a sh:NodeShape ;
             sh:nodeKind sh:IRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, etcsMarker must conform to ETCSMarker object." ;
+            sh:message "If present, etcsMarker must conform to ETCSMarker object."@en ;
+            sh:message "Falls vorhanden, muss etcsMarker dem ETCSMarker-Objekt entsprechen."@de ;
+            sh:message "S'il est présent, etcsMarker doit être conforme à l'objet ETCSMarker."@fr ;
             sh:severity sh:Violation ;
         ]
         
@@ -2443,7 +2828,9 @@ era:TPActiveObjectShape a sh:NodeShape ;
             sh:nodeKind sh:IRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, stopLocation must conform to StopLocation object." ;
+            sh:message "If present, stopLocation must conform to StopLocation object."@en ;
+            sh:message "Falls vorhanden, muss stopLocation dem StopLocation-Objekt entsprechen."@de ;
+            sh:message "S'il est présent, stopLocation doit être conforme à l'objet StopLocation."@fr ;
             sh:severity sh:Violation ;
         ]
         
@@ -2454,7 +2841,9 @@ era:TPActiveObjectShape a sh:NodeShape ;
             sh:nodeKind sh:IRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, timeMeasurePoint must conform to TravelTimeMeasurementPoint object." ;
+            sh:message "If present, timeMeasurePoint must conform to TravelTimeMeasurementPoint object."@en ;
+            sh:message "Falls vorhanden, muss timeMeasurePoint dem TravelTimeMeasurementPoint-Objekt entsprechen."@de ;
+            sh:message "S'il est présent, timeMeasurePoint doit être conforme à l'objet TravelTimeMeasurementPoint."@fr ;
             sh:severity sh:Violation ;
         ]
     ) .
@@ -2468,7 +2857,9 @@ era:TimingPointShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A TimingPoint may have at most one name (string)." ;
+        sh:message "A TimingPoint may have at most one name (string)."@en ;
+        sh:message "Ein TimingPoint darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Un TimingPoint peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2478,7 +2869,9 @@ era:TimingPointShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TimingPoint must have exactly one pos (position as unsigned integer)." ;
+        sh:message "Each TimingPoint must have exactly one pos (position as unsigned integer)."@en ;
+        sh:message "Jeder TimingPoint muss genau eine Position (Position als vorzeichenlose Ganzzahl) haben."@de ;
+        sh:message "Chaque TimingPoint doit avoir exactement une pos (position sous forme d'entier non signé)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2489,7 +2882,9 @@ era:TimingPointShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TimingPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object." ;
+        sh:message "Each TimingPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object."@en ;
+        sh:message "Jeder TimingPoint muss genau ein topologicalCoordinate haben, das dem TopologicalCoordinate-Objekt entspricht."@de ;
+        sh:message "Chaque TimingPoint doit avoir exactement un topologicalCoordinate conforme à l'objet TopologicalCoordonnée."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2500,7 +2895,9 @@ era:TimingPointShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TimingPoint must have exactly one activeObject that conforms to TPActiveObject object." ;
+        sh:message "Each TimingPoint must have exactly one activeObject that conforms to TPActiveObject object."@en ;
+        sh:message "Jeder TimingPoint muss genau einen activeObject haben, der dem TPActiveObject-Objekt entspricht."@de ;
+        sh:message "Chaque TimingPoint doit avoir exactement un activeObject conforme à l'objet TPActiveObject."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2515,7 +2912,9 @@ era:TopoAreaShape a sh:NodeShape ;
         sh:datatype xsd:dateTime ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TopoArea must have exactly one versionTimestamp (dateTime)." ;
+        sh:message "Each TopoArea must have exactly one versionTimestamp (dateTime)."@en ;
+        sh:message "Jede TopoArea muss genau ein versionTimestamp (dateTime) haben."@de ;
+        sh:message "Chaque TopoArea doit avoir exactement un versionTimestamp (dateTime)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2524,7 +2923,9 @@ era:TopoAreaShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A TopoArea may have at most one name (string)." ;
+        sh:message "A TopoArea may have at most one name (string)."@en ;
+        sh:message "Eine TopoArea darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Une TopoArea peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2533,7 +2934,9 @@ era:TopoAreaShape a sh:NodeShape ;
         sh:path era:linearElements ;
         sh:node era:LinearElementShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "TopoArea linearElements must conform to LinearElement object (can be inline or referenced)." ;
+        sh:message "TopoArea linearElements must conform to LinearElement object (can be inline or referenced)."@en ;
+        sh:message "TopoArea linearElements muss dem LinearElement-Objekt entsprechen (kann inline oder referenziert sein)."@de ;
+        sh:message "TopoArea linearElements doit être conforme à l'objet LinearElement (peut être en ligne ou référencé)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2542,7 +2945,9 @@ era:TopoAreaShape a sh:NodeShape ;
         sh:path era:netRelations ;
         sh:node era:NetRelationShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "TopoArea netRelations must conform to NetRelation object (can be inline or referenced)." ;
+        sh:message "TopoArea netRelations must conform to NetRelation object (can be inline or referenced)."@en ;
+        sh:message "TopoArea netRelations muss dem NetRelation-Objekt entsprechen (kann inline oder referenziert sein)."@de ;
+        sh:message "TopoArea netRelations doit être conforme à l'objet NetRelation (peut être en ligne ou référencé)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2557,7 +2962,9 @@ era:TopologicalCoordinateShape a sh:NodeShape ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TopologicalCoordinate must have exactly one onLinearElement that conforms to LinearElement object." ;
+        sh:message "Each TopologicalCoordinate must have exactly one onLinearElement that conforms to LinearElement object."@en ;
+        sh:message "Jede TopologicalCoordinate muss genau eine onLinearElement haben, die dem LinearElement-Objekt entspricht."@de ;
+        sh:message "Chaque TopologicalCoordonnée doit avoir exactement un onLinearElement conforme à l'objet LinearElement."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2567,7 +2974,9 @@ era:TopologicalCoordinateShape a sh:NodeShape ;
         sh:datatype xsd:positiveInteger ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TopologicalCoordinate must have exactly one offsetFromOrigin (non-negative unsigned integer, in meters)." ;
+        sh:message "Each TopologicalCoordinate must have exactly one offsetFromOrigin (non-negative unsigned integer, in meters)."@en ;
+        sh:message "Jede TopologicalCoordinate muss genau eine offsetFromOrigin haben (nicht negative Ganzzahl ohne Vorzeichen, in Metern)."@de ;
+        sh:message "Chaque TopologicalCoorder doit avoir exactement un offsetFromOrigin (entier non signé non négatif, en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2594,7 +3003,9 @@ era:TrackConditionShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property conditionType must have a value from the defined SKOS concept scheme for ETCS transmitted track conditions." ;
+        sh:message "The property conditionType must have a value from the defined SKOS concept scheme for ETCS transmitted track conditions."@en ;
+        sh:message "Die Eigenschaft conditionType muss einen Wert aus dem definierten SKOS-Konzeptschema für ETCS-übertragene Gleisbedingungen haben."@de ;
+        sh:message "La propriété conditionType doit avoir une valeur issue du schéma conceptuel SKOS défini pour les conditions de voie transmises par ETCS."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2604,7 +3015,9 @@ era:TrackConditionShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each TrackCondition must have at least one linearElementSections that conform to LinearElementSection object." ;
+        sh:message "Each TrackCondition must have at least one linearElementSections that conform to LinearElementSection object."@en ;
+        sh:message "Jede TrackCondition muss mindestens eine linearElementSections haben, die dem LinearElementSection-Objekt entspricht."@de ;
+        sh:message "Chaque TrackCondition doit avoir au moins un linearElementSections conforme à l'objet LinearElementSection."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2618,7 +3031,9 @@ era:TrackUsageAreaShape a sh:NodeShape ;
         sh:datatype xsd:dateTime ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TrackUsageArea must have exactly one versionTimestamp (dateTime)." ;
+        sh:message "Each TrackUsageArea must have exactly one versionTimestamp (dateTime)."@en ;
+        sh:message "Jede TrackUsageArea muss genau ein versionTimestamp (dateTime) haben."@de ;
+        sh:message "Chaque TrackUsageArea doit avoir exactement un versionTimestamp (dateTime)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2627,7 +3042,9 @@ era:TrackUsageAreaShape a sh:NodeShape ;
         sh:path era:preferredSameDir ;
         sh:class era:LinearElement ;
 		sh:nodeKind sh:IRI ;
-        sh:message "TrackUsageArea preferredSameDir must conform to validated LinearElement object." ;
+        sh:message "TrackUsageArea preferredSameDir must conform to validated LinearElement object."@en ;
+        sh:message "TrackUsageArea preferredSameDir muss dem validierten LinearElement-Objekt entsprechen."@de ;
+        sh:message "TrackUsageArea preferredSameDir doit être conforme à l'objet LinearElement validé."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2636,7 +3053,9 @@ era:TrackUsageAreaShape a sh:NodeShape ;
         sh:path era:preferredOppositeDir ;
         sh:class era:LinearElement ;
 		sh:nodeKind sh:IRI ;
-        sh:message "TrackUsageArea preferredOppositeDir must conform to validated LinearElement object." ;
+        sh:message "TrackUsageArea preferredOppositeDir must conform to validated LinearElement object."@en ;
+        sh:message "TrackUsageArea preferredOppositeDir muss dem validierten LinearElement-Objekt entsprechen."@de ;
+        sh:message "TrackUsageArea preferredOppositeDir doit être conforme à l'objet LinearElement validé."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2645,7 +3064,9 @@ era:TrackUsageAreaShape a sh:NodeShape ;
         sh:path era:secondaryTracks ;
         sh:class era:LinearElement ;
 		sh:nodeKind sh:IRI ;
-        sh:message "TrackUsageArea secondaryTracks must conform to validated LinearElement object." ;
+        sh:message "TrackUsageArea secondaryTracks must conform to validated LinearElement object."@en ;
+        sh:message "TrackUsageArea secondaryTracks muss dem validierten LinearElement-Objekt entsprechen."@de ;
+        sh:message "TrackUsageArea secondaryTracks doit être conforme à l'objet LinearElement validé."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2654,7 +3075,9 @@ era:TrackUsageAreaShape a sh:NodeShape ;
         sh:path era:shuntingTracks ;
         sh:class era:LinearElement ;
 		sh:nodeKind sh:IRI ;
-        sh:message "TrackUsageArea shuntingTracks must conform to validated LinearElement object." ;
+        sh:message "TrackUsageArea shuntingTracks must conform to validated LinearElement object."@en ;
+        sh:message "TrackUsageArea shuntingTracks muss dem validierten LinearElement-Objekt entsprechen."@de ;
+        sh:message "TrackUsageArea shuntingTracks doit être conforme à l'objet LinearElement validé."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2678,7 +3101,9 @@ era:TractionSystemShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property voltageType must have a value from the defined SKOS concept scheme for energy supply systems." ;
+        sh:message "The property voltageType must have a value from the defined SKOS concept scheme for energy supply systems."@en ;
+        sh:message "Die Eigenschaft voltageType muss einen Wert aus dem definierten SKOS-Konzeptschema für Energieversorgungsanlagen haben."@de ;
+        sh:message "La propriété voltageType doit avoir une valeur issue du schéma conceptuel SKOS défini pour les systèmes d'approvisionnement en énergie."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2688,7 +3113,9 @@ era:TractionSystemShape a sh:NodeShape ;
         sh:node era:LinearElementSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each TractionSystem must have at least one linearElementSections that conform to LinearElementSection object." ;
+        sh:message "Each TractionSystem must have at least one linearElementSections that conform to LinearElementSection object."@en ;
+        sh:message "Jedes TractionSystem muss mindestens ein linearElementSections haben, das dem LinearElementSection-Objekt entspricht."@de ;
+        sh:message "Chaque TractionSystem doit avoir au moins un linearElementSections conforme à l'objet LinearElementSection."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2703,7 +3130,9 @@ era:TrainDetectorShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TrainDetector must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object." ;
+        sh:message "Each TrainDetector must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object."@en ;
+        sh:message "Jeder TrainDetector muss genau ein topologicalCoordinate haben, das dem TopologicalCoordinate-Objekt entspricht."@de ;
+        sh:message "Chaque TrainDetector doit avoir exactement un topologicalCoordinate conforme à l'objet TopologicalCoordonnée."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2716,7 +3145,9 @@ era:TrainDetectorShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property trainDetectorType must have a value from the defined SKOS concept scheme (axleCounter or trackCircuitBorder)." ;
+        sh:message "The property trainDetectorType must have a value from the defined SKOS concept scheme (axleCounter or trackCircuitBorder)."@en ;
+        sh:message "Die Eigenschaft trainDetectorType muss einen Wert aus dem definierten SKOS-Konzeptschema (axleCounter oder trackCircuitBorder) haben."@de ;
+        sh:message "La propriété trainDetectorType doit avoir une valeur du schéma de concept SKOS défini (axleCounter ou trackCircuitBorder)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2730,7 +3161,9 @@ era:TrainDetectorShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property referenceDir must have a value from the defined SKOS concept scheme (both, same, or opposite)." ;
+        sh:message "The property referenceDir must have a value from the defined SKOS concept scheme (both, same, or opposite)."@en ;
+        sh:message "Die Eigenschaft referenceDir muss einen Wert aus dem definierten SKOS-Konzeptschema haben (beide, gleich oder entgegengesetzt)."@de ;
+        sh:message "La propriété referenceDir doit avoir une valeur du schéma conceptuel SKOS défini (les deux, identique ou opposé)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2745,7 +3178,9 @@ era:TravelTimeMeasurementPointShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TravelTimeMeasurementPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object." ;
+        sh:message "Each TravelTimeMeasurementPoint must have exactly one topologicalCoordinate that conforms to TopologicalCoordinate object."@en ;
+        sh:message "Jeder TravelTimeMeasurementPoint muss genau ein topologicalCoordinate haben, das dem TopologicalCoordinate-Objekt entspricht."@de ;
+        sh:message "Chaque TravelTimeMeasurementPoint doit avoir exactement un topologicalCoordinate conforme à l'objet TopologicalCoordonnée."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2759,7 +3194,9 @@ era:TunnelShape a sh:NodeShape ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Tunnel must have exactly one tunnelIdentification (string)." ;
+        sh:message "Each Tunnel must have exactly one tunnelIdentification (string)."@en ;
+        sh:message "Jeder Tunnel muss genau einen tunnelIdentification (String) haben."@de ;
+        sh:message "Chaque tunnel doit avoir exactement un tunnelIdentification (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2768,7 +3205,9 @@ era:TunnelShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A Tunnel may have at most one name (string)." ;
+        sh:message "A Tunnel may have at most one name (string)."@en ;
+        sh:message "Ein Tunnel darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Un tunnel peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2778,7 +3217,9 @@ era:TunnelShape a sh:NodeShape ;
         sh:node era:TunnelTubeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each Tunnel must have at least one tunnelTubes that conform to validated TunnelTube object." ;
+        sh:message "Each Tunnel must have at least one tunnelTubes that conform to validated TunnelTube object."@en ;
+        sh:message "Jeder Tunnel muss mindestens ein tunnelTubes haben, das dem validierten TunnelTube-Objekt entspricht."@de ;
+        sh:message "Chaque tunnel doit avoir au moins un tunnelTubes conforme à l'objet TunnelTube validé."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2793,7 +3234,9 @@ era:TunnelTubeShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TunnelTube must have exactly one areaReference that conforms to NetAreaReference object." ;
+        sh:message "Each TunnelTube must have exactly one areaReference that conforms to NetAreaReference object."@en ;
+        sh:message "Jede TunnelTube muss genau ein areaReference haben, das dem NetAreaReference-Objekt entspricht."@de ;
+        sh:message "Chaque TunnelTube doit avoir exactement un areaReference conforme à l'objet NetAreaReference."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2804,7 +3247,9 @@ era:TunnelTubeShape a sh:NodeShape ;
         sh:minInclusive 1 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TunnelTube must have exactly one crossSection (unsigned integer > 0, in square meters)." ;
+        sh:message "Each TunnelTube must have exactly one crossSection (unsigned integer > 0, in square meters)."@en ;
+        sh:message "Jede TunnelTube muss genau eine crossSection haben (vorzeichenlose Ganzzahl > 0, in Quadratmetern)."@de ;
+        sh:message "Chaque TunnelTube doit avoir exactement un crossSection (entier non signé > 0, en mètres carrés)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2817,7 +3262,9 @@ era:TvpSectionShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A TvpSection may have at most one name (string)." ;
+        sh:message "A TvpSection may have at most one name (string)."@en ;
+        sh:message "Eine TvpSection darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Une TvpSection peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2828,7 +3275,9 @@ era:TvpSectionShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TvpSection must have exactly one linkedArea that conforms to NetAreaReference object." ;
+        sh:message "Each TvpSection must have exactly one linkedArea that conforms to NetAreaReference object."@en ;
+        sh:message "Jeder TvpSection muss genau ein linkedArea haben, das dem NetAreaReference-Objekt entspricht."@de ;
+        sh:message "Chaque TvpSection doit avoir exactement un linkedArea conforme à l'objet NetAreaReference."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2837,7 +3286,9 @@ era:TvpSectionShape a sh:NodeShape ;
         sh:path era:trainDetectors ;
         sh:node era:TrainDetectorShape ;
 		sh:nodeKind sh:IRI ;
-        sh:message "TvpSection trainDetectors must conform to TrainDetector object." ;
+        sh:message "TvpSection trainDetectors must conform to TrainDetector object."@en ;
+        sh:message "TvpSection trainDetectors muss dem TrainDetector-Objekt entsprechen."@de ;
+        sh:message "TvpSection trainDetectors doit être conforme à l'objet TrainDetector."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2850,7 +3301,9 @@ era:UnderpassShape a sh:NodeShape ;
         sh:path era:name ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "An Underpass may have at most one name (string)." ;
+        sh:message "An Underpass may have at most one name (string)."@en ;
+        sh:message "Eine Unterführung darf höchstens einen Namen (String) haben."@de ;
+        sh:message "Un Underpass peut avoir au plus un nom (chaîne)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2861,7 +3314,9 @@ era:UnderpassShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Underpass must have exactly one areaReference that conforms to NetAreaReference object." ;
+        sh:message "Each Underpass must have exactly one areaReference that conforms to NetAreaReference object."@en ;
+        sh:message "Jede Unterführung muss genau ein areaReference haben, das dem NetAreaReference-Objekt entspricht."@de ;
+        sh:message "Chaque Underpass doit avoir exactement un areaReference conforme à l'objet NetAreaReference."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2875,7 +3330,9 @@ era:VerticalArcShape a sh:NodeShape ;
         sh:datatype xsd:double ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each VerticalArc must have exactly one elementGeometryPos (double)." ;
+        sh:message "Each VerticalArc must have exactly one elementGeometryPos (double)."@en ;
+        sh:message "Jeder VerticalArc muss genau ein elementGeometryPos (double) haben."@de ;
+        sh:message "Chaque VerticalArc doit avoir exactement un elementGeometryPos (double)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2885,7 +3342,9 @@ era:VerticalArcShape a sh:NodeShape ;
         sh:datatype xsd:double ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each VerticalArc must have exactly one slope value (double, per mille)." ;
+        sh:message "Each VerticalArc must have exactly one slope value (double, per mille)."@en ;
+        sh:message "Jeder VerticalArc muss genau einen Steigungswert haben (double, Promille)."@de ;
+        sh:message "Chaque VerticalArc doit avoir exactement une valeur de pente (double, pour mille)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2896,7 +3355,9 @@ era:VerticalArcShape a sh:NodeShape ;
         sh:minExclusive 0.0 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each VerticalArc must have exactly one radius value (double > 0, in meters)." ;
+        sh:message "Each VerticalArc must have exactly one radius value (double > 0, in meters)."@en ;
+        sh:message "Jeder VerticalArc muss genau einen Radiuswert haben (double > 0, in Metern)."@de ;
+        sh:message "Chaque VerticalArc doit avoir exactement une valeur de rayon (double > 0, en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2909,7 +3370,9 @@ era:VerticalArcShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property arcType must have a value from the defined SKOS concept scheme (circularArc or parabola)." ;
+        sh:message "The property arcType must have a value from the defined SKOS concept scheme (circularArc or parabola)."@en ;
+        sh:message "Die Eigenschaft arcType muss einen Wert aus dem definierten SKOS-Konzeptschema (circularArc oder Parabel) haben."@de ;
+        sh:message "La propriété arcType doit avoir une valeur issue du schéma conceptuel SKOS défini (circularArc ou parabole)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
@@ -2923,7 +3386,9 @@ era:VerticalLineShape a sh:NodeShape ;
         sh:datatype xsd:double ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each VerticalLine must have exactly one elementGeometryPos (double)." ;
+        sh:message "Each VerticalLine must have exactly one elementGeometryPos (double)."@en ;
+        sh:message "Jede VerticalLine muss genau ein elementGeometryPos (doppelt) haben."@de ;
+        sh:message "Chaque VerticalLine doit avoir exactement un elementGeometryPos (double)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -2933,14 +3398,18 @@ era:VerticalLineShape a sh:NodeShape ;
         sh:datatype xsd:double ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each VerticalLine must have exactly one slope value (double, per mille)." ;
+        sh:message "Each VerticalLine must have exactly one slope value (double, per mille)."@en ;
+        sh:message "Jede VerticalLine muss genau einen Steigungswert haben (doppelt, Promille)."@de ;
+        sh:message "Chaque VerticalLine doit avoir exactement une valeur de pente (double, pour mille)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Vertical Segment Shape =====
 era:VerticalSegmentShape a sh:NodeShape ;
     sh:targetClass era:VerticalSegment ;
-    sh:message "A VerticalSegment must have exactly one of: verticalSegmentArc or verticalSegmentLine." ;
+    sh:message "A VerticalSegment must have exactly one of: verticalSegmentArc or verticalSegmentLine."@en ;
+    sh:message "Ein VerticalSegment muss genau eines von: verticalSegmentArc oder verticalSegmentLine haben."@de ;
+    sh:message "Un VerticalSegment doit avoir exactement l'un des éléments suivants : verticalSegmentArc ou verticalSegmentLine."@fr ;
     
     # Exactly one of the two vertical segment types must be present
     sh:xone (
@@ -2951,7 +3420,9 @@ era:VerticalSegmentShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, verticalSegmentArc must conform to VerticalArc object." ;
+            sh:message "If present, verticalSegmentArc must conform to VerticalArc object."@en ;
+            sh:message "Falls vorhanden, muss verticalSegmentArc dem VerticalArc-Objekt entsprechen."@de ;
+            sh:message "S'il est présent, verticalSegmentArc doit être conforme à l'objet VerticalArc."@fr ;
             sh:severity sh:Violation ;
         ]
         
@@ -2962,7 +3433,9 @@ era:VerticalSegmentShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "If present, verticalSegmentLine must conform to VerticalLine object." ;
+            sh:message "If present, verticalSegmentLine must conform to VerticalLine object."@en ;
+            sh:message "Falls vorhanden, muss verticalSegmentLine dem VerticalLine-Objekt entsprechen."@de ;
+            sh:message "S'il est présent, verticalSegmentLine doit être conforme à l'objet VerticalLine."@fr ;
             sh:severity sh:Violation ;
         ]
     ) .
@@ -2983,7 +3456,9 @@ era:AtLeastOneInfrastructureClassShape a sh:NodeShape ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The data must contain at least one instance of the required infrastructure objects (e.g., TopoArea, LinearElement, Switch, OperationalPoint, etc.). This error may indicate that the provided data significantly deviates from the expected infrastructure model as defined in the extended ERA ontology." ;
+        sh:message "The data must contain at least one instance of the required infrastructure objects (e.g., TopoArea, LinearElement, Switch, OperationalPoint, etc.). This error may indicate that the provided data significantly deviates from the expected infrastructure model as defined in the extended ERA ontology."@en ;
+        sh:message "Die Daten müssen mindestens eine Instanz der erforderlichen Infrastrukturobjekte enthalten (z. B. TopoArea, LinearElement, Switch, OperationalPoint usw.). Dieser Fehler kann darauf hinweisen, dass die bereitgestellten Daten erheblich vom erwarteten Infrastrukturmodell abweichen, wie es in der erweiterten ERA-Ontologie definiert ist."@de ;
+        sh:message "Les données doivent contenir au moins une instance des objets d'infrastructure requis (par exemple, TopoArea, LinearElement, Switch, OperationalPoint, etc.). Cette erreur peut indiquer que les données fournies s'écartent considérablement du modèle d'infrastructure attendu tel que défini dans l'ontologie ERA étendue."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

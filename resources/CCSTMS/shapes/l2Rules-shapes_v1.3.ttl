@@ -28,6 +28,16 @@ era:BaliseMinimumDistanceConstraint
         {?actualDist_m} m apart, but ETCS Engineering rule requires at least
         {?minDist_m} m for tracks with maximum permitted speed
         {?maxSpeed} km/h."""@en ;
+    sh:message """Die Markierungen {?b1} und {?b2} am LinearElement {$this} liegen
+        {?actualDist_m} m auseinander, doch die ETCS-Technikvorschrift schreibt für Gleise mit einer zulässigen Höchstgeschwindigkeit von
+        {?maxSpeed} km/h einen Mindestabstand von mindestens
+        {?minDist_m} m vor."""@de ;
+    sh:message """Les balises {?b1} et {?b2} sur l'élément linéaire {$this} sont
+        distantes de {?actualDist_m} m, mais la règle technique ETCS exige une distance minimale de
+        {?minDist_m} m pour les voies dont la vitesse maximale autorisée est de
+        {?maxSpeed} km/h."""@fr;
+
+
     sh:prefixes era:ETCSPrefixes ;
     sh:select """
         SELECT $this ?b1 ?b2 ?actualDist_m ?minDist_m ?maxSpeed

@@ -23,14 +23,18 @@
 # ===== Absolute Position Shape =====
 era:AbsolutePositionShape a sh:NodeShape ;
     sh:targetClass era:AbsolutePosition ;
-    sh:message "3D coordinates defining absolute position in a geographic coordinate system." ;
+    sh:message "3D coordinates defining absolute position in a geographic coordinate system."@en ;
+    sh:message "3D-Koordinaten, die die absolute Position in einem geografischen Koordinatensystem definieren."@de ;
+    sh:message "Coordonnées 3D définissant la position absolue dans un système de coordonnées géographiques."@fr ;
     
     # X Coordinate (optional, double - easting/longitude)
     sh:property [ 
         sh:path era:x ;
         sh:datatype xsd:double ;
         sh:maxCount 1 ;
-        sh:message "An AbsolutePosition may have at most one x coordinate (double, easting or longitude value)." ;
+        sh:message "An AbsolutePosition may have at most one x coordinate (double, easting or longitude value)."@en ;
+        sh:message "Eine AbsolutePosition darf höchstens eine x-Koordinate haben (Doppel-, Rechts- oder Längengradwert)."@de ;
+        sh:message "Une AbsolutePosition peut avoir au plus une coordonnée x (valeur double, est ou longitude)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -39,7 +43,9 @@ era:AbsolutePositionShape a sh:NodeShape ;
         sh:path era:y ;
         sh:datatype xsd:double ;
         sh:maxCount 1 ;
-        sh:message "An AbsolutePosition may have at most one y coordinate (double, northing or latitude value)." ;
+        sh:message "An AbsolutePosition may have at most one y coordinate (double, northing or latitude value)."@en ;
+        sh:message "Eine AbsolutePosition darf höchstens eine Y-Koordinate (Doppel-, Nord- oder Breitengradwert) haben."@de ;
+        sh:message "Une AbsolutePosition peut avoir au plus une coordonnée y (valeur double, nord ou latitude)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -48,14 +54,18 @@ era:AbsolutePositionShape a sh:NodeShape ;
         sh:path era:z ;
         sh:datatype xsd:double ;
         sh:maxCount 1 ;
-        sh:message "An AbsolutePosition may have at most one z coordinate (double, elevation or altitude in meters)." ;
+        sh:message "An AbsolutePosition may have at most one z coordinate (double, elevation or altitude in meters)."@en ;
+        sh:message "Eine AbsolutePosition darf höchstens eine Z-Koordinate haben (doppelt, Höhe oder Höhe in Metern)."@de ;
+        sh:message "Une AbsolutePosition peut avoir au plus une coordonnée z (double, élévation ou altitude en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Adjacent Segment Profile Shape =====
 era:AdjacentSegmentProfileShape a sh:NodeShape ;
     sh:targetClass era:AdjacentSegmentProfile ;
-    sh:message "Reference to an adjacent track segment profile, describing topology connections." ;
+    sh:message "Reference to an adjacent track segment profile, describing topology connections."@en ;
+    sh:message "Verweis auf ein benachbartes Gleissegmentprofil, das Topologieverbindungen beschreibt."@de ;
+    sh:message "Référence à un profil de segment de piste adjacent, décrivant les connexions topologiques."@fr ;
     
     # NID SP (required, unsigned integer - segment profile identifier)
     sh:property [ 
@@ -63,7 +73,9 @@ era:AdjacentSegmentProfileShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each AdjacentSegmentProfile must have exactly one nidSP (unsigned integer, segment profile ID)." ;
+        sh:message "Each AdjacentSegmentProfile must have exactly one nidSP (unsigned integer, segment profile ID)."@en ;
+        sh:message "Jedes AdjacentSegmentProfile muss genau eine nidSP (vorzeichenlose Ganzzahl, Segmentprofil-ID) haben."@de ;
+        sh:message "Chaque AdjacentSegmentProfile doit avoir exactement un nidSP (entier non signé, ID de profil de segment)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -73,7 +85,9 @@ era:AdjacentSegmentProfileShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each AdjacentSegmentProfile must have exactly one version (unsigned integer, segment profile data version)." ;
+        sh:message "Each AdjacentSegmentProfile must have exactly one version (unsigned integer, segment profile data version)."@en ;
+        sh:message "Jedes AdjacentSegmentProfile muss genau eine Version haben (vorzeichenlose Ganzzahl, Segmentprofildatenversion)."@de ;
+        sh:message "Chaque AdjacentSegmentProfile doit avoir exactement une version (entier non signé, version des données du profil de segment)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -85,7 +99,9 @@ era:AdjacentSegmentProfileShape a sh:NodeShape ;
         sh:maxInclusive 1023 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each AdjacentSegmentProfile must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)." ;
+        sh:message "Each AdjacentSegmentProfile must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)."@en ;
+        sh:message "Jedes AdjacentSegmentProfile muss genau ein nid_c (vorzeichenlose Ganzzahl 0-1023, ETCS-Länderkennung) haben."@de ;
+        sh:message "Chaque AdjacentSegmentProfile doit avoir exactement un nid_c (entier non signé 0-1023, identifiant de pays ETCS)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -100,14 +116,18 @@ era:AdjacentSegmentProfileShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property linkType must have a value from the defined SKOS concept scheme (pointLeft, pointRight, pointTip, or simpleConnector)." ;
+        sh:message "The property linkType must have a value from the defined SKOS concept scheme (pointLeft, pointRight, pointTip, or simpleConnector)."@en ;
+        sh:message "Die Eigenschaft linkType muss einen Wert aus dem definierten SKOS-Konzeptschema (pointLeft, pointRight, pointTip oder simpleConnector) haben."@de ;
+        sh:message "La propriété linkType doit avoir une valeur du schéma de concept SKOS défini (pointLeft, pointRight, pointTip ou simpleConnector)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== ATO-TS Contact Info Shape =====
 era:AtoTSContactInfoShape a sh:NodeShape ;
     sh:targetClass era:AtoTSContactInfo ;
-    sh:message "Contact information for ATO Trackside (ATO-TS) system communication." ;
+    sh:message "Contact information for ATO Trackside (ATO-TS) system communication."@en ;
+    sh:message "Kontaktinformationen für die Systemkommunikation von ATO Trackside (ATO-TS)."@de ;
+    sh:message "Coordonnées pour la communication du système ATO Trackside (ATO-TS)."@fr ;
     
     # NID ATOTS (required, unsigned integer - ATO trackside identifier)
     sh:property [ 
@@ -115,7 +135,9 @@ era:AtoTSContactInfoShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each AtoTSContactInfo must have exactly one nidATOTS (unsigned integer, ATO trackside system identifier)." ;
+        sh:message "Each AtoTSContactInfo must have exactly one nidATOTS (unsigned integer, ATO trackside system identifier)."@en ;
+        sh:message "Jede AtoTSContactInfo muss genau eine nidATOTS (vorzeichenlose Ganzzahl, streckenseitige ATO-Systemkennung) haben."@de ;
+        sh:message "Chaque AtoTSContactInfo doit avoir exactement un nidATOTS (entier non signé, identifiant du système au sol ATO)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -125,7 +147,9 @@ era:AtoTSContactInfoShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each AtoTSContactInfo must have exactly one spNidC (unsigned integer, segment profile country identifier)." ;
+        sh:message "Each AtoTSContactInfo must have exactly one spNidC (unsigned integer, segment profile country identifier)."@en ;
+        sh:message "Jede AtoTSContactInfo muss genau eine spNidC (vorzeichenlose Ganzzahl, Länderkennung des Segmentprofils) haben."@de ;
+        sh:message "Chaque AtoTSContactInfo doit avoir exactement un spNidC (entier non signé, identifiant de pays du profil de segment)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -135,7 +159,9 @@ era:AtoTSContactInfoShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each AtoTSContactInfo must have exactly one nidSP (unsigned integer, segment profile identifier)." ;
+        sh:message "Each AtoTSContactInfo must have exactly one nidSP (unsigned integer, segment profile identifier)."@en ;
+        sh:message "Jede AtoTSContactInfo muss genau eine nidSP (vorzeichenlose Ganzzahl, Segmentprofil-ID) haben."@de ;
+        sh:message "Chaque AtoTSContactInfo doit avoir exactement un nidSP (entier non signé, identifiant de profil de segment)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -145,14 +171,18 @@ era:AtoTSContactInfoShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each AtoTSContactInfo must have exactly one atotsNidC (unsigned integer, ATO trackside country identifier)." ;
+        sh:message "Each AtoTSContactInfo must have exactly one atotsNidC (unsigned integer, ATO trackside country identifier)."@en ;
+        sh:message "Jede AtoTSContactInfo muss genau eine atotsNidC (vorzeichenlose Ganzzahl, streckenseitige ATO-Länderkennung) haben."@de ;
+        sh:message "Chaque AtoTSContactInfo doit avoir exactement un atotsNidC (entier non signé, identifiant de pays au bord de la piste ATO)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Attitude Shape =====
 era:AttitudeShape a sh:NodeShape ;
     sh:targetClass era:Attitude ;
-    sh:message "Spatial orientation of track segment including angles and curvature." ;
+    sh:message "Spatial orientation of track segment including angles and curvature."@en ;
+    sh:message "Räumliche Ausrichtung des Gleissegments einschließlich Winkel und Krümmung."@de ;
+    sh:message "Orientation spatiale du segment de voie, y compris les angles et la courbure."@fr ;
     
     # Azimuth (required, double 0-360 - compass bearing in degrees)
     sh:property [ 
@@ -162,7 +192,9 @@ era:AttitudeShape a sh:NodeShape ;
         sh:maxInclusive 360.0 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Attitude must have exactly one azimuth (double 0-360, compass bearing in degrees)." ;
+        sh:message "Each Attitude must have exactly one azimuth (double 0-360, compass bearing in degrees)."@en ;
+        sh:message "Jede Fluglage muss genau einen Azimut haben (doppelt 0-360, Kompasspeilung in Grad)."@de ;
+        sh:message "Chaque attitude doit avoir exactement un azimut (double 0-360, relèvement compas en degrés)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -174,7 +206,9 @@ era:AttitudeShape a sh:NodeShape ;
         sh:maxInclusive 360 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Attitude must have exactly one pitch (integer 0-360, vertical inclination angle in degrees)." ;
+        sh:message "Each Attitude must have exactly one pitch (integer 0-360, vertical inclination angle in degrees)."@en ;
+        sh:message "Jede Attitude muss genau eine Tonhöhe haben (Ganzzahl 0-360, vertikaler Neigungswinkel in Grad)."@de ;
+        sh:message "Chaque attitude doit avoir exactement un pas (entier 0-360, angle d'inclinaison verticale en degrés)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -186,7 +220,9 @@ era:AttitudeShape a sh:NodeShape ;
         sh:maxInclusive 360 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Attitude must have exactly one rollAngle (integer 0-360, banking/cant angle in degrees)." ;
+        sh:message "Each Attitude must have exactly one rollAngle (integer 0-360, banking/cant angle in degrees)."@en ;
+        sh:message "Jede Haltung muss genau eine rollAngle haben (Ganzzahl 0-360, Neigungs-/Neigungswinkel in Grad)."@de ;
+        sh:message "Chaque attitude doit avoir exactement un rollAngle (entier 0-360, angle d'inclinaison/inclinaison en degrés)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -196,14 +232,18 @@ era:AttitudeShape a sh:NodeShape ;
         sh:datatype xsd:int ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Attitude must have exactly one curvature (integer, curve radius in meters; negative=left curve, positive=right curve, 0=straight)." ;
+        sh:message "Each Attitude must have exactly one curvature (integer, curve radius in meters; negative=left curve, positive=right curve, 0=straight)."@en ;
+        sh:message "Jede Attitude muss genau eine Krümmung haben (Ganzzahl, Kurvenradius in Metern; negativ=linke Kurve, positiv=rechte Kurve, 0=gerade)."@de ;
+        sh:message "Chaque Attitude doit avoir exactement une courbure (entier, rayon de courbe en mètres ; négatif=courbe gauche, positif=courbe droite, 0=droite)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Axle Load Speed Profile Shape =====
 era:AxleLoadSpeedProfileShape a sh:NodeShape ;
     sh:targetClass era:AxleLoadSpeedProfile ;
-    sh:message "Speed restriction profile based on axle load for a track segment." ;
+    sh:message "Speed restriction profile based on axle load for a track segment."@en ;
+    sh:message "Geschwindigkeitsbeschränkungsprofil basierend auf der Achslast für ein Gleissegment."@de ;
+    sh:message "Profil de limitation de vitesse basé sur la charge par essieu pour un segment de voie."@fr ;
     
     # Segment Section (required, track section reference)
     sh:property [ 
@@ -212,7 +252,9 @@ era:AxleLoadSpeedProfileShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each AxleLoadSpeedProfile must reference exactly one segmentSection that conforms to SegmentSection object." ;
+        sh:message "Each AxleLoadSpeedProfile must reference exactly one segmentSection that conforms to SegmentSection object."@en ;
+        sh:message "Jedes AxleLoadSpeedProfile muss genau auf ein segmentSection verweisen, das dem SegmentSection-Objekt entspricht."@de ;
+        sh:message "Chaque AxleLoadSpeedProfile doit faire référence à exactement un segmentSection conforme à l'objet SegmentSection."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -225,14 +267,18 @@ era:AxleLoadSpeedProfileShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property trainEndApplicability must have a value from the defined SKOS concept scheme (lengthDelay or noLengthDelay)." ;
+        sh:message "The property trainEndApplicability must have a value from the defined SKOS concept scheme (lengthDelay or noLengthDelay)."@en ;
+        sh:message "Die Eigenschaft trainEndApplicability muss einen Wert aus dem definierten SKOS-Konzeptschema (lengthDelay oder noLengthDelay) haben."@de ;
+        sh:message "La propriété trainEndApplicability doit avoir une valeur du schéma de concept SKOS défini (lengthDelay ou noLengthDelay)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Balise Group Shape =====
 era:BaliseGroupShape a sh:NodeShape ;
     sh:targetClass era:BaliseGroup ;
-    sh:message "Group of ETCS balises functioning as a logical unit for train detection and positioning." ;
+    sh:message "Group of ETCS balises functioning as a logical unit for train detection and positioning."@en ;
+    sh:message "Gruppe von ETCS-Balisen, die als logische Einheit zur Zugerkennung und -positionierung fungieren."@de ;
+    sh:message "Groupe de balises ETCS fonctionnant comme une unité logique pour la détection et le positionnement des trains."@fr ;
     
     # NID C Qualifier (required, boolean - country ID qualifier flag)
     sh:property [ 
@@ -240,14 +286,18 @@ era:BaliseGroupShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each BaliseGroup must have exactly one nidCQualifier (boolean, true if country ID is qualified/linked to previous balise group)." ;
+        sh:message "Each BaliseGroup must have exactly one nidCQualifier (boolean, true if country ID is qualified/linked to previous balise group)."@en ;
+        sh:message "Jede BaliseGroup muss genau eine nidCQualifier haben (boolean, true, wenn die Länder-ID qualifiziert/mit der vorherigen Balise-Gruppe verknüpft ist)."@de ;
+        sh:message "Chaque BaliseGroup doit avoir exactement un nidCQualifier (booléen, vrai si l'ID du pays est qualifié/lié au groupe balise précédent)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Balise Shape =====
 era:BaliseShape a sh:NodeShape ;
     sh:targetClass era:Balise ;
-    sh:message "Individual ETCS balise transponder providing position and data to passing trains." ;
+    sh:message "Individual ETCS balise transponder providing position and data to passing trains."@en ;
+    sh:message "Individueller ETCS-Balisentransponder, der vorbeifahrenden Zügen Position und Daten liefert."@de ;
+    sh:message "Transpondeur balise ETCS individuel fournissant la position et les données aux trains qui passent."@fr ;
     
     # N PIG (required, unsigned integer 0-7 - position in balise group)
     sh:property [ 
@@ -257,7 +307,9 @@ era:BaliseShape a sh:NodeShape ;
         sh:maxInclusive 7 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Balise must have exactly one n_pig (unsigned integer 0-7, position in group; 0=not in group, 1-8=position within group)." ;
+        sh:message "Each Balise must have exactly one n_pig (unsigned integer 0-7, position in group; 0=not in group, 1-8=position within group)."@en ;
+        sh:message "Jede Balise muss genau ein n_pig haben (vorzeichenlose Ganzzahl 0-7, Position in der Gruppe; 0=nicht in der Gruppe, 1-8=Position innerhalb der Gruppe)."@de ;
+        sh:message "Chaque Balise doit avoir exactement un n_pig (entier non signé 0-7, position dans le groupe ; 0=pas dans le groupe, 1-8=position dans le groupe)."@fr ;
         sh:severity sh:Violation ;
     ] ;
 	
@@ -267,14 +319,18 @@ era:BaliseShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Balise must have exactly one pos (position as unsigned integer). The error might be because the position of the Balise on the corresponding Segment Profile is undefined" ;
+        sh:message "Each Balise must have exactly one pos (position as unsigned integer). The error might be because the position of the Balise on the corresponding Segment Profile is undefined"@en ;
+        sh:message "Jede Balise muss genau eine Position (Position als vorzeichenlose Ganzzahl) haben. Der Fehler könnte darauf zurückzuführen sein, dass die Position der Balise auf dem entsprechenden Segmentprofil nicht definiert ist"@de ;
+        sh:message "Chaque Balise doit avoir exactement une pos (position sous forme d'entier non signé). L'erreur peut être due au fait que la position de la balise sur le profil de segment correspondant n'est pas définie."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Contact Information Shape =====
 era:ContactInformationShape a sh:NodeShape ;
     sh:targetClass era:ContactInformation ;
-    sh:message "Contact information for Digital Railway Traffic Authority (DRTA) system." ;
+    sh:message "Contact information for Digital Railway Traffic Authority (DRTA) system."@en ;
+    sh:message "Kontaktinformationen für das System der Digital Railway Traffic Authority (DRTA)."@de ;
+    sh:message "Coordonnées du système Digital Railway Traffic Authority (DRTA)."@fr ;
     
     # NID C (required, unsigned integer 0-1023 - country identifier)
     sh:property [ 
@@ -284,7 +340,9 @@ era:ContactInformationShape a sh:NodeShape ;
         sh:maxInclusive 1023 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each ContactInformation must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)." ;
+        sh:message "Each ContactInformation must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)."@en ;
+        sh:message "Jede ContactInformation muss genau ein nid_c (vorzeichenlose Ganzzahl 0-1023, ETCS-Länderkennung) haben."@de ;
+        sh:message "Chaque ContactInformation doit avoir exactement un nid_c (entier non signé 0-1023, identifiant de pays ETCS)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -294,14 +352,18 @@ era:ContactInformationShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each ContactInformation must have exactly one nidDRTA (unsigned integer, Digital Railway Traffic Authority identifier)." ;
+        sh:message "Each ContactInformation must have exactly one nidDRTA (unsigned integer, Digital Railway Traffic Authority identifier)."@en ;
+        sh:message "Jede ContactInformation muss genau eine nidDRTA (ganzzahlige Zahl ohne Vorzeichen, Kennung der Digital Railway Traffic Authority) haben."@de ;
+        sh:message "Chaque ContactInformation doit avoir exactement un nidDRTA (entier non signé, identifiant Digital Railway Traffic Authority)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Current Change Shape =====
 era:CurrentChangeShape a sh:NodeShape ;
     sh:targetClass era:CurrentChange ;
-    sh:message "Defines a change in electrical current limit at a specific position along the track." ;
+    sh:message "Defines a change in electrical current limit at a specific position along the track."@en ;
+    sh:message "Definiert eine Änderung der elektrischen Stromgrenze an einer bestimmten Position entlang der Strecke."@de ;
+    sh:message "Définit un changement dans la limite de courant électrique à une position spécifique le long de la piste."@fr ;
     
     # Position (required, unsigned integer - position in meters)
     sh:property [ 
@@ -309,7 +371,9 @@ era:CurrentChangeShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each CurrentChange must have exactly one pos (unsigned integer, position along track in meters)." ;
+        sh:message "Each CurrentChange must have exactly one pos (unsigned integer, position along track in meters)."@en ;
+        sh:message "Jeder CurrentChange muss genau eine Position (vorzeichenlose Ganzzahl, Position entlang der Spur in Metern) haben."@de ;
+        sh:message "Chaque CurrentChange doit avoir exactement une pos (entier non signé, position le long de la piste en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -319,14 +383,18 @@ era:CurrentChangeShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each CurrentChange must have exactly one currentValue (unsigned integer, maximum permitted current in amperes)." ;
+        sh:message "Each CurrentChange must have exactly one currentValue (unsigned integer, maximum permitted current in amperes)."@en ;
+        sh:message "Jeder CurrentChange muss genau eine currentValue (vorzeichenlose Ganzzahl, maximal zulässiger Strom in Ampere) haben."@de ;
+        sh:message "Chaque CurrentChange doit avoir exactement un currentValue (entier non signé, courant maximum autorisé en ampères)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Curve Change Shape =====
 era:CurveChangeShape a sh:NodeShape ;
     sh:targetClass era:CurveChange ;
-    sh:message "Defines a change in track curvature at a specific position." ;
+    sh:message "Defines a change in track curvature at a specific position."@en ;
+    sh:message "Definiert eine Änderung der Gleiskrümmung an einer bestimmten Position."@de ;
+    sh:message "Définit un changement dans la courbure de la piste à une position spécifique."@fr ;
     
     # Position (required, unsigned integer - position in meters)
     sh:property [ 
@@ -334,7 +402,9 @@ era:CurveChangeShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each CurveChange must have exactly one pos (unsigned integer, position along track in meters)." ;
+        sh:message "Each CurveChange must have exactly one pos (unsigned integer, position along track in meters)."@en ;
+        sh:message "Jeder CurveChange muss genau eine Position (vorzeichenlose Ganzzahl, Position entlang der Strecke in Metern) haben."@de ;
+        sh:message "Chaque CurveChange doit avoir exactement une pos (entier non signé, position le long de la piste en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -369,14 +439,18 @@ era:CurveChangeShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property curve must have a value from the defined SKOS concept scheme (curve radius categories from >7000m down to <150m)." ;
+        sh:message "The property curve must have a value from the defined SKOS concept scheme (curve radius categories from >7000m down to <150m)."@en ;
+        sh:message "Die Eigenschaftskurve muss einen Wert aus dem definierten SKOS-Konzeptschema haben (Kurvenradiuskategorien von >7000 m bis <150 m)."@de ;
+        sh:message "La courbe de propriété doit avoir une valeur issue du schéma conceptuel SKOS défini (catégories de rayon de courbe de >7 000 m à <150 m)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Digital Register Handshake Acknowledgement Shape =====
 era:DigitalRegisterHandshakeAcknowledgementShape a sh:NodeShape ;
     sh:targetClass era:DigitalRegisterHandshakeAcknowledgement ;
-    sh:message "Acknowledgement message for successful digital register handshake between train and trackside." ;
+    sh:message "Acknowledgement message for successful digital register handshake between train and trackside."@en ;
+    sh:message "Bestätigungsnachricht für den erfolgreichen digitalen Register-Handshake zwischen Zug und Gleis."@de ;
+    sh:message "Message d'accusé de réception pour une prise de contact réussie du registre numérique entre le train et le bord de la voie."@fr ;
     
     # Track Train Header (required, message header)
     sh:property [ 
@@ -385,7 +459,9 @@ era:DigitalRegisterHandshakeAcknowledgementShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
+        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one trackTrainHeader that conforms to TrackTrainHeader object."@en ;
+        sh:message "Jedes DigitalRegisterHandshakeAcknowledgement muss genau ein trackTrainHeader haben, das dem TrackTrainHeader-Objekt entspricht."@de ;
+        sh:message "Chaque DigitalRegisterHandshakeAcknowledgement doit avoir exactement un trackTrainHeader conforme à l'objet TrackTrainHeader."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -397,7 +473,9 @@ era:DigitalRegisterHandshakeAcknowledgementShape a sh:NodeShape ;
         sh:maxInclusive 1023 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)." ;
+        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)."@en ;
+        sh:message "Jedes DigitalRegisterHandshakeAcknowledgement muss genau ein nid_c (vorzeichenlose Ganzzahl 0-1023, ETCS-Länderkennung) haben."@de ;
+        sh:message "Chaque DigitalRegisterHandshakeAcknowledgement doit avoir exactement un nid_c (entier non signé 0-1023, identifiant de pays ETCS)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -407,7 +485,9 @@ era:DigitalRegisterHandshakeAcknowledgementShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one nidDRTA (unsigned integer, Digital RTA identifier)." ;
+        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one nidDRTA (unsigned integer, Digital RTA identifier)."@en ;
+        sh:message "Jedes DigitalRegisterHandshakeAcknowledgement muss genau eine nidDRTA (vorzeichenlose Ganzzahl, digitale RTA-Kennung) haben."@de ;
+        sh:message "Chaque DigitalRegisterHandshakeAcknowledgement doit avoir exactement un nidDRTA (entier non signé, identifiant Digital RTA)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -417,7 +497,9 @@ era:DigitalRegisterHandshakeAcknowledgementShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one systemVersion (unsigned integer, digital register protocol version)." ;
+        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one systemVersion (unsigned integer, digital register protocol version)."@en ;
+        sh:message "Jedes DigitalRegisterHandshakeAcknowledgement muss genau eine systemVersion (vorzeichenlose Ganzzahl, digitale Registerprotokollversion) haben."@de ;
+        sh:message "Chaque DigitalRegisterHandshakeAcknowledgement doit avoir exactement un systemVersion (entier non signé, version du protocole de registre numérique)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -427,14 +509,18 @@ era:DigitalRegisterHandshakeAcknowledgementShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one timeOutResponse (unsigned integer, response timeout in seconds)." ;
+        sh:message "Each DigitalRegisterHandshakeAcknowledgement must have exactly one timeOutResponse (unsigned integer, response timeout in seconds)."@en ;
+        sh:message "Jedes DigitalRegisterHandshakeAcknowledgement muss genau eine timeOutResponse haben (Ganzzahl ohne Vorzeichen, Antwortzeitüberschreitung in Sekunden)."@de ;
+        sh:message "Chaque DigitalRegisterHandshakeAcknowledgement doit avoir exactement un timeOutResponse (entier non signé, délai d'attente de réponse en secondes)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Digital Register Handshake Rejection Shape =====
 era:DigitalRegisterHandshakeRejectionShape a sh:NodeShape ;
     sh:targetClass era:DigitalRegisterHandshakeRejection ;
-    sh:message "Rejection message for digital register handshake with reason for failure." ;
+    sh:message "Rejection message for digital register handshake with reason for failure."@en ;
+    sh:message "Ablehnungsmeldung für Digitalregister-Handshake mit Fehlergrund."@de ;
+    sh:message "Message de rejet pour la prise de contact du registre numérique avec raison de l'échec."@fr ;
     
     # Track Train Header (required, message header)
     sh:property [ 
@@ -443,7 +529,9 @@ era:DigitalRegisterHandshakeRejectionShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterHandshakeRejection must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
+        sh:message "Each DigitalRegisterHandshakeRejection must have exactly one trackTrainHeader that conforms to TrackTrainHeader object."@en ;
+        sh:message "Jede DigitalRegisterHandshakeRejection muss genau ein trackTrainHeader haben, das dem TrackTrainHeader-Objekt entspricht."@de ;
+        sh:message "Chaque DigitalRegisterHandshakeRejection doit avoir exactement un trackTrainHeader conforme à l'objet TrackTrainHeader."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -457,7 +545,9 @@ era:DigitalRegisterHandshakeRejectionShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property rejectionReason must have a value from the defined SKOS concept scheme (incompatibleSystemVersion, anotherDRTAInCharge, or DRTAInChargeUnknown)." ;
+        sh:message "The property rejectionReason must have a value from the defined SKOS concept scheme (incompatibleSystemVersion, anotherDRTAInCharge, or DRTAInChargeUnknown)."@en ;
+        sh:message "Die Eigenschaft rejectionReason muss einen Wert aus dem definierten SKOS-Konzeptschema (incompatibleSystemVersion, anotherDRTAInCharge oder DRTAInChargeUnknown) haben."@de ;
+        sh:message "La propriété rejectionReason doit avoir une valeur du schéma de concept SKOS défini (incompatibleSystemVersion, anotherDRTAInCharge ou DRTAInChargeUnknown)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -467,14 +557,18 @@ era:DigitalRegisterHandshakeRejectionShape a sh:NodeShape ;
         sh:node era:ContactInformationShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A DigitalRegisterHandshakeRejection may have at most one contactInformation that conforms to ContactInformation object." ;
+        sh:message "A DigitalRegisterHandshakeRejection may have at most one contactInformation that conforms to ContactInformation object."@en ;
+        sh:message "Eine DigitalRegisterHandshakeRejection kann höchstens ein contactInformation haben, das dem ContactInformation-Objekt entspricht."@de ;
+        sh:message "Un DigitalRegisterHandshakeRejection peut avoir au plus un contactInformation conforme à l'objet ContactInformation."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Digital Register Handshake Request Shape =====
 era:DigitalRegisterHandshakeRequestShape a sh:NodeShape ;
     sh:targetClass era:DigitalRegisterHandshakeRequest ;
-    sh:message "Request message to initiate digital register communication session between train and trackside." ;
+    sh:message "Request message to initiate digital register communication session between train and trackside."@en ;
+    sh:message "Anforderungsnachricht zum Initiieren einer digitalen Registerkommunikationssitzung zwischen Zug und Gleis."@de ;
+    sh:message "Demander un message pour lancer une session de communication du registre numérique entre le train et le bord de la voie."@fr ;
     
     # Track Train Header (required, message header)
     sh:property [ 
@@ -483,7 +577,9 @@ era:DigitalRegisterHandshakeRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
+        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeader object."@en ;
+        sh:message "Jede DigitalRegisterHandshakeRequest muss genau ein trackTrainHeader haben, das dem TrackTrainHeader-Objekt entspricht."@de ;
+        sh:message "Chaque DigitalRegisterHandshakeRequest doit avoir exactement un trackTrainHeader conforme à l'objet TrackTrainHeader."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -494,7 +590,9 @@ era:DigitalRegisterHandshakeRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one absolutePosition that conforms to AbsolutePosition object." ;
+        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one absolutePosition that conforms to AbsolutePosition object."@en ;
+        sh:message "Jede DigitalRegisterHandshakeRequest muss genau ein absolutePosition haben, das dem AbsolutePosition-Objekt entspricht."@de ;
+        sh:message "Chaque DigitalRegisterHandshakeRequest doit avoir exactement un absolutePosition conforme à l'objet AbsolutePosition."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -505,7 +603,9 @@ era:DigitalRegisterHandshakeRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one relativePos that conforms to RelativePosition object." ;
+        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one relativePos that conforms to RelativePosition object."@en ;
+        sh:message "Jede DigitalRegisterHandshakeRequest muss genau ein relativePos haben, das dem RelativePosition-Objekt entspricht."@de ;
+        sh:message "Chaque DigitalRegisterHandshakeRequest doit avoir exactement un relativePos conforme à l'objet RelativePosition."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -515,14 +615,18 @@ era:DigitalRegisterHandshakeRequestShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one handingOver (boolean, true if handing over from another DRTA)." ;
+        sh:message "Each DigitalRegisterHandshakeRequest must have exactly one handingOver (boolean, true if handing over from another DRTA)."@en ;
+        sh:message "Jede DigitalRegisterHandshakeRequest muss genau eine handingOver haben (boolean, true bei Übergabe von einem anderen DRTA)."@de ;
+        sh:message "Chaque DigitalRegisterHandshakeRequest doit avoir exactement un handingOver (booléen, vrai en cas de transfert depuis un autre DRTA)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Digital Register Session Termination Request Shape =====
 era:DigitalRegisterSessionTerminationRequestShape a sh:NodeShape ;
     sh:targetClass era:DigitalRegisterSessionTerminationRequest ;
-    sh:message "Request message to terminate digital register communication session." ;
+    sh:message "Request message to terminate digital register communication session."@en ;
+    sh:message "Anforderungsnachricht zum Beenden der Kommunikationssitzung mit dem digitalen Register."@de ;
+    sh:message "Message de demande pour mettre fin à la session de communication du registre numérique."@fr ;
     
     # Track Train Header (required, message header)
     sh:property [ 
@@ -531,7 +635,9 @@ era:DigitalRegisterSessionTerminationRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterSessionTerminationRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
+        sh:message "Each DigitalRegisterSessionTerminationRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeader object."@en ;
+        sh:message "Jede DigitalRegisterSessionTerminationRequest muss genau ein trackTrainHeader haben, das dem TrackTrainHeader-Objekt entspricht."@de ;
+        sh:message "Chaque DigitalRegisterSessionTerminationRequest doit avoir exactement un trackTrainHeader conforme à l'objet TrackTrainHeader."@fr ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -539,7 +645,9 @@ era:DigitalRegisterSessionTerminationRequestShape a sh:NodeShape ;
 # ===== Digital Register Session Termination Shape =====
 era:DigitalRegisterSessionTerminationShape a sh:NodeShape ;
     sh:targetClass era:DigitalRegisterSessionTermination ;
-    sh:message "Termination confirmation message for digital register communication session with reason." ;
+    sh:message "Termination confirmation message for digital register communication session with reason."@en ;
+    sh:message "Bestätigungsnachricht zur Beendigung der digitalen Registerkommunikationssitzung mit Begründung."@de ;
+    sh:message "Message de confirmation de fin de session de communication avec registre numérique avec motif."@fr ;
     
     # Track Train Header (required, message header)
     sh:property [ 
@@ -548,7 +656,9 @@ era:DigitalRegisterSessionTerminationShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DigitalRegisterSessionTermination must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
+        sh:message "Each DigitalRegisterSessionTermination must have exactly one trackTrainHeader that conforms to TrackTrainHeader object."@en ;
+        sh:message "Jede DigitalRegisterSessionTermination muss genau ein trackTrainHeader haben, das dem TrackTrainHeader-Objekt entspricht."@de ;
+        sh:message "Chaque DigitalRegisterSessionTermination doit avoir exactement un trackTrainHeader conforme à l'objet TrackTrainHeader."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -562,14 +672,18 @@ era:DigitalRegisterSessionTerminationShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property terminationReason must have a value from the defined SKOS concept scheme (DRTATerminationRequest, lastSPLeft, or DRTAHandoverCancelled)." ;
+        sh:message "The property terminationReason must have a value from the defined SKOS concept scheme (DRTATerminationRequest, lastSPLeft, or DRTAHandoverCancelled)."@en ;
+        sh:message "Die Eigenschaft terminationReason muss einen Wert aus dem definierten SKOS-Konzeptschema (DRTATerminationRequest, lastSPLeft oder DRTAHandoverCancelled) haben."@de ;
+        sh:message "La propriété terminationReason doit avoir une valeur du schéma de concept SKOS défini (DRTATerminationRequest, lastSPLeft ou DRTAHandoverCancelled)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Driving Profile Shape =====
 era:DrivingProfileShape a sh:NodeShape ;
     sh:targetClass era:DrivingProfile ;
-    sh:message "Comprehensive track profile for ATO driving including gradients, curves, speeds, voltages, and infrastructure elements." ;
+    sh:message "Comprehensive track profile for ATO driving including gradients, curves, speeds, voltages, and infrastructure elements."@en ;
+    sh:message "Umfassendes Streckenprofil für ATO-Fahrten, einschließlich Steigungen, Kurven, Geschwindigkeiten, Spannungen und Infrastrukturelementen."@de ;
+    sh:message "Profil de piste complet pour la conduite ATO, comprenant les pentes, les courbes, les vitesses, les tensions et les éléments d'infrastructure."@fr ;
     
     # Static Speed Profile Start (required, initial speed)
     sh:property [ 
@@ -578,7 +692,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DrivingProfile must have exactly one staticSpeedProfileStart that conforms to StaticSpeedProfileStart object." ;
+        sh:message "Each DrivingProfile must have exactly one staticSpeedProfileStart that conforms to StaticSpeedProfileStart object."@en ;
+        sh:message "Jedes DrivingProfile muss genau ein staticSpeedProfileStart haben, das dem StaticSpeedProfileStart-Objekt entspricht."@de ;
+        sh:message "Chaque DrivingProfile doit avoir exactement un staticSpeedProfileStart conforme à l'objet StaticSpeedProfileStart."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -589,7 +705,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DrivingProfile must have exactly one voltageStart that conforms to VoltageStart object." ;
+        sh:message "Each DrivingProfile must have exactly one voltageStart that conforms to VoltageStart object."@en ;
+        sh:message "Jedes DrivingProfile muss genau ein voltageStart haben, das dem VoltageStart-Objekt entspricht."@de ;
+        sh:message "Chaque DrivingProfile doit avoir exactement un voltageStart conforme à l'objet VoltageStart."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -599,7 +717,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:datatype xsd:int ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DrivingProfile must have exactly one gradientStart (integer, initial track gradient in per mille)." ;
+        sh:message "Each DrivingProfile must have exactly one gradientStart (integer, initial track gradient in per mille)."@en ;
+        sh:message "Jedes DrivingProfile muss genau eine gradientStart (Ganzzahl, anfänglicher Streckengradient in Promille) haben."@de ;
+        sh:message "Chaque DrivingProfile doit avoir exactement un gradientStart (entier, pente initiale de la piste en pour mille)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -609,7 +729,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:datatype xsd:int ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DrivingProfile must have exactly one startAltitude (integer, initial elevation in meters above sea level)." ;
+        sh:message "Each DrivingProfile must have exactly one startAltitude (integer, initial elevation in meters above sea level)."@en ;
+        sh:message "Jedes DrivingProfile muss genau eine startAltitude (Ganzzahl, anfängliche Höhe in Metern über dem Meeresspiegel) haben."@de ;
+        sh:message "Chaque DrivingProfile doit avoir exactement un startAltitude (entier, altitude initiale en mètres au-dessus du niveau de la mer)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -644,7 +766,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property curveStart must have a value from the defined SKOS concept scheme (curve radius categories)." ;
+        sh:message "The property curveStart must have a value from the defined SKOS concept scheme (curve radius categories)."@en ;
+        sh:message "Die Eigenschaft curveStart muss einen Wert aus dem definierten SKOS-Konzeptschema (Kurvenradiuskategorien) haben."@de ;
+        sh:message "La propriété curveStart doit avoir une valeur issue du schéma conceptuel SKOS défini (catégories de rayon de courbe)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -654,7 +778,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DrivingProfile must have exactly one currentStart (unsigned integer, initial maximum current in amperes)." ;
+        sh:message "Each DrivingProfile must have exactly one currentStart (unsigned integer, initial maximum current in amperes)."@en ;
+        sh:message "Jedes DrivingProfile muss genau eine currentStart (vorzeichenlose Ganzzahl, anfänglicher Maximalstrom in Ampere) haben."@de ;
+        sh:message "Chaque DrivingProfile doit avoir exactement un currentStart (entier non signé, courant maximum initial en ampères)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -664,7 +790,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DrivingProfile must have exactly one eoaOffset (unsigned integer, end of authority offset in meters)." ;
+        sh:message "Each DrivingProfile must have exactly one eoaOffset (unsigned integer, end of authority offset in meters)."@en ;
+        sh:message "Jedes DrivingProfile muss genau eine eoaOffset haben (Ganzzahl ohne Vorzeichen, Offset des Autoritätsendes in Metern)."@de ;
+        sh:message "Chaque DrivingProfile doit avoir exactement un eoaOffset (entier non signé, décalage de fin d'autorité en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -791,7 +919,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property utcOffset must have a value from the defined SKOS concept scheme (UTC-14:00 to UTC+14:00 in 15-minute increments)." ;
+        sh:message "The property utcOffset must have a value from the defined SKOS concept scheme (UTC-14:00 to UTC+14:00 in 15-minute increments)."@en ;
+        sh:message "Die Eigenschaft utcOffset muss einen Wert aus dem definierten SKOS-Konzeptschema haben (UTC-14:00 bis UTC+14:00 in 15-Minuten-Schritten)."@de ;
+        sh:message "La propriété utcOffset doit avoir une valeur issue du schéma conceptuel SKOS défini (UTC-14 :00 à UTC+14 :00 par incréments de 15 minutes)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -801,7 +931,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each DrivingProfile must have exactly one atotsContactInfoDir (boolean, ATO-TS contact information direction flag)." ;
+        sh:message "Each DrivingProfile must have exactly one atotsContactInfoDir (boolean, ATO-TS contact information direction flag)."@en ;
+        sh:message "Jedes DrivingProfile muss genau ein atotsContactInfoDir (boolescher Wert, ATO-TS-Kontaktinformationsrichtungsflag) haben."@de ;
+        sh:message "Chaque DrivingProfile doit avoir exactement un atotsContactInfoDir (booléen, indicateur de direction des informations de contact ATO-TS)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -812,7 +944,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:staticSpeedProfileChanges ;
         sh:node era:StaticSpeedProfileChangeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple validated staticSpeedProfileChanges." ;
+        sh:message "A DrivingProfile may have multiple validated staticSpeedProfileChanges."@en ;
+        sh:message "Ein DrivingProfile kann mehrere validierte staticSpeedProfileChanges haben."@de ;
+        sh:message "Un DrivingProfile peut avoir plusieurs staticSpeedProfileChanges validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -821,7 +955,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:voltageChanges ;
         sh:node era:VoltageChangeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple validated voltageChanges." ;
+        sh:message "A DrivingProfile may have multiple validated voltageChanges."@en ;
+        sh:message "Ein DrivingProfile kann mehrere validierte voltageChanges haben."@de ;
+        sh:message "Un DrivingProfile peut avoir plusieurs voltageChanges validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -830,7 +966,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:gradientChanges ;
         sh:node era:GradientChangeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple validated gradientChanges." ;
+        sh:message "A DrivingProfile may have multiple validated gradientChanges."@en ;
+        sh:message "Ein DrivingProfile kann mehrere validierte gradientChanges haben."@de ;
+        sh:message "Un DrivingProfile peut avoir plusieurs gradientChanges validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -839,7 +977,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:curveChanges ;
         sh:node era:CurveChangeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple validated curveChanges." ;
+        sh:message "A DrivingProfile may have multiple validated curveChanges."@en ;
+        sh:message "Ein DrivingProfile kann mehrere validierte curveChanges haben."@de ;
+        sh:message "Un DrivingProfile peut avoir plusieurs curveChanges validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -848,7 +988,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:currentChanges ;
         sh:node era:CurrentChangeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple validated currentChanges." ;
+        sh:message "A DrivingProfile may have multiple validated currentChanges."@en ;
+        sh:message "Ein DrivingProfile kann mehrere validierte currentChanges haben."@de ;
+        sh:message "Un DrivingProfile peut avoir plusieurs currentChanges validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -859,7 +1001,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:baliseGroups ;
         sh:node era:BaliseGroupShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple validated baliseGroups." ;
+        sh:message "A DrivingProfile may reference multiple validated baliseGroups."@en ;
+        sh:message "Ein DrivingProfile kann auf mehrere validierte baliseGroups verweisen."@de ;
+        sh:message "Un DrivingProfile peut faire référence à plusieurs baliseGroups validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -868,7 +1012,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:tunnels ;
         sh:node era:TunnelShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple validated tunnels." ;
+        sh:message "A DrivingProfile may reference multiple validated tunnels."@en ;
+        sh:message "Ein DrivingProfile kann auf mehrere validierte Tunnel verweisen."@de ;
+        sh:message "Un DrivingProfile peut faire référence à plusieurs tunnels validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -877,7 +1023,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:unprotectedLXs ;
         sh:node era:UnprotectedLXShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple validated unprotectedLXs." ;
+        sh:message "A DrivingProfile may reference multiple validated unprotectedLXs."@en ;
+        sh:message "Ein DrivingProfile kann auf mehrere validierte unprotectedLXs verweisen."@de ;
+        sh:message "Un DrivingProfile peut faire référence à plusieurs unprotectedLXs validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -886,7 +1034,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:timingPoints ;
         sh:node era:TimingPointShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple validated timingPoints." ;
+        sh:message "A DrivingProfile may reference multiple validated timingPoints."@en ;
+        sh:message "Ein DrivingProfile kann auf mehrere validierte timingPoints verweisen."@de ;
+        sh:message "Un DrivingProfile peut faire référence à plusieurs timingPoints validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -895,7 +1045,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:platformAreas ;
         sh:node era:SegmentSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple validated platformAreas." ;
+        sh:message "A DrivingProfile may reference multiple validated platformAreas."@en ;
+        sh:message "Ein DrivingProfile kann auf mehrere validierte platformAreas verweisen."@de ;
+        sh:message "Un DrivingProfile peut faire référence à plusieurs platformAreas validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -906,7 +1058,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:axleLoadSpeedProfiles ;
         sh:node era:AxleLoadSpeedProfileShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple validated axleLoadSpeedProfiles." ;
+        sh:message "A DrivingProfile may have multiple validated axleLoadSpeedProfiles."@en ;
+        sh:message "Ein DrivingProfile kann mehrere validierte axleLoadSpeedProfiles haben."@de ;
+        sh:message "Un DrivingProfile peut avoir plusieurs axleLoadSpeedProfiles validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -915,7 +1069,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:permittedBrakingDistances ;
         sh:node era:PermittedBrakingDistanceShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple validated permittedBrakingDistances." ;
+        sh:message "A DrivingProfile may have multiple validated permittedBrakingDistances."@en ;
+        sh:message "Ein DrivingProfile kann mehrere validierte permittedBrakingDistances haben."@de ;
+        sh:message "Un DrivingProfile peut avoir plusieurs permittedBrakingDistances validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -924,7 +1080,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:limitedDynamicBrakeForces ;
         sh:node era:LimitedDynamicBrakeForceShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may have multiple validated limitedDynamicBrakeForces." ;
+        sh:message "A DrivingProfile may have multiple validated limitedDynamicBrakeForces."@en ;
+        sh:message "Ein DrivingProfile kann mehrere validierte limitedDynamicBrakeForces haben."@de ;
+        sh:message "Un DrivingProfile peut avoir plusieurs limitedDynamicBrakeForces validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -935,7 +1093,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:switchOffRegenerativeBrakes ;
         sh:node era:SegmentSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple validated switchOffRegenerativeBrakes sections." ;
+        sh:message "A DrivingProfile may reference multiple validated switchOffRegenerativeBrakes sections."@en ;
+        sh:message "Ein DrivingProfile kann auf mehrere validierte switchOffRegenerativeBrakes-Abschnitte verweisen."@de ;
+        sh:message "Un DrivingProfile peut faire référence à plusieurs sections switchOffRegenerativeBrakes validées."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -944,7 +1104,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:switchOffMagneticShoeBrakes ;
         sh:node era:SegmentSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple validated switchOffMagneticShoeBrakes sections." ;
+        sh:message "A DrivingProfile may reference multiple validated switchOffMagneticShoeBrakes sections."@en ;
+        sh:message "Ein DrivingProfile kann auf mehrere validierte switchOffMagneticShoeBrakes-Abschnitte verweisen."@de ;
+        sh:message "Un DrivingProfile peut faire référence à plusieurs sections switchOffMagneticShoeBrakes validées."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -953,7 +1115,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:switchOffEddyCurrentBrakeServiceBrakes ;
         sh:node era:SegmentSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple validated switchOffEddyCurrentBrakeServiceBrakes sections." ;
+        sh:message "A DrivingProfile may reference multiple validated switchOffEddyCurrentBrakeServiceBrakes sections."@en ;
+        sh:message "Ein DrivingProfile kann auf mehrere validierte switchOffEddyCurrentBrakeServiceBrakes-Abschnitte verweisen."@de ;
+        sh:message "Un DrivingProfile peut faire référence à plusieurs sections switchOffEddyCurrentBrakeServiceBrakes validées."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -962,7 +1126,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:switchOffEddyCurrentBrakeEmergencyBrakes ;
         sh:node era:SegmentSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple validated switchOffEddyCurrentBrakeEmergencyBrakes sections." ;
+        sh:message "A DrivingProfile may reference multiple validated switchOffEddyCurrentBrakeEmergencyBrakes sections."@en ;
+        sh:message "Ein DrivingProfile kann auf mehrere validierte switchOffEddyCurrentBrakeEmergencyBrakes-Abschnitte verweisen."@de ;
+        sh:message "Un DrivingProfile peut faire référence à plusieurs sections switchOffEddyCurrentBrakeEmergencyBrakes validées."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -971,7 +1137,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:path era:dynamicBrakeForceInhibitions ;
         sh:node era:SegmentSectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A DrivingProfile may reference multiple validated dynamicBrakeForceInhibitions sections." ;
+        sh:message "A DrivingProfile may reference multiple validated dynamicBrakeForceInhibitions sections."@en ;
+        sh:message "Ein DrivingProfile kann auf mehrere validierte dynamicBrakeForceInhibitions-Abschnitte verweisen."@de ;
+        sh:message "Un DrivingProfile peut faire référence à plusieurs sections dynamicBrakeForceInhibitions validées."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -981,7 +1149,9 @@ era:DrivingProfileShape a sh:NodeShape ;
         sh:node era:AtoTSContactInfoShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A DrivingProfile may have at most one validated atotsContactInfo." ;
+        sh:message "A DrivingProfile may have at most one validated atotsContactInfo."@en ;
+        sh:message "Ein DrivingProfile kann höchstens ein validiertes atotsContactInfo haben."@de ;
+        sh:message "Un DrivingProfile peut avoir au plus un atotsContactInfo validé."@fr ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -989,7 +1159,9 @@ era:DrivingProfileShape a sh:NodeShape ;
 # ===== Geometry Profile Shape =====
 era:GeometryProfileShape a sh:NodeShape ;
     sh:targetClass era:GeometryProfile ;
-    sh:message "Geometric description of track segment including spatial orientation and coordinate points." ;
+    sh:message "Geometric description of track segment including spatial orientation and coordinate points."@en ;
+    sh:message "Geometrische Beschreibung des Gleisabschnitts einschließlich räumlicher Orientierung und Koordinatenpunkten."@de ;
+    sh:message "Description géométrique du segment de piste, y compris l'orientation spatiale et les points de coordonnées."@fr ;
     
     # Attitudes (optional, spatial orientation - appears to be max 1 despite property name)
     sh:property [ 
@@ -997,7 +1169,9 @@ era:GeometryProfileShape a sh:NodeShape ;
         sh:node era:AttitudeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A GeometryProfile may have at most one attitudes that conforms to Attitude object." ;
+        sh:message "A GeometryProfile may have at most one attitudes that conforms to Attitude object."@en ;
+        sh:message "Ein GeometryProfile kann höchstens eine Einstellung haben, die dem Attitude-Objekt entspricht."@de ;
+        sh:message "Un GeometryProfile peut avoir au plus une attitude conforme à l’objet Attitude."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1006,14 +1180,18 @@ era:GeometryProfileShape a sh:NodeShape ;
         sh:path era:linearElementCoordinates ;
         sh:node era:LinearElementCoordinateShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A GeometryProfile may have multiple validated linearElementCoordinates." ;
+        sh:message "A GeometryProfile may have multiple validated linearElementCoordinates."@en ;
+        sh:message "Ein GeometryProfile kann mehrere validierte linearElementCoordinates haben."@de ;
+        sh:message "Un GeometryProfile peut avoir plusieurs linearElementCoordinates validés."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Gradient Change Shape =====
 era:GradientChangeShape a sh:NodeShape ;
     sh:targetClass era:GradientChange ;
-    sh:message "Defines a change in track gradient at a specific position." ;
+    sh:message "Defines a change in track gradient at a specific position."@en ;
+    sh:message "Definiert eine Änderung der Gleissteigung an einer bestimmten Position."@de ;
+    sh:message "Définit un changement dans l'inclinaison de la piste à une position spécifique."@fr ;
     
     # Position (required, unsigned integer - position in meters)
     sh:property [ 
@@ -1021,7 +1199,9 @@ era:GradientChangeShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each GradientChange must have exactly one pos (unsigned integer, position along track in meters)." ;
+        sh:message "Each GradientChange must have exactly one pos (unsigned integer, position along track in meters)."@en ;
+        sh:message "Jeder GradientChange muss genau eine Position (vorzeichenlose Ganzzahl, Position entlang der Spur in Metern) haben."@de ;
+        sh:message "Chaque GradientChange doit avoir exactement une pos (entier non signé, position le long de la piste en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1031,14 +1211,18 @@ era:GradientChangeShape a sh:NodeShape ;
         sh:datatype xsd:int ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each GradientChange must have exactly one gradientValue (integer, new gradient in per mille; positive=uphill, negative=downhill)." ;
+        sh:message "Each GradientChange must have exactly one gradientValue (integer, new gradient in per mille; positive=uphill, negative=downhill)."@en ;
+        sh:message "Jeder GradientChange muss genau eine gradientValue haben (Ganzzahl, neuer Gradient in Promille; positiv=bergauf, negativ=bergab)."@de ;
+        sh:message "Chaque GradientChange doit avoir exactement un gradientValue (entier, nouveau gradient en pour mille ; positif = montée, négatif = descente)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Limited Dynamic Brake Force Shape =====
 era:LimitedDynamicBrakeForceShape a sh:NodeShape ;
     sh:targetClass era:LimitedDynamicBrakeForce ;
-    sh:message "Defines a section where dynamic braking force must be limited." ;
+    sh:message "Defines a section where dynamic braking force must be limited."@en ;
+    sh:message "Definiert einen Abschnitt, in dem die dynamische Bremskraft begrenzt werden muss."@de ;
+    sh:message "Définit une section où la force de freinage dynamique doit être limitée."@fr ;
     
     # Segment Section (required, where limitation applies)
     sh:property [ 
@@ -1047,7 +1231,9 @@ era:LimitedDynamicBrakeForceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LimitedDynamicBrakeForce must reference exactly one segmentSection that conforms to SegmentSection object." ;
+        sh:message "Each LimitedDynamicBrakeForce must reference exactly one segmentSection that conforms to SegmentSection object."@en ;
+        sh:message "Jede LimitedDynamicBrakeForce muss auf genau ein segmentSection verweisen, das dem SegmentSection-Objekt entspricht."@de ;
+        sh:message "Chaque LimitedDynamicBrakeForce doit faire référence à exactement un segmentSection conforme à l'objet SegmentSection."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1059,14 +1245,18 @@ era:LimitedDynamicBrakeForceShape a sh:NodeShape ;
         sh:maxInclusive 3000 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each LimitedDynamicBrakeForce must have exactly one dynamicBrakeForceLimit (unsigned integer 0-3000, maximum brake force in kilonewtons)." ;
+        sh:message "Each LimitedDynamicBrakeForce must have exactly one dynamicBrakeForceLimit (unsigned integer 0-3000, maximum brake force in kilonewtons)."@en ;
+        sh:message "Jede LimitedDynamicBrakeForce muss genau eine dynamicBrakeForceLimit haben (vorzeichenlose Ganzzahl 0-3000, maximale Bremskraft in Kilonewton)."@de ;
+        sh:message "Chaque LimitedDynamicBrakeForce doit avoir exactement un dynamicBrakeForceLimit (entier non signé de 0 à 3 000, force de freinage maximale en kilonewtons)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Map Area Request Shape =====
 era:MapAreaRequestShape a sh:NodeShape ;
     sh:targetClass era:MapAreaRequest ;
-    sh:message "Request for map area data from digital register based on train position and radius." ;
+    sh:message "Request for map area data from digital register based on train position and radius."@en ;
+    sh:message "Anforderung von Kartenflächendaten aus dem digitalen Register basierend auf Zugposition und -radius."@de ;
+    sh:message "Demande de données de zone cartographique à partir du registre numérique en fonction de la position et du rayon du train."@fr ;
     
     # Track Train Header (required, message header)
     sh:property [ 
@@ -1075,7 +1265,9 @@ era:MapAreaRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MapAreaRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
+        sh:message "Each MapAreaRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeader object."@en ;
+        sh:message "Jede MapAreaRequest muss genau ein trackTrainHeader haben, das dem TrackTrainHeader-Objekt entspricht."@de ;
+        sh:message "Chaque MapAreaRequest doit avoir exactement un trackTrainHeader conforme à l'objet TrackTrainHeader."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1086,7 +1278,9 @@ era:MapAreaRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MapAreaRequest must have exactly one absolutePosition that conforms to AbsolutePosition object." ;
+        sh:message "Each MapAreaRequest must have exactly one absolutePosition that conforms to AbsolutePosition object."@en ;
+        sh:message "Jede MapAreaRequest muss genau ein absolutePosition haben, das dem AbsolutePosition-Objekt entspricht."@de ;
+        sh:message "Chaque MapAreaRequest doit avoir exactement un absolutePosition conforme à l'objet AbsolutePosition."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1097,7 +1291,9 @@ era:MapAreaRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MapAreaRequest must have exactly one relativePos that conforms to RelativePosition object." ;
+        sh:message "Each MapAreaRequest must have exactly one relativePos that conforms to RelativePosition object."@en ;
+        sh:message "Jede MapAreaRequest muss genau ein relativePos haben, das dem RelativePosition-Objekt entspricht."@de ;
+        sh:message "Chaque MapAreaRequest doit avoir exactement un relativePos conforme à l'objet RelativePosition."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1107,14 +1303,18 @@ era:MapAreaRequestShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MapAreaRequest must have exactly one mapAreaRadius (unsigned integer, requested radius around position in meters)." ;
+        sh:message "Each MapAreaRequest must have exactly one mapAreaRadius (unsigned integer, requested radius around position in meters)."@en ;
+        sh:message "Jede MapAreaRequest muss genau eine mapAreaRadius (vorzeichenlose Ganzzahl, angeforderter Radius um die Position in Metern) haben."@de ;
+        sh:message "Chaque MapAreaRequest doit avoir exactement un mapAreaRadius (entier non signé, rayon demandé autour de la position en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Map Area Shape =====
 era:MapAreaShape a sh:NodeShape ;
     sh:targetClass era:MapArea ;
-    sh:message "Response containing segment profile data for requested map area." ;
+    sh:message "Response containing segment profile data for requested map area."@en ;
+    sh:message "Antwort mit Segmentprofildaten für den angeforderten Kartenbereich."@de ;
+    sh:message "Réponse contenant les données de profil de segment pour la zone de carte demandée."@fr ;
     
     # Track Train Header (required, message header)
     sh:property [ 
@@ -1123,7 +1323,9 @@ era:MapAreaShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each MapArea must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
+        sh:message "Each MapArea must have exactly one trackTrainHeader that conforms to TrackTrainHeader object."@en ;
+        sh:message "Jede MapArea muss genau ein trackTrainHeader haben, das dem TrackTrainHeader-Objekt entspricht."@de ;
+        sh:message "Chaque MapArea doit avoir exactement un trackTrainHeader conforme à l'objet TrackTrainHeader."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1133,14 +1335,18 @@ era:MapAreaShape a sh:NodeShape ;
         sh:node era:SegmentProfileListShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each MapArea must have at least one segmentProfileList that conforms to SegmentProfileList object." ;
+        sh:message "Each MapArea must have at least one segmentProfileList that conforms to SegmentProfileList object."@en ;
+        sh:message "Jede MapArea muss mindestens ein segmentProfileList haben, das dem SegmentProfileList-Objekt entspricht."@de ;
+        sh:message "Chaque MapArea doit avoir au moins un segmentProfileList conforme à l'objet SegmentProfileList."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== OI Area Shape =====
 era:OIAreaShape a sh:NodeShape ;
     sh:targetClass era:OIArea ;
-    sh:message "Operational Interface area containing segments and timing point mappings." ;
+    sh:message "Operational Interface area containing segments and timing point mappings."@en ;
+    sh:message "Betriebsschnittstellenbereich mit Segmenten und Zeitpunktzuordnungen."@de ;
+    sh:message "Zone d'interface opérationnelle contenant des segments et des mappages de points de synchronisation."@fr ;
     
     # Segments (required, at least one segment)
     sh:property [ 
@@ -1148,7 +1354,9 @@ era:OIAreaShape a sh:NodeShape ;
         sh:node era:OISegmentShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each OIArea must have at least one segments that conform to OISegment object." ;
+        sh:message "Each OIArea must have at least one segments that conform to OISegment object."@en ;
+        sh:message "Jede OIArea muss mindestens ein Segment haben, das dem OISegment-Objekt entspricht."@de ;
+        sh:message "Chaque OIArea doit avoir au moins un segment conforme à l’objet OISegment."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1157,14 +1365,18 @@ era:OIAreaShape a sh:NodeShape ;
         sh:path era:timingPointsMapping ;
         sh:node era:TimingPointMappingShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OIArea may have multiple validated timingPointsMapping." ;
+        sh:message "An OIArea may have multiple validated timingPointsMapping."@en ;
+        sh:message "Ein OIArea kann mehrere validierte timingPointsMapping haben."@de ;
+        sh:message "Une zone OIA peut avoir plusieurs timingPointsMapping validés."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== OI Segment Shape =====
 era:OISegmentShape a sh:NodeShape ;
     sh:targetClass era:OISegment ;
-    sh:message "Operational Interface segment linking linear element sections to segment profiles." ;
+    sh:message "Operational Interface segment linking linear element sections to segment profiles."@en ;
+    sh:message "Betriebsschnittstellensegment, das lineare Elementabschnitte mit Segmentprofilen verbindet."@de ;
+    sh:message "Segment d'interface opérationnelle reliant les sections d'éléments linéaires aux profils de segments."@fr ;
     
     # Linear Element Section (required, physical track section)
     sh:property [ 
@@ -1173,7 +1385,9 @@ era:OISegmentShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each OISegment must reference exactly one linearElementSection that conforms to LinearElementSection object." ;
+        sh:message "Each OISegment must reference exactly one linearElementSection that conforms to LinearElementSection object."@en ;
+        sh:message "Jedes OISegment muss genau ein linearElementSection referenzieren, das dem LinearElementSection-Objekt entspricht."@de ;
+        sh:message "Chaque OISegment doit référencer exactement un linearElementSection conforme à l'objet LinearElementSection."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1184,21 +1398,27 @@ era:OISegmentShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each OISegment must reference exactly one segmentProfile that conforms to SegmentProfile object." ;
+        sh:message "Each OISegment must reference exactly one segmentProfile that conforms to SegmentProfile object."@en ;
+        sh:message "Jedes OISegment muss genau ein segmentProfile referenzieren, das dem SegmentProfile-Objekt entspricht."@de ;
+        sh:message "Chaque OISegment doit faire référence à exactement un segmentProfile conforme à l'objet SegmentProfile."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== OI Shape =====
 era:OIShape a sh:NodeShape ;
     sh:targetClass era:OI ;
-    sh:message "Operational Interface container for all digital register communication messages and area data." ;
+    sh:message "Operational Interface container for all digital register communication messages and area data."@en ;
+    sh:message "Betriebsschnittstellencontainer für alle digitalen Registerkommunikationsnachrichten und Bereichsdaten."@de ;
+    sh:message "Conteneur d'interface opérationnelle pour tous les messages de communication du registre numérique et les données de zone."@fr ;
     
     # OI Areas (optional, operational interface areas)
     sh:property [ 
         sh:path era:oiAreas ;
         sh:node era:OIAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple validated oiAreas." ;
+        sh:message "An OI may contain multiple validated oiAreas."@en ;
+        sh:message "Ein OI kann mehrere validierte oiAreas enthalten."@de ;
+        sh:message "Un OI peut contenir plusieurs oiAreas validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1207,7 +1427,9 @@ era:OIShape a sh:NodeShape ;
         sh:path era:mapAreaRequests ;
         sh:node era:MapAreaRequestShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple validated mapAreaRequests." ;
+        sh:message "An OI may contain multiple validated mapAreaRequests."@en ;
+        sh:message "Ein OI kann mehrere validierte mapAreaRequests enthalten."@de ;
+        sh:message "Un OI peut contenir plusieurs mapAreaRequests validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1216,7 +1438,9 @@ era:OIShape a sh:NodeShape ;
         sh:path era:mapAreas ;
         sh:node era:MapAreaShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple validated mapAreas." ;
+        sh:message "An OI may contain multiple validated mapAreas."@en ;
+        sh:message "Ein OI kann mehrere validierte mapAreas enthalten."@de ;
+        sh:message "Un OI peut contenir plusieurs mapAreas validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1225,7 +1449,9 @@ era:OIShape a sh:NodeShape ;
         sh:path era:digitalRegisterHandshakeRequests ;
         sh:node era:DigitalRegisterHandshakeRequestShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple validated digitalRegisterHandshakeRequests." ;
+        sh:message "An OI may contain multiple validated digitalRegisterHandshakeRequests."@en ;
+        sh:message "Ein OI kann mehrere validierte digitalRegisterHandshakeRequests enthalten."@de ;
+        sh:message "Un OI peut contenir plusieurs digitalRegisterHandshakeRequests validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1234,7 +1460,9 @@ era:OIShape a sh:NodeShape ;
         sh:path era:digitalRegisterHandshakeAcknowledgements ;
         sh:node era:DigitalRegisterHandshakeAcknowledgementShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple validated digitalRegisterHandshakeAcknowledgements." ;
+        sh:message "An OI may contain multiple validated digitalRegisterHandshakeAcknowledgements."@en ;
+        sh:message "Ein OI kann mehrere validierte digitalRegisterHandshakeAcknowledgements enthalten."@de ;
+        sh:message "Un OI peut contenir plusieurs digitalRegisterHandshakeAcknowledgements validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1243,7 +1471,9 @@ era:OIShape a sh:NodeShape ;
         sh:path era:digitalRegisterHandshakeRejections ;
         sh:node era:DigitalRegisterHandshakeRejectionShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple validated digitalRegisterHandshakeRejections." ;
+        sh:message "An OI may contain multiple validated digitalRegisterHandshakeRejections."@en ;
+        sh:message "Ein OI kann mehrere validierte digitalRegisterHandshakeRejections enthalten."@de ;
+        sh:message "Un OI peut contenir plusieurs digitalRegisterHandshakeRejections validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1252,7 +1482,9 @@ era:OIShape a sh:NodeShape ;
         sh:path era:digitalRegisterSessionTerminationRequests ;
         sh:node era:DigitalRegisterSessionTerminationRequestShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple validated digitalRegisterSessionTerminationRequests." ;
+        sh:message "An OI may contain multiple validated digitalRegisterSessionTerminationRequests."@en ;
+        sh:message "Ein OI kann mehrere validierte digitalRegisterSessionTerminationRequests enthalten."@de ;
+        sh:message "Un OI peut contenir plusieurs digitalRegisterSessionTerminationRequests validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1261,7 +1493,9 @@ era:OIShape a sh:NodeShape ;
         sh:path era:digitalRegisterSessionTerminations ;
         sh:node era:DigitalRegisterSessionTerminationShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple validated digitalRegisterSessionTerminations." ;
+        sh:message "An OI may contain multiple validated digitalRegisterSessionTerminations."@en ;
+        sh:message "Ein OI kann mehrere validierte digitalRegisterSessionTerminations enthalten."@de ;
+        sh:message "Un OI peut contenir plusieurs digitalRegisterSessionTerminations validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1270,7 +1504,9 @@ era:OIShape a sh:NodeShape ;
         sh:path era:segmentProfileRequests ;
         sh:node era:SegmentProfileRequestShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple validated segmentProfileRequests." ;
+        sh:message "An OI may contain multiple validated segmentProfileRequests."@en ;
+        sh:message "Ein OI kann mehrere validierte segmentProfileRequests enthalten."@de ;
+        sh:message "Un OI peut contenir plusieurs segmentProfileRequests validés."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1279,14 +1515,18 @@ era:OIShape a sh:NodeShape ;
         sh:path era:segmentProfilePackets ;
         sh:node era:SegmentProfilePacketShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "An OI may contain multiple validated segmentProfilePackets." ;
+        sh:message "An OI may contain multiple validated segmentProfilePackets."@en ;
+        sh:message "Ein OI kann mehrere validierte segmentProfilePackets enthalten."@de ;
+        sh:message "Un OI peut contenir plusieurs segmentProfilePackets validés."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Permitted Braking Distance Shape =====
 era:PermittedBrakingDistanceShape a sh:NodeShape ;
     sh:targetClass era:PermittedBrakingDistance ;
-    sh:message "Defines permitted braking distance for a track section." ;
+    sh:message "Defines permitted braking distance for a track section."@en ;
+    sh:message "Definiert den zulässigen Bremsweg für einen Streckenabschnitt."@de ;
+    sh:message "Définit la distance de freinage autorisée pour un tronçon de voie."@fr ;
     
     # Segment Section (required, where distance applies)
     sh:property [ 
@@ -1295,7 +1535,9 @@ era:PermittedBrakingDistanceShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each PermittedBrakingDistance must reference exactly one segmentSection that conforms to SegmentSection object." ;
+        sh:message "Each PermittedBrakingDistance must reference exactly one segmentSection that conforms to SegmentSection object."@en ;
+        sh:message "Jeder PermittedBrakingDistance muss auf genau einen segmentSection verweisen, der dem SegmentSection-Objekt entspricht."@de ;
+        sh:message "Chaque PermitteBrakingDistance doit faire référence à exactement un segmentSection conforme à l'objet SegmentSection."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1305,14 +1547,18 @@ era:PermittedBrakingDistanceShape a sh:NodeShape ;
         sh:datatype xsd:boolean ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each PermittedBrakingDistance must have exactly one byEmergencyBrake (boolean, true=emergency brake distance, false=service brake distance)." ;
+        sh:message "Each PermittedBrakingDistance must have exactly one byEmergencyBrake (boolean, true=emergency brake distance, false=service brake distance)."@en ;
+        sh:message "Jede PermittedBrakingDistance muss genau eine byEmergencyBrake haben (boolean, true=Notbremsdistanz, false=Betriebsbremsdistanz)."@de ;
+        sh:message "Chaque PermitteBrakingDistance doit avoir exactement un byEmergencyBrake (booléen, true = distance de freinage d'urgence, false = distance de freinage de service)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Relative Position Shape =====
 era:RelativePositionShape a sh:NodeShape ;
     sh:targetClass era:RelativePosition ;
-    sh:message "Position on track relative to segment profile reference system." ;
+    sh:message "Position on track relative to segment profile reference system."@en ;
+    sh:message "Position auf der Strecke relativ zum Segmentprofil-Referenzsystem."@de ;
+    sh:message "Position sur la bonne voie par rapport au système de référence du profil de segment."@fr ;
     
     # NID SP (required, unsigned integer - segment profile identifier)
     sh:property [ 
@@ -1320,7 +1566,9 @@ era:RelativePositionShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each RelativePosition must have exactly one nidSP (unsigned integer, segment profile identifier)." ;
+        sh:message "Each RelativePosition must have exactly one nidSP (unsigned integer, segment profile identifier)."@en ;
+        sh:message "Jede RelativePosition muss genau eine nidSP (vorzeichenlose Ganzzahl, Segmentprofil-ID) haben."@de ;
+        sh:message "Chaque RelativePosition doit avoir exactement un nidSP (entier non signé, identifiant de profil de segment)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1330,7 +1578,9 @@ era:RelativePositionShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each RelativePosition must have exactly one version (unsigned integer, segment profile data version)." ;
+        sh:message "Each RelativePosition must have exactly one version (unsigned integer, segment profile data version)."@en ;
+        sh:message "Jede RelativePosition muss genau eine Version haben (vorzeichenlose Ganzzahl, Segmentprofildatenversion)."@de ;
+        sh:message "Chaque RelativePosition doit avoir exactement une version (entier non signé, version des données de profil de segment)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1342,7 +1592,9 @@ era:RelativePositionShape a sh:NodeShape ;
         sh:maxInclusive 1023 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each RelativePosition must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)." ;
+        sh:message "Each RelativePosition must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)."@en ;
+        sh:message "Jede RelativePosition muss genau ein nid_c (vorzeichenlose Ganzzahl 0-1023, ETCS-Länderkennung) haben."@de ;
+        sh:message "Chaque RelativePosition doit avoir exactement un nid_c (entier non signé 0-1023, identifiant de pays ETCS)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1352,14 +1604,18 @@ era:RelativePositionShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each RelativePosition must have exactly one pos (unsigned integer, position offset within segment in meters)." ;
+        sh:message "Each RelativePosition must have exactly one pos (unsigned integer, position offset within segment in meters)."@en ;
+        sh:message "Jede RelativePosition muss genau eine Pos (vorzeichenlose Ganzzahl, Positionsoffset innerhalb des Segments in Metern) haben."@de ;
+        sh:message "Chaque RelativePosition doit avoir exactement une pos (entier non signé, décalage de position dans le segment en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Segment Description Shape =====
 era:SegmentDescriptionShape a sh:NodeShape ;
     sh:targetClass era:SegmentDescription ;
-    sh:message "Complete description of track segment including geometry and driving characteristics." ;
+    sh:message "Complete description of track segment including geometry and driving characteristics."@en ;
+    sh:message "Vollständige Beschreibung des Streckenabschnitts einschließlich Geometrie und Fahreigenschaften."@de ;
+    sh:message "Description complète du segment de piste, y compris la géométrie et les caractéristiques de conduite."@fr ;
     
     # Geometry Profile (optional, spatial geometry)
     sh:property [ 
@@ -1367,7 +1623,9 @@ era:SegmentDescriptionShape a sh:NodeShape ;
         sh:node era:GeometryProfileShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A SegmentDescription may have at most one geometryProfile that conforms to GeometryProfile object." ;
+        sh:message "A SegmentDescription may have at most one geometryProfile that conforms to GeometryProfile object."@en ;
+        sh:message "Eine SegmentDescription darf höchstens eine geometryProfile haben, die dem GeometryProfile-Objekt entspricht."@de ;
+        sh:message "Une SegmentDescription peut avoir au plus un geometryProfile conforme à l'objet GeometryProfile."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1377,14 +1635,18 @@ era:SegmentDescriptionShape a sh:NodeShape ;
         sh:node era:DrivingProfileShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:maxCount 1 ;
-        sh:message "A SegmentDescription may have at most one drivingProfile that conforms to DrivingProfile object." ;
+        sh:message "A SegmentDescription may have at most one drivingProfile that conforms to DrivingProfile object."@en ;
+        sh:message "Eine SegmentDescription kann höchstens eine drivingProfile haben, die dem DrivingProfile-Objekt entspricht."@de ;
+        sh:message "Une SegmentDescription peut avoir au plus un drivingProfile conforme à l'objet DrivingProfile."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Segment Profile List Shape =====
 era:SegmentProfileListShape a sh:NodeShape ;
     sh:targetClass era:SegmentProfileList ;
-    sh:message "List header identifying segment profile with country, ID, and version." ;
+    sh:message "List header identifying segment profile with country, ID, and version."@en ;
+    sh:message "Listenkopf, der das Segmentprofil mit Land, ID und Version identifiziert."@de ;
+    sh:message "En-tête de liste identifiant le profil de segment avec le pays, l'ID et la version."@fr ;
     
     # NID SP (required, unsigned integer - segment profile identifier)
     sh:property [ 
@@ -1392,7 +1654,9 @@ era:SegmentProfileListShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentProfileList must have exactly one nidSP (unsigned integer, segment profile identifier)." ;
+        sh:message "Each SegmentProfileList must have exactly one nidSP (unsigned integer, segment profile identifier)."@en ;
+        sh:message "Jede SegmentProfileList muss genau eine nidSP (vorzeichenlose Ganzzahl, Segmentprofil-ID) haben."@de ;
+        sh:message "Chaque SegmentProfileList doit avoir exactement un nidSP (entier non signé, identifiant de profil de segment)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1404,7 +1668,9 @@ era:SegmentProfileListShape a sh:NodeShape ;
         sh:maxInclusive 1023 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentProfileList must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)." ;
+        sh:message "Each SegmentProfileList must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)."@en ;
+        sh:message "Jede SegmentProfileList muss genau ein nid_c (vorzeichenlose Ganzzahl 0-1023, ETCS-Länderkennung) haben."@de ;
+        sh:message "Chaque SegmentProfileList doit avoir exactement un nid_c (entier non signé 0-1023, identifiant de pays ETCS)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1414,7 +1680,9 @@ era:SegmentProfileListShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentProfileList must have exactly one version (unsigned integer, segment profile data version)." ;
+        sh:message "Each SegmentProfileList must have exactly one version (unsigned integer, segment profile data version)."@en ;
+        sh:message "Jede SegmentProfileList muss genau eine Version haben (vorzeichenlose Ganzzahl, Segmentprofildatenversion)."@de ;
+        sh:message "Chaque SegmentProfileList doit avoir exactement une version (entier non signé, version des données de profil de segment)."@fr ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -1422,7 +1690,9 @@ era:SegmentProfileListShape a sh:NodeShape ;
 # ===== Segment Profile Packet Shape =====
 era:SegmentProfilePacketShape a sh:NodeShape ;
     sh:targetClass era:SegmentProfilePacket ;
-    sh:message "Packet containing one or more segment profiles for digital register transmission." ;
+    sh:message "Packet containing one or more segment profiles for digital register transmission."@en ;
+    sh:message "Paket, das ein oder mehrere Segmentprofile für die digitale Registerübertragung enthält."@de ;
+    sh:message "Paquet contenant un ou plusieurs profils de segments pour la transmission de registres numériques."@fr ;
     
     # Track Train Header (required, message header)
     sh:property [ 
@@ -1431,7 +1701,9 @@ era:SegmentProfilePacketShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentProfilePacket must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
+        sh:message "Each SegmentProfilePacket must have exactly one trackTrainHeader that conforms to TrackTrainHeader object."@en ;
+        sh:message "Jedes SegmentProfilePacket muss genau ein trackTrainHeader haben, das dem TrackTrainHeader-Objekt entspricht."@de ;
+        sh:message "Chaque SegmentProfilePacket doit avoir exactement un trackTrainHeader conforme à l'objet TrackTrainHeader."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1441,14 +1713,18 @@ era:SegmentProfilePacketShape a sh:NodeShape ;
         sh:node era:SegmentProfileShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
-        sh:message "Each SegmentProfilePacket must contain at least one segmentProfiles that conform to SegmentProfile object." ;
+        sh:message "Each SegmentProfilePacket must contain at least one segmentProfiles that conform to SegmentProfile object."@en ;
+        sh:message "Jedes SegmentProfilePacket muss mindestens ein segmentProfiles enthalten, das dem SegmentProfile-Objekt entspricht."@de ;
+        sh:message "Chaque SegmentProfilePacket doit contenir au moins un segmentProfiles conforme à l'objet SegmentProfile."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Segment Profile Request Shape =====
 era:SegmentProfileRequestShape a sh:NodeShape ;
     sh:targetClass era:SegmentProfileRequest ;
-    sh:message "Request for specific segment profile data from digital register." ;
+    sh:message "Request for specific segment profile data from digital register."@en ;
+    sh:message "Anforderung spezifischer Segmentprofildaten aus dem digitalen Register."@de ;
+    sh:message "Demande de données de profil de segment spécifiques à partir du registre numérique."@fr ;
     
     # Track Train Header (required, message header)
     sh:property [ 
@@ -1457,7 +1733,9 @@ era:SegmentProfileRequestShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentProfileRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeader object." ;
+        sh:message "Each SegmentProfileRequest must have exactly one trackTrainHeader that conforms to TrackTrainHeader object."@en ;
+        sh:message "Jede SegmentProfileRequest muss genau ein trackTrainHeader haben, das dem TrackTrainHeader-Objekt entspricht."@de ;
+        sh:message "Chaque SegmentProfileRequest doit avoir exactement un trackTrainHeader conforme à l'objet TrackTrainHeader."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1469,7 +1747,9 @@ era:SegmentProfileRequestShape a sh:NodeShape ;
         sh:maxInclusive 1023 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentProfileRequest must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)." ;
+        sh:message "Each SegmentProfileRequest must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)."@en ;
+        sh:message "Jede SegmentProfileRequest muss genau ein nid_c (vorzeichenlose Ganzzahl 0-1023, ETCS-Länderkennung) haben."@de ;
+        sh:message "Chaque SegmentProfileRequest doit avoir exactement un nid_c (entier non signé 0-1023, identifiant de pays ETCS)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1479,14 +1759,18 @@ era:SegmentProfileRequestShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentProfileRequest must have exactly one nidSP (unsigned integer, requested segment profile identifier)." ;
+        sh:message "Each SegmentProfileRequest must have exactly one nidSP (unsigned integer, requested segment profile identifier)."@en ;
+        sh:message "Jede SegmentProfileRequest muss genau eine nidSP (vorzeichenlose Ganzzahl, angeforderte Segmentprofil-ID) haben."@de ;
+        sh:message "Chaque SegmentProfileRequest doit avoir exactement un nidSP (entier non signé, identifiant de profil de segment demandé)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Segment Profile Shape =====
 era:SegmentProfileShape a sh:NodeShape ;
     sh:targetClass era:SegmentProfile ;
-    sh:message "Complete profile for track segment including topology connections and segment description." ;
+    sh:message "Complete profile for track segment including topology connections and segment description."@en ;
+    sh:message "Komplettes Profil für Gleissegment inklusive Topologieverbindungen und Segmentbeschreibung."@de ;
+    sh:message "Profil complet pour le segment de voie, y compris les connexions topologiques et la description du segment."@fr ;
     
     # NID SP (required, unsigned integer - segment profile identifier)
     sh:property [ 
@@ -1494,7 +1778,9 @@ era:SegmentProfileShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentProfile must have exactly one nidSP (unsigned integer, segment profile identifier)." ;
+        sh:message "Each SegmentProfile must have exactly one nidSP (unsigned integer, segment profile identifier)."@en ;
+        sh:message "Jedes SegmentProfile muss genau eine nidSP (vorzeichenlose Ganzzahl, Segmentprofil-ID) haben."@de ;
+        sh:message "Chaque SegmentProfile doit avoir exactement un nidSP (entier non signé, identifiant de profil de segment)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1506,7 +1792,9 @@ era:SegmentProfileShape a sh:NodeShape ;
         sh:maxInclusive 1023 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentProfile must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)." ;
+        sh:message "Each SegmentProfile must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier)."@en ;
+        sh:message "Jedes SegmentProfile muss genau ein nid_c (vorzeichenlose Ganzzahl 0-1023, ETCS-Länderkennung) haben."@de ;
+        sh:message "Chaque SegmentProfile doit avoir exactement un nid_c (entier non signé 0-1023, identifiant de pays ETCS)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1516,7 +1804,9 @@ era:SegmentProfileShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentProfile must have exactly one version (unsigned integer, segment profile data version)." ;
+        sh:message "Each SegmentProfile must have exactly one version (unsigned integer, segment profile data version)."@en ;
+        sh:message "Jedes SegmentProfile muss genau eine Version haben (vorzeichenlose Ganzzahl, Segmentprofildatenversion)."@de ;
+        sh:message "Chaque SegmentProfile doit avoir exactement une version (entier non signé, version des données du profil de segment)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1526,7 +1816,9 @@ era:SegmentProfileShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentProfile must have exactly one segmentProfileLength (unsigned integer, total segment length in meters)." ;
+        sh:message "Each SegmentProfile must have exactly one segmentProfileLength (unsigned integer, total segment length in meters)."@en ;
+        sh:message "Jedes SegmentProfile muss genau eine segmentProfileLength (vorzeichenlose Ganzzahl, Gesamtsegmentlänge in Metern) haben."@de ;
+        sh:message "Chaque SegmentProfile doit avoir exactement un segmentProfileLength (entier non signé, longueur totale du segment en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1537,7 +1829,9 @@ era:SegmentProfileShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentProfile must have exactly one segmentDescription that conforms to SegmentDescription object." ;
+        sh:message "Each SegmentProfile must have exactly one segmentDescription that conforms to SegmentDescription object."@en ;
+        sh:message "Jedes SegmentProfile muss genau ein segmentDescription haben, das dem SegmentDescription-Objekt entspricht."@de ;
+        sh:message "Chaque SegmentProfile doit avoir exactement un segmentDescription conforme à l'objet SegmentDescription."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1548,14 +1842,18 @@ era:SegmentProfileShape a sh:NodeShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 4 ;
-        sh:message "Each SegmentProfile must have 1-4 adjacentSegmentProfiles that conform to AdjacentSegmentProfile object." ;
+        sh:message "Each SegmentProfile must have 1-4 adjacentSegmentProfiles that conform to AdjacentSegmentProfile object."@en ;
+        sh:message "Jedes SegmentProfile muss 1–4 adjacentSegmentProfiles haben, die dem AdjacentSegmentProfile-Objekt entsprechen."@de ;
+        sh:message "Chaque SegmentProfile doit avoir 1 à 4 adjacentSegmentProfiles conformes à l'objet AdjacentSegmentProfile."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Segment Section Shape =====
 era:SegmentSectionShape a sh:NodeShape ;
     sh:targetClass era:SegmentSection ;
-    sh:message "Defines a section within a segment profile using start and end positions." ;
+    sh:message "Defines a section within a segment profile using start and end positions."@en ;
+    sh:message "Definiert einen Abschnitt innerhalb eines Segmentprofils mithilfe von Start- und Endpositionen."@de ;
+    sh:message "Définit une section dans un profil de segment à l'aide des positions de début et de fin."@fr ;
     
     # Range (required, controlled vocabulary - range type)
     sh:property [ 
@@ -1568,7 +1866,9 @@ era:SegmentSectionShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property range must have a value from the defined SKOS concept scheme (rtStart, rtEnd, rtStartEnd, or rtWholeSP)." ;
+        sh:message "The property range must have a value from the defined SKOS concept scheme (rtStart, rtEnd, rtStartEnd, or rtWholeSP)."@en ;
+        sh:message "Der Eigenschaftsbereich muss einen Wert aus dem definierten SKOS-Konzeptschema (rtStart, rtEnd, rtStartEnd oder rtWholeSP) haben."@de ;
+        sh:message "La plage de propriétés doit avoir une valeur du schéma de concept SKOS défini (rtStart, rtEnd, rtStartEnd ou rtWholeSP)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1578,7 +1878,9 @@ era:SegmentSectionShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentSection must have exactly one pStart (unsigned integer, section start position in meters from segment beginning)." ;
+        sh:message "Each SegmentSection must have exactly one pStart (unsigned integer, section start position in meters from segment beginning)."@en ;
+        sh:message "Jeder Segmentabschnitt muss genau eine pStart haben (vorzeichenlose Ganzzahl, Abschnittsstartposition in Metern vom Segmentanfang)."@de ;
+        sh:message "Chaque SegmentSection doit avoir exactement un pStart (entier non signé, position de début de section en mètres à partir du début du segment)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1588,14 +1890,18 @@ era:SegmentSectionShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each SegmentSection must have exactly one pEnd (unsigned integer, section end position in meters from segment beginning)." ;
+        sh:message "Each SegmentSection must have exactly one pEnd (unsigned integer, section end position in meters from segment beginning)."@en ;
+        sh:message "Jeder Segmentabschnitt muss genau eine pEnd haben (vorzeichenlose Ganzzahl, Abschnittsendposition in Metern vom Segmentanfang)."@de ;
+        sh:message "Chaque SegmentSection doit avoir exactement un pEnd (entier non signé, position de fin de section en mètres à partir du début du segment)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Static Speed Profile Change Shape =====
 era:StaticSpeedProfileChangeShape a sh:NodeShape ;
     sh:targetClass era:StaticSpeedProfileChange ;
-    sh:message "Defines a change in static speed limit at a specific position." ;
+    sh:message "Defines a change in static speed limit at a specific position."@en ;
+    sh:message "Definiert eine Änderung der statischen Geschwindigkeitsbegrenzung an einer bestimmten Position."@de ;
+    sh:message "Définit un changement de limite de vitesse statique à une position spécifique."@fr ;
     
     # Position (required, unsigned integer - position in meters)
     sh:property [ 
@@ -1603,7 +1909,9 @@ era:StaticSpeedProfileChangeShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each StaticSpeedProfileChange must have exactly one pos (unsigned integer, position along track in meters)." ;
+        sh:message "Each StaticSpeedProfileChange must have exactly one pos (unsigned integer, position along track in meters)."@en ;
+        sh:message "Jeder StaticSpeedProfileChange muss genau eine Position (vorzeichenlose Ganzzahl, Position entlang der Strecke in Metern) haben."@de ;
+        sh:message "Chaque StaticSpeedProfileChange doit avoir exactement une position (entier non signé, position le long de la piste en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1613,7 +1921,9 @@ era:StaticSpeedProfileChangeShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each StaticSpeedProfileChange must have exactly one speed (unsigned integer, new speed limit in km/h)." ;
+        sh:message "Each StaticSpeedProfileChange must have exactly one speed (unsigned integer, new speed limit in km/h)."@en ;
+        sh:message "Jeder StaticSpeedProfileChange muss genau eine Geschwindigkeit haben (vorzeichenlose Ganzzahl, neue Geschwindigkeitsbegrenzung in km/h)."@de ;
+        sh:message "Chaque StaticSpeedProfileChange doit avoir exactement une vitesse (entier non signé, nouvelle limite de vitesse en km/h)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1626,7 +1936,9 @@ era:StaticSpeedProfileChangeShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property trainEndApplicability must have a value from the defined SKOS concept scheme (lengthDelay or noLengthDelay)." ;
+        sh:message "The property trainEndApplicability must have a value from the defined SKOS concept scheme (lengthDelay or noLengthDelay)."@en ;
+        sh:message "Die Eigenschaft trainEndApplicability muss einen Wert aus dem definierten SKOS-Konzeptschema (lengthDelay oder noLengthDelay) haben."@de ;
+        sh:message "La propriété trainEndApplicability doit avoir une valeur du schéma de concept SKOS défini (lengthDelay ou noLengthDelay)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1635,14 +1947,18 @@ era:StaticSpeedProfileChangeShape a sh:NodeShape ;
         sh:path era:specificStaticSpeedProfile ;
         sh:node era:SpecificStaticSpeedLimitShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A StaticSpeedProfileChange may have multiple validated specificStaticSpeedProfile entries for different train types." ;
+        sh:message "A StaticSpeedProfileChange may have multiple validated specificStaticSpeedProfile entries for different train types."@en ;
+        sh:message "Ein StaticSpeedProfileChange kann mehrere validierte specificStaticSpeedProfile-Einträge für verschiedene Zugtypen haben."@de ;
+        sh:message "Un StaticSpeedProfileChange peut avoir plusieurs entrées specificStaticSpeedProfile validées pour différents types de train."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Static Speed Profile Start Shape =====
 era:StaticSpeedProfileStartShape a sh:NodeShape ;
     sh:targetClass era:StaticSpeedProfileStart ;
-    sh:message "Defines the initial static speed limit at the start of a segment profile." ;
+    sh:message "Defines the initial static speed limit at the start of a segment profile."@en ;
+    sh:message "Definiert die anfängliche statische Geschwindigkeitsbegrenzung am Anfang eines Segmentprofils."@de ;
+    sh:message "Définit la limite de vitesse statique initiale au début d'un profil de segment."@fr ;
     
     # Speed (required, unsigned integer - initial speed in km/h)
     sh:property [ 
@@ -1650,7 +1966,9 @@ era:StaticSpeedProfileStartShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each StaticSpeedProfileStart must have exactly one speed (unsigned integer, initial speed limit in km/h)." ;
+        sh:message "Each StaticSpeedProfileStart must have exactly one speed (unsigned integer, initial speed limit in km/h)."@en ;
+        sh:message "Jeder StaticSpeedProfileStart muss genau eine Geschwindigkeit haben (vorzeichenlose Ganzzahl, anfängliche Geschwindigkeitsbegrenzung in km/h)."@de ;
+        sh:message "Chaque StaticSpeedProfileStart doit avoir exactement une vitesse (entier non signé, limite de vitesse initiale en km/h)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1663,7 +1981,9 @@ era:StaticSpeedProfileStartShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property trainEndApplicability must have a value from the defined SKOS concept scheme (lengthDelay or noLengthDelay)." ;
+        sh:message "The property trainEndApplicability must have a value from the defined SKOS concept scheme (lengthDelay or noLengthDelay)."@en ;
+        sh:message "Die Eigenschaft trainEndApplicability muss einen Wert aus dem definierten SKOS-Konzeptschema (lengthDelay oder noLengthDelay) haben."@de ;
+        sh:message "La propriété trainEndApplicability doit avoir une valeur du schéma de concept SKOS défini (lengthDelay ou noLengthDelay)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1672,14 +1992,18 @@ era:StaticSpeedProfileStartShape a sh:NodeShape ;
         sh:path era:specificStaticSpeedProfile ;
         sh:node era:SpecificStaticSpeedLimitShape ;
 		sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:message "A StaticSpeedProfileStart may have multiple validated specificStaticSpeedProfile entries for different train types." ;
+        sh:message "A StaticSpeedProfileStart may have multiple validated specificStaticSpeedProfile entries for different train types."@en ;
+        sh:message "Ein StaticSpeedProfileStart kann mehrere validierte specificStaticSpeedProfile-Einträge für verschiedene Zugtypen haben."@de ;
+        sh:message "Un StaticSpeedProfileStart peut avoir plusieurs entrées specificStaticSpeedProfile validées pour différents types de train."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Timing Point Mapping Shape =====
 era:TimingPointMappingShape a sh:NodeShape ;
     sh:targetClass era:TimingPointMapping ;
-    sh:message "Maps infrastructure timing points to ATO timing points for schedule coordination." ;
+    sh:message "Maps infrastructure timing points to ATO timing points for schedule coordination."@en ;
+    sh:message "Ordnet Infrastruktur-Timing-Punkte den ATO-Timing-Punkten zur Zeitplankoordinierung zu."@de ;
+    sh:message "Mappe les points de synchronisation de l’infrastructure aux points de synchronisation ATO pour la coordination du calendrier."@fr ;
     
     # Infrastructure Timing Point (required, reference to infrastructure timing point)
     sh:property [ 
@@ -1688,7 +2012,9 @@ era:TimingPointMappingShape a sh:NodeShape ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TimingPointMapping must reference exactly one infraTimingPoint that conforms to TimingPoint object." ;
+        sh:message "Each TimingPointMapping must reference exactly one infraTimingPoint that conforms to TimingPoint object."@en ;
+        sh:message "Jedes TimingPointMapping muss genau ein infraTimingPoint referenzieren, das dem TimingPoint-Objekt entspricht."@de ;
+        sh:message "Chaque TimingPointMapping doit référencer exactement un infraTimingPoint conforme à l'objet TimingPoint."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1699,7 +2025,9 @@ era:TimingPointMappingShape a sh:NodeShape ;
         sh:nodeKind sh:IRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TimingPointMapping must reference exactly one atoTimingPoint that conforms to TimingPoint object." ;
+        sh:message "Each TimingPointMapping must reference exactly one atoTimingPoint that conforms to TimingPoint object."@en ;
+        sh:message "Jedes TimingPointMapping muss genau ein atoTimingPoint referenzieren, das dem TimingPoint-Objekt entspricht."@de ;
+        sh:message "Chaque TimingPointMapping doit référencer exactement un atoTimingPoint conforme à l'objet TimingPoint."@fr ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -1707,7 +2035,9 @@ era:TimingPointMappingShape a sh:NodeShape ;
 # ===== Timing Point Shape =====
 era:TimingPointShape a sh:NodeShape ;
     sh:targetClass era:TimingPoint ;
-    sh:message "Operational timing point for schedule monitoring and ATO stopping precision." ;
+    sh:message "Operational timing point for schedule monitoring and ATO stopping precision."@en ;
+    sh:message "Betriebszeitpunkt für die Zeitplanüberwachung und ATO-Stopppräzision."@de ;
+    sh:message "Point de timing opérationnel pour la surveillance du calendrier et la précision d’arrêt de l’ATO."@fr ;
     
     # NID TP (required, unsigned integer - timing point identifier)
     sh:property [ 
@@ -1715,7 +2045,9 @@ era:TimingPointShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TimingPoint must have exactly one nidTP (unsigned integer, timing point identifier)." ;
+        sh:message "Each TimingPoint must have exactly one nidTP (unsigned integer, timing point identifier)."@en ;
+        sh:message "Jeder TimingPoint muss genau eine nidTP (vorzeichenlose Ganzzahl, Timing-Point-ID) haben."@de ;
+        sh:message "Chaque TimingPoint doit avoir exactement un nidTP (entier non signé, identifiant de point de timing)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1747,7 +2079,9 @@ era:TimingPointShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property stopLocationTolerance must have a value from the defined SKOS concept scheme (10cm to 100m tolerance levels)." ;
+        sh:message "The property stopLocationTolerance must have a value from the defined SKOS concept scheme (10cm to 100m tolerance levels)."@en ;
+        sh:message "Die Eigenschaft stopLocationTolerance muss einen Wert aus dem definierten SKOS-Konzeptschema haben (Toleranzstufen 10 cm bis 100 m)."@de ;
+        sh:message "La propriété stopLocationTolerance doit avoir une valeur issue du schéma conceptuel SKOS défini (niveaux de tolérance de 10 cm à 100 m)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1779,14 +2113,18 @@ era:TimingPointShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property stoppingPointReachDistance must have a value from the defined SKOS concept scheme (distance before timing point to initiate stopping sequence)." ;
+        sh:message "The property stoppingPointReachDistance must have a value from the defined SKOS concept scheme (distance before timing point to initiate stopping sequence)."@en ;
+        sh:message "Die Eigenschaft stoppingPointReachDistance muss einen Wert aus dem definierten SKOS-Konzeptschema haben (Abstand vor dem Zeitpunkt zum Einleiten der Stoppsequenz)."@de ;
+        sh:message "La propriété stoppingPointReachDistance doit avoir une valeur issue du schéma conceptuel SKOS défini (distance avant le point de timing pour lancer la séquence d'arrêt)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Track Train Header Shape =====
 era:TrackTrainHeaderShape a sh:NodeShape ;
     sh:targetClass era:TrackTrainHeader ;
-    sh:message "Message header for track-to-train and train-to-track digital register communications." ;
+    sh:message "Message header for track-to-train and train-to-track digital register communications."@en ;
+    sh:message "Nachrichtenkopf für die digitale Registerkommunikation Gleis-zu-Zug und Zug-zu-Gleis."@de ;
+    sh:message "En-tête de message pour les communications de registre numérique voie-à-train et train-à-voie."@fr ;
     
     # Issued At (required, dateTime - message timestamp)
     sh:property [ 
@@ -1794,7 +2132,9 @@ era:TrackTrainHeaderShape a sh:NodeShape ;
         sh:datatype xsd:dateTime ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TrackTrainHeader must have exactly one issuedAt timestamp (xsd:dateTime)." ;
+        sh:message "Each TrackTrainHeader must have exactly one issuedAt timestamp (xsd:dateTime)."@en ;
+        sh:message "Jeder TrackTrainHeader muss genau einen issuedAt-Zeitstempel (xsd:dateTime) haben."@de ;
+        sh:message "Chaque TrackTrainHeader doit avoir exactement un horodatage issuedAt (xsd:dateTime)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1806,7 +2146,9 @@ era:TrackTrainHeaderShape a sh:NodeShape ;
         sh:maxInclusive 255 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each TrackTrainHeader must have exactly one packetId (unsigned integer 0-255, message sequence identifier)." ;
+        sh:message "Each TrackTrainHeader must have exactly one packetId (unsigned integer 0-255, message sequence identifier)."@en ;
+        sh:message "Jeder TrackTrainHeader muss genau eine packetId (vorzeichenlose Ganzzahl 0-255, Nachrichtensequenz-ID) haben."@de ;
+        sh:message "Chaque TrackTrainHeader doit avoir exactement un packetId (entier non signé 0-255, identifiant de séquence de message)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1815,14 +2157,18 @@ era:TrackTrainHeaderShape a sh:NodeShape ;
         sh:path era:leadingOnBoardUnitId ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
-        sh:message "A TrackTrainHeader may have at most one leadingOnBoardUnitId (string, identifier of leading onboard unit)." ;
+        sh:message "A TrackTrainHeader may have at most one leadingOnBoardUnitId (string, identifier of leading onboard unit)."@en ;
+        sh:message "Ein TrackTrainHeader darf höchstens einen leadingOnBoardUnitId (String, Kennung der führenden Onboard-Einheit) haben."@de ;
+        sh:message "Un TrackTrainHeader peut avoir au plus un leadingOnBoardUnitId (chaîne, identifiant de l'unité embarquée principale)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Tunnel Shape =====
 era:TunnelShape a sh:NodeShape ;
     sh:targetClass era:Tunnel ;
-    sh:message "Tunnel section with type classification for ATO operational considerations." ;
+    sh:message "Tunnel section with type classification for ATO operational considerations."@en ;
+    sh:message "Tunnelabschnitt mit Typklassifizierung für ATO-Betriebserwägungen."@de ;
+    sh:message "Section de tunnel avec classification de type pour les considérations opérationnelles ATO."@fr ;
     
     # Segment Section (required, tunnel location)
     sh:property [ 
@@ -1831,7 +2177,9 @@ era:TunnelShape a sh:NodeShape ;
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each Tunnel must reference exactly one segmentSection that conforms to SegmentSection object." ;
+        sh:message "Each Tunnel must reference exactly one segmentSection that conforms to SegmentSection object."@en ;
+        sh:message "Jeder Tunnel muss genau einen segmentSection referenzieren, der dem SegmentSection-Objekt entspricht."@de ;
+        sh:message "Chaque tunnel doit référencer exactement un segmentSection conforme à l'objet SegmentSection."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1845,14 +2193,18 @@ era:TunnelShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property tunnelType must have a value from the defined SKOS concept scheme (singleTrackTunnel, doubleTrackTunnel, or wideCrossSectionTunnel)." ;
+        sh:message "The property tunnelType must have a value from the defined SKOS concept scheme (singleTrackTunnel, doubleTrackTunnel, or wideCrossSectionTunnel)."@en ;
+        sh:message "Die Eigenschaft tunnelType muss einen Wert aus dem definierten SKOS-Konzeptschema (singleTrackTunnel, doubleTrackTunnel oder wideCrossSectionTunnel) haben."@de ;
+        sh:message "La propriété tunnelType doit avoir une valeur du schéma de concept SKOS défini (singleTrackTunnel, doubleTrackTunnel ou wideCrossSectionTunnel)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Unprotected Level Crossing Shape =====
 era:UnprotectedLXShape a sh:NodeShape ;
     sh:targetClass era:UnprotectedLX ;
-    sh:message "Unprotected level crossing location requiring horn/whistle warning." ;
+    sh:message "Unprotected level crossing location requiring horn/whistle warning."@en ;
+    sh:message "Ungeschützter Bahnübergang, der eine Hupen-/Pfeifwarnung erfordert."@de ;
+    sh:message "Emplacement de passage à niveau non protégé nécessitant un avertissement sonore/sifflet."@fr ;
     
     # P Nominal (required, unsigned integer - nominal position in meters)
     sh:property [ 
@@ -1860,7 +2212,9 @@ era:UnprotectedLXShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each UnprotectedLX must have exactly one pNominal (unsigned integer, nominal crossing position in meters for nominal direction)." ;
+        sh:message "Each UnprotectedLX must have exactly one pNominal (unsigned integer, nominal crossing position in meters for nominal direction)."@en ;
+        sh:message "Jeder UnprotectedLX muss genau eine pNominal haben (vorzeichenlose Ganzzahl, nominelle Kreuzungsposition in Metern für nominelle Richtung)."@de ;
+        sh:message "Chaque UnprotectedLX doit avoir exactement un pNominal (entier non signé, position de croisement nominale en mètres pour la direction nominale)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1870,14 +2224,18 @@ era:UnprotectedLXShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each UnprotectedLX must have exactly one pReverse (unsigned integer, crossing position in meters for reverse direction)." ;
+        sh:message "Each UnprotectedLX must have exactly one pReverse (unsigned integer, crossing position in meters for reverse direction)."@en ;
+        sh:message "Jeder UnprotectedLX muss genau eine pReverse haben (Ganzzahl ohne Vorzeichen, Kreuzungsposition in Metern für umgekehrte Richtung)."@de ;
+        sh:message "Chaque UnprotectedLX doit avoir exactement un pReverse (entier non signé, position de croisement en mètres pour le sens inverse)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Voltage Change Shape =====
 era:VoltageChangeShape a sh:NodeShape ;
     sh:targetClass era:VoltageChange ;
-    sh:message "Defines a change in electrical power supply system at a specific position." ;
+    sh:message "Defines a change in electrical power supply system at a specific position."@en ;
+    sh:message "Definiert eine Änderung des Stromversorgungssystems an einer bestimmten Position."@de ;
+    sh:message "Définit un changement dans le système d'alimentation électrique à un endroit spécifique."@fr ;
     
     # Position (required, unsigned integer - position in meters)
     sh:property [ 
@@ -1885,7 +2243,9 @@ era:VoltageChangeShape a sh:NodeShape ;
         sh:datatype xsd:unsignedInt ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each VoltageChange must have exactly one pos (unsigned integer, position along track in meters)." ;
+        sh:message "Each VoltageChange must have exactly one pos (unsigned integer, position along track in meters)."@en ;
+        sh:message "Jede Spannungsänderung muss genau eine Position (vorzeichenlose Ganzzahl, Position entlang der Strecke in Metern) haben."@de ;
+        sh:message "Chaque changement de tension doit avoir exactement une pos (entier non signé, position le long de la voie en mètres)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1905,7 +2265,9 @@ era:VoltageChangeShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property voltageType must have a value from the defined SKOS concept scheme (AC 25kV 50Hz, AC 15kV 16.7Hz, DC 3kV, DC 1.5kV, DC 750V, etc.)." ;
+        sh:message "The property voltageType must have a value from the defined SKOS concept scheme (AC 25kV 50Hz, AC 15kV 16.7Hz, DC 3kV, DC 1.5kV, DC 750V, etc.)."@en ;
+        sh:message "Die Eigenschaft voltageType muss einen Wert aus dem definierten SKOS-Konzeptschema haben (AC 25 kV 50 Hz, AC 15 kV 16,7 Hz, DC 3 kV, DC 1,5 kV, DC 750 V usw.)."@de ;
+        sh:message "La propriété voltageType doit avoir une valeur issue du schéma conceptuel SKOS défini (AC 25kV 50Hz, AC 15kV 16,7Hz, DC 3kV, DC 1,5kV, DC 750V, etc.)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1917,14 +2279,18 @@ era:VoltageChangeShape a sh:NodeShape ;
         sh:maxInclusive 1023 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each VoltageChange must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier for traction system)." ;
+        sh:message "Each VoltageChange must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier for traction system)."@en ;
+        sh:message "Jeder Spannungswechsel muss genau einen nid_c (vorzeichenlose Ganzzahl 0-1023, ETCS-Länderkennung für Traktionssystem) haben."@de ;
+        sh:message "Chaque changement de tension doit avoir exactement un nid_c (entier non signé 0-1023, identifiant de pays ETCS pour le système de traction)."@fr ;
         sh:severity sh:Violation ;
     ] .
 
 # ===== Voltage Start Shape =====
 era:VoltageStartShape a sh:NodeShape ;
     sh:targetClass era:VoltageStart ;
-    sh:message "Defines the initial electrical power supply system at the start of a segment profile." ;
+    sh:message "Defines the initial electrical power supply system at the start of a segment profile."@en ;
+    sh:message "Definiert das anfängliche Stromversorgungssystem am Anfang eines Segmentprofils."@de ;
+    sh:message "Définit le système d'alimentation électrique initial au début d'un profil de segment."@fr ;
     
     # Voltage Type (required, controlled vocabulary - power system)
     sh:property [ 
@@ -1942,7 +2308,9 @@ era:VoltageStartShape a sh:NodeShape ;
         ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "The property voltageType must have a value from the defined SKOS concept scheme (AC 25kV 50Hz, AC 15kV 16.7Hz, DC 3kV, DC 1.5kV, DC 750V, etc.)." ;
+        sh:message "The property voltageType must have a value from the defined SKOS concept scheme (AC 25kV 50Hz, AC 15kV 16.7Hz, DC 3kV, DC 1.5kV, DC 750V, etc.)."@en ;
+        sh:message "Die Eigenschaft voltageType muss einen Wert aus dem definierten SKOS-Konzeptschema haben (AC 25 kV 50 Hz, AC 15 kV 16,7 Hz, DC 3 kV, DC 1,5 kV, DC 750 V usw.)."@de ;
+        sh:message "La propriété voltageType doit avoir une valeur issue du schéma conceptuel SKOS défini (AC 25kV 50Hz, AC 15kV 16,7Hz, DC 3kV, DC 1,5kV, DC 750V, etc.)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     
@@ -1954,7 +2322,9 @@ era:VoltageStartShape a sh:NodeShape ;
         sh:maxInclusive 1023 ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each VoltageStart must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier for traction system)." ;
+        sh:message "Each VoltageStart must have exactly one nid_c (unsigned integer 0-1023, ETCS country identifier for traction system)."@en ;
+        sh:message "Jeder VoltageStart muss genau ein nid_c (vorzeichenlose Ganzzahl 0-1023, ETCS-Länderkennung für Traktionssystem) haben."@de ;
+        sh:message "Chaque VoltageStart doit avoir exactement un nid_c (entier non signé 0-1023, identifiant de pays ETCS pour le système de traction)."@fr ;
         sh:severity sh:Violation ;
     ] .
 	
@@ -1975,7 +2345,9 @@ era:AtLeastOneOnBoardInfrastructureClassShape a sh:NodeShape ;
     
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "The data must contain at least one instance of the required On-Board Infrastructure classes (e.g., OIArea, SegmentProfile, BaliseGroup, TimingPoint, etc.). This error may indicate that the provided data significantly deviates from the expected ATO On-Board Infrastructure model as defined in the extended ERA ontology." ;
+        sh:message "The data must contain at least one instance of the required On-Board Infrastructure classes (e.g., OIArea, SegmentProfile, BaliseGroup, TimingPoint, etc.). This error may indicate that the provided data significantly deviates from the expected ATO On-Board Infrastructure model as defined in the extended ERA ontology."@en ;
+        sh:message "Die Daten müssen mindestens eine Instanz der erforderlichen On-Board-Infrastrukturklassen enthalten (z. B. OIArea, SegmentProfile, BaliseGroup, TimingPoint usw.). Dieser Fehler kann darauf hinweisen, dass die bereitgestellten Daten erheblich vom erwarteten ATO-On-Board-Infrastrukturmodell gemäß der Definition in der erweiterten ERA-Ontologie abweichen."@de ;
+        sh:message "Les données doivent contenir au moins une instance des classes d'infrastructure embarquées requises (par exemple, OIArea, SegmentProfile, BaliseGroup, TimingPoint, etc.). Cette erreur peut indiquer que les données fournies s'écartent considérablement du modèle d'infrastructure embarquée ATO attendu tel que défini dans l'ontologie ERA étendue."@fr ;
         sh:select """
             PREFIX era: <http://data.europa.eu/949/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
