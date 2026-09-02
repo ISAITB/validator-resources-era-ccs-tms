@@ -94,6 +94,8 @@ infra-dp:DP001-hasSequenceNotEmptyOnSameElement
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-001"@en ;
     sh:message "DP-001: this NetLinearReference starts and ends on the same LinearElement, so era:hasSequence must be empty; it currently lists at least one element. Either clear the sequence, or correct the startsAt / endsAt topological coordinates."@en ;
+    sh:message "DP-001: diese NetLinearReference beginnt und endet auf demselben LinearElement, era:hasSequence muss daher leer sein; sie listet derzeit mindestens ein Element auf. Entweder die Sequenz leeren, oder die startsAt- / endsAt-Koordinaten korrigieren."@de ;
+    sh:message "DP-001 : cette NetLinearReference commence et se termine sur le même LinearElement, era:hasSequence doit donc être vide ; elle liste actuellement au moins un élément. Videz la séquence, ou corrigez les coordonnées topologiques startsAt / endsAt."@fr ;
     sh:select """
         SELECT DISTINCT $this
         WHERE {
@@ -152,6 +154,8 @@ infra-dp:DP002-startElementInSequence
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-002 (start)"@en ;
     sh:message "DP-002 (SPT2TS-130927): the LinearElement holding this NetLinearReference's startsAt coordinate also appears in era:hasSequence. The sequence must list only the elements traversed BETWEEN the two end points; remove the start element from it."@en ;
+    sh:message "DP-002 (SPT2TS-130927): das LinearElement, das die startsAt-Koordinate dieser NetLinearReference trägt, erscheint auch in era:hasSequence. Die Sequenz darf nur die Elemente auflisten, die ZWISCHEN den beiden Endpunkten durchlaufen werden; entfernen Sie das Startelement daraus."@de ;
+    sh:message "DP-002 (SPT2TS-130927) : le LinearElement portant la coordonnée startsAt de cette NetLinearReference apparaît également dans era:hasSequence. La séquence ne doit lister que les éléments traversés ENTRE les deux extrémités ; retirez-en l'élément de départ."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value
         WHERE {
@@ -166,6 +170,8 @@ infra-dp:DP002-endElementInSequence
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-002 (end)"@en ;
     sh:message "DP-002 (SPT2TS-130927): the LinearElement holding this NetLinearReference's endsAt coordinate also appears in era:hasSequence. The sequence must list only the elements traversed BETWEEN the two end points; remove the end element from it."@en ;
+    sh:message "DP-002 (SPT2TS-130927): das LinearElement, das die endsAt-Koordinate dieser NetLinearReference trägt, erscheint auch in era:hasSequence. Die Sequenz darf nur die Elemente auflisten, die ZWISCHEN den beiden Endpunkten durchlaufen werden; entfernen Sie das Endelement daraus."@de ;
+    sh:message "DP-002 (SPT2TS-130927) : le LinearElement portant la coordonnée endsAt de cette NetLinearReference apparaît également dans era:hasSequence. La séquence ne doit lister que les éléments traversés ENTRE les deux extrémités ; retirez-en l'élément d'arrivée."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value
         WHERE {
@@ -212,6 +218,8 @@ infra-dp:DP003-elementAdistinctFromElementB
     sh:path era:elementA ;
     sh:disjoint era:elementB ;
     sh:message "DP-003: this NetRelation references the same LinearElement as both elementA and elementB. A relation connects two DISTINCT linear elements; a self-relation is a degenerate edge in the topology graph. Correct one of the two references."@en ;
+    sh:message "DP-003: diese NetRelation referenziert dasselbe LinearElement sowohl als elementA als auch als elementB. Eine Relation verbindet zwei UNTERSCHIEDLICHE lineare Elemente; eine Selbstbeziehung ist eine degenerierte Kante im Topologiegraphen. Korrigieren Sie eine der beiden Referenzen."@de ;
+    sh:message "DP-003 : cette NetRelation référence le même LinearElement à la fois comme elementA et comme elementB. Une relation relie deux éléments linéaires DISTINCTS ; une relation à soi-même est une arête dégénérée dans le graphe de topologie. Corrigez l'une des deux références."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -263,6 +271,8 @@ infra-dp:DP004-usedBySomeNetRelation
     sh:qualifiedValueShape [ sh:class era:NetRelation ] ;
     sh:qualifiedMinCount 1 ;
     sh:message "DP-004: this LinearElement is not referenced by any NetRelation, as either elementA or elementB. It is therefore isolated in the topology graph and no route can reach it. Add the missing relation, or remove the element if it is a leftover. (If you are validating only a fragment of a TopoArea, note that this rule expects the complete topology.)"@en ;
+    sh:message "DP-004: dieses LinearElement wird von keiner NetRelation referenziert, weder als elementA noch als elementB. Es ist daher im Topologiegraphen isoliert, und keine Fahrstraße kann es erreichen. Fügen Sie die fehlende Relation hinzu, oder entfernen Sie das Element, falls es ein Überbleibsel ist. (Falls Sie nur ein Fragment eines TopoArea validieren, beachten Sie, dass diese Regel die vollständige Topologie erwartet.)"@de ;
+    sh:message "DP-004 : ce LinearElement n'est référencé par aucune NetRelation, ni comme elementA ni comme elementB. Il est donc isolé dans le graphe de topologie, et aucun itinéraire ne peut l'atteindre. Ajoutez la relation manquante, ou supprimez l'élément s'il s'agit d'un reliquat. (Si vous validez uniquement un fragment d'un TopoArea, notez que cette règle suppose la topologie complète.)"@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -315,6 +325,8 @@ infra-dp:DP005-stopLocationOffTheLinearReference
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-005"@en ;
     sh:message "DP-005: this StopLocation sits on a LinearElement that is not part of the PlatformEdge's linearReference. A stop location must lie on the stretch of track the platform edge runs along - on its first or last element, or on one of the elements listed in hasSequence. Either move the stop location, or correct the platform edge's linear reference."@en ;
+    sh:message "DP-005: dieser StopLocation liegt auf einem LinearElement, das nicht Teil der linearReference des PlatformEdge ist. Ein Haltepunkt muss auf dem Gleisabschnitt liegen, dem die Bahnsteigkante folgt - auf ihrem ersten oder letzten Element, oder auf einem der in hasSequence aufgeführten Elemente. Entweder den Haltepunkt verschieben, oder die linearReference der Bahnsteigkante korrigieren."@de ;
+    sh:message "DP-005 : ce StopLocation se trouve sur un LinearElement qui ne fait pas partie de la linearReference du PlatformEdge. Un point d'arrêt doit se trouver sur le tronçon de voie que suit le bord de quai - sur son premier ou dernier élément, ou sur l'un des éléments listés dans hasSequence. Déplacez le point d'arrêt, ou corrigez la linearReference du bord de quai."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value
         WHERE {
@@ -384,6 +396,8 @@ infra-dp:DP006-derailerPositionCollision
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-006"@en ;
     sh:message "DP-006: another Derailer is declared at exactly the same position - the same LinearElement and the same offsetFromOrigin. Only one derailer can occupy a given point on the track, whichever way each of them faces. Remove the duplicate, or correct the offset of one of them."@en ;
+    sh:message "DP-006: ein weiterer Derailer ist an genau derselben Position deklariert - demselben LinearElement und demselben offsetFromOrigin. Nur eine Gleissperre kann einen bestimmten Punkt des Gleises belegen, unabhängig davon, in welche Richtung jede von ihnen weist. Entfernen Sie das Duplikat, oder korrigieren Sie den Offset einer der beiden."@de ;
+    sh:message "DP-006 : un autre Derailer est déclaré exactement à la même position - le même LinearElement et le même offsetFromOrigin. Un seul dispositif de déraillement peut occuper un point donné de la voie, quel que soit le sens dans lequel chacun est orienté. Supprimez le doublon, ou corrigez le décalage de l'un des deux."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value
         WHERE {
@@ -449,6 +463,8 @@ infra-dp:DP007-bufferStopPositionCollision
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-007"@en ;
     sh:message "DP-007: another BufferStop is declared at exactly the same position - the same LinearElement and the same offsetFromOrigin. A buffer stop terminates the track at one physical point, so two records at that point are a duplicate. Remove the duplicate, or correct the offset of one of them."@en ;
+    sh:message "DP-007: ein weiterer BufferStop ist an genau derselben Position deklariert - demselben LinearElement und demselben offsetFromOrigin. Ein Prellbock schließt das Gleis an einem physischen Punkt ab, sodass zwei Einträge an diesem Punkt ein Duplikat darstellen. Entfernen Sie das Duplikat, oder korrigieren Sie den Offset einer der beiden."@de ;
+    sh:message "DP-007 : un autre BufferStop est déclaré exactement à la même position - le même LinearElement et le même offsetFromOrigin. Un heurtoir termine la voie en un point physique, donc deux enregistrements à ce point constituent un doublon. Supprimez le doublon, ou corrigez le décalage de l'un des deux."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value
         WHERE {
@@ -507,6 +523,8 @@ infra-dp:DP008-balisePositionCollision
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-008"@en ;
     sh:message "DP-008: another Balise is declared at exactly the same position - the same LinearElement and the same offsetFromOrigin. Only one balise can be fixed at a given point on the trackbed, whichever balise group each of them belongs to. Remove the duplicate, or correct the offset of one of them."@en ;
+    sh:message "DP-008: eine weitere Balise ist an genau derselben Position deklariert - demselben LinearElement und demselben offsetFromOrigin. Nur eine Balise kann an einem bestimmten Punkt des Gleisbetts befestigt sein, unabhängig davon, zu welcher BaliseGroup jede von ihnen gehört. Entfernen Sie das Duplikat, oder korrigieren Sie den Offset einer der beiden."@de ;
+    sh:message "DP-008 : une autre Balise est déclarée exactement à la même position - le même LinearElement et le même offsetFromOrigin. Une seule balise peut être fixée à un point donné du ballast, quel que soit le BaliseGroup auquel chacune appartient. Supprimez le doublon, ou corrigez le décalage de l'une des deux."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value
         WHERE {
@@ -571,6 +589,8 @@ infra-dp:DP009-duplicateBaliseGroupIdentity
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-009"@en ;
     sh:message "DP-009: another BaliseGroup declares the same NID_BG within the same NID_C. The pair (NID_C, NID_BG) is the identity an on-board uses to recognise a balise group, so it must be unique per country; duplicating it makes the two groups indistinguishable on board. Renumber one of them."@en ;
+    sh:message "DP-009: eine weitere BaliseGroup deklariert dieselbe NID_BG innerhalb derselben NID_C. Das Paar (NID_C, NID_BG) ist die Kennung, mit der ein Fahrzeuggerät eine Balisengruppe erkennt, sie muss also pro Land eindeutig sein; eine Duplizierung macht die beiden Gruppen für das Fahrzeuggerät nicht unterscheidbar. Nummerieren Sie eine der beiden um."@de ;
+    sh:message "DP-009 : un autre BaliseGroup déclare le même NID_BG au sein du même NID_C. Le couple (NID_C, NID_BG) est l'identifiant qu'un équipement embarqué utilise pour reconnaître un groupe de balises, il doit donc être unique par pays ; le dupliquer rend les deux groupes indiscernables à bord. Renumérotez l'un des deux."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value
         WHERE {
@@ -628,6 +648,8 @@ infra-dp:DP010-startNotAfterEnd
     sh:path era:startOffsetFromOrigin ;
     sh:lessThanOrEquals era:endOffsetFromOrigin ;
     sh:message "DP-010: this LinearElementSection has startOffsetFromOrigin greater than endOffsetFromOrigin, which describes a section of negative length. Both offsets are measured from the same origin of the same linear element, so the start must not lie beyond the end - the two values have most likely been transposed."@en ;
+    sh:message "DP-010: dieser LinearElementSection hat einen startOffsetFromOrigin, der größer ist als endOffsetFromOrigin, was einen Abschnitt negativer Länge beschreibt. Beide Offsets werden vom selben Ursprung desselben linearen Elements gemessen, der Anfang darf also nicht hinter dem Ende liegen - die beiden Werte wurden höchstwahrscheinlich vertauscht."@de ;
+    sh:message "DP-010 : ce LinearElementSection a un startOffsetFromOrigin supérieur à endOffsetFromOrigin, ce qui décrit une section de longueur négative. Les deux décalages sont mesurés depuis la même origine du même élément linéaire, le début ne doit donc pas se situer au-delà de la fin - les deux valeurs ont très probablement été inversées."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -683,6 +705,8 @@ infra-dp:DP011a-startNotNegative
     sh:path era:startOffsetFromOrigin ;
     sh:minInclusive 0 ;
     sh:message "DP-011a: startOffsetFromOrigin is negative. Offsets are distances measured from the origin of the linear element, so they cannot be less than zero."@en ;
+    sh:message "DP-011a: startOffsetFromOrigin ist negativ. Offsets sind Distanzen, gemessen vom Ursprung des linearen Elements, sie können also nicht kleiner als null sein."@de ;
+    sh:message "DP-011a : startOffsetFromOrigin est négatif. Les décalages sont des distances mesurées depuis l'origine de l'élément linéaire, elles ne peuvent donc pas être inférieures à zéro."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -692,6 +716,8 @@ infra-dp:DP011b-endNotNegative
     sh:path era:endOffsetFromOrigin ;
     sh:minInclusive 0 ;
     sh:message "DP-011b: endOffsetFromOrigin is negative. Offsets are distances measured from the origin of the linear element, so they cannot be less than zero."@en ;
+    sh:message "DP-011b: endOffsetFromOrigin ist negativ. Offsets sind Distanzen, gemessen vom Ursprung des linearen Elements, sie können also nicht kleiner als null sein."@de ;
+    sh:message "DP-011b : endOffsetFromOrigin est négatif. Les décalages sont des distances mesurées depuis l'origine de l'élément linéaire, elles ne peuvent donc pas être inférieures à zéro."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -700,6 +726,8 @@ infra-dp:DP011c-endBeyondElementLength
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-011c"@en ;
     sh:message "DP-011c: endOffsetFromOrigin runs past the end of the linear element this section sits on - it is greater than that element's lengthOfNetLinearElement. The section would extend beyond track its element does not cover. Shorten the section, or correct the element's length."@en ;
+    sh:message "DP-011c: endOffsetFromOrigin läuft über das Ende des linearen Elements hinaus, auf dem dieser Abschnitt liegt - er ist größer als das lengthOfNetLinearElement dieses Elements. Der Abschnitt würde sich über Gleis erstrecken, das sein Element nicht abdeckt. Kürzen Sie den Abschnitt, oder korrigieren Sie die Länge des Elements."@de ;
+    sh:message "DP-011c : endOffsetFromOrigin dépasse la fin de l'élément linéaire sur lequel se trouve cette section - il est supérieur au lengthOfNetLinearElement de cet élément. La section s'étendrait sur une voie que son élément ne couvre pas. Raccourcissez la section, ou corrigez la longueur de l'élément."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value
         WHERE {
@@ -778,6 +806,8 @@ infra-dp:DP012-relationBetweenSwitchBranches
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-012"@en ;
     sh:message "DP-012: this NetRelation establishes navigability between the two diverging ends of a switch, bypassing it. A switch permits movement between its common track and one diverging track at a time; the two divergences must never be navigable to one another directly. Delete this relation. Note that relating the same two elements at their OTHER ends is legitimate - it is specifically the pair of ends the switch diverges that must not be joined."@en ;
+    sh:message "DP-012: diese NetRelation stellt eine Befahrbarkeit zwischen den beiden abzweigenden Enden einer Weiche her und umgeht sie damit. Eine Weiche erlaubt Bewegung zwischen ihrem Stammgleis und jeweils einem abzweigenden Strang; die beiden Abzweigungen dürfen niemals direkt miteinander befahrbar sein. Löschen Sie diese Relation. Beachten Sie, dass eine Beziehung zwischen denselben beiden Elementen an ihren JEWEILS ANDEREN Enden zulässig ist - es ist speziell das Paar der Enden, das die Weiche abzweigt, das nicht verbunden werden darf."@de ;
+    sh:message "DP-012 : cette NetRelation établit une praticabilité entre les deux extrémités divergentes d'un aiguillage, le contournant ainsi. Un aiguillage permet un mouvement entre sa voie commune et une seule voie divergente à la fois ; les deux divergences ne doivent jamais être praticables directement l'une vers l'autre. Supprimez cette relation. Notez qu'une relation entre les deux mêmes éléments à leurs AUTRES extrémités est légitime - c'est précisément la paire d'extrémités que l'aiguillage fait diverger qui ne doit pas être reliée."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value
         WHERE {
@@ -877,6 +907,8 @@ infra-dp:DP013-switchPortCount
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-013"@en ;
     sh:message "DP-013: this Switch does not present exactly three distinct (LinearElement, isOnOrigin) pairs across its leftBranch and rightBranch relations; the reported value is the number actually found. A switch is a three-port object - one common track and two divergences - so its two branch relations must name three ends between them, sharing the common one. Two ports means there is only one divergence; four means the two relations share no common track."@en ;
+    sh:message "DP-013: dieser Switch weist über seine leftBranch- und rightBranch-Relationen nicht genau drei unterschiedliche (LinearElement, isOnOrigin)-Paare auf; der gemeldete Wert ist die tatsächlich gefundene Anzahl. Eine Weiche ist ein Objekt mit drei Anschlüssen - ein Stammgleis und zwei Abzweigungen - ihre beiden Branch-Relationen müssen also zusammen drei Enden benennen und sich das gemeinsame Ende teilen. Zwei Anschlüsse bedeuten, dass es nur eine Abzweigung gibt; vier bedeuten, dass die beiden Relationen kein gemeinsames Gleis teilen."@de ;
+    sh:message "DP-013 : ce Switch ne présente pas exactement trois paires distinctes (LinearElement, isOnOrigin) à travers ses relations leftBranch et rightBranch ; la valeur indiquée est le nombre réellement trouvé. Un aiguillage est un objet à trois voies - une voie commune et deux divergences - ses deux relations de branche doivent donc nommer trois extrémités entre elles, en partageant celle qui est commune. Deux voies signifient qu'il n'y a qu'une seule divergence ; quatre signifient que les deux relations ne partagent aucune voie commune."@fr ;
     sh:select """
         SELECT $this (COUNT(DISTINCT CONCAT(STR(?el), "|", IF(?flag, "T", "F"))) AS ?value)
         WHERE {
@@ -945,6 +977,8 @@ infra-dp:DP014-detectorOutsideLinkedArea
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-014"@en ;
     sh:message "DP-014: this TrainDetectionSystem stands on a LinearElement that is not part of the TvpSection's linkedArea. A vacancy proving section and the detectors that prove it must describe the same stretch of track; otherwise the section can report clear while occupied, or stay occupied after the vehicle has left. Either move the detector, or extend the linked area to cover the element it stands on."@en ;
+    sh:message "DP-014: dieses TrainDetectionSystem steht auf einem LinearElement, das nicht Teil der linkedArea der TvpSection ist. Ein Freimeldeabschnitt und die Detektoren, die ihn nachweisen, müssen denselben Gleisabschnitt beschreiben; andernfalls kann der Abschnitt frei melden, obwohl er belegt ist, oder belegt bleiben, nachdem das Fahrzeug ihn verlassen hat. Entweder den Detektor verschieben, oder die linkedArea so erweitern, dass sie das Element abdeckt, auf dem er steht."@de ;
+    sh:message "DP-014 : ce TrainDetectionSystem se trouve sur un LinearElement qui ne fait pas partie de la linkedArea du TvpSection. Une section de contrôle de vacance et les détecteurs qui la prouvent doivent décrire le même tronçon de voie ; sinon la section peut signaler qu'elle est libre alors qu'elle est occupée, ou rester occupée après que le véhicule l'a quittée. Déplacez le détecteur, ou étendez la linkedArea pour couvrir l'élément sur lequel il se trouve."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value
         WHERE {
@@ -1048,6 +1082,8 @@ infra-dp:DP015-speedLimitBeyondElementEnd
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-015"@en ;
     sh:message "DP-015: a StaticSpeedLimit in this LinearElementSpeedProfile's {?dir} is positioned at pos {?value} m, beyond the end of the referenced LinearElement, whose lengthOfNetLinearElement is {?len} m. pos is an offset from the origin of that element, so it must not exceed the element's length; a speed change placed past the end is applied in the wrong place or not at all. Either correct the position, or move the limit to the speed profile of the element it really belongs to."@en ;
+    sh:message "DP-015: ein StaticSpeedLimit in {?dir} dieses LinearElementSpeedProfile ist an pos {?value} m positioniert, jenseits des Endes des referenzierten LinearElement, dessen lengthOfNetLinearElement {?len} m beträgt. pos ist ein Offset vom Ursprung dieses Elements, darf also die Länge des Elements nicht überschreiten; eine Geschwindigkeitsänderung jenseits des Endes wird am falschen Ort oder gar nicht angewendet. Entweder die Position korrigieren, oder die Begrenzung dem Geschwindigkeitsprofil des Elements zuordnen, zu dem sie tatsächlich gehört."@de ;
+    sh:message "DP-015 : un StaticSpeedLimit dans {?dir} de ce LinearElementSpeedProfile est positionné à pos {?value} m, au-delà de la fin du LinearElement référencé, dont le lengthOfNetLinearElement est de {?len} m. pos est un décalage depuis l'origine de cet élément et ne doit donc pas dépasser la longueur de l'élément ; un changement de vitesse placé au-delà de la fin est appliqué au mauvais endroit, ou pas du tout. Corrigez la position, ou déplacez la limite vers le profil de vitesse de l'élément auquel elle appartient réellement."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?len ?dir ?ssl
         WHERE {
@@ -1144,6 +1180,8 @@ infra-dp:DP016-horizontalSegmentBeyondElementEnd
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-016"@en ;
     sh:message "DP-016: a {?kind} in this LinearElementGeometry is positioned at elementGeometryPos {?value} m, beyond the end of the referenced LinearElement, whose lengthOfNetLinearElement is {?len} m. The position is an offset from the origin of that element, so it must not exceed the element's length; a change of alignment placed past the end describes track that is not there. Either correct the position, or move the segment to the geometry of the element it really belongs to."@en ;
+    sh:message "DP-016: ein {?kind} in diesem LinearElementGeometry ist an elementGeometryPos {?value} m positioniert, jenseits des Endes des referenzierten LinearElement, dessen lengthOfNetLinearElement {?len} m beträgt. Die Position ist ein Offset vom Ursprung dieses Elements, darf also die Länge des Elements nicht überschreiten; eine Änderung der Linienführung jenseits des Endes beschreibt Gleis, das dort nicht existiert. Entweder die Position korrigieren, oder das Segment der Geometrie des Elements zuordnen, zu dem es tatsächlich gehört."@de ;
+    sh:message "DP-016 : un {?kind} dans ce LinearElementGeometry est positionné à elementGeometryPos {?value} m, au-delà de la fin du LinearElement référencé, dont le lengthOfNetLinearElement est de {?len} m. La position est un décalage depuis l'origine de cet élément et ne doit donc pas dépasser la longueur de l'élément ; un changement de tracé placé au-delà de la fin décrit une voie qui n'existe pas à cet endroit. Corrigez la position, ou déplacez le segment vers la géométrie de l'élément auquel il appartient réellement."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?len ?kind ?geom
         WHERE {
@@ -1234,6 +1272,8 @@ infra-dp:DP017-verticalSegmentBeyondElementEnd
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-017"@en ;
     sh:message "DP-017: a {?kind} in this LinearElementGeometry is positioned at elementGeometryPos {?value} m, beyond the end of the referenced LinearElement, whose lengthOfNetLinearElement is {?len} m. The position is an offset from the origin of that element, so it must not exceed the element's length; a change of gradient placed past the end describes track that is not there, and gradient feeds braking and traction calculations directly. Either correct the position, or move the segment to the geometry of the element it really belongs to."@en ;
+    sh:message "DP-017: ein {?kind} in diesem LinearElementGeometry ist an elementGeometryPos {?value} m positioniert, jenseits des Endes des referenzierten LinearElement, dessen lengthOfNetLinearElement {?len} m beträgt. Die Position ist ein Offset vom Ursprung dieses Elements, darf also die Länge des Elements nicht überschreiten; eine Änderung der Neigung jenseits des Endes beschreibt Gleis, das dort nicht existiert, und die Neigung fließt direkt in Brems- und Traktionsberechnungen ein. Entweder die Position korrigieren, oder das Segment der Geometrie des Elements zuordnen, zu dem es tatsächlich gehört."@de ;
+    sh:message "DP-017 : un {?kind} dans ce LinearElementGeometry est positionné à elementGeometryPos {?value} m, au-delà de la fin du LinearElement référencé, dont le lengthOfNetLinearElement est de {?len} m. La position est un décalage depuis l'origine de cet élément et ne doit donc pas dépasser la longueur de l'élément ; un changement de déclivité placé au-delà de la fin décrit une voie qui n'existe pas à cet endroit, et la déclivité alimente directement les calculs de freinage et de traction. Corrigez la position, ou déplacez le segment vers la géométrie de l'élément auquel il appartient réellement."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?len ?kind ?geom
         WHERE {
@@ -1320,6 +1360,8 @@ infra-dp:DP018-cantPointBeyondElementEnd
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-018"@en ;
     sh:message "DP-018: a CantPoint in this LinearElementGeometry is positioned at elementGeometryPos {?value} m, beyond the end of the referenced LinearElement, whose lengthOfNetLinearElement is {?len} m. The position is an offset from the origin of that element, so it must not exceed the element's length; cant is interpolated between the points, so one placed past the end stretches that interpolation across track that is not there and the cant derived at any chainage is wrong. Either correct the position, or move the cant point to the geometry of the element it really belongs to."@en ;
+    sh:message "DP-018: ein CantPoint in diesem LinearElementGeometry ist an elementGeometryPos {?value} m positioniert, jenseits des Endes des referenzierten LinearElement, dessen lengthOfNetLinearElement {?len} m beträgt. Die Position ist ein Offset vom Ursprung dieses Elements, darf also die Länge des Elements nicht überschreiten; die Überhöhung wird zwischen den Punkten interpoliert, sodass ein jenseits des Endes platzierter Punkt diese Interpolation über Gleis erstreckt, das dort nicht existiert, und die an jeder Stelle abgeleitete Überhöhung falsch ist. Entweder die Position korrigieren, oder den Überhöhungspunkt der Geometrie des Elements zuordnen, zu dem er tatsächlich gehört."@de ;
+    sh:message "DP-018 : un CantPoint dans ce LinearElementGeometry est positionné à elementGeometryPos {?value} m, au-delà de la fin du LinearElement référencé, dont le lengthOfNetLinearElement est de {?len} m. La position est un décalage depuis l'origine de cet élément et ne doit donc pas dépasser la longueur de l'élément ; le dévers est interpolé entre les points, donc un point placé au-delà de la fin étend cette interpolation sur une voie qui n'existe pas à cet endroit, et le dévers obtenu à n'importe quel point kilométrique est erroné. Corrigez la position, ou déplacez le point de dévers vers la géométrie de l'élément auquel il appartient réellement."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?len ?cp
         WHERE {
@@ -1412,6 +1454,8 @@ infra-dp:DP019-slopeSampleBeyondElementEnd
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-019"@en ;
     sh:message "DP-019: a SlopeSamplePoint in this SampledLinearElementGeometry is positioned at elementGeometryPos {?value} m, beyond the end of the referenced LinearElement, whose lengthOfNetLinearElement is {?len} m. The position is an offset from the origin of that element, so it must not exceed the element's length; a gradient sampled past the end is attributed to track that is not there, and distorts whatever is interpolated between it and its neighbour. Either correct the position, or move the sample to the sampled geometry of the element it really belongs to."@en ;
+    sh:message "DP-019: ein SlopeSamplePoint in diesem SampledLinearElementGeometry ist an elementGeometryPos {?value} m positioniert, jenseits des Endes des referenzierten LinearElement, dessen lengthOfNetLinearElement {?len} m beträgt. Die Position ist ein Offset vom Ursprung dieses Elements, darf also die Länge des Elements nicht überschreiten; eine jenseits des Endes abgetastete Neigung wird Gleis zugeordnet, das dort nicht existiert, und verfälscht alles, was zwischen ihr und ihrem Nachbarn interpoliert wird. Entweder die Position korrigieren, oder die Abtastung der abgetasteten Geometrie des Elements zuordnen, zu dem sie tatsächlich gehört."@de ;
+    sh:message "DP-019 : un SlopeSamplePoint dans ce SampledLinearElementGeometry est positionné à elementGeometryPos {?value} m, au-delà de la fin du LinearElement référencé, dont le lengthOfNetLinearElement est de {?len} m. La position est un décalage depuis l'origine de cet élément et ne doit donc pas dépasser la longueur de l'élément ; une déclivité échantillonnée au-delà de la fin est attribuée à une voie qui n'existe pas à cet endroit, et fausse tout ce qui est interpolé entre elle et son voisin. Corrigez la position, ou déplacez l'échantillon vers la géométrie échantillonnée de l'élément auquel il appartient réellement."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?len ?sp
         WHERE {
@@ -1444,6 +1488,8 @@ infra-dp:DP020-curveSampleBeyondElementEnd
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-020"@en ;
     sh:message "DP-020: a CurveSamplePoint in this SampledLinearElementGeometry is positioned at elementGeometryPos {?value} m, beyond the end of the referenced LinearElement, whose lengthOfNetLinearElement is {?len} m. The position is an offset from the origin of that element, so it must not exceed the element's length; a radius sampled past the end is attributed to track that is not there, and distorts whatever is interpolated between it and its neighbour. Either correct the position, or move the sample to the sampled geometry of the element it really belongs to."@en ;
+    sh:message "DP-020: ein CurveSamplePoint in diesem SampledLinearElementGeometry ist an elementGeometryPos {?value} m positioniert, jenseits des Endes des referenzierten LinearElement, dessen lengthOfNetLinearElement {?len} m beträgt. Die Position ist ein Offset vom Ursprung dieses Elements, darf also die Länge des Elements nicht überschreiten; ein jenseits des Endes abgetasteter Radius wird Gleis zugeordnet, das dort nicht existiert, und verfälscht alles, was zwischen ihm und seinem Nachbarn interpoliert wird. Entweder die Position korrigieren, oder die Abtastung der abgetasteten Geometrie des Elements zuordnen, zu dem sie tatsächlich gehört."@de ;
+    sh:message "DP-020 : un CurveSamplePoint dans ce SampledLinearElementGeometry est positionné à elementGeometryPos {?value} m, au-delà de la fin du LinearElement référencé, dont le lengthOfNetLinearElement est de {?len} m. La position est un décalage depuis l'origine de cet élément et ne doit donc pas dépasser la longueur de l'élément ; un rayon échantillonné au-delà de la fin est attribué à une voie qui n'existe pas à cet endroit, et fausse tout ce qui est interpolé entre lui et son voisin. Corrigez la position, ou déplacez l'échantillon vers la géométrie échantillonnée de l'élément auquel il appartient réellement."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?len ?sp
         WHERE {
@@ -1476,6 +1522,8 @@ infra-dp:DP021-cantSampleBeyondElementEnd
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-021"@en ;
     sh:message "DP-021: a CantSamplePoint in this SampledLinearElementGeometry is positioned at elementGeometryPos {?value} m, beyond the end of the referenced LinearElement, whose lengthOfNetLinearElement is {?len} m. The position is an offset from the origin of that element, so it must not exceed the element's length; a cant sampled past the end is attributed to track that is not there, and distorts whatever is interpolated between it and its neighbour. Either correct the position, or move the sample to the sampled geometry of the element it really belongs to."@en ;
+    sh:message "DP-021: ein CantSamplePoint in diesem SampledLinearElementGeometry ist an elementGeometryPos {?value} m positioniert, jenseits des Endes des referenzierten LinearElement, dessen lengthOfNetLinearElement {?len} m beträgt. Die Position ist ein Offset vom Ursprung dieses Elements, darf also die Länge des Elements nicht überschreiten; eine jenseits des Endes abgetastete Überhöhung wird Gleis zugeordnet, das dort nicht existiert, und verfälscht alles, was zwischen ihr und ihrem Nachbarn interpoliert wird. Entweder die Position korrigieren, oder die Abtastung der abgetasteten Geometrie des Elements zuordnen, zu dem sie tatsächlich gehört."@de ;
+    sh:message "DP-021 : un CantSamplePoint dans ce SampledLinearElementGeometry est positionné à elementGeometryPos {?value} m, au-delà de la fin du LinearElement référencé, dont le lengthOfNetLinearElement est de {?len} m. La position est un décalage depuis l'origine de cet élément et ne doit donc pas dépasser la longueur de l'élément ; un dévers échantillonné au-delà de la fin est attribué à une voie qui n'existe pas à cet endroit, et fausse tout ce qui est interpolé entre lui et son voisin. Corrigez la position, ou déplacez l'échantillon vers la géométrie échantillonnée de l'élément auquel il appartient réellement."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?len ?sp
         WHERE {
@@ -1580,6 +1628,8 @@ infra-dp:DP022a-startNotAfterEnd
     sh:path era:startPos ;
     sh:lessThanOrEquals era:endPos ;
     sh:message "DP-022a: this AxleLoadSpeedProfile has startPos greater than endPos, which describes a span of negative length. Both positions are measured from the same origin of the same linear element, so the start must not lie beyond the end - the two values have most likely been transposed. Note that a consumer computing end - start may silently treat the span as empty, in which case the axle load restriction is never applied at all."@en ;
+    sh:message "DP-022a: dieses AxleLoadSpeedProfile hat einen startPos, der größer ist als endPos, was eine Spanne negativer Länge beschreibt. Beide Positionen werden vom selben Ursprung desselben linearen Elements gemessen, der Anfang darf also nicht hinter dem Ende liegen - die beiden Werte wurden höchstwahrscheinlich vertauscht. Beachten Sie, dass ein Konsument, der end - start berechnet, die Spanne stillschweigend als leer behandeln kann, wodurch die Achslastbeschränkung überhaupt nie angewendet wird."@de ;
+    sh:message "DP-022a : ce AxleLoadSpeedProfile a un startPos supérieur à endPos, ce qui décrit un intervalle de longueur négative. Les deux positions sont mesurées depuis la même origine du même élément linéaire, le début ne doit donc pas se situer au-delà de la fin - les deux valeurs ont très probablement été inversées. Notez qu'un consommateur calculant end - start peut traiter silencieusement l'intervalle comme vide, auquel cas la restriction de charge à l'essieu n'est jamais appliquée."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -1598,6 +1648,8 @@ infra-dp:DP022b-startBeyondElementEnd
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-022b"@en ;
     sh:message "DP-022b: an AxleLoadSpeedProfile in this LinearElementSpeedProfile's {?dir} starts at startPos {?value} m, beyond the end of the referenced LinearElement, whose lengthOfNetLinearElement is {?len} m. The position is an offset from the origin of that element, so it must not exceed the element's length; a restriction beginning past the end is claimed over track that is not there. Either correct the position, or move the profile to the speed profile of the element it really belongs to."@en ;
+    sh:message "DP-022b: ein AxleLoadSpeedProfile in {?dir} dieses LinearElementSpeedProfile beginnt bei startPos {?value} m, jenseits des Endes des referenzierten LinearElement, dessen lengthOfNetLinearElement {?len} m beträgt. Die Position ist ein Offset vom Ursprung dieses Elements, darf also die Länge des Elements nicht überschreiten; eine jenseits des Endes beginnende Beschränkung wird für Gleis beansprucht, das dort nicht existiert. Entweder die Position korrigieren, oder das Profil dem Geschwindigkeitsprofil des Elements zuordnen, zu dem es tatsächlich gehört."@de ;
+    sh:message "DP-022b : un AxleLoadSpeedProfile dans {?dir} de ce LinearElementSpeedProfile commence à startPos {?value} m, au-delà de la fin du LinearElement référencé, dont le lengthOfNetLinearElement est de {?len} m. La position est un décalage depuis l'origine de cet élément et ne doit donc pas dépasser la longueur de l'élément ; une restriction commençant au-delà de la fin est revendiquée sur une voie qui n'existe pas à cet endroit. Corrigez la position, ou déplacez le profil vers le profil de vitesse de l'élément auquel il appartient réellement."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?len ?dir ?alsp
         WHERE {
@@ -1622,6 +1674,8 @@ infra-dp:DP022c-endBeyondElementEnd
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-022c"@en ;
     sh:message "DP-022c: an AxleLoadSpeedProfile in this LinearElementSpeedProfile's {?dir} ends at endPos {?value} m, beyond the end of the referenced LinearElement, whose lengthOfNetLinearElement is {?len} m. The position is an offset from the origin of that element, so it must not exceed the element's length; a restriction running past the end is claimed over track that is not there. Either correct the position, or move the profile to the speed profile of the element it really belongs to."@en ;
+    sh:message "DP-022c: ein AxleLoadSpeedProfile in {?dir} dieses LinearElementSpeedProfile endet bei endPos {?value} m, jenseits des Endes des referenzierten LinearElement, dessen lengthOfNetLinearElement {?len} m beträgt. Die Position ist ein Offset vom Ursprung dieses Elements, darf also die Länge des Elements nicht überschreiten; eine jenseits des Endes verlaufende Beschränkung wird für Gleis beansprucht, das dort nicht existiert. Entweder die Position korrigieren, oder das Profil dem Geschwindigkeitsprofil des Elements zuordnen, zu dem es tatsächlich gehört."@de ;
+    sh:message "DP-022c : un AxleLoadSpeedProfile dans {?dir} de ce LinearElementSpeedProfile se termine à endPos {?value} m, au-delà de la fin du LinearElement référencé, dont le lengthOfNetLinearElement est de {?len} m. La position est un décalage depuis l'origine de cet élément et ne doit donc pas dépasser la longueur de l'élément ; une restriction se prolongeant au-delà de la fin est revendiquée sur une voie qui n'existe pas à cet endroit. Corrigez la position, ou déplacez le profil vers le profil de vitesse de l'élément auquel il appartient réellement."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?len ?dir ?alsp
         WHERE {
@@ -1729,6 +1783,8 @@ infra-dp:DP023a-startNotJoinedToFirst
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-023a"@en ;
     sh:message "DP-023a: no NetRelation joins this NetLinearReference's start element {?s} to {?value}, the first element of its hasSequence. The path claimed by the sequence therefore steps off the start element onto track it cannot reach. Either add the missing relation to the topology, or correct the sequence - most often the true first element has been left out."@en ;
+    sh:message "DP-023a: keine NetRelation verbindet das Startelement {?s} dieser NetLinearReference mit {?value}, dem ersten Element seiner hasSequence. Der von der Sequenz beanspruchte Pfad verlässt daher das Startelement in Richtung Gleis, das er nicht erreichen kann. Entweder die fehlende Relation zur Topologie hinzufügen, oder die Sequenz korrigieren - meist wurde das tatsächlich erste Element ausgelassen."@de ;
+    sh:message "DP-023a : aucune NetRelation ne relie l'élément de départ {?s} de cette NetLinearReference à {?value}, le premier élément de son hasSequence. Le chemin revendiqué par la séquence quitte donc l'élément de départ vers une voie qu'il ne peut atteindre. Ajoutez la relation manquante à la topologie, ou corrigez la séquence - le plus souvent, le véritable premier élément a été omis."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?s
         WHERE {
@@ -1755,6 +1811,8 @@ infra-dp:DP023b-adjacentPairNotJoined
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-023b"@en ;
     sh:message "DP-023b: no NetRelation joins {?a} to {?value}, two elements that follow one another in this NetLinearReference's hasSequence. The sequence claims a route that steps between them, but the topology does not connect them. Either add the missing relation, or correct the sequence - most often an intermediate element has been left out, or two entries are in the wrong order."@en ;
+    sh:message "DP-023b: keine NetRelation verbindet {?a} mit {?value}, zwei aufeinanderfolgende Elemente in der hasSequence dieser NetLinearReference. Die Sequenz beansprucht eine Route, die zwischen ihnen verläuft, aber die Topologie verbindet sie nicht. Entweder die fehlende Relation hinzufügen, oder die Sequenz korrigieren - meist wurde ein Zwischenelement ausgelassen, oder zwei Einträge stehen in falscher Reihenfolge."@de ;
+    sh:message "DP-023b : aucune NetRelation ne relie {?a} à {?value}, deux éléments qui se suivent dans le hasSequence de cette NetLinearReference. La séquence revendique un trajet passant entre eux, mais la topologie ne les relie pas. Ajoutez la relation manquante, ou corrigez la séquence - le plus souvent, un élément intermédiaire a été omis, ou deux entrées sont dans le mauvais ordre."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?a
         WHERE {
@@ -1779,6 +1837,8 @@ infra-dp:DP023c-lastNotJoinedToEnd
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-023c"@en ;
     sh:message "DP-023c: no NetRelation joins {?value}, the last element of this NetLinearReference's hasSequence, to its end element {?e}. The path claimed by the sequence therefore cannot reach the element the reference ends on. Either add the missing relation to the topology, or correct the sequence - most often the true last element has been left out."@en ;
+    sh:message "DP-023c: keine NetRelation verbindet {?value}, das letzte Element der hasSequence dieser NetLinearReference, mit ihrem Endelement {?e}. Der von der Sequenz beanspruchte Pfad kann daher das Element, auf dem die Referenz endet, nicht erreichen. Entweder die fehlende Relation zur Topologie hinzufügen, oder die Sequenz korrigieren - meist wurde das tatsächlich letzte Element ausgelassen."@de ;
+    sh:message "DP-023c : aucune NetRelation ne relie {?value}, le dernier élément du hasSequence de cette NetLinearReference, à son élément de fin {?e}. Le chemin revendiqué par la séquence ne peut donc pas atteindre l'élément sur lequel la référence se termine. Ajoutez la relation manquante à la topologie, ou corrigez la séquence - le plus souvent, le véritable dernier élément a été omis."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?e
         WHERE {
@@ -1893,6 +1953,8 @@ infra-dp:DP024-transitionWithoutCantPoint
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-024"@en ;
     sh:message "DP-024: this LinearElementGeometry has a horizontalSegmentTransition at elementGeometryPos {?value} m, and no CantPoint lies within 1 m of it. A transition curve is where the cant ramp runs - cant cannot be raised instantaneously - so the two must be described together; the model defines a CantPoint as marking the start and end of a cant ramp. The match allows +/- 1 m to absorb differences in authoring precision between the two, so the nearest cant point is more than a metre away. Either add the missing cant point, or correct the transition's position. Note this geometry does define cant elsewhere, so the omission is at this position specifically."@en ;
+    sh:message "DP-024: dieses LinearElementGeometry hat einen horizontalSegmentTransition an elementGeometryPos {?value} m, und kein CantPoint liegt innerhalb von 1 m davon. Eine Übergangskurve ist die Stelle, an der die Überhöhungsrampe verläuft - Überhöhung kann nicht sprunghaft aufgebaut werden - die beiden müssen also gemeinsam beschrieben werden; das Modell definiert einen CantPoint als Markierung für Anfang und Ende einer Überhöhungsrampe. Der Abgleich erlaubt +/- 1 m, um Unterschiede in der Erfassungsgenauigkeit zwischen den beiden auszugleichen, der nächstgelegene Überhöhungspunkt ist also mehr als einen Meter entfernt. Entweder den fehlenden Überhöhungspunkt hinzufügen, oder die Position des Übergangs korrigieren. Beachten Sie, dass diese Geometrie an anderer Stelle durchaus Überhöhung definiert, die Auslassung also speziell an dieser Position vorliegt."@de ;
+    sh:message "DP-024 : ce LinearElementGeometry a un horizontalSegmentTransition à elementGeometryPos {?value} m, et aucun CantPoint ne se trouve à moins de 1 m de celui-ci. Une courbe de raccordement est l'endroit où se déroule la rampe de dévers - le dévers ne peut pas être établi instantanément - les deux doivent donc être décrits ensemble ; le modèle définit un CantPoint comme marquant le début et la fin d'une rampe de dévers. La tolérance de +/- 1 m absorbe les différences de précision de saisie entre les deux, le point de dévers le plus proche est donc à plus d'un mètre. Ajoutez le point de dévers manquant, ou corrigez la position du raccordement. Notez que cette géométrie définit bien le dévers ailleurs, l'omission concerne donc spécifiquement cette position."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?ht
         WHERE {
@@ -1994,6 +2056,8 @@ infra-dp:DP025a-offsetNotNegative
     sh:path era:offsetFromOrigin ;
     sh:minInclusive 0 ;
     sh:message "DP-025a: offsetFromOrigin is negative. The offset is a distance measured from the origin of the linear element, so it cannot be less than zero; a negative value places the object off the near end of the element."@en ;
+    sh:message "DP-025a: offsetFromOrigin ist negativ. Der Offset ist eine Distanz, gemessen vom Ursprung des linearen Elements, er kann also nicht kleiner als null sein; ein negativer Wert platziert das Objekt vor dem nahen Ende des Elements."@de ;
+    sh:message "DP-025a : offsetFromOrigin est négatif. Le décalage est une distance mesurée depuis l'origine de l'élément linéaire, il ne peut donc pas être inférieur à zéro ; une valeur négative place l'objet avant l'extrémité proche de l'élément."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2002,6 +2066,8 @@ infra-dp:DP025b-offsetBeyondElementEnd
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-025b"@en ;
     sh:message "DP-025b: this TopologicalCoordinate has offsetFromOrigin {?value} m, beyond the end of the LinearElement it names, whose lengthOfNetLinearElement is {?len} m. The offset is measured from that element's origin, so it must not exceed the element's length - the object is placed on track the element does not contain. Either correct the offset, or point the coordinate at the element the object really stands on."@en ;
+    sh:message "DP-025b: dieses TopologicalCoordinate hat offsetFromOrigin {?value} m, jenseits des Endes des von ihm benannten LinearElement, dessen lengthOfNetLinearElement {?len} m beträgt. Der Offset wird vom Ursprung dieses Elements gemessen, darf also die Länge des Elements nicht überschreiten - das Objekt ist auf Gleis platziert, das das Element nicht enthält. Entweder den Offset korrigieren, oder die Koordinate auf das Element verweisen lassen, auf dem das Objekt tatsächlich steht."@de ;
+    sh:message "DP-025b : ce TopologicalCoordinate a offsetFromOrigin {?value} m, au-delà de la fin du LinearElement qu'il nomme, dont le lengthOfNetLinearElement est de {?len} m. Le décalage est mesuré depuis l'origine de cet élément et ne doit donc pas dépasser la longueur de l'élément - l'objet est placé sur une voie que l'élément ne contient pas. Corrigez le décalage, ou faites pointer la coordonnée vers l'élément sur lequel l'objet se trouve réellement."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?len
         WHERE {
@@ -2101,6 +2167,8 @@ infra-dp:DP026a-adjacentPositionsEqual
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-026a"@en ;
     sh:message "DP-026a: in this object's {?series} list, two members that follow one another are both at elementGeometryPos {?value} m. Two members at one position are contradictory - they claim two different values at one place - so consecutive positions must differ. Remove the duplicate, or correct whichever position was copied."@en ;
+    sh:message "DP-026a: in der {?series}-Liste dieses Objekts liegen zwei aufeinanderfolgende Mitglieder beide bei elementGeometryPos {?value} m. Zwei Mitglieder an einer Position widersprechen sich - sie beanspruchen zwei unterschiedliche Werte an einer Stelle - aufeinanderfolgende Positionen müssen sich also unterscheiden. Entfernen Sie das Duplikat, oder korrigieren Sie die Position, die kopiert wurde."@de ;
+    sh:message "DP-026a : dans la liste {?series} de cet objet, deux membres qui se suivent se trouvent tous deux à elementGeometryPos {?value} m. Deux membres à une même position sont contradictoires - ils revendiquent deux valeurs différentes au même endroit - les positions consécutives doivent donc différer. Supprimez le doublon, ou corrigez la position qui a été copiée."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?series ?cell
         WHERE {
@@ -2139,6 +2207,8 @@ infra-dp:DP026b-listChangesDirection
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-026b"@en ;
     sh:message "DP-026b: this object's {?series} list changes direction at elementGeometryPos {?value} m - the three consecutive members at {?p1}, {?value} and {?p3} m turn back on themselves. A list tagged byIndex is in the order its members occupy on the ground, which may run either way along the element, but it must not reverse part way: a consumer walking it reconstructs a path that doubles back. Move the member at {?value} m to its proper place in the sequence, or correct its position."@en ;
+    sh:message "DP-026b: die {?series}-Liste dieses Objekts ändert bei elementGeometryPos {?value} m die Richtung - die drei aufeinanderfolgenden Mitglieder bei {?p1}, {?value} und {?p3} m kehren sich um. Eine mit byIndex getaggte Liste folgt der Reihenfolge, in der ihre Mitglieder auf dem Gelände liegen, was in beide Richtungen entlang des Elements verlaufen kann, sich aber nicht auf halbem Weg umkehren darf: ein Konsument, der sie durchläuft, rekonstruiert einen Pfad, der sich umkehrt. Verschieben Sie das Mitglied bei {?value} m an seine richtige Stelle in der Sequenz, oder korrigieren Sie seine Position."@de ;
+    sh:message "DP-026b : la liste {?series} de cet objet change de direction à elementGeometryPos {?value} m - les trois membres consécutifs à {?p1}, {?value} et {?p3} m rebroussent chemin. Une liste étiquetée byIndex suit l'ordre dans lequel ses membres se trouvent sur le terrain, ce qui peut aller dans un sens ou dans l'autre le long de l'élément, mais ne doit pas s'inverser en cours de route : un consommateur qui la parcourt reconstruit un chemin qui rebrousse chemin. Déplacez le membre situé à {?value} m à sa place correcte dans la séquence, ou corrigez sa position."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?p1 ?p3 ?series ?cell
         WHERE {
@@ -2258,6 +2328,8 @@ infra-dp:DP027a-noCantAtOrigin
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-027a"@en ;
     sh:message "DP-027a: this LinearElementGeometry defines cant points but none of them is at position 0, so the cant of the element is undefined from its origin up to the first point. The model requires the element to be completely defined, at least at beginning and end; cant is interpolated between points, so a consumer has nothing to interpolate from over the opening stretch. Add a cant point at the origin."@en ;
+    sh:message "DP-027a: dieses LinearElementGeometry definiert Überhöhungspunkte, aber keiner von ihnen liegt bei Position 0, sodass die Überhöhung des Elements von seinem Ursprung bis zum ersten Punkt undefiniert ist. Das Modell verlangt, dass das Element mindestens am Anfang und Ende vollständig definiert ist; Überhöhung wird zwischen Punkten interpoliert, ein Konsument hat für den einleitenden Abschnitt also nichts, wovon er ausgehend interpolieren könnte. Fügen Sie einen Überhöhungspunkt am Ursprung hinzu."@de ;
+    sh:message "DP-027a : ce LinearElementGeometry définit des points de dévers, mais aucun d'eux n'est à la position 0, si bien que le dévers de l'élément est indéfini depuis son origine jusqu'au premier point. Le modèle exige que l'élément soit complètement défini, au moins au début et à la fin ; le dévers est interpolé entre les points, un consommateur n'a donc rien à partir de quoi interpoler sur le tronçon initial. Ajoutez un point de dévers à l'origine."@fr ;
     sh:select """
         SELECT DISTINCT $this
         WHERE {
@@ -2283,6 +2355,8 @@ infra-dp:DP027b-noCantAtFarEnd
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-027b"@en ;
     sh:message "DP-027b: this LinearElementGeometry defines cant points but none of them lies within 1 m of the far end of the element, whose lengthOfNetLinearElement is {?len} m, so the cant is undefined from the last point onwards. The model requires the element to be completely defined, at least at beginning and end. The match allows +/- 1 m to absorb differences in authoring precision between the cant series and the recorded element length, so the last cant point is more than a metre short. Add a cant point at the element's end."@en ;
+    sh:message "DP-027b: dieses LinearElementGeometry definiert Überhöhungspunkte, aber keiner von ihnen liegt innerhalb von 1 m vom fernen Ende des Elements entfernt, dessen lengthOfNetLinearElement {?len} m beträgt, sodass die Überhöhung ab dem letzten Punkt undefiniert ist. Das Modell verlangt, dass das Element mindestens am Anfang und Ende vollständig definiert ist. Der Abgleich erlaubt +/- 1 m, um Unterschiede in der Erfassungsgenauigkeit zwischen der Überhöhungsreihe und der erfassten Elementlänge auszugleichen, der letzte Überhöhungspunkt fehlt also um mehr als einen Meter. Fügen Sie einen Überhöhungspunkt am Ende des Elements hinzu."@de ;
+    sh:message "DP-027b : ce LinearElementGeometry définit des points de dévers, mais aucun d'eux ne se trouve à moins de 1 m de l'extrémité éloignée de l'élément, dont le lengthOfNetLinearElement est de {?len} m, si bien que le dévers est indéfini à partir du dernier point. Le modèle exige que l'élément soit complètement défini, au moins au début et à la fin. La tolérance de +/- 1 m absorbe les différences de précision de saisie entre la série de dévers et la longueur d'élément enregistrée, le dernier point de dévers manque donc de plus d'un mètre. Ajoutez un point de dévers à la fin de l'élément."@fr ;
     sh:select """
         SELECT DISTINCT $this ?len
         WHERE {
@@ -2346,6 +2420,8 @@ infra-dp:DP028-lengthPositive
     sh:path era:lengthOfNetLinearElement ;
     sh:minExclusive 0 ;
     sh:message "DP-028: lengthOfNetLinearElement is zero or negative. A linear element is an uninterrupted stretch of track, so its length must be greater than zero; no position can lie within a zero-length element, and every rule that bounds a position against this element silently passes when the length is not positive."@en ;
+    sh:message "DP-028: lengthOfNetLinearElement ist null oder negativ. Ein lineares Element ist ein ununterbrochener Gleisabschnitt, seine Länge muss also größer als null sein; keine Position kann innerhalb eines Elements der Länge null liegen, und jede Regel, die eine Position gegen dieses Element begrenzt, wird stillschweigend erfüllt, wenn die Länge nicht positiv ist."@de ;
+    sh:message "DP-028 : lengthOfNetLinearElement est nul ou négatif. Un élément linéaire est un tronçon de voie ininterrompu, sa longueur doit donc être supérieure à zéro ; aucune position ne peut se situer à l'intérieur d'un élément de longueur nulle, et toute règle qui borne une position par rapport à cet élément est satisfaite silencieusement lorsque la longueur n'est pas positive."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2386,6 +2462,8 @@ infra-dp:DP029-countriesDiffer
     sh:path era:fromCountryCode ;
     sh:disjoint era:toCountryCode ;
     sh:message "DP-029: fromCountryCode and toCountryCode are the same, so this NationalBorder separates a country from itself. A border marks where the network passes from one country to another; with both codes equal the transition is invisible and a consumer will not switch to the other country's rules. Correct whichever of the two was duplicated."@en ;
+    sh:message "DP-029: fromCountryCode und toCountryCode sind identisch, dieser NationalBorder trennt also ein Land von sich selbst. Eine Grenze markiert, wo das Netz von einem Land in ein anderes übergeht; sind beide Codes gleich, ist der Übergang unsichtbar, und ein Konsument wechselt nicht zu den Regeln des anderen Landes. Korrigieren Sie, welcher der beiden dupliziert wurde."@de ;
+    sh:message "DP-029 : fromCountryCode et toCountryCode sont identiques, ce NationalBorder sépare donc un pays de lui-même. Une frontière marque l'endroit où le réseau passe d'un pays à un autre ; si les deux codes sont identiques, la transition est invisible et un consommateur ne basculera pas vers les règles de l'autre pays. Corrigez celui des deux qui a été dupliqué."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2445,6 +2523,8 @@ infra-dp:DP030-duplicateStaticSpeedLimitPosition
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-030"@en ;
     sh:message "DP-030: this LinearElementSpeedProfile's {?dir} has two distinct StaticSpeedLimit at pos {?value} m. A static limit applies from its position onwards until the next, so two at one position claim two different permitted speeds over the same stretch and nothing decides which applies - a consumer will pick one arbitrarily. Remove the duplicate, or correct the position of whichever limit was misplaced."@en ;
+    sh:message "DP-030: {?dir} dieses LinearElementSpeedProfile hat zwei unterschiedliche StaticSpeedLimit an pos {?value} m. Eine statische Begrenzung gilt ab ihrer Position bis zur nächsten, zwei an einer Position beanspruchen also zwei unterschiedliche zulässige Geschwindigkeiten über denselben Abschnitt, und nichts entscheidet, welche gilt - ein Konsument wählt willkürlich eine davon. Entfernen Sie das Duplikat, oder korrigieren Sie die Position der falsch platzierten Begrenzung."@de ;
+    sh:message "DP-030 : {?dir} de ce LinearElementSpeedProfile comporte deux StaticSpeedLimit distincts à pos {?value} m. Une limite statique s'applique à partir de sa position jusqu'à la suivante, deux à une même position revendiquent donc deux vitesses autorisées différentes sur le même tronçon, et rien ne décide laquelle s'applique - un consommateur en choisira une arbitrairement. Supprimez le doublon, ou corrigez la position de la limite mal placée."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?dir
         WHERE {
@@ -2528,6 +2608,8 @@ infra-dp:DP031-overlappingAxleLoadProfiles
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-031"@en ;
     sh:message "DP-031: this LinearElementSpeedProfile's {?dir} has two AxleLoadSpeedProfile of the same axleLoadCategory {?cat} whose spans overlap - [{?value}, {?e1}] m and [{?s2}, {?e2}] m. A train of that category would have two different permitted speeds over the shared stretch and nothing says which governs. Either merge the two, or move one boundary so the spans meet without overlapping - spans that touch at a single position are accepted."@en ;
+    sh:message "DP-031: {?dir} dieses LinearElementSpeedProfile hat zwei AxleLoadSpeedProfile derselben axleLoadCategory {?cat}, deren Spannen sich überschneiden - [{?value}, {?e1}] m und [{?s2}, {?e2}] m. Ein Zug dieser Kategorie hätte damit zwei unterschiedliche zulässige Geschwindigkeiten über den gemeinsamen Abschnitt, und nichts legt fest, welche gilt. Entweder die beiden zusammenführen, oder eine Grenze so verschieben, dass sich die Spannen ohne Überschneidung berühren - Spannen, die sich an einer einzelnen Position berühren, werden akzeptiert."@de ;
+    sh:message "DP-031 : {?dir} de ce LinearElementSpeedProfile comporte deux AxleLoadSpeedProfile de la même axleLoadCategory {?cat} dont les intervalles se chevauchent - [{?value}, {?e1}] m et [{?s2}, {?e2}] m. Un train de cette catégorie aurait donc deux vitesses autorisées différentes sur le tronçon commun, et rien n'indique laquelle prévaut. Fusionnez les deux, ou déplacez une limite pour que les intervalles se touchent sans se chevaucher - des intervalles qui se touchent en une seule position sont acceptés."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?e1 ?s2 ?e2 ?cat ?dir
         WHERE {
@@ -2622,6 +2704,8 @@ infra-dp:DP032-crossingCoordinatesShareElement
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-032"@en ;
     sh:message "DP-032: both topological coordinates of this Crossing are on the same LinearElement {?value}. A crossing is where two tracks cross, and two tracks are two different linear elements - an element being an uninterrupted stretch without divergence or convergence - so a crossing whose coordinates share an element describes a track crossing itself. Usually the second coordinate was copied from the first and its onLinearElement never changed. Until it is corrected, routes over the two tracks will be treated as independent and two movements may be authorised over the same ground at once."@en ;
+    sh:message "DP-032: beide topologischen Koordinaten dieser Crossing liegen auf demselben LinearElement {?value}. Eine Kreuzung ist die Stelle, an der sich zwei Gleise kreuzen, und zwei Gleise sind zwei unterschiedliche lineare Elemente - ein Element ist ein ununterbrochener Abschnitt ohne Abzweigung oder Zusammenführung - eine Kreuzung, deren Koordinaten sich ein Element teilen, beschreibt also ein Gleis, das sich selbst kreuzt. Meist wurde die zweite Koordinate von der ersten kopiert und ihr onLinearElement nie geändert. Bis dies korrigiert ist, werden Fahrstraßen über die beiden Gleise als unabhängig behandelt, und es können zwei Fahrten gleichzeitig über denselben Grund zugelassen werden."@de ;
+    sh:message "DP-032 : les deux coordonnées topologiques de ce Crossing se trouvent sur le même LinearElement {?value}. Un croisement est l'endroit où deux voies se croisent, et deux voies sont deux éléments linéaires différents - un élément étant un tronçon ininterrompu sans divergence ni convergence - un croisement dont les coordonnées partagent un élément décrit donc une voie qui se croise elle-même. Le plus souvent, la seconde coordonnée a été copiée depuis la première et son onLinearElement n'a jamais été modifié. Tant que ce n'est pas corrigé, les itinéraires sur les deux voies seront traités comme indépendants, et deux mouvements pourront être autorisés sur le même terrain à la fois."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value
         WHERE {
@@ -2690,6 +2774,8 @@ infra-dp:DP033-eoaOffsetBeyondElementEnd
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-033"@en ;
     sh:message "DP-033: this SegmentProfile has eoaOffset {?value} cm, which is beyond the end of the LinearElement it names, whose lengthOfNetLinearElement is {?len} m. Note the units differ - the offset is in CENTIMETRES and the length in METRES, so the offset must not exceed the length times one hundred. An End Of Authority placed past the end of the element refers to track that does not exist, and a limit of authority must never be optimistic."@en ;
+    sh:message "DP-033: dieses SegmentProfile hat eoaOffset {?value} cm, was jenseits des Endes des von ihm benannten LinearElement liegt, dessen lengthOfNetLinearElement {?len} m beträgt. Beachten Sie, dass die Einheiten unterschiedlich sind - der Offset ist in ZENTIMETERN und die Länge in METERN angegeben, der Offset darf also die Länge mal hundert nicht überschreiten. Ein End Of Authority jenseits des Endes des Elements verweist auf Gleis, das nicht existiert, und eine Fahrterlaubnisgrenze darf niemals optimistisch sein."@de ;
+    sh:message "DP-033 : ce SegmentProfile a eoaOffset {?value} cm, ce qui est au-delà de la fin du LinearElement qu'il nomme, dont le lengthOfNetLinearElement est de {?len} m. Notez que les unités diffèrent - le décalage est en CENTIMÈTRES et la longueur en MÈTRES, le décalage ne doit donc pas dépasser la longueur multipliée par cent. Une End Of Authority placée au-delà de la fin de l'élément désigne une voie qui n'existe pas, et une limite d'autorisation ne doit jamais être optimiste."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?len
         WHERE {
@@ -2760,6 +2846,8 @@ infra-dp:DP034-duplicateStopLocationPosition
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-034"@en ;
     sh:message "DP-034: this PlatformEdge lists two distinct StopLocation at exactly the same position - {?value} and {?other}, both on LinearElement {?le} at offset {?off} m. Two berths at one place are indistinguishable, so a system choosing where to stop a train picks arbitrarily; since the two usually differ in trainLoadType, doorOpeningSide or stopTrainLimit, that choice can open the doors on the wrong side. Remove the duplicate, or correct the offset of whichever was copied."@en ;
+    sh:message "DP-034: dieses PlatformEdge listet zwei unterschiedliche StopLocation an genau derselben Position - {?value} und {?other}, beide auf LinearElement {?le} bei Offset {?off} m. Zwei Halteposition an einer Stelle sind nicht unterscheidbar, ein System, das auswählt, wo ein Zug hält, wählt also willkürlich; da sich die beiden meist in trainLoadType, doorOpeningSide oder stopTrainLimit unterscheiden, kann diese Wahl die Türen auf der falschen Seite öffnen. Entfernen Sie das Duplikat, oder korrigieren Sie den Offset des kopierten Eintrags."@de ;
+    sh:message "DP-034 : ce PlatformEdge liste deux StopLocation distincts exactement à la même position - {?value} et {?other}, tous deux sur LinearElement {?le} à offset {?off} m. Deux points d'arrêt au même endroit sont indiscernables, un système choisissant où arrêter un train choisit donc arbitrairement ; comme les deux diffèrent généralement par trainLoadType, doorOpeningSide ou stopTrainLimit, ce choix peut ouvrir les portes du mauvais côté. Supprimez le doublon, ou corrigez le décalage de celui qui a été copié."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?other ?le ?off
         WHERE {
@@ -2864,6 +2952,8 @@ infra-dp:DP035-conflictingValueOverSharedTrack
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-035"@en ;
     sh:message "DP-035: two {?kind} objects claim different values over the same stretch of LinearElement {?value}. One covers [{?a1}, {?b1}] m with {?v1}, the other covers [{?a2}, {?b2}] m with {?v2}, and the two ranges overlap. This property is exclusive - a stretch of track has only one - so the two cannot both hold. Neither object is wrong on its own, which is why nothing else reports this; a consumer will resolve it by picking one, and which one may differ from run to run. Reconcile the values, or move a boundary so the ranges meet without overlapping - ranges that touch at a single offset are accepted."@en ;
+    sh:message "DP-035: zwei {?kind}-Objekte beanspruchen unterschiedliche Werte über denselben Abschnitt von LinearElement {?value}. Eines deckt [{?a1}, {?b1}] m mit {?v1} ab, das andere [{?a2}, {?b2}] m mit {?v2}, und die beiden Bereiche überschneiden sich. Diese Eigenschaft ist exklusiv - ein Gleisabschnitt hat nur eine - beide können also nicht gleichzeitig gelten. Keines der beiden Objekte ist für sich genommen falsch, weshalb nichts sonst dies meldet; ein Konsument löst dies, indem er eines wählt, und welches das ist, kann von Lauf zu Lauf variieren. Gleichen Sie die Werte ab, oder verschieben Sie eine Grenze, sodass sich die Bereiche ohne Überschneidung berühren - Bereiche, die sich an einem einzelnen Offset berühren, werden akzeptiert."@de ;
+    sh:message "DP-035 : deux objets {?kind} revendiquent des valeurs différentes sur le même tronçon de LinearElement {?value}. L'un couvre [{?a1}, {?b1}] m avec {?v1}, l'autre couvre [{?a2}, {?b2}] m avec {?v2}, et les deux plages se chevauchent. Cette propriété est exclusive - un tronçon de voie n'en a qu'une - les deux ne peuvent donc pas être valables à la fois. Aucun des deux objets n'est fautif en soi, c'est pourquoi rien d'autre ne signale ceci ; un consommateur résoudra la situation en en choisissant un, et lequel peut varier d'une exécution à l'autre. Réconciliez les valeurs, ou déplacez une limite pour que les plages se touchent sans se chevaucher - des plages qui se touchent en un seul décalage sont acceptées."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?kind ?v1 ?v2 ?a1 ?b1 ?a2 ?b2
         WHERE {
@@ -2979,6 +3069,8 @@ infra-dp:DP036-baliseOrderChangesDirection
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-036"@en ;
     sh:message "DP-036: the balises of this group change direction at offsetFromOrigin {?value} m - three consecutive balises on LinearElement {?le}, at {?p1}, {?value} and {?p3} m, turn back on themselves. The list is tagged byIndex, so it is in the order a train passes over the balises; that order may run either way along the element but must not reverse part way, since an on-board uses it together with linkOrientationDirection to establish its own direction of travel. Reorder the balises, or correct the position of the one at {?value} m."@en ;
+    sh:message "DP-036: die Balisen dieser Gruppe ändern bei offsetFromOrigin {?value} m die Richtung - drei aufeinanderfolgende Balisen auf LinearElement {?le}, bei {?p1}, {?value} und {?p3} m, kehren sich um. Die Liste ist mit byIndex getaggt, sie folgt also der Reihenfolge, in der ein Zug über die Balisen fährt; diese Reihenfolge kann in beide Richtungen entlang des Elements verlaufen, darf sich aber nicht auf halbem Weg umkehren, da ein Fahrzeuggerät sie zusammen mit linkOrientationDirection nutzt, um seine eigene Fahrtrichtung zu bestimmen. Ordnen Sie die Balisen neu, oder korrigieren Sie die Position der bei {?value} m."@de ;
+    sh:message "DP-036 : les balises de ce groupe changent de direction à offsetFromOrigin {?value} m - trois balises consécutives sur LinearElement {?le}, à {?p1}, {?value} et {?p3} m, rebroussent chemin. La liste est étiquetée byIndex, elle suit donc l'ordre dans lequel un train passe sur les balises ; cet ordre peut aller dans un sens ou dans l'autre le long de l'élément, mais ne doit pas s'inverser en cours de route, car un équipement embarqué l'utilise avec linkOrientationDirection pour établir son propre sens de marche. Réordonnez les balises, ou corrigez la position de celle à {?value} m."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?p1 ?p3 ?le ?cell
         WHERE {
@@ -3067,6 +3159,8 @@ infra-dp:DP037a-maxLengthPositive
     sh:path era:trainMaxLength ;
     sh:minExclusive 0 ;
     sh:message "DP-037a (advisory): trainMaxLength is zero, which says that no train of any length may stop here. That may be intended - it is a coherent way of recording a berth as out of use - but it is more often a placeholder written because the attribute is mandatory. Either way a system checking a train against this limit will refuse every train. Confirm the value, or record the berth's closure some other way."@en ;
+    sh:message "DP-037a (Hinweis): trainMaxLength ist null, was besagt, dass kein Zug beliebiger Länge hier halten darf. Das kann beabsichtigt sein - es ist eine schlüssige Art, eine Haltestelle als außer Betrieb zu erfassen - ist aber öfter ein Platzhalter, der geschrieben wurde, weil das Attribut Pflicht ist. So oder so wird ein System, das einen Zug gegen diese Grenze prüft, jeden Zug ablehnen. Bestätigen Sie den Wert, oder erfassen Sie die Schließung der Haltestelle auf andere Weise."@de ;
+    sh:message "DP-037a (avis) : trainMaxLength est nul, ce qui signifie qu'aucun train, quelle que soit sa longueur, ne peut s'arrêter ici. Cela peut être intentionnel - c'est une manière cohérente d'enregistrer un quai comme hors service - mais c'est plus souvent un espace réservé écrit parce que l'attribut est obligatoire. Dans tous les cas, un système vérifiant un train par rapport à cette limite refusera chaque train. Confirmez la valeur, ou enregistrez la fermeture du quai d'une autre manière."@fr ;
     sh:severity sh:Warning ;
     .
 
@@ -3076,6 +3170,8 @@ infra-dp:DP037b-maxAxlesPositive
     sh:path era:trainMaxAxles ;
     sh:minExclusive 0 ;
     sh:message "DP-037b (advisory): trainMaxAxles is zero, so no train with any axles may stop here - which is every train. This is usually a placeholder for a limit that was not known when the record was written. Confirm the value."@en ;
+    sh:message "DP-037b (Hinweis): trainMaxAxles ist null, sodass kein Zug mit irgendwelchen Achsen hier halten darf - was auf jeden Zug zutrifft. Dies ist meist ein Platzhalter für eine Grenze, die beim Erfassen des Eintrags noch nicht bekannt war. Bestätigen Sie den Wert."@de ;
+    sh:message "DP-037b (avis) : trainMaxAxles est nul, si bien qu'aucun train ayant des essieux ne peut s'arrêter ici - ce qui est le cas de tous les trains. Il s'agit généralement d'un espace réservé pour une limite qui n'était pas connue au moment de la saisie. Confirmez la valeur."@fr ;
     sh:severity sh:Warning ;
     .
 
@@ -3085,6 +3181,8 @@ infra-dp:DP037c-maxWagonsPositive
     sh:path era:trainMaxWagons ;
     sh:minExclusive 0 ;
     sh:message "DP-037c (advisory): trainMaxWagons is zero. Unlike the other two limits this one has a defensible reading - a berth that takes locomotives only - so it is worth checking rather than assuming. If no wagon limit applies, record the real maximum instead."@en ;
+    sh:message "DP-037c (Hinweis): trainMaxWagons ist null. Anders als bei den beiden anderen Grenzen ist hier eine vertretbare Lesart möglich - eine Haltestelle, die nur Lokomotiven aufnimmt - es lohnt sich also zu prüfen, statt anzunehmen. Falls keine Wagenbegrenzung gilt, erfassen Sie stattdessen das tatsächliche Maximum."@de ;
+    sh:message "DP-037c (avis) : trainMaxWagons est nul. Contrairement aux deux autres limites, celle-ci admet une lecture défendable - un quai réservé aux seules locomotives - il vaut donc la peine de vérifier plutôt que de supposer. Si aucune limite de wagons ne s'applique, enregistrez plutôt le maximum réel."@fr ;
     sh:severity sh:Warning ;
     .
 
@@ -3151,6 +3249,8 @@ infra-dp:DP038a-noHorizontalSegmentAtOrigin
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-038a"@en ;
     sh:message "DP-038a (advisory): no member of this LinearElementGeometry's horizontalAlignments is at position 0, so the horizontal shape of the element is undescribed from its origin up to the first segment. A geometric primitive describes the alignment from its own position onwards, so nothing covers the opening stretch - a consumer must either refuse to compute there or extend the first segment backwards, which is a guess. Add a segment at the origin, unless the geometry is deliberately partial."@en ;
+    sh:message "DP-038a (Hinweis): kein Mitglied der horizontalAlignments dieses LinearElementGeometry liegt bei Position 0, sodass die horizontale Form des Elements von seinem Ursprung bis zum ersten Segment nicht beschrieben ist. Ein geometrisches Primitiv beschreibt die Linienführung ab seiner eigenen Position, für den einleitenden Abschnitt ist also nichts vorhanden - ein Konsument muss dort entweder die Berechnung ablehnen oder das erste Segment rückwärts verlängern, was eine Vermutung ist. Fügen Sie ein Segment am Ursprung hinzu, es sei denn, die Geometrie ist absichtlich unvollständig."@de ;
+    sh:message "DP-038a (avis) : aucun membre des horizontalAlignments de ce LinearElementGeometry ne se trouve à la position 0, si bien que la forme horizontale de l'élément n'est pas décrite depuis son origine jusqu'au premier segment. Une primitive géométrique décrit le tracé à partir de sa propre position, rien ne couvre donc le tronçon initial - un consommateur doit soit refuser de calculer à cet endroit, soit prolonger le premier segment vers l'arrière, ce qui revient à une supposition. Ajoutez un segment à l'origine, sauf si la géométrie est délibérément partielle."@fr ;
     sh:select """
         SELECT DISTINCT $this
         WHERE {
@@ -3177,6 +3277,8 @@ infra-dp:DP038b-noVerticalSegmentAtOrigin
     sh:prefixes infra-dp:PrefixDeclarations ;
     rdfs:label "DP-038b"@en ;
     sh:message "DP-038b (advisory): no member of this LinearElementGeometry's verticalAlignments is at position 0, so the gradient of the element is undescribed from its origin up to the first segment. As with the horizontal alignment, a segment describes the profile from its own position onwards, so the opening stretch is covered by nothing. Add a segment at the origin, unless the geometry is deliberately partial."@en ;
+    sh:message "DP-038b (Hinweis): kein Mitglied der verticalAlignments dieses LinearElementGeometry liegt bei Position 0, sodass die Neigung des Elements von seinem Ursprung bis zum ersten Segment nicht beschrieben ist. Wie bei der horizontalen Linienführung beschreibt ein Segment das Profil ab seiner eigenen Position, der einleitende Abschnitt ist also durch nichts abgedeckt. Fügen Sie ein Segment am Ursprung hinzu, es sei denn, die Geometrie ist absichtlich unvollständig."@de ;
+    sh:message "DP-038b (avis) : aucun membre des verticalAlignments de ce LinearElementGeometry ne se trouve à la position 0, si bien que la déclivité de l'élément n'est pas décrite depuis son origine jusqu'au premier segment. Comme pour le tracé horizontal, un segment décrit le profil à partir de sa propre position, le tronçon initial n'est donc couvert par rien. Ajoutez un segment à l'origine, sauf si la géométrie est délibérément partielle."@fr ;
     sh:select """
         SELECT DISTINCT $this
         WHERE {
