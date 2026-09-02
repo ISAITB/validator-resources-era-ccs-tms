@@ -81,6 +81,8 @@ opp-sh:infra-NetLinearReference-startsAt
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetPointReferenceShape ;
     sh:message "startsAt must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "startsAt muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "startsAt doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -95,6 +97,8 @@ opp-sh:infra-NetLinearReference-endsAt
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetPointReferenceShape ;
     sh:message "endsAt must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "endsAt muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "endsAt doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -110,6 +114,8 @@ opp-sh:infra-NetLinearReference-hasSequence
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "hasSequence is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "hasSequence ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "hasSequence est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node opp-sh:infra-NetLinearReference-hasSequence-items ;
     sh:severity sh:Violation ;
     .
@@ -118,6 +124,8 @@ opp-sh:infra-NetLinearReference-hasSequence-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "era:hasSequence is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:hasSequence ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:hasSequence est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -144,6 +152,8 @@ opp-sh:infra-NetLinearReference-hasSequence-items
         sh:nodeKind sh:IRI ;
         sh:class era:LinearElement ;
         sh:message "hasSequence must reference an existing era:LinearElement by IRI."@en ;
+        sh:message "hasSequence muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+        sh:message "hasSequence doit référencer un era:LinearElement existant par IRI."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -187,6 +197,8 @@ opp-sh:tp-SwitchableTracksideAsset-switchableTracksideAssetSections
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:tp-SwitchableTracksideAssetSectionShape ;
     sh:message "switchableTracksideAssetSections must be a well-formed SwitchableTracksideAssetSection (blank node or IRI)."@en ;
+    sh:message "switchableTracksideAssetSections muss ein wohlgeformtes SwitchableTracksideAssetSection sein (Blank Node oder IRI)."@de ;
+    sh:message "switchableTracksideAssetSections doit être un SwitchableTracksideAssetSection bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -200,6 +212,8 @@ opp-sh:tp-SwitchableTracksideAsset-protectedInfraElements
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:tp-ProtectedInfraElementShape ;
     sh:message "protectedInfraElements must be a well-formed ProtectedInfraElement (blank node or IRI)."@en ;
+    sh:message "protectedInfraElements muss ein wohlgeformtes ProtectedInfraElement sein (Blank Node oder IRI)."@de ;
+    sh:message "protectedInfraElements doit être un ProtectedInfraElement bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -214,6 +228,8 @@ opp-sh:tp-SwitchableTracksideAsset-dependenciesType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/dependency-type/exclusive> <http://data.europa.eu/949/concepts/dependency-type/equivalent> <http://data.europa.eu/949/concepts/dependency-type/specific> ) ;
     sh:message "Value must be one of the CCSTMS-scoped DependencyType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von DependencyType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de DependencyType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -266,6 +282,8 @@ opp-sh:infra-NetPointReference-hasTopoCoordinate
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-TopologicalCoordinateShape ;
     sh:message "hasTopoCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:message "hasTopoCoordinate muss ein wohlgeformtes TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
+    sh:message "hasTopoCoordinate doit être un TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -280,6 +298,8 @@ opp-sh:infra-NetPointReference-appliesToDirection
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/orientations/02> <http://data.europa.eu/949/concepts/orientations/00> <http://data.europa.eu/949/concepts/orientations/01> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OrientationDirections concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OrientationDirections entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OrientationDirections."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -349,6 +369,8 @@ opp-sh:infra-LinearElementSection-onElement
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "onElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "onElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "onElement doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -414,6 +436,8 @@ opp-sh:infra-NetAreaReference-includes
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetLinearReferenceShape ;
     sh:message "includes must be a well-formed NetLinearReference (blank node or IRI)."@en ;
+    sh:message "includes muss ein wohlgeformtes NetLinearReference sein (Blank Node oder IRI)."@de ;
+    sh:message "includes doit être un NetLinearReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -454,6 +478,8 @@ opp-sh:tp-SwitchableTracksideAssetSection-linearElementSection
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-LinearElementSectionShape ;
     sh:message "linearElementSection must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:message "linearElementSection muss ein wohlgeformtes LinearElementSection sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElementSection doit être un LinearElementSection bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -487,6 +513,8 @@ opp-sh:tp-ProtectedInfraElementShape
         opp-sh:tp-ProtectedInfraElement-levelCrossing-present
     ) ;
     sh:message "ProtectedInfraElement is a union: exactly one of (switch, slipCrossing, crossing, derailer, levelCrossing) must be present."@en ;
+    sh:message "ProtectedInfraElement ist eine Union: genau eines von (switch, slipCrossing, crossing, derailer, levelCrossing) muss vorhanden sein."@de ;
+    sh:message "ProtectedInfraElement est une union : exactement l'un de (switch, slipCrossing, crossing, derailer, levelCrossing) doit être présent."@fr ;
     sh:property opp-sh:tp-ProtectedInfraElement-switch ;
     sh:property opp-sh:tp-ProtectedInfraElement-slipCrossing ;
     sh:property opp-sh:tp-ProtectedInfraElement-crossing ;
@@ -504,6 +532,8 @@ opp-sh:tp-ProtectedInfraElement-switch
     sh:nodeKind sh:IRI ;
     sh:class era:Switch ;
     sh:message "switch must reference an existing era:Switch by IRI."@en ;
+    sh:message "switch muss über eine IRI auf ein bestehendes era:Switch verweisen."@de ;
+    sh:message "switch doit référencer un era:Switch existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -517,6 +547,8 @@ opp-sh:tp-ProtectedInfraElement-slipCrossing
     sh:nodeKind sh:IRI ;
     sh:class era:SlipCrossing ;
     sh:message "slipCrossing must reference an existing era:SlipCrossing by IRI."@en ;
+    sh:message "slipCrossing muss über eine IRI auf ein bestehendes era:SlipCrossing verweisen."@de ;
+    sh:message "slipCrossing doit référencer un era:SlipCrossing existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -530,6 +562,8 @@ opp-sh:tp-ProtectedInfraElement-crossing
     sh:nodeKind sh:IRI ;
     sh:class era:Crossing ;
     sh:message "crossing must reference an existing era:Crossing by IRI."@en ;
+    sh:message "crossing muss über eine IRI auf ein bestehendes era:Crossing verweisen."@de ;
+    sh:message "crossing doit référencer un era:Crossing existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -543,6 +577,8 @@ opp-sh:tp-ProtectedInfraElement-derailer
     sh:nodeKind sh:IRI ;
     sh:class era:Derailer ;
     sh:message "derailer must reference an existing era:Derailer by IRI."@en ;
+    sh:message "derailer muss über eine IRI auf ein bestehendes era:Derailer verweisen."@de ;
+    sh:message "derailer doit référencer un era:Derailer existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -556,6 +592,8 @@ opp-sh:tp-ProtectedInfraElement-levelCrossing
     sh:nodeKind sh:IRI ;
     sh:class era:LevelCrossing ;
     sh:message "levelCrossing must reference an existing era:LevelCrossing by IRI."@en ;
+    sh:message "levelCrossing muss über eine IRI auf ein bestehendes era:LevelCrossing verweisen."@de ;
+    sh:message "levelCrossing doit référencer un era:LevelCrossing existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -641,6 +679,8 @@ opp-sh:infra-TopologicalCoordinate-onLinearElement
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "onLinearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "onLinearElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "onLinearElement doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -700,6 +740,8 @@ opp-sh:infra-Switch-leftBranch
     sh:nodeKind sh:IRI ;
     sh:class era:NetRelation ;
     sh:message "leftBranch must reference an existing era:NetRelation by IRI."@en ;
+    sh:message "leftBranch muss über eine IRI auf ein bestehendes era:NetRelation verweisen."@de ;
+    sh:message "leftBranch doit référencer un era:NetRelation existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -714,6 +756,8 @@ opp-sh:infra-Switch-rightBranch
     sh:nodeKind sh:IRI ;
     sh:class era:NetRelation ;
     sh:message "rightBranch must reference an existing era:NetRelation by IRI."@en ;
+    sh:message "rightBranch muss über eine IRI auf ein bestehendes era:NetRelation verweisen."@de ;
+    sh:message "rightBranch doit référencer un era:NetRelation existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -746,6 +790,8 @@ opp-sh:infra-SlipCrossingShape
         [ sh:property [ sh:path era:switches ; sh:minCount 4 ; sh:maxCount 4 ] ]
     ) ;
     sh:message "A SlipCrossing must reference exactly two switches (single slip crossing) or exactly four switches (double slip crossing) - never three (see formatNote on SlipCrossing.switches)."@en ;
+    sh:message "Ein SlipCrossing muss entweder genau zwei switches referenzieren (einfache Kreuzungsweiche) oder genau vier switches (doppelte Kreuzungsweiche) - niemals drei (siehe formatNote zu SlipCrossing.switches)."@de ;
+    sh:message "Un SlipCrossing doit référencer soit exactement deux switches (traversée-jonction simple), soit exactement quatre switches (traversée-jonction double) - jamais trois (voir formatNote sur SlipCrossing.switches)."@fr ;
     sh:property opp-sh:infra-SlipCrossing-switches ;
     sh:property opp-sh:infra-SlipCrossing-crossing ;
     sh:property opp-sh:infra-SlipCrossing-name ;
@@ -761,6 +807,8 @@ opp-sh:infra-SlipCrossing-switches
     sh:nodeKind sh:IRI ;
     sh:class era:Switch ;
     sh:message "switches must reference an existing era:Switch by IRI."@en ;
+    sh:message "switches muss über eine IRI auf ein bestehendes era:Switch verweisen."@de ;
+    sh:message "switches doit référencer un era:Switch existant par IRI."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -773,6 +821,8 @@ opp-sh:infra-SlipCrossing-crossing
     sh:nodeKind sh:IRI ;
     sh:class era:Crossing ;
     sh:message "crossing must reference an existing era:Crossing by IRI."@en ;
+    sh:message "crossing muss über eine IRI auf ein bestehendes era:Crossing verweisen."@de ;
+    sh:message "crossing doit référencer un era:Crossing existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -815,6 +865,8 @@ opp-sh:infra-Crossing-topologicalCoordinates
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-TopologicalCoordinateShape ;
     sh:message "topologicalCoordinates must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:message "topologicalCoordinates muss ein wohlgeformtes TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
+    sh:message "topologicalCoordinates doit être un TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 2 ;
     sh:maxCount 2 ;
     sh:severity sh:Violation ;
@@ -871,6 +923,8 @@ opp-sh:infra-Derailer-netPointReference
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetPointReferenceShape ;
     sh:message "netPointReference must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "netPointReference muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "netPointReference doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -940,6 +994,8 @@ opp-sh:infra-LevelCrossing-areaReference
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetAreaReferenceShape ;
     sh:message "areaReference must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:message "areaReference muss ein wohlgeformtes NetAreaReference sein (Blank Node oder IRI)."@de ;
+    sh:message "areaReference doit être un NetAreaReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -996,6 +1052,8 @@ opp-sh:infra-NetRelation-elementA
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "elementA must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "elementA muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "elementA doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1010,6 +1068,8 @@ opp-sh:infra-NetRelation-elementB
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "elementB must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "elementB muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "elementB doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1065,6 +1125,8 @@ opp-sh:OperationalTrafficPlan-operationalPlanMovements
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:OperationalPlanMovementShape ;
     sh:message "operationalPlanMovements must be a well-formed OperationalPlanMovement (blank node or IRI)."@en ;
+    sh:message "operationalPlanMovements muss ein wohlgeformtes OperationalPlanMovement sein (Blank Node oder IRI)."@de ;
+    sh:message "operationalPlanMovements doit être un OperationalPlanMovement bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -1077,6 +1139,8 @@ opp-sh:OperationalTrafficPlan-operationalPlanUsageRestrictions
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:OperationalPlanUsageRestrictionShape ;
     sh:message "operationalPlanUsageRestrictions must be a well-formed OperationalPlanUsageRestriction (blank node or IRI)."@en ;
+    sh:message "operationalPlanUsageRestrictions muss ein wohlgeformtes OperationalPlanUsageRestriction sein (Blank Node oder IRI)."@de ;
+    sh:message "operationalPlanUsageRestrictions doit être un OperationalPlanUsageRestriction bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -1089,6 +1153,8 @@ opp-sh:OperationalTrafficPlan-operationalPlanWarningMeasures
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:OperationalPlanWarningMeasureShape ;
     sh:message "operationalPlanWarningMeasures must be a well-formed OperationalPlanWarningMeasure (blank node or IRI)."@en ;
+    sh:message "operationalPlanWarningMeasures muss ein wohlgeformtes OperationalPlanWarningMeasure sein (Blank Node oder IRI)."@de ;
+    sh:message "operationalPlanWarningMeasures doit être un OperationalPlanWarningMeasure bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -1160,6 +1226,8 @@ opp-sh:OperationalPlanMovement-operationalTrainUnits
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:TrainUnitShape ;
     sh:message "operationalTrainUnits must be a well-formed TrainUnit (blank node or IRI)."@en ;
+    sh:message "operationalTrainUnits muss ein wohlgeformtes TrainUnit sein (Blank Node oder IRI)."@de ;
+    sh:message "operationalTrainUnits doit être un TrainUnit bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1174,6 +1242,8 @@ opp-sh:OperationalPlanMovement-movementEvents
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:message "movementEvents is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "movementEvents ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "movementEvents est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node opp-sh:OperationalPlanMovement-movementEvents-items ;
     sh:severity sh:Violation ;
     .
@@ -1187,6 +1257,8 @@ opp-sh:OperationalPlanMovement-movementRestrictions
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:MovementRestrictionShape ;
     sh:message "movementRestrictions must be a well-formed MovementRestriction (blank node or IRI)."@en ;
+    sh:message "movementRestrictions muss ein wohlgeformtes MovementRestriction sein (Blank Node oder IRI)."@de ;
+    sh:message "movementRestrictions doit être un MovementRestriction bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -1194,6 +1266,8 @@ opp-sh:OperationalPlanMovement-movementEvents-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "era:movementEvents is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:movementEvents ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:movementEvents est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -1215,6 +1289,8 @@ opp-sh:OperationalPlanMovement-movementEvents-listItemCount
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "The single rdf:List carried by era:movementEvents must hold at least 1 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:message "Die einzelne rdf:List, die von era:movementEvents getragen wird, muss mindestens 1 Element(e) enthalten; die Multiplizität begrenzt die Elemente innerhalb der Liste, nicht die Anzahl der Listen."@de ;
+    sh:message "L'unique rdf:List portée par era:movementEvents doit contenir au moins 1 élément(s) ; la multiplicité borne les éléments à l'intérieur de la liste, pas le nombre de listes."@fr ;
     sh:select """
             SELECT $this (COUNT(?item) AS ?itemCount)
             WHERE {
@@ -1239,6 +1315,8 @@ opp-sh:OperationalPlanMovement-movementEvents-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node opp-sh:MovementEventShape ;
         sh:message "movementEvents must be a well-formed MovementEvent (blank node or IRI)."@en ;
+        sh:message "movementEvents muss ein wohlgeformtes MovementEvent sein (Blank Node oder IRI)."@de ;
+        sh:message "movementEvents doit être un MovementEvent bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -1273,6 +1351,8 @@ opp-sh:TrainUnit-physicalTrainUnit
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:PhysicalTrainUnitIdentifierShape ;
     sh:message "physicalTrainUnit must be a well-formed PhysicalTrainUnitIdentifier (blank node or IRI)."@en ;
+    sh:message "physicalTrainUnit muss ein wohlgeformtes PhysicalTrainUnitIdentifier sein (Blank Node oder IRI)."@de ;
+    sh:message "physicalTrainUnit doit être un PhysicalTrainUnitIdentifier bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1287,6 +1367,8 @@ opp-sh:TrainUnit-operationalTrainCategory
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:OperationalTrainCategoryShape ;
     sh:message "operationalTrainCategory must be a well-formed OperationalTrainCategory (blank node or IRI)."@en ;
+    sh:message "operationalTrainCategory muss ein wohlgeformtes OperationalTrainCategory sein (Blank Node oder IRI)."@de ;
+    sh:message "operationalTrainCategory doit être un OperationalTrainCategory bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1302,6 +1384,8 @@ opp-sh:TrainUnit-operationalConsists
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:message "operationalConsists is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "operationalConsists ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "operationalConsists est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node opp-sh:TrainUnit-operationalConsists-items ;
     sh:severity sh:Violation ;
     .
@@ -1359,6 +1443,8 @@ opp-sh:TrainUnit-brakePosition
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/brake-position/passengerTrainInP> <http://data.europa.eu/949/concepts/brake-position/freightTrainInP> <http://data.europa.eu/949/concepts/brake-position/freightTrainInG> <http://data.europa.eu/949/concepts/brake-position/brakePositionUnknown> ) ;
     sh:message "Value must be one of the CCSTMS-scoped BrakePosition concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von BrakePosition entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de BrakePosition."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1373,6 +1459,8 @@ opp-sh:TrainUnit-brakeModelType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/brake-model-type/lambda> <http://data.europa.eu/949/concepts/brake-model-type/gamma> <http://data.europa.eu/949/concepts/brake-model-type/undefined> ) ;
     sh:message "Value must be one of the CCSTMS-scoped BrakeModelType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von BrakeModelType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de BrakeModelType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1387,6 +1475,8 @@ opp-sh:TrainUnit-atoGradeAutomation
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/ato-grades-automation/1> <http://data.europa.eu/949/concepts/ato-grades-automation/2> <http://data.europa.eu/949/concepts/ato-grades-automation/3> <http://data.europa.eu/949/concepts/ato-grades-automation/4> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ATOGradeOfAutomation concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ATOGradeOfAutomation entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ATOGradeOfAutomation."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1410,6 +1500,8 @@ opp-sh:TrainUnit-operationalConsists-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "era:operationalConsists is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:operationalConsists ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:operationalConsists est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -1431,6 +1523,8 @@ opp-sh:TrainUnit-operationalConsists-listItemCount
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "The single rdf:List carried by era:operationalConsists must hold at least 1 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:message "Die einzelne rdf:List, die von era:operationalConsists getragen wird, muss mindestens 1 Element(e) enthalten; die Multiplizität begrenzt die Elemente innerhalb der Liste, nicht die Anzahl der Listen."@de ;
+    sh:message "L'unique rdf:List portée par era:operationalConsists doit contenir au moins 1 élément(s) ; la multiplicité borne les éléments à l'intérieur de la liste, pas le nombre de listes."@fr ;
     sh:select """
             SELECT $this (COUNT(?item) AS ?itemCount)
             WHERE {
@@ -1455,6 +1549,8 @@ opp-sh:TrainUnit-operationalConsists-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node opp-sh:OperationalConsistShape ;
         sh:message "operationalConsists must be a well-formed OperationalConsist (blank node or IRI)."@en ;
+        sh:message "operationalConsists muss ein wohlgeformtes OperationalConsist sein (Blank Node oder IRI)."@de ;
+        sh:message "operationalConsists doit être un OperationalConsist bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -1480,6 +1576,8 @@ opp-sh:OperationalTrainCategory-trainCategoryType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/train-category-type/trainCategoryUnknown> <http://data.europa.eu/949/concepts/train-category-type/interregional> <http://data.europa.eu/949/concepts/train-category-type/regional> <http://data.europa.eu/949/concepts/train-category-type/subUrban> <http://data.europa.eu/949/concepts/train-category-type/nightTrain> <http://data.europa.eu/949/concepts/train-category-type/motorRail> <http://data.europa.eu/949/concepts/train-category-type/mountainTrain> <http://data.europa.eu/949/concepts/train-category-type/historicTrain> <http://data.europa.eu/949/concepts/train-category-type/coachGroup> <http://data.europa.eu/949/concepts/train-category-type/tram> <http://data.europa.eu/949/concepts/train-category-type/underground> <http://data.europa.eu/949/concepts/train-category-type/highspeedTrain> <http://data.europa.eu/949/concepts/train-category-type/intercity> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TrainCategoryType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TrainCategoryType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TrainCategoryType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1506,6 +1604,8 @@ opp-sh:OperationalTrainCategory-trainUsage
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/train-usage-type/trainUsageUndefined> <http://data.europa.eu/949/concepts/train-usage-type/commercialPassengerTrain> <http://data.europa.eu/949/concepts/train-usage-type/commercialCargoTrain> <http://data.europa.eu/949/concepts/train-usage-type/locomotiveRunningLight> <http://data.europa.eu/949/concepts/train-usage-type/lightRunning> <http://data.europa.eu/949/concepts/train-usage-type/notInService> <http://data.europa.eu/949/concepts/train-usage-type/engineeringTrain> <http://data.europa.eu/949/concepts/train-usage-type/breakdownTrain> <http://data.europa.eu/949/concepts/train-usage-type/mixedTrain> <http://data.europa.eu/949/concepts/train-usage-type/specialTrain> <http://data.europa.eu/949/concepts/train-usage-type/otherTrain> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TrainUsageType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TrainUsageType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TrainUsageType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1530,6 +1630,8 @@ opp-sh:OperationalConsist-supportedOnBoardEquipment
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:SupportedOnBoardEquipmentShape ;
     sh:message "supportedOnBoardEquipment must be a well-formed SupportedOnBoardEquipment (blank node or IRI)."@en ;
+    sh:message "supportedOnBoardEquipment muss ein wohlgeformtes SupportedOnBoardEquipment sein (Blank Node oder IRI)."@de ;
+    sh:message "supportedOnBoardEquipment doit être un SupportedOnBoardEquipment bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1556,6 +1658,8 @@ opp-sh:SupportedOnBoardEquipment-trainProtectionType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/train-protection-type/Etcs> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TrainProtectionType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TrainProtectionType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TrainProtectionType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1571,6 +1675,8 @@ opp-sh:SupportedOnBoardEquipment-etcsSystemVersions
     sh:datatype xsd:string ;
     sh:pattern "^\\d+\\.\\d+$" ;
     sh:message "etcsSystemVersions must match the regular expression \\d+\\.\\d+ over its whole value."@en ;
+    sh:message "etcsSystemVersions muss über seinen gesamten Wert dem regulären Ausdruck \\d+\\.\\d+ entsprechen."@de ;
+    sh:message "etcsSystemVersions doit correspondre à l'expression régulière \\d+\\.\\d+ sur toute sa valeur."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1584,6 +1690,8 @@ opp-sh:SupportedOnBoardEquipment-onboardExtensions
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:OnBoardExtensionShape ;
     sh:message "onboardExtensions must be a well-formed OnBoardExtension (blank node or IRI)."@en ;
+    sh:message "onboardExtensions muss ein wohlgeformtes OnBoardExtension sein (Blank Node oder IRI)."@de ;
+    sh:message "onboardExtensions doit être un OnBoardExtension bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -1682,6 +1790,8 @@ opp-sh:MovementRestriction-restrictedPath
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetLinearReferenceShape ;
     sh:message "restrictedPath must be a well-formed NetLinearReference (blank node or IRI)."@en ;
+    sh:message "restrictedPath muss ein wohlgeformtes NetLinearReference sein (Blank Node oder IRI)."@de ;
+    sh:message "restrictedPath doit être un NetLinearReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1696,6 +1806,8 @@ opp-sh:MovementRestriction-specificRestriction
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:SpecificMovementRestrictionShape ;
     sh:message "specificRestriction must be a well-formed SpecificMovementRestriction (blank node or IRI)."@en ;
+    sh:message "specificRestriction muss ein wohlgeformtes SpecificMovementRestriction sein (Blank Node oder IRI)."@de ;
+    sh:message "specificRestriction doit être un SpecificMovementRestriction bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1716,6 +1828,8 @@ opp-sh:SpecificMovementRestrictionShape
         opp-sh:SpecificMovementRestriction-excludedSwitchableTracksideAssetsForFlankProtection-present
     ) ;
     sh:message "SpecificMovementRestriction is a union: exactly one of (speedRestriction, adhesionCategory, maxCurrent, atoInhibition, dasInhibition, excludedSwitchableTracksideAssetsForFlankProtection) must be present."@en ;
+    sh:message "SpecificMovementRestriction ist eine Union: genau eines von (speedRestriction, adhesionCategory, maxCurrent, atoInhibition, dasInhibition, excludedSwitchableTracksideAssetsForFlankProtection) muss vorhanden sein."@de ;
+    sh:message "SpecificMovementRestriction est une union : exactement l'un de (speedRestriction, adhesionCategory, maxCurrent, atoInhibition, dasInhibition, excludedSwitchableTracksideAssetsForFlankProtection) doit être présent."@fr ;
     sh:property opp-sh:SpecificMovementRestriction-speedRestriction ;
     sh:property opp-sh:SpecificMovementRestriction-adhesionCategory ;
     sh:property opp-sh:SpecificMovementRestriction-maxCurrent ;
@@ -1734,6 +1848,8 @@ opp-sh:SpecificMovementRestriction-speedRestriction
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:SpeedRestrictionShape ;
     sh:message "speedRestriction must be a well-formed SpeedRestriction (blank node or IRI)."@en ;
+    sh:message "speedRestriction muss ein wohlgeformtes SpeedRestriction sein (Blank Node oder IRI)."@de ;
+    sh:message "speedRestriction doit être un SpeedRestriction bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1747,6 +1863,8 @@ opp-sh:SpecificMovementRestriction-adhesionCategory
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/adhesion-category/dryRailHigh> <http://data.europa.eu/949/concepts/adhesion-category/dryRailMedium> <http://data.europa.eu/949/concepts/adhesion-category/dryRailLow> <http://data.europa.eu/949/concepts/adhesion-category/lowAdhesion> <http://data.europa.eu/949/concepts/adhesion-category/veryLowAdhesion> <http://data.europa.eu/949/concepts/adhesion-category/extremelyLowAdhesion> <http://data.europa.eu/949/concepts/adhesion-category/unknownAdhesion> ) ;
     sh:message "Value must be one of the CCSTMS-scoped AdhesionCategory concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von AdhesionCategory entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de AdhesionCategory."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1797,6 +1915,8 @@ opp-sh:SpecificMovementRestriction-excludedSwitchableTracksideAssetsForFlankProt
     sh:nodeKind sh:IRI ;
     sh:class era:SwitchableTracksideAsset ;
     sh:message "excludedSwitchableTracksideAssetsForFlankProtection must reference an existing era:SwitchableTracksideAsset by IRI."@en ;
+    sh:message "excludedSwitchableTracksideAssetsForFlankProtection muss über eine IRI auf ein bestehendes era:SwitchableTracksideAsset verweisen."@de ;
+    sh:message "excludedSwitchableTracksideAssetsForFlankProtection doit référencer un era:SwitchableTracksideAsset existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1904,6 +2024,8 @@ opp-sh:MovementEvent-plannedType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/movement-event-type/pass> <http://data.europa.eu/949/concepts/movement-event-type/stop> ) ;
     sh:message "Value must be one of the CCSTMS-scoped MovementEventType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von MovementEventType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de MovementEventType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1918,6 +2040,8 @@ opp-sh:MovementEvent-scheduledType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/movement-event-type/pass> <http://data.europa.eu/949/concepts/movement-event-type/stop> ) ;
     sh:message "Value must be one of the CCSTMS-scoped MovementEventType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von MovementEventType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de MovementEventType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1932,6 +2056,8 @@ opp-sh:MovementEvent-alignment
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/alignment-type/head> <http://data.europa.eu/949/concepts/alignment-type/center> <http://data.europa.eu/949/concepts/alignment-type/rear> ) ;
     sh:message "Value must be one of the CCSTMS-scoped AlignmentType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von AlignmentType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de AlignmentType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1946,6 +2072,8 @@ opp-sh:MovementEvent-position
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetPointReferenceShape ;
     sh:message "position must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "position muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "position doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1961,6 +2089,8 @@ opp-sh:MovementEvent-pathToNextEvent
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "pathToNextEvent is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "pathToNextEvent ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "pathToNextEvent est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node opp-sh:MovementEvent-pathToNextEvent-items ;
     sh:severity sh:Violation ;
     .
@@ -1974,6 +2104,8 @@ opp-sh:MovementEvent-stopDescription
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:StopDescriptionShape ;
     sh:message "stopDescription must be a well-formed StopDescription (blank node or IRI)."@en ;
+    sh:message "stopDescription muss ein wohlgeformtes StopDescription sein (Blank Node oder IRI)."@de ;
+    sh:message "stopDescription doit être un StopDescription bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2014,6 +2146,8 @@ opp-sh:MovementEvent-startsAfterEvents
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:OperationalEventRefShape ;
     sh:message "startsAfterEvents must be a well-formed OperationalEventRef (blank node or IRI)."@en ;
+    sh:message "startsAfterEvents muss ein wohlgeformtes OperationalEventRef sein (Blank Node oder IRI)."@de ;
+    sh:message "startsAfterEvents doit être un OperationalEventRef bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2021,6 +2155,8 @@ opp-sh:MovementEvent-pathToNextEvent-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "era:pathToNextEvent is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:pathToNextEvent ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:pathToNextEvent est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -2047,6 +2183,8 @@ opp-sh:MovementEvent-pathToNextEvent-items
         sh:nodeKind sh:IRI ;
         sh:class era:LinearElement ;
         sh:message "pathToNextEvent must reference an existing era:LinearElement by IRI."@en ;
+        sh:message "pathToNextEvent muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+        sh:message "pathToNextEvent doit référencer un era:LinearElement existant par IRI."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -2063,6 +2201,8 @@ opp-sh:OperationalEventRefShape
         opp-sh:OperationalEventRef-warningMeasureEvent-present
     ) ;
     sh:message "OperationalEventRef is a union: exactly one of (movementEvent, restrictionEvent, warningMeasureEvent) must be present."@en ;
+    sh:message "OperationalEventRef ist eine Union: genau eines von (movementEvent, restrictionEvent, warningMeasureEvent) muss vorhanden sein."@de ;
+    sh:message "OperationalEventRef est une union : exactement l'un de (movementEvent, restrictionEvent, warningMeasureEvent) doit être présent."@fr ;
     sh:property opp-sh:OperationalEventRef-movementEvent ;
     sh:property opp-sh:OperationalEventRef-restrictionEvent ;
     sh:property opp-sh:OperationalEventRef-warningMeasureEvent ;
@@ -2078,6 +2218,8 @@ opp-sh:OperationalEventRef-movementEvent
     sh:nodeKind sh:IRI ;
     sh:class era:MovementEvent ;
     sh:message "movementEvent must reference an existing era:MovementEvent by IRI."@en ;
+    sh:message "movementEvent muss über eine IRI auf ein bestehendes era:MovementEvent verweisen."@de ;
+    sh:message "movementEvent doit référencer un era:MovementEvent existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2091,6 +2233,8 @@ opp-sh:OperationalEventRef-restrictionEvent
     sh:nodeKind sh:IRI ;
     sh:class era:UsageRestrictionEvent ;
     sh:message "restrictionEvent must reference an existing era:UsageRestrictionEvent by IRI."@en ;
+    sh:message "restrictionEvent muss über eine IRI auf ein bestehendes era:UsageRestrictionEvent verweisen."@de ;
+    sh:message "restrictionEvent doit référencer un era:UsageRestrictionEvent existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2104,6 +2248,8 @@ opp-sh:OperationalEventRef-warningMeasureEvent
     sh:nodeKind sh:IRI ;
     sh:class era:WarningMeasureEvent ;
     sh:message "warningMeasureEvent must reference an existing era:WarningMeasureEvent by IRI."@en ;
+    sh:message "warningMeasureEvent muss über eine IRI auf ein bestehendes era:WarningMeasureEvent verweisen."@de ;
+    sh:message "warningMeasureEvent doit référencer un era:WarningMeasureEvent existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2171,6 +2317,8 @@ opp-sh:StopDescription-activities
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "activities is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "activities ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "activities est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node opp-sh:StopDescription-activities-items ;
     sh:severity sh:Violation ;
     .
@@ -2184,6 +2332,8 @@ opp-sh:StopDescription-doorActivity
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:DoorActivityShape ;
     sh:message "doorActivity must be a well-formed DoorActivity (blank node or IRI)."@en ;
+    sh:message "doorActivity muss ein wohlgeformtes DoorActivity sein (Blank Node oder IRI)."@de ;
+    sh:message "doorActivity doit être un DoorActivity bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2250,6 +2400,8 @@ opp-sh:StopDescription-additionalEventTimes
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:AdditionalEventTimeShape ;
     sh:message "additionalEventTimes must be a well-formed AdditionalEventTime (blank node or IRI)."@en ;
+    sh:message "additionalEventTimes muss ein wohlgeformtes AdditionalEventTime sein (Blank Node oder IRI)."@de ;
+    sh:message "additionalEventTimes doit être un AdditionalEventTime bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 5 ;
     sh:severity sh:Violation ;
     .
@@ -2258,6 +2410,8 @@ opp-sh:StopDescription-activities-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "era:activities is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:activities ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:activities est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -2284,6 +2438,8 @@ opp-sh:StopDescription-activities-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node opp-sh:MovementEventActivityShape ;
         sh:message "activities must be a well-formed MovementEventActivity (blank node or IRI)."@en ;
+        sh:message "activities muss ein wohlgeformtes MovementEventActivity sein (Blank Node oder IRI)."@de ;
+        sh:message "activities doit être un MovementEventActivity bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -2321,6 +2477,8 @@ opp-sh:AdditionalEventTime-timeType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/time-type/plannedArrival> <http://data.europa.eu/949/concepts/time-type/plannedDeparture> <http://data.europa.eu/949/concepts/time-type/plannedMinDwellTime> <http://data.europa.eu/949/concepts/time-type/publishedArrival> <http://data.europa.eu/949/concepts/time-type/publishedDeparture> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TimeType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TimeType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TimeType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2347,6 +2505,8 @@ opp-sh:DoorActivity-openingDoorSide
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/door-side/doorSideLeft> <http://data.europa.eu/949/concepts/door-side/doorSideRight> <http://data.europa.eu/949/concepts/door-side/doorSideBoth> <http://data.europa.eu/949/concepts/door-side/doorNoneSide> <http://data.europa.eu/949/concepts/door-side/doorSideUnknown> ) ;
     sh:message "Value must be one of the CCSTMS-scoped DoorSide concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von DoorSide entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de DoorSide."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2399,6 +2559,8 @@ opp-sh:TrainUnitActivity-trainUnitActivityType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/train-unit-activity-type/joinActivity> <http://data.europa.eu/949/concepts/train-unit-activity-type/splitActivity> <http://data.europa.eu/949/concepts/train-unit-activity-type/collectActivity> <http://data.europa.eu/949/concepts/train-unit-activity-type/dropActivity> <http://data.europa.eu/949/concepts/train-unit-activity-type/turnAroundActivity> <http://data.europa.eu/949/concepts/train-unit-activity-type/meetActivity> <http://data.europa.eu/949/concepts/train-unit-activity-type/trainReplacementActivity> <http://data.europa.eu/949/concepts/train-unit-activity-type/otherActivity> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TrainUnitActivityType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TrainUnitActivityType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TrainUnitActivityType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2450,6 +2612,8 @@ opp-sh:MovementEventActivityJoin-joiningMovement
     sh:nodeKind sh:IRI ;
     sh:class era:MovementEvent ;
     sh:message "joiningMovement must reference an existing era:MovementEvent by IRI."@en ;
+    sh:message "joiningMovement muss über eine IRI auf ein bestehendes era:MovementEvent verweisen."@de ;
+    sh:message "joiningMovement doit référencer un era:MovementEvent existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2464,6 +2628,8 @@ opp-sh:MovementEventActivityJoin-trainSides
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/train-train-side/head2tail> <http://data.europa.eu/949/concepts/train-train-side/head2head> <http://data.europa.eu/949/concepts/train-train-side/tail2head> <http://data.europa.eu/949/concepts/train-train-side/tail2tail> <http://data.europa.eu/949/concepts/train-train-side/unknown> ) ;
     sh:message "Value must be one of the CCSTMS-scoped Train2TrainSide concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von Train2TrainSide entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de Train2TrainSide."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2488,6 +2654,8 @@ opp-sh:MovementEventActivitySplit-splittingMovement
     sh:nodeKind sh:IRI ;
     sh:class era:MovementEvent ;
     sh:message "splittingMovement must reference an existing era:MovementEvent by IRI."@en ;
+    sh:message "splittingMovement muss über eine IRI auf ein bestehendes era:MovementEvent verweisen."@de ;
+    sh:message "splittingMovement doit référencer un era:MovementEvent existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2513,6 +2681,8 @@ opp-sh:MovementEventActivityMeet-meetMovement
     sh:nodeKind sh:IRI ;
     sh:class era:MovementEvent ;
     sh:message "meetMovement must reference an existing era:MovementEvent by IRI."@en ;
+    sh:message "meetMovement muss über eine IRI auf ein bestehendes era:MovementEvent verweisen."@de ;
+    sh:message "meetMovement doit référencer un era:MovementEvent existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2527,6 +2697,8 @@ opp-sh:MovementEventActivityMeet-trainSides
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/train-train-side/head2tail> <http://data.europa.eu/949/concepts/train-train-side/head2head> <http://data.europa.eu/949/concepts/train-train-side/tail2head> <http://data.europa.eu/949/concepts/train-train-side/tail2tail> <http://data.europa.eu/949/concepts/train-train-side/unknown> ) ;
     sh:message "Value must be one of the CCSTMS-scoped Train2TrainSide concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von Train2TrainSide entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de Train2TrainSide."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2545,6 +2717,8 @@ opp-sh:MovementEventActivityShape
         opp-sh:MovementEventActivity-trainUnitActivity-present
     ) ;
     sh:message "MovementEventActivity is a union: exactly one of (joinActivity, splitActivity, meetActivity, trainUnitActivity) must be present."@en ;
+    sh:message "MovementEventActivity ist eine Union: genau eines von (joinActivity, splitActivity, meetActivity, trainUnitActivity) muss vorhanden sein."@de ;
+    sh:message "MovementEventActivity est une union : exactement l'un de (joinActivity, splitActivity, meetActivity, trainUnitActivity) doit être présent."@fr ;
     sh:property opp-sh:MovementEventActivity-joinActivity ;
     sh:property opp-sh:MovementEventActivity-splitActivity ;
     sh:property opp-sh:MovementEventActivity-meetActivity ;
@@ -2561,6 +2735,8 @@ opp-sh:MovementEventActivity-joinActivity
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:MovementEventActivityJoinShape ;
     sh:message "joinActivity must be a well-formed MovementEventActivityJoin (blank node or IRI)."@en ;
+    sh:message "joinActivity muss ein wohlgeformtes MovementEventActivityJoin sein (Blank Node oder IRI)."@de ;
+    sh:message "joinActivity doit être un MovementEventActivityJoin bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2574,6 +2750,8 @@ opp-sh:MovementEventActivity-splitActivity
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:MovementEventActivitySplitShape ;
     sh:message "splitActivity must be a well-formed MovementEventActivitySplit (blank node or IRI)."@en ;
+    sh:message "splitActivity muss ein wohlgeformtes MovementEventActivitySplit sein (Blank Node oder IRI)."@de ;
+    sh:message "splitActivity doit être un MovementEventActivitySplit bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2587,6 +2765,8 @@ opp-sh:MovementEventActivity-meetActivity
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:MovementEventActivityMeetShape ;
     sh:message "meetActivity must be a well-formed MovementEventActivityMeet (blank node or IRI)."@en ;
+    sh:message "meetActivity muss ein wohlgeformtes MovementEventActivityMeet sein (Blank Node oder IRI)."@de ;
+    sh:message "meetActivity doit être un MovementEventActivityMeet bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2600,6 +2780,8 @@ opp-sh:MovementEventActivity-trainUnitActivity
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:TrainUnitActivityShape ;
     sh:message "trainUnitActivity must be a well-formed TrainUnitActivity (blank node or IRI)."@en ;
+    sh:message "trainUnitActivity muss ein wohlgeformtes TrainUnitActivity sein (Blank Node oder IRI)."@de ;
+    sh:message "trainUnitActivity doit être un TrainUnitActivity bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2729,6 +2911,8 @@ opp-sh:PhysicalTrainUnitIdentifier-companyId
     sh:datatype xsd:string ;
     sh:pattern "^[0-9A-Z]{4}$" ;
     sh:message "companyId must match the regular expression [0-9A-Z]{4} over its whole value."@en ;
+    sh:message "companyId muss über seinen gesamten Wert dem regulären Ausdruck [0-9A-Z]{4} entsprechen."@de ;
+    sh:message "companyId doit correspondre à l'expression régulière [0-9A-Z]{4} sur toute sa valeur."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2795,6 +2979,8 @@ opp-sh:OperationalPlanUsageRestriction-restrictionEvents
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:UsageRestrictionEventShape ;
     sh:message "restrictionEvents must be a well-formed UsageRestrictionEvent (blank node or IRI)."@en ;
+    sh:message "restrictionEvents muss ein wohlgeformtes UsageRestrictionEvent sein (Blank Node oder IRI)."@de ;
+    sh:message "restrictionEvents doit être un UsageRestrictionEvent bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2850,6 +3036,8 @@ opp-sh:UsageRestrictionEvent-usageRestriction
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:UsageRestrictionShape ;
     sh:message "usageRestriction must be a well-formed UsageRestriction (blank node or IRI)."@en ;
+    sh:message "usageRestriction muss ein wohlgeformtes UsageRestriction sein (Blank Node oder IRI)."@de ;
+    sh:message "usageRestriction doit être un UsageRestriction bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2863,6 +3051,8 @@ opp-sh:UsageRestrictionEvent-startsAfterEvents
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:OperationalEventRefShape ;
     sh:message "startsAfterEvents must be a well-formed OperationalEventRef (blank node or IRI)."@en ;
+    sh:message "startsAfterEvents muss ein wohlgeformtes OperationalEventRef sein (Blank Node oder IRI)."@de ;
+    sh:message "startsAfterEvents doit être un OperationalEventRef bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2890,6 +3080,8 @@ opp-sh:UsageRestriction-linearElementSections
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-LinearElementSectionShape ;
     sh:message "linearElementSections must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:message "linearElementSections muss ein wohlgeformtes LinearElementSection sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElementSections doit être un LinearElementSection bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2903,6 +3095,8 @@ opp-sh:UsageRestriction-restrictedAspect
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:RestrictedAspectShape ;
     sh:message "restrictedAspect must be a well-formed RestrictedAspect (blank node or IRI)."@en ;
+    sh:message "restrictedAspect muss ein wohlgeformtes RestrictedAspect sein (Blank Node oder IRI)."@de ;
+    sh:message "restrictedAspect doit être un RestrictedAspect bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2917,6 +3111,8 @@ opp-sh:UsageRestriction-appliedToTrains
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:TrainGroupFilterShape ;
     sh:message "appliedToTrains must be a well-formed TrainGroupFilter (blank node or IRI)."@en ;
+    sh:message "appliedToTrains muss ein wohlgeformtes TrainGroupFilter sein (Blank Node oder IRI)."@de ;
+    sh:message "appliedToTrains doit être un TrainGroupFilter bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2942,6 +3138,8 @@ opp-sh:TrainGroupFilter-axleLoadCategories
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/load-capability-line-categories/10> <http://data.europa.eu/949/concepts/load-capability-line-categories/230> <http://data.europa.eu/949/concepts/load-capability-line-categories/20> <http://data.europa.eu/949/concepts/load-capability-line-categories/30> <http://data.europa.eu/949/concepts/load-capability-line-categories/40> <http://data.europa.eu/949/concepts/load-capability-line-categories/50> <http://data.europa.eu/949/concepts/load-capability-line-categories/60> <http://data.europa.eu/949/concepts/load-capability-line-categories/70> <http://data.europa.eu/949/concepts/load-capability-line-categories/80> <http://data.europa.eu/949/concepts/load-capability-line-categories/90> <http://data.europa.eu/949/concepts/load-capability-line-categories/100> <http://data.europa.eu/949/concepts/load-capability-line-categories/110> <http://data.europa.eu/949/concepts/load-capability-line-categories/120> ) ;
     sh:message "Value must be one of the CCSTMS-scoped LoadCapabilityLineCategories concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von LoadCapabilityLineCategories entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de LoadCapabilityLineCategories."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2954,6 +3152,8 @@ opp-sh:TrainGroupFilter-cantDeficiencyCategories
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/cant-deficiencies/80> <http://data.europa.eu/949/concepts/cant-deficiencies/100> <http://data.europa.eu/949/concepts/cant-deficiencies/130> <http://data.europa.eu/949/concepts/cant-deficiencies/150> <http://data.europa.eu/949/concepts/cant-deficiencies/165> <http://data.europa.eu/949/concepts/cant-deficiencies/180> <http://data.europa.eu/949/concepts/cant-deficiencies/210> <http://data.europa.eu/949/concepts/cant-deficiencies/225> <http://data.europa.eu/949/concepts/cant-deficiencies/245> <http://data.europa.eu/949/concepts/cant-deficiencies/275> <http://data.europa.eu/949/concepts/cant-deficiencies/300> ) ;
     sh:message "Value must be one of the CCSTMS-scoped CantDeficiencies concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von CantDeficiencies entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de CantDeficiencies."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2979,6 +3179,8 @@ opp-sh:RestrictedAspectShape
         opp-sh:RestrictedAspect-operationallyNonStandstill-present
     ) ;
     sh:message "RestrictedAspect is a union: exactly one of (speedRestriction, allowedDrivingModes, nonStandstill, trackClosure, operationalRadioHole, maxAdhesion, atoInhibition, maxCurrent, soundHorn, nonSwitchability, safetyCriticalCommandOnly, manualOperationOnly, operationallyNonStandstill) must be present."@en ;
+    sh:message "RestrictedAspect ist eine Union: genau eines von (speedRestriction, allowedDrivingModes, nonStandstill, trackClosure, operationalRadioHole, maxAdhesion, atoInhibition, maxCurrent, soundHorn, nonSwitchability, safetyCriticalCommandOnly, manualOperationOnly, operationallyNonStandstill) muss vorhanden sein."@de ;
+    sh:message "RestrictedAspect est une union : exactement l'un de (speedRestriction, allowedDrivingModes, nonStandstill, trackClosure, operationalRadioHole, maxAdhesion, atoInhibition, maxCurrent, soundHorn, nonSwitchability, safetyCriticalCommandOnly, manualOperationOnly, operationallyNonStandstill) doit être présent."@fr ;
     sh:property opp-sh:RestrictedAspect-speedRestriction ;
     sh:property opp-sh:RestrictedAspect-allowedDrivingModes ;
     sh:property opp-sh:RestrictedAspect-nonStandstill ;
@@ -3004,6 +3206,8 @@ opp-sh:RestrictedAspect-speedRestriction
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:SpeedRestrictionShape ;
     sh:message "speedRestriction must be a well-formed SpeedRestriction (blank node or IRI)."@en ;
+    sh:message "speedRestriction muss ein wohlgeformtes SpeedRestriction sein (Blank Node oder IRI)."@de ;
+    sh:message "speedRestriction doit être un SpeedRestriction bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3017,6 +3221,8 @@ opp-sh:RestrictedAspect-allowedDrivingModes
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/onboard-operating-mode/fullSupervision> <http://data.europa.eu/949/concepts/onboard-operating-mode/onSight> <http://data.europa.eu/949/concepts/onboard-operating-mode/staffResponsible> <http://data.europa.eu/949/concepts/onboard-operating-mode/shunting> <http://data.europa.eu/949/concepts/onboard-operating-mode/unfitted> <http://data.europa.eu/949/concepts/onboard-operating-mode/sleeping> <http://data.europa.eu/949/concepts/onboard-operating-mode/standBy> <http://data.europa.eu/949/concepts/onboard-operating-mode/trip> <http://data.europa.eu/949/concepts/onboard-operating-mode/postTrip> <http://data.europa.eu/949/concepts/onboard-operating-mode/systemFailure> <http://data.europa.eu/949/concepts/onboard-operating-mode/isolation> <http://data.europa.eu/949/concepts/onboard-operating-mode/nonLeading> <http://data.europa.eu/949/concepts/onboard-operating-mode/limitedSupervision> <http://data.europa.eu/949/concepts/onboard-operating-mode/nationalSystem> <http://data.europa.eu/949/concepts/onboard-operating-mode/reversing> <http://data.europa.eu/949/concepts/onboard-operating-mode/passiveShunting> <http://data.europa.eu/949/concepts/onboard-operating-mode/automaticDriving> <http://data.europa.eu/949/concepts/onboard-operating-mode/supervisedManoeuvre> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OnboardOperatingMode concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OnboardOperatingMode entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OnboardOperatingMode."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3066,6 +3272,8 @@ opp-sh:RestrictedAspect-maxAdhesion
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/adhesion-category/dryRailHigh> <http://data.europa.eu/949/concepts/adhesion-category/dryRailMedium> <http://data.europa.eu/949/concepts/adhesion-category/dryRailLow> <http://data.europa.eu/949/concepts/adhesion-category/lowAdhesion> <http://data.europa.eu/949/concepts/adhesion-category/veryLowAdhesion> <http://data.europa.eu/949/concepts/adhesion-category/extremelyLowAdhesion> <http://data.europa.eu/949/concepts/adhesion-category/unknownAdhesion> ) ;
     sh:message "Value must be one of the CCSTMS-scoped AdhesionCategory concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von AdhesionCategory entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de AdhesionCategory."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3361,6 +3569,8 @@ opp-sh:OperationalPlanWarningMeasure-warningMeasureEvents
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:WarningMeasureEventShape ;
     sh:message "warningMeasureEvents must be a well-formed WarningMeasureEvent (blank node or IRI)."@en ;
+    sh:message "warningMeasureEvents muss ein wohlgeformtes WarningMeasureEvent sein (Blank Node oder IRI)."@de ;
+    sh:message "warningMeasureEvents doit être un WarningMeasureEvent bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3385,6 +3595,8 @@ opp-sh:WarningArea-trackArea
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetAreaReferenceShape ;
     sh:message "trackArea must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:message "trackArea muss ein wohlgeformtes NetAreaReference sein (Blank Node oder IRI)."@de ;
+    sh:message "trackArea doit être un NetAreaReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3399,6 +3611,8 @@ opp-sh:WarningArea-warningDevices
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:WarningDeviceShape ;
     sh:message "warningDevices must be a well-formed WarningDevice (blank node or IRI)."@en ;
+    sh:message "warningDevices muss ein wohlgeformtes WarningDevice sein (Blank Node oder IRI)."@de ;
+    sh:message "warningDevices doit être un WarningDevice bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3425,6 +3639,8 @@ opp-sh:WarningDevice-deviceType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/device-type/acousticalIndicator> <http://data.europa.eu/949/concepts/device-type/opticalIndicator> <http://data.europa.eu/949/concepts/device-type/hapticIndicator> ) ;
     sh:message "Value must be one of the CCSTMS-scoped DeviceType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von DeviceType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de DeviceType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3481,6 +3697,8 @@ opp-sh:WarningMeasureEvent-warningArea
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:WarningAreaShape ;
     sh:message "warningArea must be a well-formed WarningArea (blank node or IRI)."@en ;
+    sh:message "warningArea muss ein wohlgeformtes WarningArea sein (Blank Node oder IRI)."@de ;
+    sh:message "warningArea doit être un WarningArea bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3495,6 +3713,8 @@ opp-sh:WarningMeasureEvent-startsAfterEvents
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:OperationalEventRefShape ;
     sh:message "startsAfterEvents must be a well-formed OperationalEventRef (blank node or IRI)."@en ;
+    sh:message "startsAfterEvents muss ein wohlgeformtes OperationalEventRef sein (Blank Node oder IRI)."@de ;
+    sh:message "startsAfterEvents doit être un OperationalEventRef bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -3546,6 +3766,8 @@ opp-sh:OperationalPlanExecutionResponse-response
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:OperationalPlanResponseShape ;
     sh:message "response must be a well-formed OperationalPlanResponse (blank node or IRI)."@en ;
+    sh:message "response muss ein wohlgeformtes OperationalPlanResponse sein (Blank Node oder IRI)."@de ;
+    sh:message "response doit être un OperationalPlanResponse bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3583,6 +3805,8 @@ opp-sh:MovementResponseCode-responseCodeMovement
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/response-code-movement/accepted> <http://data.europa.eu/949/concepts/response-code-movement/anyRejectReason> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ResponseCodeMovement concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ResponseCodeMovement entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ResponseCodeMovement."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3597,6 +3821,8 @@ opp-sh:MovementResponseCode-operationalPlanMovement
     sh:nodeKind sh:IRI ;
     sh:class era:OperationalPlanMovement ;
     sh:message "operationalPlanMovement must reference an existing era:OperationalPlanMovement by IRI."@en ;
+    sh:message "operationalPlanMovement muss über eine IRI auf ein bestehendes era:OperationalPlanMovement verweisen."@de ;
+    sh:message "operationalPlanMovement doit référencer un era:OperationalPlanMovement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3622,6 +3848,8 @@ opp-sh:UsageRestrictionResponseCode-responseCodeRestriction
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/response-code-restriction/accepted> <http://data.europa.eu/949/concepts/response-code-restriction/anyRejectReason> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ResponseCodeRestriction concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ResponseCodeRestriction entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ResponseCodeRestriction."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3636,6 +3864,8 @@ opp-sh:UsageRestrictionResponseCode-operationalPlanUsageRestriction
     sh:nodeKind sh:IRI ;
     sh:class era:OperationalPlanUsageRestriction ;
     sh:message "operationalPlanUsageRestriction must reference an existing era:OperationalPlanUsageRestriction by IRI."@en ;
+    sh:message "operationalPlanUsageRestriction muss über eine IRI auf ein bestehendes era:OperationalPlanUsageRestriction verweisen."@de ;
+    sh:message "operationalPlanUsageRestriction doit référencer un era:OperationalPlanUsageRestriction existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3661,6 +3891,8 @@ opp-sh:WarningMeasureResponseCode-responseCodeWarningMeasure
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/rcwm/accepted> <http://data.europa.eu/949/concepts/rcwm/anyRejectReason> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ResponseCodeWarningMeasure concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ResponseCodeWarningMeasure entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ResponseCodeWarningMeasure."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3675,6 +3907,8 @@ opp-sh:WarningMeasureResponseCode-operationalPlanWarningMeasure
     sh:nodeKind sh:IRI ;
     sh:class era:OperationalPlanWarningMeasure ;
     sh:message "operationalPlanWarningMeasure must reference an existing era:OperationalPlanWarningMeasure by IRI."@en ;
+    sh:message "operationalPlanWarningMeasure muss über eine IRI auf ein bestehendes era:OperationalPlanWarningMeasure verweisen."@de ;
+    sh:message "operationalPlanWarningMeasure doit référencer un era:OperationalPlanWarningMeasure existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3692,6 +3926,8 @@ opp-sh:OperationalPlanResponseShape
         opp-sh:OperationalPlanResponse-warningMeasureResponse-present
     ) ;
     sh:message "OperationalPlanResponse is a union: exactly one of (movementResponse, usageRestrictionResponse, warningMeasureResponse) must be present."@en ;
+    sh:message "OperationalPlanResponse ist eine Union: genau eines von (movementResponse, usageRestrictionResponse, warningMeasureResponse) muss vorhanden sein."@de ;
+    sh:message "OperationalPlanResponse est une union : exactement l'un de (movementResponse, usageRestrictionResponse, warningMeasureResponse) doit être présent."@fr ;
     sh:property opp-sh:OperationalPlanResponse-movementResponse ;
     sh:property opp-sh:OperationalPlanResponse-usageRestrictionResponse ;
     sh:property opp-sh:OperationalPlanResponse-warningMeasureResponse ;
@@ -3707,6 +3943,8 @@ opp-sh:OperationalPlanResponse-movementResponse
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:MovementResponseCodeShape ;
     sh:message "movementResponse must be a well-formed MovementResponseCode (blank node or IRI)."@en ;
+    sh:message "movementResponse muss ein wohlgeformtes MovementResponseCode sein (Blank Node oder IRI)."@de ;
+    sh:message "movementResponse doit être un MovementResponseCode bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3720,6 +3958,8 @@ opp-sh:OperationalPlanResponse-usageRestrictionResponse
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:UsageRestrictionResponseCodeShape ;
     sh:message "usageRestrictionResponse must be a well-formed UsageRestrictionResponseCode (blank node or IRI)."@en ;
+    sh:message "usageRestrictionResponse muss ein wohlgeformtes UsageRestrictionResponseCode sein (Blank Node oder IRI)."@de ;
+    sh:message "usageRestrictionResponse doit être un UsageRestrictionResponseCode bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3733,6 +3973,8 @@ opp-sh:OperationalPlanResponse-warningMeasureResponse
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:WarningMeasureResponseCodeShape ;
     sh:message "warningMeasureResponse must be a well-formed WarningMeasureResponseCode (blank node or IRI)."@en ;
+    sh:message "warningMeasureResponse muss ein wohlgeformtes WarningMeasureResponseCode sein (Blank Node oder IRI)."@de ;
+    sh:message "warningMeasureResponse doit être un WarningMeasureResponseCode bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3788,6 +4030,8 @@ opp-sh:OperationalPlanEventExecutionReportShape
         opp-sh:OperationalPlanEventExecutionReport-deactivationWarningMeasureReport-present
     ) ;
     sh:message "OperationalPlanEventExecutionReport is a union: exactly one of (arrivalReport, departureReport, activationRestrictionReport, deactivationRestrictionReport, activationWarningMeasureReport, deactivationWarningMeasureReport) must be present."@en ;
+    sh:message "OperationalPlanEventExecutionReport ist eine Union: genau eines von (arrivalReport, departureReport, activationRestrictionReport, deactivationRestrictionReport, activationWarningMeasureReport, deactivationWarningMeasureReport) muss vorhanden sein."@de ;
+    sh:message "OperationalPlanEventExecutionReport est une union : exactement l'un de (arrivalReport, departureReport, activationRestrictionReport, deactivationRestrictionReport, activationWarningMeasureReport, deactivationWarningMeasureReport) doit être présent."@fr ;
     sh:property opp-sh:OperationalPlanEventExecutionReport-arrivalReport ;
     sh:property opp-sh:OperationalPlanEventExecutionReport-departureReport ;
     sh:property opp-sh:OperationalPlanEventExecutionReport-activationRestrictionReport ;
@@ -3806,6 +4050,8 @@ opp-sh:OperationalPlanEventExecutionReport-arrivalReport
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:MovementEventExecutionReportShape ;
     sh:message "arrivalReport must be a well-formed MovementEventExecutionReport (blank node or IRI)."@en ;
+    sh:message "arrivalReport muss ein wohlgeformtes MovementEventExecutionReport sein (Blank Node oder IRI)."@de ;
+    sh:message "arrivalReport doit être un MovementEventExecutionReport bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3819,6 +4065,8 @@ opp-sh:OperationalPlanEventExecutionReport-departureReport
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:MovementEventExecutionReportShape ;
     sh:message "departureReport must be a well-formed MovementEventExecutionReport (blank node or IRI)."@en ;
+    sh:message "departureReport muss ein wohlgeformtes MovementEventExecutionReport sein (Blank Node oder IRI)."@de ;
+    sh:message "departureReport doit être un MovementEventExecutionReport bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3832,6 +4080,8 @@ opp-sh:OperationalPlanEventExecutionReport-activationRestrictionReport
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:UsageRestrictionEventExecutionReportShape ;
     sh:message "activationRestrictionReport must be a well-formed UsageRestrictionEventExecutionReport (blank node or IRI)."@en ;
+    sh:message "activationRestrictionReport muss ein wohlgeformtes UsageRestrictionEventExecutionReport sein (Blank Node oder IRI)."@de ;
+    sh:message "activationRestrictionReport doit être un UsageRestrictionEventExecutionReport bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3845,6 +4095,8 @@ opp-sh:OperationalPlanEventExecutionReport-deactivationRestrictionReport
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:UsageRestrictionEventExecutionReportShape ;
     sh:message "deactivationRestrictionReport must be a well-formed UsageRestrictionEventExecutionReport (blank node or IRI)."@en ;
+    sh:message "deactivationRestrictionReport muss ein wohlgeformtes UsageRestrictionEventExecutionReport sein (Blank Node oder IRI)."@de ;
+    sh:message "deactivationRestrictionReport doit être un UsageRestrictionEventExecutionReport bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3858,6 +4110,8 @@ opp-sh:OperationalPlanEventExecutionReport-activationWarningMeasureReport
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:WarningMeasureEventExecutionReportShape ;
     sh:message "activationWarningMeasureReport must be a well-formed WarningMeasureEventExecutionReport (blank node or IRI)."@en ;
+    sh:message "activationWarningMeasureReport muss ein wohlgeformtes WarningMeasureEventExecutionReport sein (Blank Node oder IRI)."@de ;
+    sh:message "activationWarningMeasureReport doit être un WarningMeasureEventExecutionReport bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3871,6 +4125,8 @@ opp-sh:OperationalPlanEventExecutionReport-deactivationWarningMeasureReport
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:WarningMeasureEventExecutionReportShape ;
     sh:message "deactivationWarningMeasureReport must be a well-formed WarningMeasureEventExecutionReport (blank node or IRI)."@en ;
+    sh:message "deactivationWarningMeasureReport muss ein wohlgeformtes WarningMeasureEventExecutionReport sein (Blank Node oder IRI)."@de ;
+    sh:message "deactivationWarningMeasureReport doit être un WarningMeasureEventExecutionReport bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3971,6 +4227,8 @@ opp-sh:MovementEventExecutionReport-movementEvent
     sh:nodeKind sh:IRI ;
     sh:class era:MovementEvent ;
     sh:message "movementEvent must reference an existing era:MovementEvent by IRI."@en ;
+    sh:message "movementEvent muss über eine IRI auf ein bestehendes era:MovementEvent verweisen."@de ;
+    sh:message "movementEvent doit référencer un era:MovementEvent existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4011,6 +4269,8 @@ opp-sh:MovementEventExecutionReport-executionState
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/event-execution-state/eventCompleted> <http://data.europa.eu/949/concepts/event-execution-state/eventFailed> <http://data.europa.eu/949/concepts/event-execution-state/eventInfo> ) ;
     sh:message "Value must be one of the CCSTMS-scoped EventExecutionState concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von EventExecutionState entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de EventExecutionState."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4064,6 +4324,8 @@ opp-sh:UsageRestrictionEventExecutionReport-restrictionEvent
     sh:nodeKind sh:IRI ;
     sh:class era:UsageRestrictionEvent ;
     sh:message "restrictionEvent must reference an existing era:UsageRestrictionEvent by IRI."@en ;
+    sh:message "restrictionEvent muss über eine IRI auf ein bestehendes era:UsageRestrictionEvent verweisen."@de ;
+    sh:message "restrictionEvent doit référencer un era:UsageRestrictionEvent existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4104,6 +4366,8 @@ opp-sh:UsageRestrictionEventExecutionReport-executionState
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/event-execution-state/eventCompleted> <http://data.europa.eu/949/concepts/event-execution-state/eventFailed> <http://data.europa.eu/949/concepts/event-execution-state/eventInfo> ) ;
     sh:message "Value must be one of the CCSTMS-scoped EventExecutionState concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von EventExecutionState entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de EventExecutionState."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4157,6 +4421,8 @@ opp-sh:WarningMeasureEventExecutionReport-warningMeasureEvent
     sh:nodeKind sh:IRI ;
     sh:class era:WarningMeasureEvent ;
     sh:message "warningMeasureEvent must reference an existing era:WarningMeasureEvent by IRI."@en ;
+    sh:message "warningMeasureEvent muss über eine IRI auf ein bestehendes era:WarningMeasureEvent verweisen."@de ;
+    sh:message "warningMeasureEvent doit référencer un era:WarningMeasureEvent existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4197,6 +4463,8 @@ opp-sh:WarningMeasureEventExecutionReport-executionState
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/event-execution-state/eventCompleted> <http://data.europa.eu/949/concepts/event-execution-state/eventFailed> <http://data.europa.eu/949/concepts/event-execution-state/eventInfo> ) ;
     sh:message "Value must be one of the CCSTMS-scoped EventExecutionState concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von EventExecutionState entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de EventExecutionState."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4260,6 +4528,8 @@ opp-sh:TrainUnitReportPES-operationalPlanMovement
     sh:nodeKind sh:IRI ;
     sh:class era:OperationalPlanMovement ;
     sh:message "operationalPlanMovement must reference an existing era:OperationalPlanMovement by IRI."@en ;
+    sh:message "operationalPlanMovement muss über eine IRI auf ein bestehendes era:OperationalPlanMovement verweisen."@de ;
+    sh:message "operationalPlanMovement doit référencer un era:OperationalPlanMovement existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -4273,6 +4543,8 @@ opp-sh:TrainUnitReportPES-cmdTrainObject
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:TrainObjectShape ;
     sh:message "cmdTrainObject must be a well-formed TrainObject (blank node or IRI)."@en ;
+    sh:message "cmdTrainObject muss ein wohlgeformtes TrainObject sein (Blank Node oder IRI)."@de ;
+    sh:message "cmdTrainObject doit être un TrainObject bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4325,6 +4597,8 @@ opp-sh:TrainObject-movementPermission
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:MovementPermissionShape ;
     sh:message "movementPermission must be a well-formed MovementPermission (blank node or IRI)."@en ;
+    sh:message "movementPermission muss ein wohlgeformtes MovementPermission sein (Blank Node oder IRI)."@de ;
+    sh:message "movementPermission doit être un MovementPermission bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -4380,6 +4654,8 @@ opp-sh:TrainObject-onboardOperatingMode
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/onboard-operating-mode/fullSupervision> <http://data.europa.eu/949/concepts/onboard-operating-mode/onSight> <http://data.europa.eu/949/concepts/onboard-operating-mode/staffResponsible> <http://data.europa.eu/949/concepts/onboard-operating-mode/shunting> <http://data.europa.eu/949/concepts/onboard-operating-mode/unfitted> <http://data.europa.eu/949/concepts/onboard-operating-mode/sleeping> <http://data.europa.eu/949/concepts/onboard-operating-mode/standBy> <http://data.europa.eu/949/concepts/onboard-operating-mode/trip> <http://data.europa.eu/949/concepts/onboard-operating-mode/postTrip> <http://data.europa.eu/949/concepts/onboard-operating-mode/systemFailure> <http://data.europa.eu/949/concepts/onboard-operating-mode/isolation> <http://data.europa.eu/949/concepts/onboard-operating-mode/nonLeading> <http://data.europa.eu/949/concepts/onboard-operating-mode/limitedSupervision> <http://data.europa.eu/949/concepts/onboard-operating-mode/nationalSystem> <http://data.europa.eu/949/concepts/onboard-operating-mode/reversing> <http://data.europa.eu/949/concepts/onboard-operating-mode/passiveShunting> <http://data.europa.eu/949/concepts/onboard-operating-mode/automaticDriving> <http://data.europa.eu/949/concepts/onboard-operating-mode/supervisedManoeuvre> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OnboardOperatingMode concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OnboardOperatingMode entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OnboardOperatingMode."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4394,6 +4670,8 @@ opp-sh:TrainObject-safeTrainExtent
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:SafeTrainExtentShape ;
     sh:message "safeTrainExtent must be a well-formed SafeTrainExtent (blank node or IRI)."@en ;
+    sh:message "safeTrainExtent muss ein wohlgeformtes SafeTrainExtent sein (Blank Node oder IRI)."@de ;
+    sh:message "safeTrainExtent doit être un SafeTrainExtent bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4409,6 +4687,8 @@ opp-sh:TrainObject-maRequestedByTrain
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/ma-request-by-train/notApplicable> <http://data.europa.eu/949/concepts/ma-request-by-train/startSelectedByDriver> <http://data.europa.eu/949/concepts/ma-request-by-train/timeBeforeReachingThePerturbationLocationReached> <http://data.europa.eu/949/concepts/ma-request-by-train/timeBeforeASectionTimer_LoaSpeedTimerExpiresReached> <http://data.europa.eu/949/concepts/ma-request-by-train/trackDescriptionDeleted> <http://data.europa.eu/949/concepts/ma-request-by-train/tafUpToLevel2TransitionLocation> ) ;
     sh:message "Value must be one of the CCSTMS-scoped MaRequestedByTrain concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von MaRequestedByTrain entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de MaRequestedByTrain."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4438,6 +4718,8 @@ opp-sh:TrainObject-validatedTrainData
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:ValidatedTrainDataShape ;
     sh:message "validatedTrainData must be a well-formed ValidatedTrainData (blank node or IRI)."@en ;
+    sh:message "validatedTrainData muss ein wohlgeformtes ValidatedTrainData sein (Blank Node oder IRI)."@de ;
+    sh:message "validatedTrainData doit être un ValidatedTrainData bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4453,6 +4735,8 @@ opp-sh:TrainObject-runningDirection
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/running-direction/reverse> <http://data.europa.eu/949/concepts/running-direction/nominal> <http://data.europa.eu/949/concepts/running-direction/unknown> ) ;
     sh:message "Value must be one of the CCSTMS-scoped RunningDirection concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von RunningDirection entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de RunningDirection."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4478,6 +4762,8 @@ opp-sh:SafeTrainExtent-linearReference
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetLinearReferenceShape ;
     sh:message "linearReference must be a well-formed NetLinearReference (blank node or IRI)."@en ;
+    sh:message "linearReference muss ein wohlgeformtes NetLinearReference sein (Blank Node oder IRI)."@de ;
+    sh:message "linearReference doit être un NetLinearReference bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -4492,6 +4778,8 @@ opp-sh:SafeTrainExtent-trainPositionQualifier
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/train-position-qualifier/valid> <http://data.europa.eu/949/concepts/train-position-qualifier/ambiguous> <http://data.europa.eu/949/concepts/train-position-qualifier/unknown> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TrainPositionQualifier concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TrainPositionQualifier entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TrainPositionQualifier."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4527,6 +4815,8 @@ opp-sh:ValidatedTrainData-cantDeficiencyCategory
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/cant-deficiencies/80> <http://data.europa.eu/949/concepts/cant-deficiencies/100> <http://data.europa.eu/949/concepts/cant-deficiencies/130> <http://data.europa.eu/949/concepts/cant-deficiencies/150> <http://data.europa.eu/949/concepts/cant-deficiencies/165> <http://data.europa.eu/949/concepts/cant-deficiencies/180> <http://data.europa.eu/949/concepts/cant-deficiencies/210> <http://data.europa.eu/949/concepts/cant-deficiencies/225> <http://data.europa.eu/949/concepts/cant-deficiencies/245> <http://data.europa.eu/949/concepts/cant-deficiencies/275> <http://data.europa.eu/949/concepts/cant-deficiencies/300> ) ;
     sh:message "Value must be one of the CCSTMS-scoped CantDeficiencies concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von CantDeficiencies entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de CantDeficiencies."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4542,6 +4832,8 @@ opp-sh:ValidatedTrainData-otherTrainCategory
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/other-international-train-category/noCategory> <http://data.europa.eu/949/concepts/other-international-train-category/freightTrainP> <http://data.europa.eu/949/concepts/other-international-train-category/freightTrainG> <http://data.europa.eu/949/concepts/other-international-train-category/passengerTrain> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OtherInternationalTrainCategory concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OtherInternationalTrainCategory entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OtherInternationalTrainCategory."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4591,6 +4883,8 @@ opp-sh:ValidatedTrainData-loadingGaugeType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/loading-gauge-type/loadingGaugeIncompatible> <http://data.europa.eu/949/concepts/loading-gauge-type/g1> <http://data.europa.eu/949/concepts/loading-gauge-type/gA> <http://data.europa.eu/949/concepts/loading-gauge-type/gB> <http://data.europa.eu/949/concepts/loading-gauge-type/gC> ) ;
     sh:message "Value must be one of the CCSTMS-scoped LoadingGaugeType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von LoadingGaugeType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de LoadingGaugeType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4606,6 +4900,8 @@ opp-sh:ValidatedTrainData-axleLoadCategory
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/load-capability-line-categories/10> <http://data.europa.eu/949/concepts/load-capability-line-categories/230> <http://data.europa.eu/949/concepts/load-capability-line-categories/20> <http://data.europa.eu/949/concepts/load-capability-line-categories/30> <http://data.europa.eu/949/concepts/load-capability-line-categories/40> <http://data.europa.eu/949/concepts/load-capability-line-categories/50> <http://data.europa.eu/949/concepts/load-capability-line-categories/60> <http://data.europa.eu/949/concepts/load-capability-line-categories/70> <http://data.europa.eu/949/concepts/load-capability-line-categories/80> <http://data.europa.eu/949/concepts/load-capability-line-categories/90> <http://data.europa.eu/949/concepts/load-capability-line-categories/100> <http://data.europa.eu/949/concepts/load-capability-line-categories/110> <http://data.europa.eu/949/concepts/load-capability-line-categories/120> ) ;
     sh:message "Value must be one of the CCSTMS-scoped LoadCapabilityLineCategories concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von LoadCapabilityLineCategories entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de LoadCapabilityLineCategories."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4621,6 +4917,8 @@ opp-sh:ValidatedTrainData-airtight
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/airtight-type/notFitted> <http://data.europa.eu/949/concepts/airtight-type/fitted> ) ;
     sh:message "Value must be one of the CCSTMS-scoped AirtightType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von AirtightType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de AirtightType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4651,6 +4949,8 @@ opp-sh:ValidatedTrainData-tractionVoltage
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:TractionVoltageShape ;
     sh:message "tractionVoltage must be a well-formed TractionVoltage (blank node or IRI)."@en ;
+    sh:message "tractionVoltage muss ein wohlgeformtes TractionVoltage sein (Blank Node oder IRI)."@de ;
+    sh:message "tractionVoltage doit être un TractionVoltage bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 31 ;
     sh:severity sh:Violation ;
     .
@@ -4674,6 +4974,8 @@ opp-sh:ValidatedTrainData-vMaxTrain-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "vMaxTrain must be a multiple of 5 km/h."@en ;
+    sh:message "vMaxTrain muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "vMaxTrain doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -4704,6 +5006,8 @@ opp-sh:TractionVoltage-mVoltage
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/energy-supply-systems/notFitted> <http://data.europa.eu/949/concepts/energy-supply-systems/AC10> <http://data.europa.eu/949/concepts/energy-supply-systems/AC20> <http://data.europa.eu/949/concepts/energy-supply-systems/DC30> <http://data.europa.eu/949/concepts/energy-supply-systems/DC40> <http://data.europa.eu/949/concepts/energy-supply-systems/DC80> <http://data.europa.eu/949/concepts/energy-supply-systems/DC70> <http://data.europa.eu/949/concepts/energy-supply-systems/DC60> <http://data.europa.eu/949/concepts/energy-supply-systems/DC90> ) ;
     sh:message "Value must be one of the CCSTMS-scoped EnergySupplySystems concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von EnergySupplySystems entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de EnergySupplySystems."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4751,6 +5055,8 @@ opp-sh:MovementPermission-riskBuffer
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetLinearReferenceShape ;
     sh:message "riskBuffer must be a well-formed NetLinearReference (blank node or IRI)."@en ;
+    sh:message "riskBuffer muss ein wohlgeformtes NetLinearReference sein (Blank Node oder IRI)."@de ;
+    sh:message "riskBuffer doit être un NetLinearReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4765,6 +5071,8 @@ opp-sh:MovementPermission-riskPaths
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetLinearReferenceShape ;
     sh:message "riskPaths must be a well-formed NetLinearReference (blank node or IRI)."@en ;
+    sh:message "riskPaths muss ein wohlgeformtes NetLinearReference sein (Blank Node oder IRI)."@de ;
+    sh:message "riskPaths doit être un NetLinearReference bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4777,6 +5085,8 @@ opp-sh:MovementPermission-permissionExtent
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetLinearReferenceShape ;
     sh:message "permissionExtent must be a well-formed NetLinearReference (blank node or IRI)."@en ;
+    sh:message "permissionExtent muss ein wohlgeformtes NetLinearReference sein (Blank Node oder IRI)."@de ;
+    sh:message "permissionExtent doit être un NetLinearReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4791,6 +5101,8 @@ opp-sh:MovementPermission-mpOnboardOperatingModes
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:MpOnboardOperatingModeShape ;
     sh:message "mpOnboardOperatingModes must be a well-formed MpOnboardOperatingMode (blank node or IRI)."@en ;
+    sh:message "mpOnboardOperatingModes muss ein wohlgeformtes MpOnboardOperatingMode sein (Blank Node oder IRI)."@de ;
+    sh:message "mpOnboardOperatingModes doit être un MpOnboardOperatingMode bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4803,6 +5115,8 @@ opp-sh:MovementPermission-mpSpeeds
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:MpSpeedShape ;
     sh:message "mpSpeeds must be a well-formed MpSpeed (blank node or IRI)."@en ;
+    sh:message "mpSpeeds muss ein wohlgeformtes MpSpeed sein (Blank Node oder IRI)."@de ;
+    sh:message "mpSpeeds doit être un MpSpeed bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -4816,6 +5130,8 @@ opp-sh:MovementPermission-excludedSTAForFlankProtection
     sh:nodeKind sh:IRI ;
     sh:class era:SwitchableTracksideAsset ;
     sh:message "excludedSTAForFlankProtection must reference an existing era:SwitchableTracksideAsset by IRI."@en ;
+    sh:message "excludedSTAForFlankProtection muss über eine IRI auf ein bestehendes era:SwitchableTracksideAsset verweisen."@de ;
+    sh:message "excludedSTAForFlankProtection doit référencer un era:SwitchableTracksideAsset existant par IRI."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4828,6 +5144,8 @@ opp-sh:MovementPermission-currentEoA
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetPointReferenceShape ;
     sh:message "currentEoA must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "currentEoA muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "currentEoA doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4842,6 +5160,8 @@ opp-sh:MovementPermission-pendingCooperativeShorteningRequests
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:CooperativeShorteningRequestShape ;
     sh:message "pendingCooperativeShorteningRequests must be a well-formed CooperativeShorteningRequest (blank node or IRI)."@en ;
+    sh:message "pendingCooperativeShorteningRequests muss ein wohlgeformtes CooperativeShorteningRequest sein (Blank Node oder IRI)."@de ;
+    sh:message "pendingCooperativeShorteningRequests doit être un CooperativeShorteningRequest bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4879,6 +5199,8 @@ opp-sh:MpSpeed-linkedPath
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetLinearReferenceShape ;
     sh:message "linkedPath must be a well-formed NetLinearReference (blank node or IRI)."@en ;
+    sh:message "linkedPath muss ein wohlgeformtes NetLinearReference sein (Blank Node oder IRI)."@de ;
+    sh:message "linkedPath doit être un NetLinearReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4904,6 +5226,8 @@ opp-sh:MpOnboardOperatingMode-onboardOperatingMode
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/onboard-operating-mode/fullSupervision> <http://data.europa.eu/949/concepts/onboard-operating-mode/onSight> <http://data.europa.eu/949/concepts/onboard-operating-mode/staffResponsible> <http://data.europa.eu/949/concepts/onboard-operating-mode/shunting> <http://data.europa.eu/949/concepts/onboard-operating-mode/unfitted> <http://data.europa.eu/949/concepts/onboard-operating-mode/sleeping> <http://data.europa.eu/949/concepts/onboard-operating-mode/standBy> <http://data.europa.eu/949/concepts/onboard-operating-mode/trip> <http://data.europa.eu/949/concepts/onboard-operating-mode/postTrip> <http://data.europa.eu/949/concepts/onboard-operating-mode/systemFailure> <http://data.europa.eu/949/concepts/onboard-operating-mode/isolation> <http://data.europa.eu/949/concepts/onboard-operating-mode/nonLeading> <http://data.europa.eu/949/concepts/onboard-operating-mode/limitedSupervision> <http://data.europa.eu/949/concepts/onboard-operating-mode/nationalSystem> <http://data.europa.eu/949/concepts/onboard-operating-mode/reversing> <http://data.europa.eu/949/concepts/onboard-operating-mode/passiveShunting> <http://data.europa.eu/949/concepts/onboard-operating-mode/automaticDriving> <http://data.europa.eu/949/concepts/onboard-operating-mode/supervisedManoeuvre> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OnboardOperatingMode concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OnboardOperatingMode entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OnboardOperatingMode."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4918,6 +5242,8 @@ opp-sh:MpOnboardOperatingMode-linkedPath
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetLinearReferenceShape ;
     sh:message "linkedPath must be a well-formed NetLinearReference (blank node or IRI)."@en ;
+    sh:message "linkedPath muss ein wohlgeformtes NetLinearReference sein (Blank Node oder IRI)."@de ;
+    sh:message "linkedPath doit être un NetLinearReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4945,6 +5271,8 @@ opp-sh:CooperativeShorteningRequest-trainObjectReference
     sh:nodeKind sh:IRI ;
     sh:class era:TrainObject ;
     sh:message "trainObjectReference must reference an existing era:TrainObject by IRI."@en ;
+    sh:message "trainObjectReference muss über eine IRI auf ein bestehendes era:TrainObject verweisen."@de ;
+    sh:message "trainObjectReference doit référencer un era:TrainObject existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4959,6 +5287,8 @@ opp-sh:CooperativeShorteningRequest-newMpEnd
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetPointReferenceShape ;
     sh:message "newMpEnd must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "newMpEnd muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "newMpEnd doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4973,6 +5303,8 @@ opp-sh:CooperativeShorteningRequest-riskBuffer
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetLinearReferenceShape ;
     sh:message "riskBuffer must be a well-formed NetLinearReference (blank node or IRI)."@en ;
+    sh:message "riskBuffer muss ein wohlgeformtes NetLinearReference sein (Blank Node oder IRI)."@de ;
+    sh:message "riskBuffer doit être un NetLinearReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5027,6 +5359,8 @@ opp-sh:TrainUnitReportAtoStatus-operationalPlanMovement
     sh:nodeKind sh:IRI ;
     sh:class era:OperationalPlanMovement ;
     sh:message "operationalPlanMovement must reference an existing era:OperationalPlanMovement by IRI."@en ;
+    sh:message "operationalPlanMovement muss über eine IRI auf ein bestehendes era:OperationalPlanMovement verweisen."@de ;
+    sh:message "operationalPlanMovement doit référencer un era:OperationalPlanMovement existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -5040,6 +5374,8 @@ opp-sh:TrainUnitReportAtoStatus-trainUnitIdentifier
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:PhysicalTrainUnitIdentifierShape ;
     sh:message "trainUnitIdentifier must be a well-formed PhysicalTrainUnitIdentifier (blank node or IRI)."@en ;
+    sh:message "trainUnitIdentifier muss ein wohlgeformtes PhysicalTrainUnitIdentifier sein (Blank Node oder IRI)."@de ;
+    sh:message "trainUnitIdentifier doit être un PhysicalTrainUnitIdentifier bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5054,6 +5390,8 @@ opp-sh:TrainUnitReportAtoStatus-atoState
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/ato-state/unknown> <http://data.europa.eu/949/concepts/ato-state/CO> <http://data.europa.eu/949/concepts/ato-state/NA> <http://data.europa.eu/949/concepts/ato-state/AV> <http://data.europa.eu/949/concepts/ato-state/RE> <http://data.europa.eu/949/concepts/ato-state/EG> <http://data.europa.eu/949/concepts/ato-state/DE> <http://data.europa.eu/949/concepts/ato-state/FA> ) ;
     sh:message "Value must be one of the CCSTMS-scoped AtoState concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von AtoState entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de AtoState."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5199,6 +5537,8 @@ opp-sh:TrainUnitReportAtoStatus-frontPosition
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetPointReferenceShape ;
     sh:message "frontPosition must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "frontPosition muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "frontPosition doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -5212,6 +5552,8 @@ opp-sh:TrainUnitReportAtoStatus-eventHandling
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:EventHandlingShape ;
     sh:message "eventHandling must be a well-formed EventHandling (blank node or IRI)."@en ;
+    sh:message "eventHandling muss ein wohlgeformtes EventHandling sein (Blank Node oder IRI)."@de ;
+    sh:message "eventHandling doit être un EventHandling bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -5226,6 +5568,8 @@ opp-sh:TrainUnitReportAtoStatus-eventEstimations
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "eventEstimations is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "eventEstimations ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "eventEstimations est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node opp-sh:TrainUnitReportAtoStatus-eventEstimations-items ;
     sh:severity sh:Violation ;
     .
@@ -5234,6 +5578,8 @@ opp-sh:TrainUnitReportAtoStatus-eventEstimations-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "era:eventEstimations is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:eventEstimations ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:eventEstimations est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -5260,6 +5606,8 @@ opp-sh:TrainUnitReportAtoStatus-eventEstimations-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node opp-sh:EventEstimationShape ;
         sh:message "eventEstimations must be a well-formed EventEstimation (blank node or IRI)."@en ;
+        sh:message "eventEstimations muss ein wohlgeformtes EventEstimation sein (Blank Node oder IRI)."@de ;
+        sh:message "eventEstimations doit être un EventEstimation bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -5284,6 +5632,8 @@ opp-sh:EventHandling-event
     sh:nodeKind sh:IRI ;
     sh:class era:MovementEvent ;
     sh:message "event must reference an existing era:MovementEvent by IRI."@en ;
+    sh:message "event muss über eine IRI auf ein bestehendes era:MovementEvent verweisen."@de ;
+    sh:message "event doit référencer un era:MovementEvent existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5298,6 +5648,8 @@ opp-sh:EventHandling-passStopDepart
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/movement-event-action/passedEvent> <http://data.europa.eu/949/concepts/movement-event-action/stoppedAccurateAtEvent> <http://data.europa.eu/949/concepts/movement-event-action/stoppedWithOvershootAtEvent> <http://data.europa.eu/949/concepts/movement-event-action/stoppedWithUndershootAtEvent> <http://data.europa.eu/949/concepts/movement-event-action/departedFromEvent> ) ;
     sh:message "Value must be one of the CCSTMS-scoped MovementEventAction concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von MovementEventAction entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de MovementEventAction."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5323,6 +5675,8 @@ opp-sh:EventEstimation-event
     sh:nodeKind sh:IRI ;
     sh:class era:MovementEvent ;
     sh:message "event must reference an existing era:MovementEvent by IRI."@en ;
+    sh:message "event muss über eine IRI auf ein bestehendes era:MovementEvent verweisen."@de ;
+    sh:message "event doit référencer un era:MovementEvent existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5385,6 +5739,8 @@ opp-sh:TrainUnitReportAtoCapabilities-operationalPlanMovement
     sh:nodeKind sh:IRI ;
     sh:class era:OperationalPlanMovement ;
     sh:message "operationalPlanMovement must reference an existing era:OperationalPlanMovement by IRI."@en ;
+    sh:message "operationalPlanMovement muss über eine IRI auf ein bestehendes era:OperationalPlanMovement verweisen."@de ;
+    sh:message "operationalPlanMovement doit référencer un era:OperationalPlanMovement existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -5398,6 +5754,8 @@ opp-sh:TrainUnitReportAtoCapabilities-trainUnitIdentifier
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:PhysicalTrainUnitIdentifierShape ;
     sh:message "trainUnitIdentifier must be a well-formed PhysicalTrainUnitIdentifier (blank node or IRI)."@en ;
+    sh:message "trainUnitIdentifier muss ein wohlgeformtes PhysicalTrainUnitIdentifier sein (Blank Node oder IRI)."@de ;
+    sh:message "trainUnitIdentifier doit être un PhysicalTrainUnitIdentifier bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5441,6 +5799,8 @@ opp-sh:TrainUnitReportAtoCapabilities-etcsData
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:EtcsDataAtoShape ;
     sh:message "etcsData must be a well-formed EtcsDataAto (blank node or IRI)."@en ;
+    sh:message "etcsData muss ein wohlgeformtes EtcsDataAto sein (Blank Node oder IRI)."@de ;
+    sh:message "etcsData doit être un EtcsDataAto bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -5498,6 +5858,8 @@ opp-sh:TrainUnitReportAtoCapabilities-additionalTrainData
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:AdditionalTrainDataShape ;
     sh:message "additionalTrainData must be a well-formed AdditionalTrainData (blank node or IRI)."@en ;
+    sh:message "additionalTrainData muss ein wohlgeformtes AdditionalTrainData sein (Blank Node oder IRI)."@de ;
+    sh:message "additionalTrainData doit être un AdditionalTrainData bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -5512,6 +5874,8 @@ opp-sh:TrainUnitReportAtoCapabilities-physicalConsists
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "physicalConsists is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "physicalConsists ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "physicalConsists est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node opp-sh:TrainUnitReportAtoCapabilities-physicalConsists-items ;
     sh:severity sh:Violation ;
     .
@@ -5520,6 +5884,8 @@ opp-sh:TrainUnitReportAtoCapabilities-physicalConsists-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "era:physicalConsists is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:physicalConsists ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:physicalConsists est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -5541,6 +5907,8 @@ opp-sh:TrainUnitReportAtoCapabilities-physicalConsists-listItemCount
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "The single rdf:List carried by era:physicalConsists must hold between 0 and 255 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:message "Die einzelne rdf:List, die von era:physicalConsists getragen wird, muss zwischen 0 und 255 Element(e) enthalten; die Multiplizität begrenzt die Elemente innerhalb der Liste, nicht die Anzahl der Listen."@de ;
+    sh:message "L'unique rdf:List portée par era:physicalConsists doit contenir entre 0 et 255 élément(s) ; la multiplicité borne les éléments à l'intérieur de la liste, pas le nombre de listes."@fr ;
     sh:select """
             SELECT $this (COUNT(?item) AS ?itemCount)
             WHERE {
@@ -5565,6 +5933,8 @@ opp-sh:TrainUnitReportAtoCapabilities-physicalConsists-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node opp-sh:PhysicalConsistShape ;
         sh:message "physicalConsists must be a well-formed PhysicalConsist (blank node or IRI)."@en ;
+        sh:message "physicalConsists muss ein wohlgeformtes PhysicalConsist sein (Blank Node oder IRI)."@de ;
+        sh:message "physicalConsists doit être un PhysicalConsist bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -5624,6 +5994,8 @@ opp-sh:EtcsDataAto-cantDeficiencyCategory
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/cant-deficiencies/80> <http://data.europa.eu/949/concepts/cant-deficiencies/100> <http://data.europa.eu/949/concepts/cant-deficiencies/130> <http://data.europa.eu/949/concepts/cant-deficiencies/150> <http://data.europa.eu/949/concepts/cant-deficiencies/165> <http://data.europa.eu/949/concepts/cant-deficiencies/180> <http://data.europa.eu/949/concepts/cant-deficiencies/210> <http://data.europa.eu/949/concepts/cant-deficiencies/225> <http://data.europa.eu/949/concepts/cant-deficiencies/245> <http://data.europa.eu/949/concepts/cant-deficiencies/275> <http://data.europa.eu/949/concepts/cant-deficiencies/300> ) ;
     sh:message "Value must be one of the CCSTMS-scoped CantDeficiencies concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von CantDeficiencies entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de CantDeficiencies."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5638,6 +6010,8 @@ opp-sh:EtcsDataAto-otherInternationalCategory
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_freightTrainP> <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_freightTrainG> <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_passengerTrain> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OtherSpecificStaticSpeedProfileCategory concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OtherSpecificStaticSpeedProfileCategory entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OtherSpecificStaticSpeedProfileCategory."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5653,6 +6027,8 @@ opp-sh:EtcsDataAto-axleLoadCategory
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/load-capability-line-categories/10> <http://data.europa.eu/949/concepts/load-capability-line-categories/230> <http://data.europa.eu/949/concepts/load-capability-line-categories/20> <http://data.europa.eu/949/concepts/load-capability-line-categories/30> <http://data.europa.eu/949/concepts/load-capability-line-categories/40> <http://data.europa.eu/949/concepts/load-capability-line-categories/50> <http://data.europa.eu/949/concepts/load-capability-line-categories/60> <http://data.europa.eu/949/concepts/load-capability-line-categories/70> <http://data.europa.eu/949/concepts/load-capability-line-categories/80> <http://data.europa.eu/949/concepts/load-capability-line-categories/90> <http://data.europa.eu/949/concepts/load-capability-line-categories/100> <http://data.europa.eu/949/concepts/load-capability-line-categories/110> <http://data.europa.eu/949/concepts/load-capability-line-categories/120> ) ;
     sh:message "Value must be one of the CCSTMS-scoped LoadCapabilityLineCategories concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von LoadCapabilityLineCategories entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de LoadCapabilityLineCategories."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5710,6 +6086,8 @@ opp-sh:EtcsDataAto-brakePosition
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/brake-position/passengerTrainInP> <http://data.europa.eu/949/concepts/brake-position/freightTrainInP> <http://data.europa.eu/949/concepts/brake-position/freightTrainInG> <http://data.europa.eu/949/concepts/brake-position/brakePositionUnknown> ) ;
     sh:message "Value must be one of the CCSTMS-scoped BrakePosition concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von BrakePosition entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de BrakePosition."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5735,6 +6113,8 @@ opp-sh:DoorData-doorState
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/door-state/doorStateUnknown> <http://data.europa.eu/949/concepts/door-state/doorStateBlocked> <http://data.europa.eu/949/concepts/door-state/doorStateAvailable> ) ;
     sh:message "Value must be one of the CCSTMS-scoped DoorState concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von DoorState entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de DoorState."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5870,6 +6250,8 @@ opp-sh:AdditionalTrainData-regenerativeBrakeState
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/active-state/activeState> <http://data.europa.eu/949/concepts/active-state/inactiveState> <http://data.europa.eu/949/concepts/active-state/undefinedState> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ActiveState concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ActiveState entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ActiveState."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5884,6 +6266,8 @@ opp-sh:AdditionalTrainData-magneticShoeBrakeState
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/active-state/activeState> <http://data.europa.eu/949/concepts/active-state/inactiveState> <http://data.europa.eu/949/concepts/active-state/undefinedState> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ActiveState concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ActiveState entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ActiveState."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5898,6 +6282,8 @@ opp-sh:AdditionalTrainData-eddyCurrentBrakeState
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/active-state/activeState> <http://data.europa.eu/949/concepts/active-state/inactiveState> <http://data.europa.eu/949/concepts/active-state/undefinedState> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ActiveState concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ActiveState entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ActiveState."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5912,6 +6298,8 @@ opp-sh:AdditionalTrainData-electroPneumaticBrakeState
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/active-state/activeState> <http://data.europa.eu/949/concepts/active-state/inactiveState> <http://data.europa.eu/949/concepts/active-state/undefinedState> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ActiveState concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ActiveState entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ActiveState."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5926,6 +6314,8 @@ opp-sh:AdditionalTrainData-adhesionIndependentBrakeState
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/active-state/activeState> <http://data.europa.eu/949/concepts/active-state/inactiveState> <http://data.europa.eu/949/concepts/active-state/undefinedState> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ActiveState concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ActiveState entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ActiveState."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5940,6 +6330,8 @@ opp-sh:AdditionalTrainData-availableAdhesionCategory
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/adhesion-category/dryRailHigh> <http://data.europa.eu/949/concepts/adhesion-category/dryRailMedium> <http://data.europa.eu/949/concepts/adhesion-category/dryRailLow> <http://data.europa.eu/949/concepts/adhesion-category/lowAdhesion> <http://data.europa.eu/949/concepts/adhesion-category/veryLowAdhesion> <http://data.europa.eu/949/concepts/adhesion-category/extremelyLowAdhesion> <http://data.europa.eu/949/concepts/adhesion-category/unknownAdhesion> ) ;
     sh:message "Value must be one of the CCSTMS-scoped AdhesionCategory concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von AdhesionCategory entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de AdhesionCategory."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6058,6 +6450,8 @@ opp-sh:PhysicalConsist-physicalVehicles
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "physicalVehicles is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "physicalVehicles ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "physicalVehicles est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node opp-sh:PhysicalConsist-physicalVehicles-items ;
     sh:severity sh:Violation ;
     .
@@ -6066,6 +6460,8 @@ opp-sh:PhysicalConsist-physicalVehicles-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "era:physicalVehicles is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:physicalVehicles ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:physicalVehicles est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -6087,6 +6483,8 @@ opp-sh:PhysicalConsist-physicalVehicles-listItemCount
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "The single rdf:List carried by era:physicalVehicles must hold between 0 and 255 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:message "Die einzelne rdf:List, die von era:physicalVehicles getragen wird, muss zwischen 0 und 255 Element(e) enthalten; die Multiplizität begrenzt die Elemente innerhalb der Liste, nicht die Anzahl der Listen."@de ;
+    sh:message "L'unique rdf:List portée par era:physicalVehicles doit contenir entre 0 et 255 élément(s) ; la multiplicité borne les éléments à l'intérieur de la liste, pas le nombre de listes."@fr ;
     sh:select """
             SELECT $this (COUNT(?item) AS ?itemCount)
             WHERE {
@@ -6111,6 +6509,8 @@ opp-sh:PhysicalConsist-physicalVehicles-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node opp-sh:PhysicalVehicleShape ;
         sh:message "physicalVehicles must be a well-formed PhysicalVehicle (blank node or IRI)."@en ;
+        sh:message "physicalVehicles muss ein wohlgeformtes PhysicalVehicle sein (Blank Node oder IRI)."@de ;
+        sh:message "physicalVehicles doit être un PhysicalVehicle bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -6176,6 +6576,8 @@ opp-sh:PhysicalVehicle-vehicleOrientation
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/vehicle-orientation/orientationUnknown> <http://data.europa.eu/949/concepts/vehicle-orientation/orientationSameAsTrainUnit> <http://data.europa.eu/949/concepts/vehicle-orientation/orientationInverseToTrainUnit> ) ;
     sh:message "Value must be one of the CCSTMS-scoped VehicleOrientation concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von VehicleOrientation entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de VehicleOrientation."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6191,6 +6593,8 @@ opp-sh:PhysicalVehicle-doorDataLeft
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "doorDataLeft is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "doorDataLeft ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "doorDataLeft est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node opp-sh:PhysicalVehicle-doorDataLeft-items ;
     sh:severity sh:Violation ;
     .
@@ -6205,6 +6609,8 @@ opp-sh:PhysicalVehicle-doorDataRight
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "doorDataRight is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "doorDataRight ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "doorDataRight est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node opp-sh:PhysicalVehicle-doorDataRight-items ;
     sh:severity sh:Violation ;
     .
@@ -6233,6 +6639,8 @@ opp-sh:PhysicalVehicle-pantographsStates
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "pantographsStates is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "pantographsStates ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "pantographsStates est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node opp-sh:PhysicalVehicle-pantographsStates-items ;
     sh:severity sh:Violation ;
     .
@@ -6241,6 +6649,8 @@ opp-sh:PhysicalVehicle-doorDataLeft-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "era:doorDataLeft is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:doorDataLeft ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:doorDataLeft est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -6262,6 +6672,8 @@ opp-sh:PhysicalVehicle-doorDataLeft-listItemCount
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "The single rdf:List carried by era:doorDataLeft must hold between 0 and 7 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:message "Die einzelne rdf:List, die von era:doorDataLeft getragen wird, muss zwischen 0 und 7 Element(e) enthalten; die Multiplizität begrenzt die Elemente innerhalb der Liste, nicht die Anzahl der Listen."@de ;
+    sh:message "L'unique rdf:List portée par era:doorDataLeft doit contenir entre 0 et 7 élément(s) ; la multiplicité borne les éléments à l'intérieur de la liste, pas le nombre de listes."@fr ;
     sh:select """
             SELECT $this (COUNT(?item) AS ?itemCount)
             WHERE {
@@ -6281,6 +6693,8 @@ opp-sh:PhysicalVehicle-doorDataRight-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "era:doorDataRight is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:doorDataRight ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:doorDataRight est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -6302,6 +6716,8 @@ opp-sh:PhysicalVehicle-doorDataRight-listItemCount
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "The single rdf:List carried by era:doorDataRight must hold between 0 and 7 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:message "Die einzelne rdf:List, die von era:doorDataRight getragen wird, muss zwischen 0 und 7 Element(e) enthalten; die Multiplizität begrenzt die Elemente innerhalb der Liste, nicht die Anzahl der Listen."@de ;
+    sh:message "L'unique rdf:List portée par era:doorDataRight doit contenir entre 0 et 7 élément(s) ; la multiplicité borne les éléments à l'intérieur de la liste, pas le nombre de listes."@fr ;
     sh:select """
             SELECT $this (COUNT(?item) AS ?itemCount)
             WHERE {
@@ -6321,6 +6737,8 @@ opp-sh:PhysicalVehicle-pantographsStates-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "era:pantographsStates is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:pantographsStates ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:pantographsStates est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -6342,6 +6760,8 @@ opp-sh:PhysicalVehicle-pantographsStates-listItemCount
     a sh:SPARQLConstraint ;
     sh:prefixes opp-sh:PrefixDeclarations ;
     sh:message "The single rdf:List carried by era:pantographsStates must hold between 0 and 7 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:message "Die einzelne rdf:List, die von era:pantographsStates getragen wird, muss zwischen 0 und 7 Element(e) enthalten; die Multiplizität begrenzt die Elemente innerhalb der Liste, nicht die Anzahl der Listen."@de ;
+    sh:message "L'unique rdf:List portée par era:pantographsStates doit contenir entre 0 et 7 élément(s) ; la multiplicité borne les éléments à l'intérieur de la liste, pas le nombre de listes."@fr ;
     sh:select """
             SELECT $this (COUNT(?item) AS ?itemCount)
             WHERE {
@@ -6366,6 +6786,8 @@ opp-sh:PhysicalVehicle-doorDataLeft-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node opp-sh:DoorDataShape ;
         sh:message "doorDataLeft must be a well-formed DoorData (blank node or IRI)."@en ;
+        sh:message "doorDataLeft muss ein wohlgeformtes DoorData sein (Blank Node oder IRI)."@de ;
+        sh:message "doorDataLeft doit être un DoorData bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -6379,6 +6801,8 @@ opp-sh:PhysicalVehicle-doorDataRight-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node opp-sh:DoorDataShape ;
         sh:message "doorDataRight must be a well-formed DoorData (blank node or IRI)."@en ;
+        sh:message "doorDataRight muss ein wohlgeformtes DoorData sein (Blank Node oder IRI)."@de ;
+        sh:message "doorDataRight doit être un DoorData bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -6392,6 +6816,8 @@ opp-sh:PhysicalVehicle-pantographsStates-items
         sh:nodeKind sh:IRI ;
         sh:in ( <http://data.europa.eu/949/concepts/pantograph-state/pantographBlocked> <http://data.europa.eu/949/concepts/pantograph-state/pantographLowered> <http://data.europa.eu/949/concepts/pantograph-state/pantographRaised> <http://data.europa.eu/949/concepts/pantograph-state/pantographStateUnknown> ) ;
         sh:message "Value must be one of the CCSTMS-scoped PantographState concepts."@en ;
+        sh:message "Der Wert muss einem der CCSTMS-Konzepte von PantographState entsprechen."@de ;
+        sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de PantographState."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -6421,6 +6847,8 @@ opp-sh:UnresolvedTrackboundObject-utoExtent
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:infra-NetAreaReferenceShape ;
     sh:message "utoExtent must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:message "utoExtent muss ein wohlgeformtes NetAreaReference sein (Blank Node oder IRI)."@de ;
+    sh:message "utoExtent doit être un NetAreaReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6461,6 +6889,8 @@ opp-sh:UnresolvedTrackboundObject-utoCreationReason
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/uto-creation-reason/ttdFree> <http://data.europa.eu/949/concepts/uto-creation-reason/systemInit> <http://data.europa.eu/949/concepts/uto-creation-reason/shorterLTrain> <http://data.europa.eu/949/concepts/uto-creation-reason/toCommLoss> <http://data.europa.eu/949/concepts/uto-creation-reason/ttdOccupation> ) ;
     sh:message "Value must be one of the CCSTMS-scoped UtoCreationReason concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von UtoCreationReason entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de UtoCreationReason."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6486,6 +6916,8 @@ opp-sh:UnresolvedTrackboundObjectState-unresolvedTrackBoundObject
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:UnresolvedTrackboundObjectShape ;
     sh:message "unresolvedTrackBoundObject must be a well-formed UnresolvedTrackboundObject (blank node or IRI)."@en ;
+    sh:message "unresolvedTrackBoundObject muss ein wohlgeformtes UnresolvedTrackboundObject sein (Blank Node oder IRI)."@de ;
+    sh:message "unresolvedTrackBoundObject doit être un UnresolvedTrackboundObject bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6528,6 +6960,8 @@ opp-sh:SwitchableTracksideAssetState-switchableTracksideAsset
     sh:nodeKind sh:IRI ;
     sh:class era:SwitchableTracksideAsset ;
     sh:message "switchableTracksideAsset must reference an existing era:SwitchableTracksideAsset by IRI."@en ;
+    sh:message "switchableTracksideAsset muss über eine IRI auf ein bestehendes era:SwitchableTracksideAsset verweisen."@de ;
+    sh:message "switchableTracksideAsset doit référencer un era:SwitchableTracksideAsset existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6542,6 +6976,8 @@ opp-sh:SwitchableTracksideAssetState-switchableTracksideAssetStateValue
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/stasv/disturbed> <http://data.europa.eu/949/concepts/stasv/trailed> <http://data.europa.eu/949/concepts/stasv/processing> <http://data.europa.eu/949/concepts/stasv/ready> ) ;
     sh:message "Value must be one of the CCSTMS-scoped SwitchableTracksideAssetStateValue concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von SwitchableTracksideAssetStateValue entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de SwitchableTracksideAssetStateValue."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6556,6 +6992,8 @@ opp-sh:SwitchableTracksideAssetState-switchableTracksideAssetSectionState
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:SwitchableTracksideAssetSectionStateShape ;
     sh:message "switchableTracksideAssetSectionState must be a well-formed SwitchableTracksideAssetSectionState (blank node or IRI)."@en ;
+    sh:message "switchableTracksideAssetSectionState muss ein wohlgeformtes SwitchableTracksideAssetSectionState sein (Blank Node oder IRI)."@de ;
+    sh:message "switchableTracksideAssetSectionState doit être un SwitchableTracksideAssetSectionState bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -6583,6 +7021,8 @@ opp-sh:SwitchableTracksideAssetSectionState-switchableTracksideAssetSection
     sh:nodeKind sh:IRI ;
     sh:class era:SwitchableTracksideAssetSection ;
     sh:message "switchableTracksideAssetSection must reference an existing era:SwitchableTracksideAssetSection by IRI."@en ;
+    sh:message "switchableTracksideAssetSection muss über eine IRI auf ein bestehendes era:SwitchableTracksideAssetSection verweisen."@de ;
+    sh:message "switchableTracksideAssetSection doit référencer un era:SwitchableTracksideAssetSection existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6597,6 +7037,8 @@ opp-sh:SwitchableTracksideAssetSectionState-requestedDriveability
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/stasd/full> <http://data.europa.eu/949/concepts/stasd/none> ) ;
     sh:message "Value must be one of the CCSTMS-scoped SwitchableTracksideAssetSectionDriveability concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von SwitchableTracksideAssetSectionDriveability entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de SwitchableTracksideAssetSectionDriveability."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6611,6 +7053,8 @@ opp-sh:SwitchableTracksideAssetSectionState-currentDriveability
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/stasd/full> <http://data.europa.eu/949/concepts/stasd/none> ) ;
     sh:message "Value must be one of the CCSTMS-scoped SwitchableTracksideAssetSectionDriveability concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von SwitchableTracksideAssetSectionDriveability entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de SwitchableTracksideAssetSectionDriveability."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6640,6 +7084,8 @@ opp-sh:UsageRestrictionState-usageRestrictionState
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/event-state/activated> <http://data.europa.eu/949/concepts/event-state/deactivated> ) ;
     sh:message "Value must be one of the CCSTMS-scoped EventState concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von EventState entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de EventState."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6654,6 +7100,8 @@ opp-sh:UsageRestrictionState-usageRestriction
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:UsageRestrictionShape ;
     sh:message "usageRestriction must be a well-formed UsageRestriction (blank node or IRI)."@en ;
+    sh:message "usageRestriction muss ein wohlgeformtes UsageRestriction sein (Blank Node oder IRI)."@de ;
+    sh:message "usageRestriction doit être un UsageRestriction bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -6692,6 +7140,8 @@ opp-sh:UsageRestrictionEventState-usageRestrictionEvent
     sh:nodeKind sh:IRI ;
     sh:class era:UsageRestrictionEvent ;
     sh:message "usageRestrictionEvent must reference an existing era:UsageRestrictionEvent by IRI."@en ;
+    sh:message "usageRestrictionEvent muss über eine IRI auf ein bestehendes era:UsageRestrictionEvent verweisen."@de ;
+    sh:message "usageRestrictionEvent doit référencer un era:UsageRestrictionEvent existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -6718,6 +7168,8 @@ opp-sh:UsageRestrictionEventState-usageRestrictionState
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:UsageRestrictionStateShape ;
     sh:message "usageRestrictionState must be a well-formed UsageRestrictionState (blank node or IRI)."@en ;
+    sh:message "usageRestrictionState muss ein wohlgeformtes UsageRestrictionState sein (Blank Node oder IRI)."@de ;
+    sh:message "usageRestrictionState doit être un UsageRestrictionState bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6746,6 +7198,8 @@ opp-sh:WarningAreaState-warningState
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/event-state/activated> <http://data.europa.eu/949/concepts/event-state/deactivated> ) ;
     sh:message "Value must be one of the CCSTMS-scoped EventState concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von EventState entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de EventState."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6760,6 +7214,8 @@ opp-sh:WarningAreaState-warningArea
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:WarningAreaShape ;
     sh:message "warningArea must be a well-formed WarningArea (blank node or IRI)."@en ;
+    sh:message "warningArea muss ein wohlgeformtes WarningArea sein (Blank Node oder IRI)."@de ;
+    sh:message "warningArea doit être un WarningArea bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -6785,6 +7241,8 @@ opp-sh:WarningMeasureEventState-warningMeasureEvent
     sh:nodeKind sh:IRI ;
     sh:class era:WarningMeasureEvent ;
     sh:message "warningMeasureEvent must reference an existing era:WarningMeasureEvent by IRI."@en ;
+    sh:message "warningMeasureEvent muss über eine IRI auf ein bestehendes era:WarningMeasureEvent verweisen."@de ;
+    sh:message "warningMeasureEvent doit référencer un era:WarningMeasureEvent existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -6811,6 +7269,8 @@ opp-sh:WarningMeasureEventState-warningAreaState
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node opp-sh:WarningAreaStateShape ;
     sh:message "warningAreaState must be a well-formed WarningAreaState (blank node or IRI)."@en ;
+    sh:message "warningAreaState muss ein wohlgeformtes WarningAreaState sein (Blank Node oder IRI)."@de ;
+    sh:message "warningAreaState doit être un WarningAreaState bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;

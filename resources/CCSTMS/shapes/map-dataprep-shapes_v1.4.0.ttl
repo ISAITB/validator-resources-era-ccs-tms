@@ -113,6 +113,8 @@ map-dp:MAPDP001-coordinateBeyondElementEnd
     sh:prefixes map-dp:PrefixDeclarations ;
     rdfs:label "MAP-DP-001"@en ;
     sh:message "MAP-DP-001: this LinearElementProjection places a coordinate at pos {?value} m, beyond the end of the referenced LinearElement, whose lengthOfNetLinearElement is {?len} m. The position is an offset from that element's origin, so it must not exceed the element's length. Because spatial coordinates are interpolated between the listed positions, a member off the end anchors one end of an interpolation interval to track that does not exist - so every position between it and its neighbour is projected onto the wrong ground, and an object correctly placed on the topology comes out in the wrong place on the map. Either correct the position, or move the coordinate to the projection of the element it really belongs to."@en ;
+    sh:message "MAP-DP-001: dieses LinearElementProjection platziert eine Koordinate bei pos {?value} m, jenseits des Endes des referenzierten LinearElement, dessen lengthOfNetLinearElement {?len} m beträgt. Die Position ist ein Offset vom Ursprung dieses Elements, darf also die Länge des Elements nicht überschreiten. Da räumliche Koordinaten zwischen den aufgeführten Positionen interpoliert werden, verankert ein Mitglied jenseits des Endes ein Ende eines Interpolationsintervalls an Gleis, das nicht existiert - sodass jede Position zwischen ihm und seinem Nachbarn auf den falschen Grund projiziert wird, und ein korrekt auf der Topologie platziertes Objekt an der falschen Stelle auf der Karte erscheint. Entweder die Position korrigieren, oder die Koordinate der Projektion des Elements zuordnen, zu dem sie tatsächlich gehört."@de ;
+    sh:message "MAP-DP-001 : ce LinearElementProjection place une coordonnée à pos {?value} m, au-delà de la fin du LinearElement référencé, dont le lengthOfNetLinearElement est de {?len} m. La position est un décalage depuis l'origine de cet élément et ne doit donc pas dépasser la longueur de l'élément. Comme les coordonnées spatiales sont interpolées entre les positions listées, un membre situé au-delà de la fin ancre une extrémité d'un intervalle d'interpolation sur une voie qui n'existe pas - si bien que chaque position entre lui et son voisin est projetée sur le mauvais terrain, et un objet correctement placé sur la topologie ressort au mauvais endroit sur la carte. Corrigez la position, ou déplacez la coordonnée vers la projection de l'élément auquel elle appartient réellement."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?len ?c ?x
         WHERE {
@@ -207,6 +209,8 @@ map-dp:MAPDP002a-adjacentPositionsEqual
     sh:prefixes map-dp:PrefixDeclarations ;
     rdfs:label "MAP-DP-002a"@en ;
     sh:message "MAP-DP-002a: two LinearElementCoordinates that follow one another in this projection's list are both at pos {?value} m. One place on the element is then given two different spatial points, so the projection is ambiguous exactly there and a consumer will pick one arbitrarily. Remove the duplicate, or correct whichever position was copied."@en ;
+    sh:message "MAP-DP-002a: zwei aufeinanderfolgende LinearElementCoordinates in der Liste dieser Projektion liegen beide bei pos {?value} m. Einer Stelle des Elements werden damit zwei unterschiedliche räumliche Punkte zugewiesen, die Projektion ist an genau dieser Stelle also mehrdeutig, und ein Konsument wählt willkürlich einen davon. Entfernen Sie das Duplikat, oder korrigieren Sie die Position, die kopiert wurde."@de ;
+    sh:message "MAP-DP-002a : deux LinearElementCoordinates consécutifs dans la liste de cette projection se trouvent tous deux à pos {?value} m. Un même point de l'élément se voit alors attribuer deux points spatiaux différents, la projection est donc ambiguë exactement à cet endroit, et un consommateur en choisira un arbitrairement. Supprimez le doublon, ou corrigez la position qui a été copiée."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?cell
         WHERE {
@@ -228,6 +232,8 @@ map-dp:MAPDP002b-listChangesDirection
     sh:prefixes map-dp:PrefixDeclarations ;
     rdfs:label "MAP-DP-002b"@en ;
     sh:message "MAP-DP-002b: this projection's list of coordinates changes direction at pos {?value} m - the three consecutive members at {?p1}, {?value} and {?p3} m turn back on themselves. The list is tagged byIndex, so it is in the order its members occupy on the ground; that order may run either way along the element but must not reverse part way. Consecutive coordinates are the two ends of an interval over which position is interpolated into space, so a list that doubles back makes those intervals overlap and one position can be projected to two different points. Move the member at {?value} m to its proper place in the sequence, or correct its position."@en ;
+    sh:message "MAP-DP-002b: die Koordinatenliste dieser Projektion ändert bei pos {?value} m die Richtung - die drei aufeinanderfolgenden Mitglieder bei {?p1}, {?value} und {?p3} m kehren sich um. Die Liste ist mit byIndex getaggt, folgt also der Reihenfolge, in der ihre Mitglieder auf dem Gelände liegen; diese Reihenfolge kann in beide Richtungen entlang des Elements verlaufen, darf sich aber nicht auf halbem Weg umkehren. Aufeinanderfolgende Koordinaten bilden die beiden Enden eines Intervalls, über das die Position in den Raum interpoliert wird, sodass eine Liste, die sich umkehrt, diese Intervalle überlappen lässt und eine Position auf zwei unterschiedliche Punkte projiziert werden kann. Verschieben Sie das Mitglied bei {?value} m an seine richtige Stelle in der Sequenz, oder korrigieren Sie seine Position."@de ;
+    sh:message "MAP-DP-002b : la liste des coordonnées de cette projection change de direction à pos {?value} m - les trois membres consécutifs à {?p1}, {?value} et {?p3} m rebroussent chemin. La liste est étiquetée byIndex, elle suit donc l'ordre dans lequel ses membres se trouvent sur le terrain ; cet ordre peut aller dans un sens ou dans l'autre le long de l'élément, mais ne doit pas s'inverser en cours de route. Des coordonnées consécutives constituent les deux extrémités d'un intervalle sur lequel la position est interpolée dans l'espace, de sorte qu'une liste qui rebrousse chemin fait se chevaucher ces intervalles, et une position peut alors être projetée sur deux points différents. Déplacez le membre situé à {?value} m à sa place correcte dans la séquence, ou corrigez sa position."@fr ;
     sh:select """
         SELECT DISTINCT $this ?value ?p1 ?p3 ?cell
         WHERE {
@@ -311,6 +317,8 @@ map-dp:MAPDP003a-coordAccXNotNegative
     sh:path era:accX ;
     sh:minInclusive 0 ;
     sh:message "MAP-DP-003a: accX is negative on this LinearElementCoordinate. An accuracy is a one-sigma magnitude - a distance either side of the stated value - so it cannot be less than zero. Note that ZERO is valid and is not reported: map.json defines it as meaning the accuracy is not stated."@en ;
+    sh:message "MAP-DP-003a: accX ist bei diesem LinearElementCoordinate negativ. Eine Genauigkeit ist eine Ein-Sigma-Größe - eine Distanz zu beiden Seiten des angegebenen Werts - kann also nicht kleiner als null sein. Beachten Sie, dass NULL gültig ist und nicht gemeldet wird: map.json definiert dies als Bedeutung, dass die Genauigkeit nicht angegeben ist."@de ;
+    sh:message "MAP-DP-003a : accX est négatif sur ce LinearElementCoordinate. Une précision est une grandeur à un sigma - une distance de part et d'autre de la valeur indiquée - elle ne peut donc pas être inférieure à zéro. Notez que ZÉRO est valide et n'est pas signalé : map.json définit cette valeur comme signifiant que la précision n'est pas indiquée."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -320,6 +328,8 @@ map-dp:MAPDP003b-coordAccYNotNegative
     sh:path era:accY ;
     sh:minInclusive 0 ;
     sh:message "MAP-DP-003b: accY is negative on this LinearElementCoordinate. An accuracy is a one-sigma magnitude and cannot be less than zero; zero itself is valid and means the accuracy is not stated."@en ;
+    sh:message "MAP-DP-003b: accY ist bei diesem LinearElementCoordinate negativ. Eine Genauigkeit ist eine Ein-Sigma-Größe und kann nicht kleiner als null sein; null selbst ist gültig und bedeutet, dass die Genauigkeit nicht angegeben ist."@de ;
+    sh:message "MAP-DP-003b : accY est négatif sur ce LinearElementCoordinate. Une précision est une grandeur à un sigma et ne peut pas être inférieure à zéro ; zéro lui-même est valide et signifie que la précision n'est pas indiquée."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -329,6 +339,8 @@ map-dp:MAPDP003c-coordAccZNotNegative
     sh:path era:accZ ;
     sh:minInclusive 0 ;
     sh:message "MAP-DP-003c: accZ is negative on this LinearElementCoordinate. An accuracy is a one-sigma magnitude and cannot be less than zero; zero itself is valid and means the accuracy is not stated."@en ;
+    sh:message "MAP-DP-003c: accZ ist bei diesem LinearElementCoordinate negativ. Eine Genauigkeit ist eine Ein-Sigma-Größe und kann nicht kleiner als null sein; null selbst ist gültig und bedeutet, dass die Genauigkeit nicht angegeben ist."@de ;
+    sh:message "MAP-DP-003c : accZ est négatif sur ce LinearElementCoordinate. Une précision est une grandeur à un sigma et ne peut pas être inférieure à zéro ; zéro lui-même est valide et signifie que la précision n'est pas indiquée."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -348,6 +360,8 @@ map-dp:MAPDP003d-projAccXNotNegative
     sh:path era:accX ;
     sh:minInclusive 0 ;
     sh:message "MAP-DP-003d: accX is negative on this FunctionalElementProjection. An accuracy is a one-sigma magnitude and cannot be less than zero; zero itself is valid and means the accuracy is not stated."@en ;
+    sh:message "MAP-DP-003d: accX ist bei diesem FunctionalElementProjection negativ. Eine Genauigkeit ist eine Ein-Sigma-Größe und kann nicht kleiner als null sein; null selbst ist gültig und bedeutet, dass die Genauigkeit nicht angegeben ist."@de ;
+    sh:message "MAP-DP-003d : accX est négatif sur ce FunctionalElementProjection. Une précision est une grandeur à un sigma et ne peut pas être inférieure à zéro ; zéro lui-même est valide et signifie que la précision n'est pas indiquée."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -357,6 +371,8 @@ map-dp:MAPDP003e-projAccYNotNegative
     sh:path era:accY ;
     sh:minInclusive 0 ;
     sh:message "MAP-DP-003e: accY is negative on this FunctionalElementProjection. An accuracy is a one-sigma magnitude and cannot be less than zero; zero itself is valid and means the accuracy is not stated."@en ;
+    sh:message "MAP-DP-003e: accY ist bei diesem FunctionalElementProjection negativ. Eine Genauigkeit ist eine Ein-Sigma-Größe und kann nicht kleiner als null sein; null selbst ist gültig und bedeutet, dass die Genauigkeit nicht angegeben ist."@de ;
+    sh:message "MAP-DP-003e : accY est négatif sur ce FunctionalElementProjection. Une précision est une grandeur à un sigma et ne peut pas être inférieure à zéro ; zéro lui-même est valide et signifie que la précision n'est pas indiquée."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -366,6 +382,8 @@ map-dp:MAPDP003f-projAccZNotNegative
     sh:path era:accZ ;
     sh:minInclusive 0 ;
     sh:message "MAP-DP-003f: accZ is negative on this FunctionalElementProjection. An accuracy is a one-sigma magnitude and cannot be less than zero; zero itself is valid and means the accuracy is not stated."@en ;
+    sh:message "MAP-DP-003f: accZ ist bei diesem FunctionalElementProjection negativ. Eine Genauigkeit ist eine Ein-Sigma-Größe und kann nicht kleiner als null sein; null selbst ist gültig und bedeutet, dass die Genauigkeit nicht angegeben ist."@de ;
+    sh:message "MAP-DP-003f : accZ est négatif sur ce FunctionalElementProjection. Une précision est une grandeur à un sigma et ne peut pas être inférieure à zéro ; zéro lui-même est valide et signifie que la précision n'est pas indiquée."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -450,6 +468,8 @@ map-dp:MAPDP004a-noCoordinateAtOrigin
     sh:prefixes map-dp:PrefixDeclarations ;
     rdfs:label "MAP-DP-004a"@en ;
     sh:message "MAP-DP-004a: this LinearElementProjection has no coordinate at pos 0, so nothing on the element is projected between its origin and the first coordinate. Spatial coordinates are interpolated between the listed positions, so a consumer must either refuse to project over that opening stretch or extrapolate backwards - a guess presented as a place on the map. Add a coordinate at the origin: defining the projection at the beginning and end of the track is mandatory."@en ;
+    sh:message "MAP-DP-004a: dieses LinearElementProjection hat keine Koordinate bei pos 0, sodass nichts auf dem Element zwischen seinem Ursprung und der ersten Koordinate projiziert wird. Räumliche Koordinaten werden zwischen den aufgeführten Positionen interpoliert, ein Konsument muss also entweder die Projektion über diesen einleitenden Abschnitt ablehnen oder rückwärts extrapolieren - eine Vermutung, die als Stelle auf der Karte dargestellt wird. Fügen Sie eine Koordinate am Ursprung hinzu: die Projektion am Anfang und Ende des Gleises zu definieren, ist verpflichtend."@de ;
+    sh:message "MAP-DP-004a : ce LinearElementProjection n'a aucune coordonnée à pos 0, si bien que rien sur l'élément n'est projeté entre son origine et la première coordonnée. Les coordonnées spatiales sont interpolées entre les positions listées, un consommateur doit donc soit refuser de projeter sur ce tronçon initial, soit extrapoler vers l'arrière - une supposition présentée comme un emplacement sur la carte. Ajoutez une coordonnée à l'origine : définir la projection au début et à la fin de la voie est obligatoire."@fr ;
     sh:select """
         SELECT DISTINCT $this
         WHERE {
@@ -477,6 +497,8 @@ map-dp:MAPDP004b-noCoordinateAtFarEnd
     sh:prefixes map-dp:PrefixDeclarations ;
     rdfs:label "MAP-DP-004b"@en ;
     sh:message "MAP-DP-004b: this LinearElementProjection has no coordinate within 1 m of the far end of the element, whose lengthOfNetLinearElement is {?len} m, so nothing is projected between the last coordinate and the element's end. As at the origin, a consumer must refuse to project there or extrapolate. The match allows +/- 1 m to absorb differences in authoring precision between the projection and the recorded element length. Add a closing coordinate: defining the projection at the beginning and end of the track is mandatory."@en ;
+    sh:message "MAP-DP-004b: dieses LinearElementProjection hat keine Koordinate innerhalb von 1 m vom fernen Ende des Elements entfernt, dessen lengthOfNetLinearElement {?len} m beträgt, sodass zwischen der letzten Koordinate und dem Ende des Elements nichts projiziert wird. Wie am Ursprung muss ein Konsument die Projektion dort ablehnen oder extrapolieren. Der Abgleich erlaubt +/- 1 m, um Unterschiede in der Erfassungsgenauigkeit zwischen der Projektion und der erfassten Elementlänge auszugleichen. Fügen Sie eine abschließende Koordinate hinzu: die Projektion am Anfang und Ende des Gleises zu definieren, ist verpflichtend."@de ;
+    sh:message "MAP-DP-004b : ce LinearElementProjection n'a aucune coordonnée à moins de 1 m de l'extrémité éloignée de l'élément, dont le lengthOfNetLinearElement est de {?len} m, si bien que rien n'est projeté entre la dernière coordonnée et la fin de l'élément. Comme à l'origine, un consommateur doit refuser de projeter à cet endroit ou extrapoler. La tolérance de +/- 1 m absorbe les différences de précision de saisie entre la projection et la longueur d'élément enregistrée. Ajoutez une coordonnée de clôture : définir la projection au début et à la fin de la voie est obligatoire."@fr ;
     sh:select """
         SELECT DISTINCT $this ?len
         WHERE {

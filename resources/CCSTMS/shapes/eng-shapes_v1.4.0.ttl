@@ -95,6 +95,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket-q_dir
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/q-dir/reverse> <http://data.europa.eu/949/concepts/q-dir/nominal> <http://data.europa.eu/949/concepts/q-dir/both> ) ;
     sh:message "Value must be one of the CCSTMS-scoped QDir concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von QDir entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de QDir."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -122,6 +124,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket-trackToTrainPacket
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-TrackToTrainPacketShape ;
     sh:message "trackToTrainPacket must be a well-formed TrackToTrainPacket (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket muss ein wohlgeformtes TrackToTrainPacket sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket doit être un TrackToTrainPacket bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -150,6 +154,8 @@ eng-sh:infra-LinearElementSection-onElement
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "onElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "onElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "onElement doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -217,6 +223,8 @@ eng-sh:infra-TopologicalCoordinate-onLinearElement
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "onLinearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "onLinearElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "onLinearElement doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -262,6 +270,8 @@ eng-sh:infra-Derailer-netPointReference
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:infra-NetPointReferenceShape ;
     sh:message "netPointReference must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "netPointReference muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "netPointReference doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -328,6 +338,8 @@ eng-sh:infra-NetLinearReference-startsAt
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:infra-NetPointReferenceShape ;
     sh:message "startsAt must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "startsAt muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "startsAt doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -342,6 +354,8 @@ eng-sh:infra-NetLinearReference-endsAt
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:infra-NetPointReferenceShape ;
     sh:message "endsAt must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "endsAt muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "endsAt doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -357,6 +371,8 @@ eng-sh:infra-NetLinearReference-hasSequence
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "hasSequence is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "hasSequence ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "hasSequence est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node eng-sh:infra-NetLinearReference-hasSequence-items ;
     sh:severity sh:Violation ;
     .
@@ -365,6 +381,8 @@ eng-sh:infra-NetLinearReference-hasSequence-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "era:hasSequence is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:hasSequence ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:hasSequence est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -391,6 +409,8 @@ eng-sh:infra-NetLinearReference-hasSequence-items
         sh:nodeKind sh:IRI ;
         sh:class era:LinearElement ;
         sh:message "hasSequence must reference an existing era:LinearElement by IRI."@en ;
+        sh:message "hasSequence muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+        sh:message "hasSequence doit référencer un era:LinearElement existant par IRI."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -434,6 +454,8 @@ eng-sh:infra-TopoArea-linearElements
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:infra-LinearElementShape ;
     sh:message "linearElements must be a well-formed LinearElement (blank node or IRI)."@en ;
+    sh:message "linearElements muss ein wohlgeformtes LinearElement sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElements doit être un LinearElement bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -446,6 +468,8 @@ eng-sh:infra-TopoArea-netRelations
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:infra-NetRelationShape ;
     sh:message "netRelations must be a well-formed NetRelation (blank node or IRI)."@en ;
+    sh:message "netRelations muss ein wohlgeformtes NetRelation sein (Blank Node oder IRI)."@de ;
+    sh:message "netRelations doit être un NetRelation bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -565,6 +589,8 @@ eng-sh:ss026-TrackToTrainPacketShape
         eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_255-present
     ) ;
     sh:message "TrackToTrainPacket is a union: exactly one of (trackToTrainPacket_0, trackToTrainPacket_2, trackToTrainPacket_3, trackToTrainPacket_5, trackToTrainPacket_6, trackToTrainPacket_15, trackToTrainPacket_16, trackToTrainPacket_21, trackToTrainPacket_27, trackToTrainPacket_31, trackToTrainPacket_32, trackToTrainPacket_39, trackToTrainPacket_40, trackToTrainPacket_41, trackToTrainPacket_42, trackToTrainPacket_44, trackToTrainPacket_45, trackToTrainPacket_46, trackToTrainPacket_49, trackToTrainPacket_51, trackToTrainPacket_52, trackToTrainPacket_57, trackToTrainPacket_58, trackToTrainPacket_63, trackToTrainPacket_64, trackToTrainPacket_65, trackToTrainPacket_66, trackToTrainPacket_67, trackToTrainPacket_68, trackToTrainPacket_69, trackToTrainPacket_70, trackToTrainPacket_71, trackToTrainPacket_73, trackToTrainPacket_74, trackToTrainPacket_79, trackToTrainPacket_80, trackToTrainPacket_88, trackToTrainPacket_90, trackToTrainPacket_131, trackToTrainPacket_132, trackToTrainPacket_133, trackToTrainPacket_134, trackToTrainPacket_135, trackToTrainPacket_136, trackToTrainPacket_137, trackToTrainPacket_138, trackToTrainPacket_139, trackToTrainPacket_140, trackToTrainPacket_141, trackToTrainPacket_145, trackToTrainPacket_180, trackToTrainPacket_181, trackToTrainPacket_254, trackToTrainPacket_255) must be present."@en ;
+    sh:message "TrackToTrainPacket ist eine Union: genau eines von (trackToTrainPacket_0, trackToTrainPacket_2, trackToTrainPacket_3, trackToTrainPacket_5, trackToTrainPacket_6, trackToTrainPacket_15, trackToTrainPacket_16, trackToTrainPacket_21, trackToTrainPacket_27, trackToTrainPacket_31, trackToTrainPacket_32, trackToTrainPacket_39, trackToTrainPacket_40, trackToTrainPacket_41, trackToTrainPacket_42, trackToTrainPacket_44, trackToTrainPacket_45, trackToTrainPacket_46, trackToTrainPacket_49, trackToTrainPacket_51, trackToTrainPacket_52, trackToTrainPacket_57, trackToTrainPacket_58, trackToTrainPacket_63, trackToTrainPacket_64, trackToTrainPacket_65, trackToTrainPacket_66, trackToTrainPacket_67, trackToTrainPacket_68, trackToTrainPacket_69, trackToTrainPacket_70, trackToTrainPacket_71, trackToTrainPacket_73, trackToTrainPacket_74, trackToTrainPacket_79, trackToTrainPacket_80, trackToTrainPacket_88, trackToTrainPacket_90, trackToTrainPacket_131, trackToTrainPacket_132, trackToTrainPacket_133, trackToTrainPacket_134, trackToTrainPacket_135, trackToTrainPacket_136, trackToTrainPacket_137, trackToTrainPacket_138, trackToTrainPacket_139, trackToTrainPacket_140, trackToTrainPacket_141, trackToTrainPacket_145, trackToTrainPacket_180, trackToTrainPacket_181, trackToTrainPacket_254, trackToTrainPacket_255) muss vorhanden sein."@de ;
+    sh:message "TrackToTrainPacket est une union : exactement l'un de (trackToTrainPacket_0, trackToTrainPacket_2, trackToTrainPacket_3, trackToTrainPacket_5, trackToTrainPacket_6, trackToTrainPacket_15, trackToTrainPacket_16, trackToTrainPacket_21, trackToTrainPacket_27, trackToTrainPacket_31, trackToTrainPacket_32, trackToTrainPacket_39, trackToTrainPacket_40, trackToTrainPacket_41, trackToTrainPacket_42, trackToTrainPacket_44, trackToTrainPacket_45, trackToTrainPacket_46, trackToTrainPacket_49, trackToTrainPacket_51, trackToTrainPacket_52, trackToTrainPacket_57, trackToTrainPacket_58, trackToTrainPacket_63, trackToTrainPacket_64, trackToTrainPacket_65, trackToTrainPacket_66, trackToTrainPacket_67, trackToTrainPacket_68, trackToTrainPacket_69, trackToTrainPacket_70, trackToTrainPacket_71, trackToTrainPacket_73, trackToTrainPacket_74, trackToTrainPacket_79, trackToTrainPacket_80, trackToTrainPacket_88, trackToTrainPacket_90, trackToTrainPacket_131, trackToTrainPacket_132, trackToTrainPacket_133, trackToTrainPacket_134, trackToTrainPacket_135, trackToTrainPacket_136, trackToTrainPacket_137, trackToTrainPacket_138, trackToTrainPacket_139, trackToTrainPacket_140, trackToTrainPacket_141, trackToTrainPacket_145, trackToTrainPacket_180, trackToTrainPacket_181, trackToTrainPacket_254, trackToTrainPacket_255) doit être présent."@fr ;
     sh:property eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_0 ;
     sh:property eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_2 ;
     sh:property eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_3 ;
@@ -631,6 +657,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_0
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_0Shape ;
     sh:message "trackToTrainPacket_0 must be a well-formed ETCSTrackToTrainPacket_0 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_0 muss ein wohlgeformtes ETCSTrackToTrainPacket_0 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_0 doit être un ETCSTrackToTrainPacket_0 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -644,6 +672,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_2
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_2Shape ;
     sh:message "trackToTrainPacket_2 must be a well-formed ETCSTrackToTrainPacket_2 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_2 muss ein wohlgeformtes ETCSTrackToTrainPacket_2 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_2 doit être un ETCSTrackToTrainPacket_2 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -657,6 +687,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_3
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_3Shape ;
     sh:message "trackToTrainPacket_3 must be a well-formed ETCSTrackToTrainPacket_3 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_3 muss ein wohlgeformtes ETCSTrackToTrainPacket_3 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_3 doit être un ETCSTrackToTrainPacket_3 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -670,6 +702,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_5
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_5Shape ;
     sh:message "trackToTrainPacket_5 must be a well-formed ETCSTrackToTrainPacket_5 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_5 muss ein wohlgeformtes ETCSTrackToTrainPacket_5 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_5 doit être un ETCSTrackToTrainPacket_5 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -683,6 +717,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_6
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_6Shape ;
     sh:message "trackToTrainPacket_6 must be a well-formed ETCSTrackToTrainPacket_6 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_6 muss ein wohlgeformtes ETCSTrackToTrainPacket_6 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_6 doit être un ETCSTrackToTrainPacket_6 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -696,6 +732,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_15
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_15Shape ;
     sh:message "trackToTrainPacket_15 must be a well-formed ETCSTrackToTrainPacket_15 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_15 muss ein wohlgeformtes ETCSTrackToTrainPacket_15 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_15 doit être un ETCSTrackToTrainPacket_15 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -709,6 +747,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_16
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_16Shape ;
     sh:message "trackToTrainPacket_16 must be a well-formed ETCSTrackToTrainPacket_16 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_16 muss ein wohlgeformtes ETCSTrackToTrainPacket_16 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_16 doit être un ETCSTrackToTrainPacket_16 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -722,6 +762,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_21
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_21Shape ;
     sh:message "trackToTrainPacket_21 must be a well-formed ETCSTrackToTrainPacket_21 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_21 muss ein wohlgeformtes ETCSTrackToTrainPacket_21 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_21 doit être un ETCSTrackToTrainPacket_21 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -735,6 +777,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_27
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_27Shape ;
     sh:message "trackToTrainPacket_27 must be a well-formed ETCSTrackToTrainPacket_27 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_27 muss ein wohlgeformtes ETCSTrackToTrainPacket_27 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_27 doit être un ETCSTrackToTrainPacket_27 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -748,6 +792,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_31
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_31Shape ;
     sh:message "trackToTrainPacket_31 must be a well-formed ETCSTrackToTrainPacket_31 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_31 muss ein wohlgeformtes ETCSTrackToTrainPacket_31 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_31 doit être un ETCSTrackToTrainPacket_31 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -761,6 +807,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_32
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_32Shape ;
     sh:message "trackToTrainPacket_32 must be a well-formed ETCSTrackToTrainPacket_32 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_32 muss ein wohlgeformtes ETCSTrackToTrainPacket_32 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_32 doit être un ETCSTrackToTrainPacket_32 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -774,6 +822,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_39
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_39Shape ;
     sh:message "trackToTrainPacket_39 must be a well-formed ETCSTrackToTrainPacket_39 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_39 muss ein wohlgeformtes ETCSTrackToTrainPacket_39 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_39 doit être un ETCSTrackToTrainPacket_39 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -787,6 +837,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_40
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_40Shape ;
     sh:message "trackToTrainPacket_40 must be a well-formed ETCSTrackToTrainPacket_40 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_40 muss ein wohlgeformtes ETCSTrackToTrainPacket_40 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_40 doit être un ETCSTrackToTrainPacket_40 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -800,6 +852,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_41
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_41Shape ;
     sh:message "trackToTrainPacket_41 must be a well-formed ETCSTrackToTrainPacket_41 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_41 muss ein wohlgeformtes ETCSTrackToTrainPacket_41 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_41 doit être un ETCSTrackToTrainPacket_41 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -813,6 +867,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_42
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_42Shape ;
     sh:message "trackToTrainPacket_42 must be a well-formed ETCSTrackToTrainPacket_42 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_42 muss ein wohlgeformtes ETCSTrackToTrainPacket_42 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_42 doit être un ETCSTrackToTrainPacket_42 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -826,6 +882,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_44
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_44Shape ;
     sh:message "trackToTrainPacket_44 must be a well-formed ETCSTrackToTrainPacket_44 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_44 muss ein wohlgeformtes ETCSTrackToTrainPacket_44 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_44 doit être un ETCSTrackToTrainPacket_44 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -839,6 +897,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_45
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_45Shape ;
     sh:message "trackToTrainPacket_45 must be a well-formed ETCSTrackToTrainPacket_45 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_45 muss ein wohlgeformtes ETCSTrackToTrainPacket_45 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_45 doit être un ETCSTrackToTrainPacket_45 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -852,6 +912,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_46
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_46Shape ;
     sh:message "trackToTrainPacket_46 must be a well-formed ETCSTrackToTrainPacket_46 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_46 muss ein wohlgeformtes ETCSTrackToTrainPacket_46 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_46 doit être un ETCSTrackToTrainPacket_46 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -865,6 +927,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_49
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_49Shape ;
     sh:message "trackToTrainPacket_49 must be a well-formed ETCSTrackToTrainPacket_49 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_49 muss ein wohlgeformtes ETCSTrackToTrainPacket_49 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_49 doit être un ETCSTrackToTrainPacket_49 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -878,6 +942,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_51
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_51Shape ;
     sh:message "trackToTrainPacket_51 must be a well-formed ETCSTrackToTrainPacket_51 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_51 muss ein wohlgeformtes ETCSTrackToTrainPacket_51 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_51 doit être un ETCSTrackToTrainPacket_51 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -891,6 +957,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_52
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_52Shape ;
     sh:message "trackToTrainPacket_52 must be a well-formed ETCSTrackToTrainPacket_52 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_52 muss ein wohlgeformtes ETCSTrackToTrainPacket_52 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_52 doit être un ETCSTrackToTrainPacket_52 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -904,6 +972,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_57
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_57Shape ;
     sh:message "trackToTrainPacket_57 must be a well-formed ETCSTrackToTrainPacket_57 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_57 muss ein wohlgeformtes ETCSTrackToTrainPacket_57 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_57 doit être un ETCSTrackToTrainPacket_57 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -917,6 +987,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_58
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_58Shape ;
     sh:message "trackToTrainPacket_58 must be a well-formed ETCSTrackToTrainPacket_58 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_58 muss ein wohlgeformtes ETCSTrackToTrainPacket_58 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_58 doit être un ETCSTrackToTrainPacket_58 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -930,6 +1002,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_63
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_63Shape ;
     sh:message "trackToTrainPacket_63 must be a well-formed ETCSTrackToTrainPacket_63 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_63 muss ein wohlgeformtes ETCSTrackToTrainPacket_63 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_63 doit être un ETCSTrackToTrainPacket_63 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -943,6 +1017,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_64
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_64Shape ;
     sh:message "trackToTrainPacket_64 must be a well-formed ETCSTrackToTrainPacket_64 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_64 muss ein wohlgeformtes ETCSTrackToTrainPacket_64 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_64 doit être un ETCSTrackToTrainPacket_64 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -956,6 +1032,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_65
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_65Shape ;
     sh:message "trackToTrainPacket_65 must be a well-formed ETCSTrackToTrainPacket_65 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_65 muss ein wohlgeformtes ETCSTrackToTrainPacket_65 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_65 doit être un ETCSTrackToTrainPacket_65 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -969,6 +1047,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_66
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_66Shape ;
     sh:message "trackToTrainPacket_66 must be a well-formed ETCSTrackToTrainPacket_66 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_66 muss ein wohlgeformtes ETCSTrackToTrainPacket_66 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_66 doit être un ETCSTrackToTrainPacket_66 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -982,6 +1062,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_67
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_67Shape ;
     sh:message "trackToTrainPacket_67 must be a well-formed ETCSTrackToTrainPacket_67 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_67 muss ein wohlgeformtes ETCSTrackToTrainPacket_67 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_67 doit être un ETCSTrackToTrainPacket_67 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -995,6 +1077,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_68
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_68Shape ;
     sh:message "trackToTrainPacket_68 must be a well-formed ETCSTrackToTrainPacket_68 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_68 muss ein wohlgeformtes ETCSTrackToTrainPacket_68 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_68 doit être un ETCSTrackToTrainPacket_68 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1008,6 +1092,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_69
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_69Shape ;
     sh:message "trackToTrainPacket_69 must be a well-formed ETCSTrackToTrainPacket_69 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_69 muss ein wohlgeformtes ETCSTrackToTrainPacket_69 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_69 doit être un ETCSTrackToTrainPacket_69 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1021,6 +1107,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_70
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_70Shape ;
     sh:message "trackToTrainPacket_70 must be a well-formed ETCSTrackToTrainPacket_70 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_70 muss ein wohlgeformtes ETCSTrackToTrainPacket_70 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_70 doit être un ETCSTrackToTrainPacket_70 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1034,6 +1122,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_71
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_71Shape ;
     sh:message "trackToTrainPacket_71 must be a well-formed ETCSTrackToTrainPacket_71 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_71 muss ein wohlgeformtes ETCSTrackToTrainPacket_71 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_71 doit être un ETCSTrackToTrainPacket_71 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1047,6 +1137,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_73
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_73Shape ;
     sh:message "trackToTrainPacket_73 must be a well-formed ETCSTrackToTrainPacket_73 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_73 muss ein wohlgeformtes ETCSTrackToTrainPacket_73 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_73 doit être un ETCSTrackToTrainPacket_73 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1060,6 +1152,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_74
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_74Shape ;
     sh:message "trackToTrainPacket_74 must be a well-formed ETCSTrackToTrainPacket_74 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_74 muss ein wohlgeformtes ETCSTrackToTrainPacket_74 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_74 doit être un ETCSTrackToTrainPacket_74 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1073,6 +1167,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_79
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_79Shape ;
     sh:message "trackToTrainPacket_79 must be a well-formed ETCSTrackToTrainPacket_79 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_79 muss ein wohlgeformtes ETCSTrackToTrainPacket_79 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_79 doit être un ETCSTrackToTrainPacket_79 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1086,6 +1182,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_80
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_80Shape ;
     sh:message "trackToTrainPacket_80 must be a well-formed ETCSTrackToTrainPacket_80 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_80 muss ein wohlgeformtes ETCSTrackToTrainPacket_80 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_80 doit être un ETCSTrackToTrainPacket_80 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1099,6 +1197,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_88
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_88Shape ;
     sh:message "trackToTrainPacket_88 must be a well-formed ETCSTrackToTrainPacket_88 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_88 muss ein wohlgeformtes ETCSTrackToTrainPacket_88 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_88 doit être un ETCSTrackToTrainPacket_88 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1112,6 +1212,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_90
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_90Shape ;
     sh:message "trackToTrainPacket_90 must be a well-formed ETCSTrackToTrainPacket_90 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_90 muss ein wohlgeformtes ETCSTrackToTrainPacket_90 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_90 doit être un ETCSTrackToTrainPacket_90 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1125,6 +1227,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_131
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_131Shape ;
     sh:message "trackToTrainPacket_131 must be a well-formed ETCSTrackToTrainPacket_131 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_131 muss ein wohlgeformtes ETCSTrackToTrainPacket_131 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_131 doit être un ETCSTrackToTrainPacket_131 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1138,6 +1242,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_132
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_132Shape ;
     sh:message "trackToTrainPacket_132 must be a well-formed ETCSTrackToTrainPacket_132 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_132 muss ein wohlgeformtes ETCSTrackToTrainPacket_132 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_132 doit être un ETCSTrackToTrainPacket_132 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1151,6 +1257,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_133
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_133Shape ;
     sh:message "trackToTrainPacket_133 must be a well-formed ETCSTrackToTrainPacket_133 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_133 muss ein wohlgeformtes ETCSTrackToTrainPacket_133 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_133 doit être un ETCSTrackToTrainPacket_133 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1164,6 +1272,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_134
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_134Shape ;
     sh:message "trackToTrainPacket_134 must be a well-formed ETCSTrackToTrainPacket_134 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_134 muss ein wohlgeformtes ETCSTrackToTrainPacket_134 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_134 doit être un ETCSTrackToTrainPacket_134 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1177,6 +1287,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_135
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_135Shape ;
     sh:message "trackToTrainPacket_135 must be a well-formed ETCSTrackToTrainPacket_135 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_135 muss ein wohlgeformtes ETCSTrackToTrainPacket_135 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_135 doit être un ETCSTrackToTrainPacket_135 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1190,6 +1302,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_136
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_136Shape ;
     sh:message "trackToTrainPacket_136 must be a well-formed ETCSTrackToTrainPacket_136 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_136 muss ein wohlgeformtes ETCSTrackToTrainPacket_136 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_136 doit être un ETCSTrackToTrainPacket_136 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1203,6 +1317,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_137
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_137Shape ;
     sh:message "trackToTrainPacket_137 must be a well-formed ETCSTrackToTrainPacket_137 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_137 muss ein wohlgeformtes ETCSTrackToTrainPacket_137 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_137 doit être un ETCSTrackToTrainPacket_137 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1216,6 +1332,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_138
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_138Shape ;
     sh:message "trackToTrainPacket_138 must be a well-formed ETCSTrackToTrainPacket_138 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_138 muss ein wohlgeformtes ETCSTrackToTrainPacket_138 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_138 doit être un ETCSTrackToTrainPacket_138 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1229,6 +1347,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_139
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_139Shape ;
     sh:message "trackToTrainPacket_139 must be a well-formed ETCSTrackToTrainPacket_139 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_139 muss ein wohlgeformtes ETCSTrackToTrainPacket_139 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_139 doit être un ETCSTrackToTrainPacket_139 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1242,6 +1362,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_140
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_140Shape ;
     sh:message "trackToTrainPacket_140 must be a well-formed ETCSTrackToTrainPacket_140 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_140 muss ein wohlgeformtes ETCSTrackToTrainPacket_140 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_140 doit être un ETCSTrackToTrainPacket_140 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1255,6 +1377,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_141
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_141Shape ;
     sh:message "trackToTrainPacket_141 must be a well-formed ETCSTrackToTrainPacket_141 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_141 muss ein wohlgeformtes ETCSTrackToTrainPacket_141 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_141 doit être un ETCSTrackToTrainPacket_141 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1268,6 +1392,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_145
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_145Shape ;
     sh:message "trackToTrainPacket_145 must be a well-formed ETCSTrackToTrainPacket_145 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_145 muss ein wohlgeformtes ETCSTrackToTrainPacket_145 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_145 doit être un ETCSTrackToTrainPacket_145 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1281,6 +1407,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_180
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_180Shape ;
     sh:message "trackToTrainPacket_180 must be a well-formed ETCSTrackToTrainPacket_180 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_180 muss ein wohlgeformtes ETCSTrackToTrainPacket_180 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_180 doit être un ETCSTrackToTrainPacket_180 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1294,6 +1422,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_181
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_181Shape ;
     sh:message "trackToTrainPacket_181 must be a well-formed ETCSTrackToTrainPacket_181 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_181 muss ein wohlgeformtes ETCSTrackToTrainPacket_181 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_181 doit être un ETCSTrackToTrainPacket_181 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1307,6 +1437,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_254
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_254Shape ;
     sh:message "trackToTrainPacket_254 must be a well-formed ETCSTrackToTrainPacket_254 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_254 muss ein wohlgeformtes ETCSTrackToTrainPacket_254 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_254 doit être un ETCSTrackToTrainPacket_254 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1320,6 +1452,8 @@ eng-sh:ss026-TrackToTrainPacket-trackToTrainPacket_255
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacket_255Shape ;
     sh:message "trackToTrainPacket_255 must be a well-formed ETCSTrackToTrainPacket_255 (blank node or IRI)."@en ;
+    sh:message "trackToTrainPacket_255 muss ein wohlgeformtes ETCSTrackToTrainPacket_255 sein (Blank Node oder IRI)."@de ;
+    sh:message "trackToTrainPacket_255 doit être un ETCSTrackToTrainPacket_255 bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1993,6 +2127,8 @@ eng-sh:infra-NetPointReference-hasTopoCoordinate
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:infra-TopologicalCoordinateShape ;
     sh:message "hasTopoCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:message "hasTopoCoordinate muss ein wohlgeformtes TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
+    sh:message "hasTopoCoordinate doit être un TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2007,6 +2143,8 @@ eng-sh:infra-NetPointReference-appliesToDirection
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/orientations/02> <http://data.europa.eu/949/concepts/orientations/00> <http://data.europa.eu/949/concepts/orientations/01> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OrientationDirections concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OrientationDirections entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OrientationDirections."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2038,6 +2176,8 @@ eng-sh:infra-NetRelation-elementA
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "elementA must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "elementA muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "elementA doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2052,6 +2192,8 @@ eng-sh:infra-NetRelation-elementB
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "elementB must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "elementB muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "elementB doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2127,6 +2269,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_2-etcsMVersion
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/etcs-m-versions/10> <http://data.europa.eu/949/concepts/etcs-m-versions/11> <http://data.europa.eu/949/concepts/etcs-m-versions/20> <http://data.europa.eu/949/concepts/etcs-m-versions/21> <http://data.europa.eu/949/concepts/etcs-m-versions/22> <http://data.europa.eu/949/concepts/etcs-m-versions/23> <http://data.europa.eu/949/concepts/etcs-m-versions/30> <http://data.europa.eu/949/concepts/etcs-m-versions/00> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ETCSMVersions concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ETCSMVersions entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ETCSMVersions."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2490,6 +2634,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_3-mNvcontact
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/etcs-reactions-contact/00> <http://data.europa.eu/949/concepts/etcs-reactions-contact/01> <http://data.europa.eu/949/concepts/etcs-reactions-contact/10> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ETCSReactionsNVContact concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ETCSReactionsNVContact entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ETCSReactionsNVContact."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2665,6 +2811,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_3-nVKs
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-NVKShape ;
     sh:message "nVKs must be a well-formed NVK (blank node or IRI)."@en ;
+    sh:message "nVKs muss ein wohlgeformtes NVK sein (Blank Node oder IRI)."@de ;
+    sh:message "nVKs doit être un NVK bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2673,6 +2821,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_3-v_nvshunt-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_nvshunt must be a multiple of 5 km/h."@en ;
+    sh:message "v_nvshunt muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_nvshunt doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -2686,6 +2836,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_3-v_nvstff-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_nvstff must be a multiple of 5 km/h."@en ;
+    sh:message "v_nvstff muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_nvstff doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -2699,6 +2851,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_3-v_nvonsight-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_nvonsight must be a multiple of 5 km/h."@en ;
+    sh:message "v_nvonsight muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_nvonsight doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -2712,6 +2866,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_3-v_nvlimsuperv-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_nvlimsuperv must be a multiple of 5 km/h."@en ;
+    sh:message "v_nvlimsuperv muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_nvlimsuperv doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -2725,6 +2881,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_3-v_nvunfit-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_nvunfit must be a multiple of 5 km/h."@en ;
+    sh:message "v_nvunfit muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_nvunfit doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -2738,6 +2896,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_3-v_nvrel-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_nvrel must be a multiple of 5 km/h."@en ;
+    sh:message "v_nvrel muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_nvrel doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -2751,6 +2911,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_3-v_nvallowovtrp-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_nvallowovtrp must be a multiple of 5 km/h."@en ;
+    sh:message "v_nvallowovtrp muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_nvallowovtrp doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -2764,6 +2926,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_3-v_nvsupovtrp-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_nvsupovtrp must be a multiple of 5 km/h."@en ;
+    sh:message "v_nvsupovtrp muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_nvsupovtrp doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -2777,6 +2941,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_3-m_nvavadh-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "m_nvavadh must be a multiple of 0.05."@en ;
+    sh:message "m_nvavadh muss ein Vielfaches von 0.05 sein."@de ;
+    sh:message "m_nvavadh doit être un multiple de 0.05."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -2805,6 +2971,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_5-links
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-LinkItemShape ;
     sh:message "links must be a well-formed LinkItem (blank node or IRI)."@en ;
+    sh:message "links muss ein wohlgeformtes LinkItem sein (Blank Node oder IRI)."@de ;
+    sh:message "links doit être un LinkItem bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 33 ;
     sh:severity sh:Violation ;
@@ -2947,6 +3115,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_15-hasSectionTimer
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-SectionTimerShape ;
     sh:message "hasSectionTimer must be a well-formed SectionTimer (blank node or IRI)."@en ;
+    sh:message "hasSectionTimer muss ein wohlgeformtes SectionTimer sein (Blank Node oder IRI)."@de ;
+    sh:message "hasSectionTimer doit être un SectionTimer bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 32 ;
     sh:severity sh:Violation ;
@@ -3110,6 +3280,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_15-v_ema-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_ema must be a multiple of 5 km/h."@en ;
+    sh:message "v_ema muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_ema doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -3123,6 +3295,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_15-v_releaseDP-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_releaseDP must be a multiple of 5 km/h."@en ;
+    sh:message "v_releaseDP muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_releaseDP doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -3176,6 +3350,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_21-hasTransmittedGradient
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-TransmittedGradientShape ;
     sh:message "hasTransmittedGradient must be a well-formed TransmittedGradient (blank node or IRI)."@en ;
+    sh:message "hasTransmittedGradient muss ein wohlgeformtes TransmittedGradient sein (Blank Node oder IRI)."@de ;
+    sh:message "hasTransmittedGradient doit être un TransmittedGradient bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 32 ;
     sh:severity sh:Violation ;
@@ -3200,6 +3376,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_27-hasTransmittedStaticSpeed
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-TransmittedStaticSpeedShape ;
     sh:message "hasTransmittedStaticSpeed must be a well-formed TransmittedStaticSpeed (blank node or IRI)."@en ;
+    sh:message "hasTransmittedStaticSpeed muss ein wohlgeformtes TransmittedStaticSpeed sein (Blank Node oder IRI)."@de ;
+    sh:message "hasTransmittedStaticSpeed doit être un TransmittedStaticSpeed bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 32 ;
     sh:severity sh:Violation ;
@@ -3379,6 +3557,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_39-m_voltage
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/energy-supply-systems/notFitted> <http://data.europa.eu/949/concepts/energy-supply-systems/AC10> <http://data.europa.eu/949/concepts/energy-supply-systems/AC20> <http://data.europa.eu/949/concepts/energy-supply-systems/DC30> <http://data.europa.eu/949/concepts/energy-supply-systems/DC40> <http://data.europa.eu/949/concepts/energy-supply-systems/DC80> <http://data.europa.eu/949/concepts/energy-supply-systems/DC70> <http://data.europa.eu/949/concepts/energy-supply-systems/DC60> <http://data.europa.eu/949/concepts/energy-supply-systems/DC90> ) ;
     sh:message "Value must be one of the CCSTMS-scoped EnergySupplySystems concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von EnergySupplySystems entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de EnergySupplySystems."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3479,6 +3659,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_41-m_leveltr
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/etcs-levels/50> <http://data.europa.eu/949/concepts/etcs-levels/60> <http://data.europa.eu/949/concepts/etcs-levels/20> <http://data.europa.eu/949/concepts/etcs-levels/30> <http://data.europa.eu/949/concepts/etcs-levels/80> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ETCSLevels concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ETCSLevels entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ETCSLevels."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3522,6 +3704,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_41-levelTransitionWithAck
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-LevelTransitionWithAckShape ;
     sh:message "levelTransitionWithAck must be a well-formed LevelTransitionWithAck (blank node or IRI)."@en ;
+    sh:message "levelTransitionWithAck muss ein wohlgeformtes LevelTransitionWithAck sein (Blank Node oder IRI)."@de ;
+    sh:message "levelTransitionWithAck doit être un LevelTransitionWithAck bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 32 ;
     sh:severity sh:Violation ;
@@ -3593,6 +3777,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_42-rbcPhone
     sh:datatype xsd:string ;
     sh:pattern "^[0-9]{16}$" ;
     sh:message "rbcPhone is Binary Coded Decimal: exactly 16 decimal digits (0-9), no other characters."@en ;
+    sh:message "rbcPhone ist Binary Coded Decimal: genau 16 Dezimalstellen (0-9), keine anderen Zeichen."@de ;
+    sh:message "rbcPhone est en Binary Coded Decimal : exactement 16 chiffres décimaux (0-9), aucun autre caractère."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3684,6 +3870,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_45-q_networktype
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/network-type/FRMCS> <http://data.europa.eu/949/concepts/network-type/FRMCS_GSMR> <http://data.europa.eu/949/concepts/network-type/GSMR> ) ;
     sh:message "Value must be one of the CCSTMS-scoped NetworkType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von NetworkType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de NetworkType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3699,6 +3887,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_45-nid_mn
     sh:datatype xsd:string ;
     sh:pattern "^[0-9]{6}$" ;
     sh:message "nid_mn is Binary Coded Decimal: exactly 6 decimal digits (0-9), no other characters."@en ;
+    sh:message "nid_mn ist Binary Coded Decimal: genau 6 Dezimalstellen (0-9), keine anderen Zeichen."@de ;
+    sh:message "nid_mn est en Binary Coded Decimal : exactement 6 chiffres décimaux (0-9), aucun autre caractère."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3724,6 +3914,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_46-m_leveltr
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/etcs-levels/50> <http://data.europa.eu/949/concepts/etcs-levels/60> <http://data.europa.eu/949/concepts/etcs-levels/20> <http://data.europa.eu/949/concepts/etcs-levels/30> <http://data.europa.eu/949/concepts/etcs-levels/80> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ETCSLevels concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ETCSLevels entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ETCSLevels."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3752,6 +3944,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_46-levelTransitions
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-LevelTransitionShape ;
     sh:message "levelTransitions must be a well-formed LevelTransition (blank node or IRI)."@en ;
+    sh:message "levelTransitions muss ein wohlgeformtes LevelTransition sein (Blank Node oder IRI)."@de ;
+    sh:message "levelTransitions doit être un LevelTransition bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 31 ;
     sh:severity sh:Violation ;
     .
@@ -3775,6 +3969,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_49-hasCountryBalise
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-CountryBaliseShape ;
     sh:message "hasCountryBalise must be a well-formed CountryBalise (blank node or IRI)."@en ;
+    sh:message "hasCountryBalise muss ein wohlgeformtes CountryBalise sein (Blank Node oder IRI)."@de ;
+    sh:message "hasCountryBalise doit être un CountryBalise bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 31 ;
     sh:severity sh:Violation ;
     .
@@ -3871,6 +4067,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_51-axleLoadRestrictions
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-AxleLoadRestrictionShape ;
     sh:message "axleLoadRestrictions must be a well-formed AxleLoadRestriction (blank node or IRI)."@en ;
+    sh:message "axleLoadRestrictions muss ein wohlgeformtes AxleLoadRestriction sein (Blank Node oder IRI)."@de ;
+    sh:message "axleLoadRestrictions doit être un AxleLoadRestriction bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 31 ;
     sh:severity sh:Violation ;
     .
@@ -3884,6 +4082,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_51-axleLoadSelections
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-AxleLoadSelectionShape ;
     sh:message "axleLoadSelections must be a well-formed AxleLoadSelection (blank node or IRI)."@en ;
+    sh:message "axleLoadSelections muss ein wohlgeformtes AxleLoadSelection sein (Blank Node oder IRI)."@de ;
+    sh:message "axleLoadSelections doit être un AxleLoadSelection bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 31 ;
     sh:severity sh:Violation ;
     .
@@ -3936,6 +4136,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_52-pbdSelection
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-PBDSelectionShape ;
     sh:message "pbdSelection must be a well-formed PBDSelection (blank node or IRI)."@en ;
+    sh:message "pbdSelection muss ein wohlgeformtes PBDSelection sein (Blank Node oder IRI)."@de ;
+    sh:message "pbdSelection doit être un PBDSelection bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 32 ;
     sh:severity sh:Violation ;
     .
@@ -4053,6 +4255,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_58-m_loc
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/prlt/now> <http://data.europa.eu/949/concepts/prlt/everyLRBG> <http://data.europa.eu/949/concepts/prlt/noReportOnLRBG> ) ;
     sh:message "Value must be one of the CCSTMS-scoped PositionReportLocationType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von PositionReportLocationType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de PositionReportLocationType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4067,6 +4271,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_58-hasPositionReportLocation
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-PositionReportLocationShape ;
     sh:message "hasPositionReportLocation must be a well-formed PositionReportLocation (blank node or IRI)."@en ;
+    sh:message "hasPositionReportLocation muss ein wohlgeformtes PositionReportLocation sein (Blank Node oder IRI)."@de ;
+    sh:message "hasPositionReportLocation doit être un PositionReportLocation bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 31 ;
     sh:severity sh:Violation ;
     .
@@ -4090,6 +4296,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_63-hasCountryBalise
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-CountryBaliseShape ;
     sh:message "hasCountryBalise must be a well-formed CountryBalise (blank node or IRI)."@en ;
+    sh:message "hasCountryBalise muss ein wohlgeformtes CountryBalise sein (Blank Node oder IRI)."@de ;
+    sh:message "hasCountryBalise doit être un CountryBalise bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 31 ;
     sh:severity sh:Violation ;
     .
@@ -4196,6 +4404,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_65-v_tsr-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_tsr must be a multiple of 5 km/h."@en ;
+    sh:message "v_tsr muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_tsr doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -4249,6 +4459,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_67-dlTrackConditions
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-DLTrackCondShape ;
     sh:message "dlTrackConditions must be a well-formed DLTrackCond (blank node or IRI)."@en ;
+    sh:message "dlTrackConditions muss ein wohlgeformtes DLTrackCond sein (Blank Node oder IRI)."@de ;
+    sh:message "dlTrackConditions doit être un DLTrackCond bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 32 ;
     sh:severity sh:Violation ;
@@ -4302,6 +4514,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_68-trackCondSelection
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-DLMConditionShape ;
     sh:message "trackCondSelection must be a well-formed DLMCondition (blank node or IRI)."@en ;
+    sh:message "trackCondSelection muss ein wohlgeformtes DLMCondition sein (Blank Node oder IRI)."@de ;
+    sh:message "trackCondSelection doit être un DLMCondition bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 32 ;
     sh:severity sh:Violation ;
     .
@@ -4354,6 +4568,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_69-trackCondPlatformSelection
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-TCSPConditionShape ;
     sh:message "trackCondPlatformSelection must be a well-formed TCSPCondition (blank node or IRI)."@en ;
+    sh:message "trackCondPlatformSelection muss ein wohlgeformtes TCSPCondition sein (Blank Node oder IRI)."@de ;
+    sh:message "trackCondPlatformSelection doit être un TCSPCondition bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 32 ;
     sh:severity sh:Violation ;
     .
@@ -4406,6 +4622,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_70-routeSuitabilities
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-RouteSuitabilityShape ;
     sh:message "routeSuitabilities must be a well-formed RouteSuitability (blank node or IRI)."@en ;
+    sh:message "routeSuitabilities muss ein wohlgeformtes RouteSuitability sein (Blank Node oder IRI)."@de ;
+    sh:message "routeSuitabilities doit être un RouteSuitability bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 32 ;
     sh:severity sh:Violation ;
     .
@@ -4486,6 +4704,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_73-textMessageConfig
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-TextMessageConfigShape ;
     sh:message "textMessageConfig must be a well-formed TextMessageConfig (blank node or IRI)."@en ;
+    sh:message "textMessageConfig muss ein wohlgeformtes TextMessageConfig sein (Blank Node oder IRI)."@de ;
+    sh:message "textMessageConfig doit être un TextMessageConfig bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4539,6 +4759,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_74-textMessageConfig
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-TextMessageConfigShape ;
     sh:message "textMessageConfig must be a well-formed TextMessageConfig (blank node or IRI)."@en ;
+    sh:message "textMessageConfig muss ein wohlgeformtes TextMessageConfig sein (Blank Node oder IRI)."@de ;
+    sh:message "textMessageConfig doit être un TextMessageConfig bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4578,6 +4800,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_79-geoPosItems
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-GeoPosItemShape ;
     sh:message "geoPosItems must be a well-formed GeoPosItem (blank node or IRI)."@en ;
+    sh:message "geoPosItems muss ein wohlgeformtes GeoPosItem sein (Blank Node oder IRI)."@de ;
+    sh:message "geoPosItems doit être un GeoPosItem bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 32 ;
     sh:severity sh:Violation ;
@@ -4602,6 +4826,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_80-modeProfiles
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ModeProfileItemShape ;
     sh:message "modeProfiles must be a well-formed ModeProfileItem (blank node or IRI)."@en ;
+    sh:message "modeProfiles muss ein wohlgeformtes ModeProfileItem sein (Blank Node oder IRI)."@de ;
+    sh:message "modeProfiles doit être un ModeProfileItem bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 32 ;
     sh:severity sh:Violation ;
@@ -4688,6 +4914,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_88-lx_Status
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-LXStatusShape ;
     sh:message "lx_Status must be a well-formed LXStatus (blank node or IRI)."@en ;
+    sh:message "lx_Status muss ein wohlgeformtes LXStatus sein (Blank Node oder IRI)."@de ;
+    sh:message "lx_Status doit être un LXStatus bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -4802,6 +5030,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_131-rbcPhone
     sh:datatype xsd:string ;
     sh:pattern "^[0-9]{16}$" ;
     sh:message "rbcPhone is Binary Coded Decimal: exactly 16 decimal digits (0-9), no other characters."@en ;
+    sh:message "rbcPhone ist Binary Coded Decimal: genau 16 Dezimalstellen (0-9), keine anderen Zeichen."@de ;
+    sh:message "rbcPhone est en Binary Coded Decimal : exactement 16 chiffres décimaux (0-9), aucun autre caractère."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4913,6 +5143,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_133-rbcPhone
     sh:datatype xsd:string ;
     sh:pattern "^[0-9]{16}$" ;
     sh:message "rbcPhone is Binary Coded Decimal: exactly 16 decimal digits (0-9), no other characters."@en ;
+    sh:message "rbcPhone ist Binary Coded Decimal: genau 16 Dezimalstellen (0-9), keine anderen Zeichen."@de ;
+    sh:message "rbcPhone est en Binary Coded Decimal : exactement 16 chiffres décimaux (0-9), aucun autre caractère."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5208,6 +5440,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_139-v_reverse-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_reverse must be a multiple of 5 km/h."@en ;
+    sh:message "v_reverse muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_reverse doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -5237,6 +5471,8 @@ eng-sh:ss026-ETCSTrackToTrainPacket_140-nid_operational
     sh:datatype xsd:string ;
     sh:pattern "^[0-9]{8}$" ;
     sh:message "nid_operational is Binary Coded Decimal: exactly 8 decimal digits (0-9), no other characters."@en ;
+    sh:message "nid_operational ist Binary Coded Decimal: genau 8 Dezimalstellen (0-9), keine anderen Zeichen."@de ;
+    sh:message "nid_operational est en Binary Coded Decimal : exactement 8 chiffres décimaux (0-9), aucun autre caractère."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5382,6 +5618,8 @@ eng-sh:ss026-NVK-nvkItems
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-NVKItemShape ;
     sh:message "nvkItems must be a well-formed NVKItem (blank node or IRI)."@en ;
+    sh:message "nvkItems muss ein wohlgeformtes NVKItem sein (Blank Node oder IRI)."@de ;
+    sh:message "nvkItems doit être un NVKItem bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 32 ;
     sh:severity sh:Violation ;
@@ -5400,6 +5638,8 @@ eng-sh:ss026-NVK-l_nvkrint
     sh:maxInclusive 2700 ;
     sh:in ( "0"^^xsd:unsignedInt "25"^^xsd:unsignedInt "50"^^xsd:unsignedInt "75"^^xsd:unsignedInt "100"^^xsd:unsignedInt "150"^^xsd:unsignedInt "200"^^xsd:unsignedInt "300"^^xsd:unsignedInt "400"^^xsd:unsignedInt "500"^^xsd:unsignedInt "600"^^xsd:unsignedInt "700"^^xsd:unsignedInt "800"^^xsd:unsignedInt "900"^^xsd:unsignedInt "1000"^^xsd:unsignedInt "1100"^^xsd:unsignedInt "1200"^^xsd:unsignedInt "1300"^^xsd:unsignedInt "1400"^^xsd:unsignedInt "1500"^^xsd:unsignedInt "1600"^^xsd:unsignedInt "1700"^^xsd:unsignedInt "1800"^^xsd:unsignedInt "1900"^^xsd:unsignedInt "2000"^^xsd:unsignedInt "2100"^^xsd:unsignedInt "2200"^^xsd:unsignedInt "2300"^^xsd:unsignedInt "2400"^^xsd:unsignedInt "2500"^^xsd:unsignedInt "2600"^^xsd:unsignedInt "2700"^^xsd:unsignedInt ) ;
     sh:message "l_nvkrint must be one of 0, 25, 50, 75, 100, 150, 200, 300, then 400 to 2700 in steps of 100 m."@en ;
+    sh:message "l_nvkrint muss einer der Werte 0, 25, 50, 75, 100, 150, 200, 300 sein, danach 400 bis 2700 in Schritten von 100 m."@de ;
+    sh:message "l_nvkrint doit être l'une des valeurs 0, 25, 50, 75, 100, 150, 200, 300, puis de 400 à 2700 par pas de 100 m."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5429,6 +5669,8 @@ eng-sh:ss026-NVK-correctionFactors
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-CorrectionFactorShape ;
     sh:message "correctionFactors must be a well-formed CorrectionFactor (blank node or IRI)."@en ;
+    sh:message "correctionFactors muss ein wohlgeformtes CorrectionFactor sein (Blank Node oder IRI)."@de ;
+    sh:message "correctionFactors doit être un CorrectionFactor bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 31 ;
     sh:severity sh:Violation ;
     .
@@ -5452,6 +5694,8 @@ eng-sh:ss026-NVK-m_nvkrint-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "m_nvkrint must be a multiple of 0.05."@en ;
+    sh:message "m_nvkrint muss ein Vielfaches von 0.05 sein."@de ;
+    sh:message "m_nvkrint doit être un multiple de 0.05."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -5465,6 +5709,8 @@ eng-sh:ss026-NVK-m_nvktint-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "m_nvktint must be a multiple of 0.05."@en ;
+    sh:message "m_nvktint muss ein Vielfaches von 0.05 sein."@de ;
+    sh:message "m_nvktint doit être un multiple de 0.05."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -5555,6 +5801,8 @@ eng-sh:ss026-LinkItem-q_linkreaction
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/etcs-reactions-contact/00> <http://data.europa.eu/949/concepts/etcs-reactions-contact/01> <http://data.europa.eu/949/concepts/etcs-reactions-contact/10> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ETCSReactionsNVContact concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ETCSReactionsNVContact entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ETCSReactionsNVContact."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5766,6 +6014,8 @@ eng-sh:ss026-TransmittedStaticSpeed-hasTransmittedSpecificStaticSpeed
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-TransmittedSpecificStaticSpeedShape ;
     sh:message "hasTransmittedSpecificStaticSpeed must be a well-formed TransmittedSpecificStaticSpeed (blank node or IRI)."@en ;
+    sh:message "hasTransmittedSpecificStaticSpeed muss ein wohlgeformtes TransmittedSpecificStaticSpeed sein (Blank Node oder IRI)."@de ;
+    sh:message "hasTransmittedSpecificStaticSpeed doit être un TransmittedSpecificStaticSpeed bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 31 ;
     sh:severity sh:Violation ;
     .
@@ -5791,6 +6041,8 @@ eng-sh:ss026-LevelTransitionWithAck-m_leveltr
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/etcs-levels/50> <http://data.europa.eu/949/concepts/etcs-levels/60> <http://data.europa.eu/949/concepts/etcs-levels/20> <http://data.europa.eu/949/concepts/etcs-levels/30> <http://data.europa.eu/949/concepts/etcs-levels/80> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ETCSLevels concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ETCSLevels entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ETCSLevels."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5845,6 +6097,8 @@ eng-sh:ss026-LevelTransition-m_leveltr
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/etcs-levels/50> <http://data.europa.eu/949/concepts/etcs-levels/60> <http://data.europa.eu/949/concepts/etcs-levels/20> <http://data.europa.eu/949/concepts/etcs-levels/30> <http://data.europa.eu/949/concepts/etcs-levels/80> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ETCSLevels concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ETCSLevels entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ETCSLevels."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5926,6 +6180,8 @@ eng-sh:ss026-AxleLoadRestriction-axleLoadCategory
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/load-capability-line-categories/10> <http://data.europa.eu/949/concepts/load-capability-line-categories/230> <http://data.europa.eu/949/concepts/load-capability-line-categories/20> <http://data.europa.eu/949/concepts/load-capability-line-categories/30> <http://data.europa.eu/949/concepts/load-capability-line-categories/40> <http://data.europa.eu/949/concepts/load-capability-line-categories/50> <http://data.europa.eu/949/concepts/load-capability-line-categories/60> <http://data.europa.eu/949/concepts/load-capability-line-categories/70> <http://data.europa.eu/949/concepts/load-capability-line-categories/80> <http://data.europa.eu/949/concepts/load-capability-line-categories/90> <http://data.europa.eu/949/concepts/load-capability-line-categories/100> <http://data.europa.eu/949/concepts/load-capability-line-categories/110> <http://data.europa.eu/949/concepts/load-capability-line-categories/120> ) ;
     sh:message "Value must be one of the CCSTMS-scoped LoadCapabilityLineCategories concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von LoadCapabilityLineCategories entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de LoadCapabilityLineCategories."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -5951,6 +6207,8 @@ eng-sh:ss026-AxleLoadRestriction-v_axleLoad-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_axleLoad must be a multiple of 5 km/h."@en ;
+    sh:message "v_axleLoad muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_axleLoad doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -6022,6 +6280,8 @@ eng-sh:ss026-AxleLoadSelection-axleLoadRestrictions
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-AxleLoadRestrictionShape ;
     sh:message "axleLoadRestrictions must be a well-formed AxleLoadRestriction (blank node or IRI)."@en ;
+    sh:message "axleLoadRestrictions muss ein wohlgeformtes AxleLoadRestriction sein (Blank Node oder IRI)."@de ;
+    sh:message "axleLoadRestrictions doit être un AxleLoadRestriction bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 31 ;
     sh:severity sh:Violation ;
     .
@@ -6258,6 +6518,8 @@ eng-sh:ss026-DLMCondition-m_trackcond
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-a> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-b> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-e> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-h> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-c> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-g> <http://data.europa.eu/949/concepts/transmitted-tcs/bigMetalMasses> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-d> <http://data.europa.eu/949/concepts/transmitted-tcs/switchOffRegenerativeBrake> <http://data.europa.eu/949/concepts/transmitted-tcs/switchOffEddyCurrentBrakeForServiceBrake> <http://data.europa.eu/949/concepts/transmitted-tcs/switchOffEddyCurrentBrakeForEmergencyBrake> <http://data.europa.eu/949/concepts/transmitted-tcs/switchOffMagneticShoeBrake> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TransmittedTrackConditions concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TransmittedTrackConditions entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TransmittedTrackConditions."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6331,6 +6593,8 @@ eng-sh:ss026-TCSPCondition-q_platform
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/platform-position/ppLeft> <http://data.europa.eu/949/concepts/platform-position/ppRight> <http://data.europa.eu/949/concepts/platform-position/ppBoth> ) ;
     sh:message "Value must be one of the CCSTMS-scoped PlatformPosition concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von PlatformPosition entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de PlatformPosition."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6375,6 +6639,8 @@ eng-sh:ss026-RouteSuitability-q_suitability
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/q-suitability/loadingGuage> <http://data.europa.eu/949/concepts/q-suitability/maxAxleLoad> <http://data.europa.eu/949/concepts/q-suitability/tractionSystem> ) ;
     sh:message "Value must be one of the CCSTMS-scoped Q_Suitability concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von Q_Suitability entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de Q_Suitability."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6389,6 +6655,8 @@ eng-sh:ss026-RouteSuitability-m_lineGauge
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/line-guage/g1> <http://data.europa.eu/949/concepts/line-guage/gA> <http://data.europa.eu/949/concepts/line-guage/gB> <http://data.europa.eu/949/concepts/line-guage/gC> ) ;
     sh:message "Value must be one of the CCSTMS-scoped LineGauge concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von LineGauge entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de LineGauge."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -6403,6 +6671,8 @@ eng-sh:ss026-RouteSuitability-axleLoadCategory
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/load-capability-line-categories/10> <http://data.europa.eu/949/concepts/load-capability-line-categories/230> <http://data.europa.eu/949/concepts/load-capability-line-categories/20> <http://data.europa.eu/949/concepts/load-capability-line-categories/30> <http://data.europa.eu/949/concepts/load-capability-line-categories/40> <http://data.europa.eu/949/concepts/load-capability-line-categories/50> <http://data.europa.eu/949/concepts/load-capability-line-categories/60> <http://data.europa.eu/949/concepts/load-capability-line-categories/70> <http://data.europa.eu/949/concepts/load-capability-line-categories/80> <http://data.europa.eu/949/concepts/load-capability-line-categories/90> <http://data.europa.eu/949/concepts/load-capability-line-categories/100> <http://data.europa.eu/949/concepts/load-capability-line-categories/110> <http://data.europa.eu/949/concepts/load-capability-line-categories/120> ) ;
     sh:message "Value must be one of the CCSTMS-scoped LoadCapabilityLineCategories concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von LoadCapabilityLineCategories entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de LoadCapabilityLineCategories."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -6416,6 +6686,8 @@ eng-sh:ss026-RouteSuitability-m_voltage
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/energy-supply-systems/notFitted> <http://data.europa.eu/949/concepts/energy-supply-systems/AC10> <http://data.europa.eu/949/concepts/energy-supply-systems/AC20> <http://data.europa.eu/949/concepts/energy-supply-systems/DC30> <http://data.europa.eu/949/concepts/energy-supply-systems/DC40> <http://data.europa.eu/949/concepts/energy-supply-systems/DC80> <http://data.europa.eu/949/concepts/energy-supply-systems/DC70> <http://data.europa.eu/949/concepts/energy-supply-systems/DC60> <http://data.europa.eu/949/concepts/energy-supply-systems/DC90> ) ;
     sh:message "Value must be one of the CCSTMS-scoped EnergySupplySystems concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von EnergySupplySystems entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de EnergySupplySystems."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -6469,6 +6741,8 @@ eng-sh:ss026-TextMessageConfig-q_textclass
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/text-class/auxiliary> <http://data.europa.eu/949/concepts/text-class/important> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TextClass concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TextClass entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TextClass."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6511,6 +6785,8 @@ eng-sh:ss026-TextMessageConfig-m_modetextdisplay
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/display-operating-mode/fullSupervision> <http://data.europa.eu/949/concepts/display-operating-mode/onSight> <http://data.europa.eu/949/concepts/display-operating-mode/staffResponsible> <http://data.europa.eu/949/concepts/display-operating-mode/automaticDriving> <http://data.europa.eu/949/concepts/display-operating-mode/unfitted> <http://data.europa.eu/949/concepts/display-operating-mode/supervisedManoeuvre> <http://data.europa.eu/949/concepts/display-operating-mode/standBy> <http://data.europa.eu/949/concepts/display-operating-mode/trip> <http://data.europa.eu/949/concepts/display-operating-mode/postTrip> <http://data.europa.eu/949/concepts/display-operating-mode/limitedSupervision> <http://data.europa.eu/949/concepts/display-operating-mode/reversing> <http://data.europa.eu/949/concepts/display-operating-mode/notLimitedByMode> ) ;
     sh:message "Value must be one of the CCSTMS-scoped DisplayOperatingMode concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von DisplayOperatingMode entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de DisplayOperatingMode."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6525,6 +6801,8 @@ eng-sh:ss026-TextMessageConfig-m_leveltextdisplay
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/display-operating-level/level0> <http://data.europa.eu/949/concepts/display-operating-level/levelNTC> <http://data.europa.eu/949/concepts/display-operating-level/level1> <http://data.europa.eu/949/concepts/display-operating-level/level2> <http://data.europa.eu/949/concepts/display-operating-level/level3> <http://data.europa.eu/949/concepts/display-operating-level/notLimited> ) ;
     sh:message "Value must be one of the CCSTMS-scoped DisplayOperatingLevel concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von DisplayOperatingLevel entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de DisplayOperatingLevel."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6584,6 +6862,8 @@ eng-sh:ss026-TextMessageConfig-m_modetextdisplay_e
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/display-operating-mode/fullSupervision> <http://data.europa.eu/949/concepts/display-operating-mode/onSight> <http://data.europa.eu/949/concepts/display-operating-mode/staffResponsible> <http://data.europa.eu/949/concepts/display-operating-mode/automaticDriving> <http://data.europa.eu/949/concepts/display-operating-mode/unfitted> <http://data.europa.eu/949/concepts/display-operating-mode/supervisedManoeuvre> <http://data.europa.eu/949/concepts/display-operating-mode/standBy> <http://data.europa.eu/949/concepts/display-operating-mode/trip> <http://data.europa.eu/949/concepts/display-operating-mode/postTrip> <http://data.europa.eu/949/concepts/display-operating-mode/limitedSupervision> <http://data.europa.eu/949/concepts/display-operating-mode/reversing> <http://data.europa.eu/949/concepts/display-operating-mode/notLimitedByMode> ) ;
     sh:message "Value must be one of the CCSTMS-scoped DisplayOperatingMode concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von DisplayOperatingMode entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de DisplayOperatingMode."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6598,6 +6878,8 @@ eng-sh:ss026-TextMessageConfig-m_leveltextdisplay_e
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/display-operating-level/level0> <http://data.europa.eu/949/concepts/display-operating-level/levelNTC> <http://data.europa.eu/949/concepts/display-operating-level/level1> <http://data.europa.eu/949/concepts/display-operating-level/level2> <http://data.europa.eu/949/concepts/display-operating-level/level3> <http://data.europa.eu/949/concepts/display-operating-level/notLimited> ) ;
     sh:message "Value must be one of the CCSTMS-scoped DisplayOperatingLevel concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von DisplayOperatingLevel entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de DisplayOperatingLevel."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6782,6 +7064,8 @@ eng-sh:ss026-GeoPosItem-m_position
     sh:maxInclusive 16777215 ;
     sh:not [ sh:minInclusive 10000000 ; sh:maxInclusive 16777214 ] ;
     sh:message "Values 10000000 to 16777214 are spare/invalid for m_position and must not be used."@en ;
+    sh:message "Die Werte 10000000 bis 16777214 sind für m_position reserviert/ungültig und dürfen nicht verwendet werden."@de ;
+    sh:message "Les valeurs 10000000 à 16777214 sont réservées/invalides pour m_position et ne doivent pas être utilisées."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6826,6 +7110,8 @@ eng-sh:ss026-ModeProfileItem-m_mamode
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/ma-mode/onSight> <http://data.europa.eu/949/concepts/ma-mode/shunting> <http://data.europa.eu/949/concepts/ma-mode/limitedSupervision> ) ;
     sh:message "Value must be one of the CCSTMS-scoped MAMode concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von MAMode entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de MAMode."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -6949,6 +7235,8 @@ eng-sh:ss026-LXStatus-v_lx-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_lx must be a multiple of 5 km/h."@en ;
+    sh:message "v_lx muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_lx doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -7075,6 +7363,8 @@ eng-sh:ss026-NVKItem-nvkSubItems
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-NVKSubItemShape ;
     sh:message "nvkSubItems must be a well-formed NVKSubItem (blank node or IRI)."@en ;
+    sh:message "nvkSubItems muss ein wohlgeformtes NVKSubItem sein (Blank Node oder IRI)."@de ;
+    sh:message "nvkSubItems doit être un NVKSubItem bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 31 ;
     sh:severity sh:Violation ;
     .
@@ -7083,6 +7373,8 @@ eng-sh:ss026-NVKItem-a_nvp12-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "a_nvp12 must be a multiple of 0.05 m/s2."@en ;
+    sh:message "a_nvp12 muss ein Vielfaches von 0.05 m/s2 sein."@de ;
+    sh:message "a_nvp12 doit être un multiple de 0.05 m/s2."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -7096,6 +7388,8 @@ eng-sh:ss026-NVKItem-a_nvp23-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "a_nvp23 must be a multiple of 0.05 m/s2."@en ;
+    sh:message "a_nvp23 muss ein Vielfaches von 0.05 m/s2 sein."@de ;
+    sh:message "a_nvp23 doit être un multiple de 0.05 m/s2."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -7109,6 +7403,8 @@ eng-sh:ss026-NVKItem-v_nvkvint-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_nvkvint must be a multiple of 5 km/h."@en ;
+    sh:message "v_nvkvint muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_nvkvint doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -7122,6 +7418,8 @@ eng-sh:ss026-NVKItem-m_nvkvint-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "m_nvkvint must be a multiple of 0.02."@en ;
+    sh:message "m_nvkvint muss ein Vielfaches von 0.02 sein."@de ;
+    sh:message "m_nvkvint doit être un multiple de 0.02."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -7135,6 +7433,8 @@ eng-sh:ss026-NVKItem-m_nvkvint_2-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "m_nvkvint_2 must be a multiple of 0.02."@en ;
+    sh:message "m_nvkvint_2 muss ein Vielfaches von 0.02 sein."@de ;
+    sh:message "m_nvkvint_2 doit être un multiple de 0.02."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -7169,6 +7469,8 @@ eng-sh:ss026-CorrectionFactor-l_nvkrint
     sh:maxInclusive 2700 ;
     sh:in ( "0"^^xsd:unsignedInt "25"^^xsd:unsignedInt "50"^^xsd:unsignedInt "75"^^xsd:unsignedInt "100"^^xsd:unsignedInt "150"^^xsd:unsignedInt "200"^^xsd:unsignedInt "300"^^xsd:unsignedInt "400"^^xsd:unsignedInt "500"^^xsd:unsignedInt "600"^^xsd:unsignedInt "700"^^xsd:unsignedInt "800"^^xsd:unsignedInt "900"^^xsd:unsignedInt "1000"^^xsd:unsignedInt "1100"^^xsd:unsignedInt "1200"^^xsd:unsignedInt "1300"^^xsd:unsignedInt "1400"^^xsd:unsignedInt "1500"^^xsd:unsignedInt "1600"^^xsd:unsignedInt "1700"^^xsd:unsignedInt "1800"^^xsd:unsignedInt "1900"^^xsd:unsignedInt "2000"^^xsd:unsignedInt "2100"^^xsd:unsignedInt "2200"^^xsd:unsignedInt "2300"^^xsd:unsignedInt "2400"^^xsd:unsignedInt "2500"^^xsd:unsignedInt "2600"^^xsd:unsignedInt "2700"^^xsd:unsignedInt ) ;
     sh:message "l_nvkrint must be one of 0, 25, 50, 75, 100, 150, 200, 300, then 400 to 2700 in steps of 100 m."@en ;
+    sh:message "l_nvkrint muss einer der Werte 0, 25, 50, 75, 100, 150, 200, 300 sein, danach 400 bis 2700 in Schritten von 100 m."@de ;
+    sh:message "l_nvkrint doit être l'une des valeurs 0, 25, 50, 75, 100, 150, 200, 300, puis de 400 à 2700 par pas de 100 m."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -7193,6 +7495,8 @@ eng-sh:ss026-CorrectionFactor-m_nvkrint-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "m_nvkrint must be a multiple of 0.05."@en ;
+    sh:message "m_nvkrint muss ein Vielfaches von 0.05 sein."@de ;
+    sh:message "m_nvkrint doit être un multiple de 0.05."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -7240,6 +7544,8 @@ eng-sh:ss026-TransmittedSpecificStaticSpeed-nc_cddiff
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/cant-deficiencies/80> <http://data.europa.eu/949/concepts/cant-deficiencies/100> <http://data.europa.eu/949/concepts/cant-deficiencies/130> <http://data.europa.eu/949/concepts/cant-deficiencies/150> <http://data.europa.eu/949/concepts/cant-deficiencies/165> <http://data.europa.eu/949/concepts/cant-deficiencies/180> <http://data.europa.eu/949/concepts/cant-deficiencies/210> <http://data.europa.eu/949/concepts/cant-deficiencies/225> <http://data.europa.eu/949/concepts/cant-deficiencies/245> <http://data.europa.eu/949/concepts/cant-deficiencies/275> <http://data.europa.eu/949/concepts/cant-deficiencies/300> ) ;
     sh:message "Value must be one of the CCSTMS-scoped CantDeficiencies concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von CantDeficiencies entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de CantDeficiencies."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -7253,6 +7559,8 @@ eng-sh:ss026-TransmittedSpecificStaticSpeed-nc_diff
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_freightTrainP> <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_freightTrainG> <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_passengerTrain> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OtherSpecificStaticSpeedProfileCategory concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OtherSpecificStaticSpeedProfileCategory entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OtherSpecificStaticSpeedProfileCategory."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -7277,6 +7585,8 @@ eng-sh:ss026-TransmittedSpecificStaticSpeed-v_diff-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_diff must be a multiple of 5 km/h."@en ;
+    sh:message "v_diff muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_diff doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -7349,6 +7659,8 @@ eng-sh:ss026-NVKSubItem-v_nvkvint-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "v_nvkvint must be a multiple of 5 km/h."@en ;
+    sh:message "v_nvkvint muss ein Vielfaches von 5 km/h sein."@de ;
+    sh:message "v_nvkvint doit être un multiple de 5 km/h."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -7362,6 +7674,8 @@ eng-sh:ss026-NVKSubItem-m_nvkvint-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "m_nvkvint must be a multiple of 0.02."@en ;
+    sh:message "m_nvkvint muss ein Vielfaches von 0.02 sein."@de ;
+    sh:message "m_nvkvint doit être un multiple de 0.02."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -7375,6 +7689,8 @@ eng-sh:ss026-NVKSubItem-m_nvkvint_2-multipleOf
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "m_nvkvint_2 must be a multiple of 0.02."@en ;
+    sh:message "m_nvkvint_2 muss ein Vielfaches von 0.02 sein."@de ;
+    sh:message "m_nvkvint_2 doit être un multiple de 0.02."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -7411,6 +7727,8 @@ eng-sh:BufferStop-dangerPoint
     sh:nodeKind sh:IRI ;
     sh:class era:DangerPoint ;
     sh:message "dangerPoint must reference an existing era:DangerPoint by IRI."@en ;
+    sh:message "dangerPoint muss über eine IRI auf ein bestehendes era:DangerPoint verweisen."@de ;
+    sh:message "dangerPoint doit référencer un era:DangerPoint existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -7438,6 +7756,8 @@ eng-sh:BufferStop-bsType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/buffer-stop-type/friction> <http://data.europa.eu/949/concepts/buffer-stop-type/hydraulic> <http://data.europa.eu/949/concepts/buffer-stop-type/fixated> <http://data.europa.eu/949/concepts/buffer-stop-type/other> ) ;
     sh:message "Value must be one of the CCSTMS-scoped BufferStopType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von BufferStopType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de BufferStopType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -7469,6 +7789,8 @@ eng-sh:Switch-foulingPoints
     sh:nodeKind sh:IRI ;
     sh:class era:FoulingPoint ;
     sh:message "foulingPoints must reference an existing era:FoulingPoint by IRI."@en ;
+    sh:message "foulingPoints muss über eine IRI auf ein bestehendes era:FoulingPoint verweisen."@de ;
+    sh:message "foulingPoints doit référencer un era:FoulingPoint existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -7510,6 +7832,8 @@ eng-sh:Switch-routeRequiresPointRight
     sh:nodeKind sh:IRI ;
     sh:class era:TrackUsagePath ;
     sh:message "routeRequiresPointRight must reference an existing era:TrackUsagePath by IRI."@en ;
+    sh:message "routeRequiresPointRight muss über eine IRI auf ein bestehendes era:TrackUsagePath verweisen."@de ;
+    sh:message "routeRequiresPointRight doit référencer un era:TrackUsagePath existant par IRI."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -7522,6 +7846,8 @@ eng-sh:Switch-routeRequiresPointLeft
     sh:nodeKind sh:IRI ;
     sh:class era:TrackUsagePath ;
     sh:message "routeRequiresPointLeft must reference an existing era:TrackUsagePath by IRI."@en ;
+    sh:message "routeRequiresPointLeft muss über eine IRI auf ein bestehendes era:TrackUsagePath verweisen."@de ;
+    sh:message "routeRequiresPointLeft doit référencer un era:TrackUsagePath existant par IRI."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -7547,6 +7873,8 @@ eng-sh:Crossing-foulingPoints
     sh:nodeKind sh:IRI ;
     sh:class era:FoulingPoint ;
     sh:message "foulingPoints must reference an existing era:FoulingPoint by IRI."@en ;
+    sh:message "foulingPoints muss über eine IRI auf ein bestehendes era:FoulingPoint verweisen."@de ;
+    sh:message "foulingPoints doit référencer un era:FoulingPoint existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -7573,6 +7901,8 @@ eng-sh:LevelCrossing-dangerPoints
     sh:nodeKind sh:IRI ;
     sh:class era:DangerPoint ;
     sh:message "dangerPoints must reference an existing era:DangerPoint by IRI."@en ;
+    sh:message "dangerPoints muss über eine IRI auf ein bestehendes era:DangerPoint verweisen."@de ;
+    sh:message "dangerPoints doit référencer un era:DangerPoint existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -7600,6 +7930,8 @@ eng-sh:BaliseGroup-etcsMVersion
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/etcs-m-versions/10> <http://data.europa.eu/949/concepts/etcs-m-versions/11> <http://data.europa.eu/949/concepts/etcs-m-versions/20> <http://data.europa.eu/949/concepts/etcs-m-versions/21> <http://data.europa.eu/949/concepts/etcs-m-versions/22> <http://data.europa.eu/949/concepts/etcs-m-versions/23> <http://data.europa.eu/949/concepts/etcs-m-versions/30> <http://data.europa.eu/949/concepts/etcs-m-versions/00> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ETCSMVersions concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ETCSMVersions entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ETCSMVersions."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -7666,6 +7998,8 @@ eng-sh:Balise-m_dup
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/duplication-type/noDuplicates> <http://data.europa.eu/949/concepts/duplication-type/duplicateNextBalise> <http://data.europa.eu/949/concepts/duplication-type/duplicatePreviousBalise> ) ;
     sh:message "Value must be one of the CCSTMS-scoped DuplicationType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von DuplicationType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de DuplicationType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -7749,6 +8083,8 @@ eng-sh:Balise-etcsPackets
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:ss026-ETCSTrackToTrainPacketShape ;
     sh:message "etcsPackets must be a well-formed ETCSTrackToTrainPacket (blank node or IRI)."@en ;
+    sh:message "etcsPackets muss ein wohlgeformtes ETCSTrackToTrainPacket sein (Blank Node oder IRI)."@de ;
+    sh:message "etcsPackets doit être un ETCSTrackToTrainPacket bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -7765,6 +8101,8 @@ eng-sh:Balise-telegram
             [ sh:pattern "^[01]{1023}$" ]
         ) ;
         sh:message "An ETCS balise telegram must be a binary bit string of either exactly 341 bits (short telegram) or exactly 1023 bits (long telegram); see formatNote on Balise.telegram."@en ;
+        sh:message "Ein ETCS-Balise-Telegramm muss eine binäre Bitfolge von entweder genau 341 Bit (kurzes Telegramm) oder genau 1023 Bit (langes Telegramm) sein; siehe formatNote zu Balise.telegram."@de ;
+        sh:message "Un télégramme de balise ETCS doit être une chaîne binaire de soit exactement 341 bits (télégramme court), soit exactement 1023 bits (télégramme long) ; voir formatNote sur Balise.telegram."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -7826,6 +8164,8 @@ eng-sh:Balise-sleepersType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/sleepers-type/unknownSleepersType> <http://data.europa.eu/949/concepts/sleepers-type/composite> <http://data.europa.eu/949/concepts/sleepers-type/concrete> <http://data.europa.eu/949/concepts/sleepers-type/steel> <http://data.europa.eu/949/concepts/sleepers-type/wood> ) ;
     sh:message "Value must be one of the CCSTMS-scoped SleepersType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von SleepersType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de SleepersType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -7854,6 +8194,8 @@ eng-sh:Sleepers-linearElementSections
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:infra-LinearElementSectionShape ;
     sh:message "linearElementSections must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:message "linearElementSections muss ein wohlgeformtes LinearElementSection sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElementSections doit être un LinearElementSection bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -7867,6 +8209,8 @@ eng-sh:Sleepers-sleepersType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/sleepers-type/unknownSleepersType> <http://data.europa.eu/949/concepts/sleepers-type/composite> <http://data.europa.eu/949/concepts/sleepers-type/concrete> <http://data.europa.eu/949/concepts/sleepers-type/steel> <http://data.europa.eu/949/concepts/sleepers-type/wood> ) ;
     sh:message "Value must be one of the CCSTMS-scoped SleepersType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von SleepersType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de SleepersType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -7908,6 +8252,8 @@ eng-sh:DangerPoint-topologicalCoordinate
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:infra-TopologicalCoordinateShape ;
     sh:message "topologicalCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:message "topologicalCoordinate muss ein wohlgeformtes TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
+    sh:message "topologicalCoordinate doit être un TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -7948,6 +8294,8 @@ eng-sh:FoulingPoint-topologicalCoordinate
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:infra-TopologicalCoordinateShape ;
     sh:message "topologicalCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:message "topologicalCoordinate muss ein wohlgeformtes TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
+    sh:message "topologicalCoordinate doit être un TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -7981,6 +8329,8 @@ eng-sh:TrackUsagePath-switches
     sh:nodeKind sh:IRI ;
     sh:class era:Switch ;
     sh:message "switches must reference an existing era:Switch by IRI."@en ;
+    sh:message "switches muss über eine IRI auf ein bestehendes era:Switch verweisen."@de ;
+    sh:message "switches doit référencer un era:Switch existant par IRI."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -7993,6 +8343,8 @@ eng-sh:TrackUsagePath-derailers
     sh:nodeKind sh:IRI ;
     sh:class era:Derailer ;
     sh:message "derailers must reference an existing era:Derailer by IRI."@en ;
+    sh:message "derailers muss über eine IRI auf ein bestehendes era:Derailer verweisen."@de ;
+    sh:message "derailers doit référencer un era:Derailer existant par IRI."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -8005,6 +8357,8 @@ eng-sh:TrackUsagePath-levelCrossings
     sh:nodeKind sh:IRI ;
     sh:class era:LevelCrossing ;
     sh:message "levelCrossings must reference an existing era:LevelCrossing by IRI."@en ;
+    sh:message "levelCrossings muss über eine IRI auf ein bestehendes era:LevelCrossing verweisen."@de ;
+    sh:message "levelCrossings doit référencer un era:LevelCrossing existant par IRI."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -8017,6 +8371,8 @@ eng-sh:TrackUsagePath-pathBody
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:infra-NetLinearReferenceShape ;
     sh:message "pathBody must be a well-formed NetLinearReference (blank node or IRI)."@en ;
+    sh:message "pathBody muss ein wohlgeformtes NetLinearReference sein (Blank Node oder IRI)."@de ;
+    sh:message "pathBody doit être un NetLinearReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -8031,6 +8387,8 @@ eng-sh:TrackUsagePath-precedingTrackUsagePath
     sh:nodeKind sh:IRI ;
     sh:class era:TrackUsagePath ;
     sh:message "precedingTrackUsagePath must reference an existing era:TrackUsagePath by IRI."@en ;
+    sh:message "precedingTrackUsagePath muss über eine IRI auf ein bestehendes era:TrackUsagePath verweisen."@de ;
+    sh:message "precedingTrackUsagePath doit référencer un era:TrackUsagePath existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -8039,6 +8397,8 @@ eng-sh:TrackUsagePath-precedingTrackUsagePath-irreflexive
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "era:precedingTrackUsagePath is an owl:IrreflexiveProperty: a TrackUsagePath must not point at itself."@en ;
+    sh:message "era:precedingTrackUsagePath ist eine owl:IrreflexiveProperty: ein TrackUsagePath darf nicht auf sich selbst verweisen."@de ;
+    sh:message "era:precedingTrackUsagePath est une owl:IrreflexiveProperty : un TrackUsagePath ne doit pas pointer vers lui-même."@fr ;
     sh:select """
             SELECT $this
             WHERE { $this era:precedingTrackUsagePath $this }
@@ -8049,6 +8409,8 @@ eng-sh:TrackUsagePath-precedingTrackUsagePath-asymmetric
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "era:precedingTrackUsagePath is an owl:AsymmetricProperty: if A era:precedingTrackUsagePath B then B era:precedingTrackUsagePath A must not hold."@en ;
+    sh:message "era:precedingTrackUsagePath ist eine owl:AsymmetricProperty: wenn A era:precedingTrackUsagePath B gilt, darf B era:precedingTrackUsagePath A nicht gelten."@de ;
+    sh:message "era:precedingTrackUsagePath est une owl:AsymmetricProperty : si A era:precedingTrackUsagePath B, alors B era:precedingTrackUsagePath A ne doit pas être vrai."@fr ;
     sh:select """
             SELECT $this
             WHERE {
@@ -8090,6 +8452,8 @@ eng-sh:EngArea-topoArea
     sh:nodeKind sh:IRI ;
     sh:class era:TopoArea ;
     sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
+    sh:message "topoArea muss über eine IRI auf ein bestehendes era:TopoArea verweisen."@de ;
+    sh:message "topoArea doit référencer un era:TopoArea existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -8104,6 +8468,8 @@ eng-sh:EngArea-defaultSleepersType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/sleepers-type/unknownSleepersType> <http://data.europa.eu/949/concepts/sleepers-type/composite> <http://data.europa.eu/949/concepts/sleepers-type/concrete> <http://data.europa.eu/949/concepts/sleepers-type/steel> <http://data.europa.eu/949/concepts/sleepers-type/wood> ) ;
     sh:message "Value must be one of the CCSTMS-scoped SleepersType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von SleepersType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de SleepersType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -8118,6 +8484,8 @@ eng-sh:EngArea-switches
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:SwitchShape ;
     sh:message "switches must be a well-formed Switch (blank node or IRI)."@en ;
+    sh:message "switches muss ein wohlgeformtes Switch sein (Blank Node oder IRI)."@de ;
+    sh:message "switches doit être un Switch bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -8130,6 +8498,8 @@ eng-sh:EngArea-crossings
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:CrossingShape ;
     sh:message "crossings must be a well-formed Crossing (blank node or IRI)."@en ;
+    sh:message "crossings muss ein wohlgeformtes Crossing sein (Blank Node oder IRI)."@de ;
+    sh:message "crossings doit être un Crossing bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -8142,6 +8512,8 @@ eng-sh:EngArea-levelCrossings
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:LevelCrossingShape ;
     sh:message "levelCrossings must be a well-formed LevelCrossing (blank node or IRI)."@en ;
+    sh:message "levelCrossings muss ein wohlgeformtes LevelCrossing sein (Blank Node oder IRI)."@de ;
+    sh:message "levelCrossings doit être un LevelCrossing bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -8154,6 +8526,8 @@ eng-sh:EngArea-baliseGroups
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:BaliseGroupShape ;
     sh:message "baliseGroups must be a well-formed BaliseGroup (blank node or IRI)."@en ;
+    sh:message "baliseGroups muss ein wohlgeformtes BaliseGroup sein (Blank Node oder IRI)."@de ;
+    sh:message "baliseGroups doit être un BaliseGroup bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -8166,6 +8540,8 @@ eng-sh:EngArea-sleepers
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:SleepersShape ;
     sh:message "sleepers must be a well-formed Sleepers (blank node or IRI)."@en ;
+    sh:message "sleepers muss ein wohlgeformtes Sleepers sein (Blank Node oder IRI)."@de ;
+    sh:message "sleepers doit être un Sleepers bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -8178,6 +8554,8 @@ eng-sh:EngArea-trackUsagePaths
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:TrackUsagePathShape ;
     sh:message "trackUsagePaths must be a well-formed TrackUsagePath (blank node or IRI)."@en ;
+    sh:message "trackUsagePaths muss ein wohlgeformtes TrackUsagePath sein (Blank Node oder IRI)."@de ;
+    sh:message "trackUsagePaths doit être un TrackUsagePath bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -8190,6 +8568,8 @@ eng-sh:EngArea-dangerPoints
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:DangerPointShape ;
     sh:message "dangerPoints must be a well-formed DangerPoint (blank node or IRI)."@en ;
+    sh:message "dangerPoints muss ein wohlgeformtes DangerPoint sein (Blank Node oder IRI)."@de ;
+    sh:message "dangerPoints doit être un DangerPoint bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -8202,6 +8582,8 @@ eng-sh:EngArea-foulingPoints
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:FoulingPointShape ;
     sh:message "foulingPoints must be a well-formed FoulingPoint (blank node or IRI)."@en ;
+    sh:message "foulingPoints muss ein wohlgeformtes FoulingPoint sein (Blank Node oder IRI)."@de ;
+    sh:message "foulingPoints doit être un FoulingPoint bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -8214,6 +8596,8 @@ eng-sh:EngArea-bufferStops
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:BufferStopShape ;
     sh:message "bufferStops must be a well-formed BufferStop (blank node or IRI)."@en ;
+    sh:message "bufferStops muss ein wohlgeformtes BufferStop sein (Blank Node oder IRI)."@de ;
+    sh:message "bufferStops doit être un BufferStop bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -8240,6 +8624,8 @@ eng-sh:LocationAccuracyArea-topoArea
     sh:nodeKind sh:IRI ;
     sh:class era:TopoArea ;
     sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
+    sh:message "topoArea muss über eine IRI auf ein bestehendes era:TopoArea verweisen."@de ;
+    sh:message "topoArea doit référencer un era:TopoArea existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -8254,6 +8640,8 @@ eng-sh:LocationAccuracyArea-accuracyProfiles
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:LinearElementAccuracyProfileShape ;
     sh:message "accuracyProfiles must be a well-formed LinearElementAccuracyProfile (blank node or IRI)."@en ;
+    sh:message "accuracyProfiles muss ein wohlgeformtes LinearElementAccuracyProfile sein (Blank Node oder IRI)."@de ;
+    sh:message "accuracyProfiles doit être un LinearElementAccuracyProfile bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -8281,6 +8669,8 @@ eng-sh:LinearElementAccuracyProfile-linearElement
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "linearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "linearElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "linearElement doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -8296,6 +8686,8 @@ eng-sh:LinearElementAccuracyProfile-offsetAccuracies
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "offsetAccuracies is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "offsetAccuracies ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "offsetAccuracies est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node eng-sh:LinearElementAccuracyProfile-offsetAccuracies-items ;
     sh:severity sh:Violation ;
     .
@@ -8304,6 +8696,8 @@ eng-sh:LinearElementAccuracyProfile-offsetAccuracies-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "era:offsetAccuracies is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:offsetAccuracies ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:offsetAccuracies est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -8330,6 +8724,8 @@ eng-sh:LinearElementAccuracyProfile-offsetAccuracies-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node eng-sh:OffsetAccuracyShape ;
         sh:message "offsetAccuracies must be a well-formed OffsetAccuracy (blank node or IRI)."@en ;
+        sh:message "offsetAccuracies muss ein wohlgeformtes OffsetAccuracy sein (Blank Node oder IRI)."@de ;
+        sh:message "offsetAccuracies doit être un OffsetAccuracy bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -8394,6 +8790,8 @@ eng-sh:LinearElementKm-linearElement
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "linearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "linearElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "linearElement doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -8409,6 +8807,8 @@ eng-sh:LinearElementKm-kilometricPosts
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "kilometricPosts is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "kilometricPosts ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "kilometricPosts est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node eng-sh:LinearElementKm-kilometricPosts-items ;
     sh:severity sh:Violation ;
     .
@@ -8417,6 +8817,8 @@ eng-sh:LinearElementKm-kilometricPosts-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes eng-sh:PrefixDeclarations ;
     sh:message "era:kilometricPosts is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:kilometricPosts ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:kilometricPosts est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -8443,6 +8845,8 @@ eng-sh:LinearElementKm-kilometricPosts-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node eng-sh:KilometricPostShape ;
         sh:message "kilometricPosts must be a well-formed KilometricPost (blank node or IRI)."@en ;
+        sh:message "kilometricPosts muss ein wohlgeformtes KilometricPost sein (Blank Node oder IRI)."@de ;
+        sh:message "kilometricPosts doit être un KilometricPost bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -8522,6 +8926,8 @@ eng-sh:KmArea-topoArea
     sh:nodeKind sh:IRI ;
     sh:class era:TopoArea ;
     sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
+    sh:message "topoArea muss über eine IRI auf ein bestehendes era:TopoArea verweisen."@de ;
+    sh:message "topoArea doit référencer un era:TopoArea existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -8536,6 +8942,8 @@ eng-sh:KmArea-linearElementKm
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:LinearElementKmShape ;
     sh:message "linearElementKm must be a well-formed LinearElementKm (blank node or IRI)."@en ;
+    sh:message "linearElementKm muss ein wohlgeformtes LinearElementKm sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElementKm doit être un LinearElementKm bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -8560,6 +8968,8 @@ eng-sh:ETCSEngineering-engAreas
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:EngAreaShape ;
     sh:message "engAreas must be a well-formed EngArea (blank node or IRI)."@en ;
+    sh:message "engAreas muss ein wohlgeformtes EngArea sein (Blank Node oder IRI)."@de ;
+    sh:message "engAreas doit être un EngArea bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -8572,6 +8982,8 @@ eng-sh:ETCSEngineering-locationAccuracyAreas
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:LocationAccuracyAreaShape ;
     sh:message "locationAccuracyAreas must be a well-formed LocationAccuracyArea (blank node or IRI)."@en ;
+    sh:message "locationAccuracyAreas muss ein wohlgeformtes LocationAccuracyArea sein (Blank Node oder IRI)."@de ;
+    sh:message "locationAccuracyAreas doit être un LocationAccuracyArea bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -8584,5 +8996,7 @@ eng-sh:ETCSEngineering-kmAreas
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node eng-sh:KmAreaShape ;
     sh:message "kmAreas must be a well-formed KmArea (blank node or IRI)."@en ;
+    sh:message "kmAreas muss ein wohlgeformtes KmArea sein (Blank Node oder IRI)."@de ;
+    sh:message "kmAreas doit être un KmArea bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .

@@ -90,6 +90,8 @@ infra-sh:TopoArea-linearElements
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:LinearElementShape ;
     sh:message "linearElements must be a well-formed LinearElement (blank node or IRI)."@en ;
+    sh:message "linearElements muss ein wohlgeformtes LinearElement sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElements doit être un LinearElement bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -102,6 +104,8 @@ infra-sh:TopoArea-netRelations
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:NetRelationShape ;
     sh:message "netRelations must be a well-formed NetRelation (blank node or IRI)."@en ;
+    sh:message "netRelations muss ein wohlgeformtes NetRelation sein (Blank Node oder IRI)."@de ;
+    sh:message "netRelations doit être un NetRelation bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -184,6 +188,8 @@ infra-sh:NetRelation-elementA
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "elementA must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "elementA muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "elementA doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -198,6 +204,8 @@ infra-sh:NetRelation-elementB
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "elementB must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "elementB muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "elementB doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -250,6 +258,8 @@ infra-sh:NetPointReference-hasTopoCoordinate
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TopologicalCoordinateShape ;
     sh:message "hasTopoCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:message "hasTopoCoordinate muss ein wohlgeformtes TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
+    sh:message "hasTopoCoordinate doit être un TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -264,6 +274,8 @@ infra-sh:NetPointReference-appliesToDirection
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/orientations/02> <http://data.europa.eu/949/concepts/orientations/00> <http://data.europa.eu/949/concepts/orientations/01> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OrientationDirections concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OrientationDirections entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OrientationDirections."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -290,6 +302,8 @@ infra-sh:TopologicalCoordinate-onLinearElement
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "onLinearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "onLinearElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "onLinearElement doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -332,6 +346,8 @@ infra-sh:LinearElementSection-onElement
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "onElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "onElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "onElement doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -400,6 +416,8 @@ infra-sh:NetLinearReference-startsAt
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:NetPointReferenceShape ;
     sh:message "startsAt must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "startsAt muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "startsAt doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -414,6 +432,8 @@ infra-sh:NetLinearReference-endsAt
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:NetPointReferenceShape ;
     sh:message "endsAt must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "endsAt muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "endsAt doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -429,6 +449,8 @@ infra-sh:NetLinearReference-hasSequence
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "hasSequence is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "hasSequence ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "hasSequence est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node infra-sh:NetLinearReference-hasSequence-items ;
     sh:severity sh:Violation ;
     .
@@ -437,6 +459,8 @@ infra-sh:NetLinearReference-hasSequence-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes infra-sh:PrefixDeclarations ;
     sh:message "era:hasSequence is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:hasSequence ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:hasSequence est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -463,6 +487,8 @@ infra-sh:NetLinearReference-hasSequence-items
         sh:nodeKind sh:IRI ;
         sh:class era:LinearElement ;
         sh:message "hasSequence must reference an existing era:LinearElement by IRI."@en ;
+        sh:message "hasSequence muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+        sh:message "hasSequence doit référencer un era:LinearElement existant par IRI."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -486,6 +512,8 @@ infra-sh:NetAreaReference-includes
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:NetLinearReferenceShape ;
     sh:message "includes must be a well-formed NetLinearReference (blank node or IRI)."@en ;
+    sh:message "includes muss ein wohlgeformtes NetLinearReference sein (Blank Node oder IRI)."@de ;
+    sh:message "includes doit être un NetLinearReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -515,6 +543,8 @@ infra-sh:GeometryArea-topoArea
     sh:nodeKind sh:IRI ;
     sh:class era:TopoArea ;
     sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
+    sh:message "topoArea muss über eine IRI auf ein bestehendes era:TopoArea verweisen."@de ;
+    sh:message "topoArea doit référencer un era:TopoArea existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -555,6 +585,8 @@ infra-sh:GeometryArea-linearElementGeometries
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:LinearElementGeometryShape ;
     sh:message "linearElementGeometries must be a well-formed LinearElementGeometry (blank node or IRI)."@en ;
+    sh:message "linearElementGeometries muss ein wohlgeformtes LinearElementGeometry sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElementGeometries doit être un LinearElementGeometry bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -589,6 +621,8 @@ infra-sh:LinearElementGeometry-linearElement
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "linearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "linearElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "linearElement doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -604,6 +638,8 @@ infra-sh:LinearElementGeometry-horizontalAlignments
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:message "horizontalAlignments is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "horizontalAlignments ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "horizontalAlignments est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node infra-sh:LinearElementGeometry-horizontalAlignments-items ;
     sh:severity sh:Violation ;
     .
@@ -618,6 +654,8 @@ infra-sh:LinearElementGeometry-verticalAlignments
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:message "verticalAlignments is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "verticalAlignments ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "verticalAlignments est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node infra-sh:LinearElementGeometry-verticalAlignments-items ;
     sh:severity sh:Violation ;
     .
@@ -632,6 +670,8 @@ infra-sh:LinearElementGeometry-cantPoints
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "cantPoints is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "cantPoints ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "cantPoints est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node infra-sh:LinearElementGeometry-cantPoints-items ;
     sh:severity sh:Violation ;
     .
@@ -640,6 +680,8 @@ infra-sh:LinearElementGeometry-horizontalAlignments-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes infra-sh:PrefixDeclarations ;
     sh:message "era:horizontalAlignments is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:horizontalAlignments ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:horizontalAlignments est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -661,6 +703,8 @@ infra-sh:LinearElementGeometry-horizontalAlignments-listItemCount
     a sh:SPARQLConstraint ;
     sh:prefixes infra-sh:PrefixDeclarations ;
     sh:message "The single rdf:List carried by era:horizontalAlignments must hold at least 1 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:message "Die einzelne rdf:List, die von era:horizontalAlignments getragen wird, muss mindestens 1 Element(e) enthalten; die Multiplizität begrenzt die Elemente innerhalb der Liste, nicht die Anzahl der Listen."@de ;
+    sh:message "L'unique rdf:List portée par era:horizontalAlignments doit contenir au moins 1 élément(s) ; la multiplicité borne les éléments à l'intérieur de la liste, pas le nombre de listes."@fr ;
     sh:select """
             SELECT $this (COUNT(?item) AS ?itemCount)
             WHERE {
@@ -680,6 +724,8 @@ infra-sh:LinearElementGeometry-verticalAlignments-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes infra-sh:PrefixDeclarations ;
     sh:message "era:verticalAlignments is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:verticalAlignments ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:verticalAlignments est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -701,6 +747,8 @@ infra-sh:LinearElementGeometry-verticalAlignments-listItemCount
     a sh:SPARQLConstraint ;
     sh:prefixes infra-sh:PrefixDeclarations ;
     sh:message "The single rdf:List carried by era:verticalAlignments must hold at least 1 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:message "Die einzelne rdf:List, die von era:verticalAlignments getragen wird, muss mindestens 1 Element(e) enthalten; die Multiplizität begrenzt die Elemente innerhalb der Liste, nicht die Anzahl der Listen."@de ;
+    sh:message "L'unique rdf:List portée par era:verticalAlignments doit contenir au moins 1 élément(s) ; la multiplicité borne les éléments à l'intérieur de la liste, pas le nombre de listes."@fr ;
     sh:select """
             SELECT $this (COUNT(?item) AS ?itemCount)
             WHERE {
@@ -720,6 +768,8 @@ infra-sh:LinearElementGeometry-cantPoints-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes infra-sh:PrefixDeclarations ;
     sh:message "era:cantPoints is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:cantPoints ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:cantPoints est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -746,6 +796,8 @@ infra-sh:LinearElementGeometry-horizontalAlignments-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node infra-sh:HorizontalSegmentShape ;
         sh:message "horizontalAlignments must be a well-formed HorizontalSegment (blank node or IRI)."@en ;
+        sh:message "horizontalAlignments muss ein wohlgeformtes HorizontalSegment sein (Blank Node oder IRI)."@de ;
+        sh:message "horizontalAlignments doit être un HorizontalSegment bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -759,6 +811,8 @@ infra-sh:LinearElementGeometry-verticalAlignments-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node infra-sh:VerticalSegmentShape ;
         sh:message "verticalAlignments must be a well-formed VerticalSegment (blank node or IRI)."@en ;
+        sh:message "verticalAlignments muss ein wohlgeformtes VerticalSegment sein (Blank Node oder IRI)."@de ;
+        sh:message "verticalAlignments doit être un VerticalSegment bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -772,6 +826,8 @@ infra-sh:LinearElementGeometry-cantPoints-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node infra-sh:CantPointShape ;
         sh:message "cantPoints must be a well-formed CantPoint (blank node or IRI)."@en ;
+        sh:message "cantPoints muss ein wohlgeformtes CantPoint sein (Blank Node oder IRI)."@de ;
+        sh:message "cantPoints doit être un CantPoint bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -789,6 +845,8 @@ infra-sh:HorizontalSegmentShape
         infra-sh:HorizontalSegment-horizontalSegmentTransition-present
     ) ;
     sh:message "HorizontalSegment is a union: exactly one of (horizontalSegmentLine, horizontalSegmentArc, horizontalSegmentTransition) must be present."@en ;
+    sh:message "HorizontalSegment ist eine Union: genau eines von (horizontalSegmentLine, horizontalSegmentArc, horizontalSegmentTransition) muss vorhanden sein."@de ;
+    sh:message "HorizontalSegment est une union : exactement l'un de (horizontalSegmentLine, horizontalSegmentArc, horizontalSegmentTransition) doit être présent."@fr ;
     sh:property infra-sh:HorizontalSegment-horizontalSegmentLine ;
     sh:property infra-sh:HorizontalSegment-horizontalSegmentArc ;
     sh:property infra-sh:HorizontalSegment-horizontalSegmentTransition ;
@@ -804,6 +862,8 @@ infra-sh:HorizontalSegment-horizontalSegmentLine
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:HorizontalLineShape ;
     sh:message "horizontalSegmentLine must be a well-formed HorizontalLine (blank node or IRI)."@en ;
+    sh:message "horizontalSegmentLine muss ein wohlgeformtes HorizontalLine sein (Blank Node oder IRI)."@de ;
+    sh:message "horizontalSegmentLine doit être un HorizontalLine bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -817,6 +877,8 @@ infra-sh:HorizontalSegment-horizontalSegmentArc
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:HorizontalArcShape ;
     sh:message "horizontalSegmentArc must be a well-formed HorizontalArc (blank node or IRI)."@en ;
+    sh:message "horizontalSegmentArc muss ein wohlgeformtes HorizontalArc sein (Blank Node oder IRI)."@de ;
+    sh:message "horizontalSegmentArc doit être un HorizontalArc bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -830,6 +892,8 @@ infra-sh:HorizontalSegment-horizontalSegmentTransition
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:HorizontalTransitionShape ;
     sh:message "horizontalSegmentTransition must be a well-formed HorizontalTransition (blank node or IRI)."@en ;
+    sh:message "horizontalSegmentTransition muss ein wohlgeformtes HorizontalTransition sein (Blank Node oder IRI)."@de ;
+    sh:message "horizontalSegmentTransition doit être un HorizontalTransition bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1036,6 +1100,8 @@ infra-sh:HorizontalTransition-transitionType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/transition-type/clothoidCurve> <http://data.europa.eu/949/concepts/transition-type/biquadraticParabola> <http://data.europa.eu/949/concepts/transition-type/blossCurve> <http://data.europa.eu/949/concepts/transition-type/cosineCurve> <http://data.europa.eu/949/concepts/transition-type/cubicParabola> <http://data.europa.eu/949/concepts/transition-type/sineCurve> <http://data.europa.eu/949/concepts/transition-type/wienerBogen> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TransitionType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TransitionType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TransitionType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1053,6 +1119,8 @@ infra-sh:VerticalSegmentShape
         infra-sh:VerticalSegment-verticalSegmentArc-present
     ) ;
     sh:message "VerticalSegment is a union: exactly one of (verticalSegmentLine, verticalSegmentArc) must be present."@en ;
+    sh:message "VerticalSegment ist eine Union: genau eines von (verticalSegmentLine, verticalSegmentArc) muss vorhanden sein."@de ;
+    sh:message "VerticalSegment est une union : exactement l'un de (verticalSegmentLine, verticalSegmentArc) doit être présent."@fr ;
     sh:property infra-sh:VerticalSegment-verticalSegmentLine ;
     sh:property infra-sh:VerticalSegment-verticalSegmentArc ;
     sh:severity sh:Violation ;
@@ -1067,6 +1135,8 @@ infra-sh:VerticalSegment-verticalSegmentLine
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:VerticalLineShape ;
     sh:message "verticalSegmentLine must be a well-formed VerticalLine (blank node or IRI)."@en ;
+    sh:message "verticalSegmentLine muss ein wohlgeformtes VerticalLine sein (Blank Node oder IRI)."@de ;
+    sh:message "verticalSegmentLine doit être un VerticalLine bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1080,6 +1150,8 @@ infra-sh:VerticalSegment-verticalSegmentArc
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:VerticalArcShape ;
     sh:message "verticalSegmentArc must be a well-formed VerticalArc (blank node or IRI)."@en ;
+    sh:message "verticalSegmentArc muss ein wohlgeformtes VerticalArc sein (Blank Node oder IRI)."@de ;
+    sh:message "verticalSegmentArc doit être un VerticalArc bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1215,6 +1287,8 @@ infra-sh:VerticalArc-arcType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/arc-type/circularArc> <http://data.europa.eu/949/concepts/arc-type/parabola> ) ;
     sh:message "Value must be one of the CCSTMS-scoped ArcType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von ArcType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de ArcType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1283,6 +1357,8 @@ infra-sh:SampledGeometryArea-topoArea
     sh:nodeKind sh:IRI ;
     sh:class era:TopoArea ;
     sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
+    sh:message "topoArea muss über eine IRI auf ein bestehendes era:TopoArea verweisen."@de ;
+    sh:message "topoArea doit référencer un era:TopoArea existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1310,6 +1386,8 @@ infra-sh:SampledGeometryArea-sampledLinearElementGeometries
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:SampledLinearElementGeometryShape ;
     sh:message "sampledLinearElementGeometries must be a well-formed SampledLinearElementGeometry (blank node or IRI)."@en ;
+    sh:message "sampledLinearElementGeometries muss ein wohlgeformtes SampledLinearElementGeometry sein (Blank Node oder IRI)."@de ;
+    sh:message "sampledLinearElementGeometries doit être un SampledLinearElementGeometry bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1345,6 +1423,8 @@ infra-sh:SampledLinearElementGeometry-linearElement
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "linearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "linearElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "linearElement doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1360,6 +1440,8 @@ infra-sh:SampledLinearElementGeometry-slopes
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:message "slopes is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "slopes ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "slopes est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node infra-sh:SampledLinearElementGeometry-slopes-items ;
     sh:severity sh:Violation ;
     .
@@ -1374,6 +1456,8 @@ infra-sh:SampledLinearElementGeometry-curves
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:message "curves is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "curves ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "curves est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node infra-sh:SampledLinearElementGeometry-curves-items ;
     sh:severity sh:Violation ;
     .
@@ -1388,6 +1472,8 @@ infra-sh:SampledLinearElementGeometry-cants
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:message "cants is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "cants ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "cants est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node infra-sh:SampledLinearElementGeometry-cants-items ;
     sh:severity sh:Violation ;
     .
@@ -1396,6 +1482,8 @@ infra-sh:SampledLinearElementGeometry-slopes-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes infra-sh:PrefixDeclarations ;
     sh:message "era:slopes is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:slopes ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:slopes est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -1417,6 +1505,8 @@ infra-sh:SampledLinearElementGeometry-slopes-listItemCount
     a sh:SPARQLConstraint ;
     sh:prefixes infra-sh:PrefixDeclarations ;
     sh:message "The single rdf:List carried by era:slopes must hold at least 1 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:message "Die einzelne rdf:List, die von era:slopes getragen wird, muss mindestens 1 Element(e) enthalten; die Multiplizität begrenzt die Elemente innerhalb der Liste, nicht die Anzahl der Listen."@de ;
+    sh:message "L'unique rdf:List portée par era:slopes doit contenir au moins 1 élément(s) ; la multiplicité borne les éléments à l'intérieur de la liste, pas le nombre de listes."@fr ;
     sh:select """
             SELECT $this (COUNT(?item) AS ?itemCount)
             WHERE {
@@ -1436,6 +1526,8 @@ infra-sh:SampledLinearElementGeometry-curves-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes infra-sh:PrefixDeclarations ;
     sh:message "era:curves is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:curves ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:curves est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -1457,6 +1549,8 @@ infra-sh:SampledLinearElementGeometry-curves-listItemCount
     a sh:SPARQLConstraint ;
     sh:prefixes infra-sh:PrefixDeclarations ;
     sh:message "The single rdf:List carried by era:curves must hold at least 1 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:message "Die einzelne rdf:List, die von era:curves getragen wird, muss mindestens 1 Element(e) enthalten; die Multiplizität begrenzt die Elemente innerhalb der Liste, nicht die Anzahl der Listen."@de ;
+    sh:message "L'unique rdf:List portée par era:curves doit contenir au moins 1 élément(s) ; la multiplicité borne les éléments à l'intérieur de la liste, pas le nombre de listes."@fr ;
     sh:select """
             SELECT $this (COUNT(?item) AS ?itemCount)
             WHERE {
@@ -1476,6 +1570,8 @@ infra-sh:SampledLinearElementGeometry-cants-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes infra-sh:PrefixDeclarations ;
     sh:message "era:cants is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:cants ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:cants est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -1497,6 +1593,8 @@ infra-sh:SampledLinearElementGeometry-cants-listItemCount
     a sh:SPARQLConstraint ;
     sh:prefixes infra-sh:PrefixDeclarations ;
     sh:message "The single rdf:List carried by era:cants must hold at least 1 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:message "Die einzelne rdf:List, die von era:cants getragen wird, muss mindestens 1 Element(e) enthalten; die Multiplizität begrenzt die Elemente innerhalb der Liste, nicht die Anzahl der Listen."@de ;
+    sh:message "L'unique rdf:List portée par era:cants doit contenir au moins 1 élément(s) ; la multiplicité borne les éléments à l'intérieur de la liste, pas le nombre de listes."@fr ;
     sh:select """
             SELECT $this (COUNT(?item) AS ?itemCount)
             WHERE {
@@ -1521,6 +1619,8 @@ infra-sh:SampledLinearElementGeometry-slopes-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node infra-sh:SlopeSamplePointShape ;
         sh:message "slopes must be a well-formed SlopeSamplePoint (blank node or IRI)."@en ;
+        sh:message "slopes muss ein wohlgeformtes SlopeSamplePoint sein (Blank Node oder IRI)."@de ;
+        sh:message "slopes doit être un SlopeSamplePoint bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -1534,6 +1634,8 @@ infra-sh:SampledLinearElementGeometry-curves-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node infra-sh:CurveSamplePointShape ;
         sh:message "curves must be a well-formed CurveSamplePoint (blank node or IRI)."@en ;
+        sh:message "curves muss ein wohlgeformtes CurveSamplePoint sein (Blank Node oder IRI)."@de ;
+        sh:message "curves doit être un CurveSamplePoint bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -1547,6 +1649,8 @@ infra-sh:SampledLinearElementGeometry-cants-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node infra-sh:CantSamplePointShape ;
         sh:message "cants must be a well-formed CantSamplePoint (blank node or IRI)."@en ;
+        sh:message "cants muss ein wohlgeformtes CantSamplePoint sein (Blank Node oder IRI)."@de ;
+        sh:message "cants doit être un CantSamplePoint bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -1709,6 +1813,8 @@ infra-sh:Switch-leftBranch
     sh:nodeKind sh:IRI ;
     sh:class era:NetRelation ;
     sh:message "leftBranch must reference an existing era:NetRelation by IRI."@en ;
+    sh:message "leftBranch muss über eine IRI auf ein bestehendes era:NetRelation verweisen."@de ;
+    sh:message "leftBranch doit référencer un era:NetRelation existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1723,6 +1829,8 @@ infra-sh:Switch-rightBranch
     sh:nodeKind sh:IRI ;
     sh:class era:NetRelation ;
     sh:message "rightBranch must reference an existing era:NetRelation by IRI."@en ;
+    sh:message "rightBranch muss über eine IRI auf ein bestehendes era:NetRelation verweisen."@de ;
+    sh:message "rightBranch doit référencer un era:NetRelation existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1755,6 +1863,8 @@ infra-sh:SlipCrossingShape
         [ sh:property [ sh:path era:switches ; sh:minCount 4 ; sh:maxCount 4 ] ]
     ) ;
     sh:message "A SlipCrossing must reference exactly two switches (single slip crossing) or exactly four switches (double slip crossing) - never three (see formatNote on SlipCrossing.switches)."@en ;
+    sh:message "Ein SlipCrossing muss entweder genau zwei switches referenzieren (einfache Kreuzungsweiche) oder genau vier switches (doppelte Kreuzungsweiche) - niemals drei (siehe formatNote zu SlipCrossing.switches)."@de ;
+    sh:message "Un SlipCrossing doit référencer soit exactement deux switches (traversée-jonction simple), soit exactement quatre switches (traversée-jonction double) - jamais trois (voir formatNote sur SlipCrossing.switches)."@fr ;
     sh:property infra-sh:SlipCrossing-switches ;
     sh:property infra-sh:SlipCrossing-crossing ;
     sh:property infra-sh:SlipCrossing-name ;
@@ -1770,6 +1880,8 @@ infra-sh:SlipCrossing-switches
     sh:nodeKind sh:IRI ;
     sh:class era:Switch ;
     sh:message "switches must reference an existing era:Switch by IRI."@en ;
+    sh:message "switches muss über eine IRI auf ein bestehendes era:Switch verweisen."@de ;
+    sh:message "switches doit référencer un era:Switch existant par IRI."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -1782,6 +1894,8 @@ infra-sh:SlipCrossing-crossing
     sh:nodeKind sh:IRI ;
     sh:class era:Crossing ;
     sh:message "crossing must reference an existing era:Crossing by IRI."@en ;
+    sh:message "crossing muss über eine IRI auf ein bestehendes era:Crossing verweisen."@de ;
+    sh:message "crossing doit référencer un era:Crossing existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1825,6 +1939,8 @@ infra-sh:Derailer-netPointReference
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:NetPointReferenceShape ;
     sh:message "netPointReference must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "netPointReference muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "netPointReference doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1894,6 +2010,8 @@ infra-sh:Crossing-topologicalCoordinates
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TopologicalCoordinateShape ;
     sh:message "topologicalCoordinates must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:message "topologicalCoordinates muss ein wohlgeformtes TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
+    sh:message "topologicalCoordinates doit être un TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 2 ;
     sh:maxCount 2 ;
     sh:severity sh:Violation ;
@@ -1986,6 +2104,8 @@ infra-sh:BaliseGroup-balises
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:message "balises is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "balises ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "balises est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node infra-sh:BaliseGroup-balises-items ;
     sh:severity sh:Violation ;
     .
@@ -1999,6 +2119,8 @@ infra-sh:BaliseGroup-bgFunction
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/balise-group-function/location> <http://data.europa.eu/949/concepts/balise-group-function/sessionManagement> <http://data.europa.eu/949/concepts/balise-group-function/networkRegistration> <http://data.europa.eu/949/concepts/balise-group-function/levelTransitionAnnouncement> <http://data.europa.eu/949/concepts/balise-group-function/stopIfInStaffResponsible> <http://data.europa.eu/949/concepts/balise-group-function/temporarySpeedRestrictionAnnouncement> <http://data.europa.eu/949/concepts/balise-group-function/border> <http://data.europa.eu/949/concepts/balise-group-function/handover> <http://data.europa.eu/949/concepts/balise-group-function/infill> <http://data.europa.eu/949/concepts/balise-group-function/temporarySpeedRestrictionRevocation> <http://data.europa.eu/949/concepts/balise-group-function/sessionEstablishment> <http://data.europa.eu/949/concepts/balise-group-function/sessionTermination> <http://data.europa.eu/949/concepts/balise-group-function/levelTransitionOrder> <http://data.europa.eu/949/concepts/balise-group-function/stopIfInShunting> <http://data.europa.eu/949/concepts/balise-group-function/levelTransitionCancellation> <http://data.europa.eu/949/concepts/balise-group-function/reference> ) ;
     sh:message "Value must be one of the CCSTMS-scoped BaliseGroupFunction concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von BaliseGroupFunction entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de BaliseGroupFunction."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2013,6 +2135,8 @@ infra-sh:BaliseGroup-linkOrientationDirection
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/orientations/02> <http://data.europa.eu/949/concepts/orientations/00> <http://data.europa.eu/949/concepts/orientations/01> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OrientationDirections concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OrientationDirections entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OrientationDirections."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2027,6 +2151,8 @@ infra-sh:BaliseGroup-etcsMarker
     sh:nodeKind sh:IRI ;
     sh:class era:ETCSMarker ;
     sh:message "etcsMarker must reference an existing era:ETCSMarker by IRI."@en ;
+    sh:message "etcsMarker muss über eine IRI auf ein bestehendes era:ETCSMarker verweisen."@de ;
+    sh:message "etcsMarker doit référencer un era:ETCSMarker existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2035,6 +2161,8 @@ infra-sh:BaliseGroup-balises-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes infra-sh:PrefixDeclarations ;
     sh:message "era:balises is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:balises ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:balises est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -2056,6 +2184,8 @@ infra-sh:BaliseGroup-balises-listItemCount
     a sh:SPARQLConstraint ;
     sh:prefixes infra-sh:PrefixDeclarations ;
     sh:message "The single rdf:List carried by era:balises must hold between 1 and 8 item(s); the multiplicity bounds the items inside the list, not the number of lists."@en ;
+    sh:message "Die einzelne rdf:List, die von era:balises getragen wird, muss zwischen 1 und 8 Element(e) enthalten; die Multiplizität begrenzt die Elemente innerhalb der Liste, nicht die Anzahl der Listen."@de ;
+    sh:message "L'unique rdf:List portée par era:balises doit contenir entre 1 et 8 élément(s) ; la multiplicité borne les éléments à l'intérieur de la liste, pas le nombre de listes."@fr ;
     sh:select """
             SELECT $this (COUNT(?item) AS ?itemCount)
             WHERE {
@@ -2080,6 +2210,8 @@ infra-sh:BaliseGroup-balises-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node infra-sh:BaliseShape ;
         sh:message "balises must be a well-formed Balise (blank node or IRI)."@en ;
+        sh:message "balises muss ein wohlgeformtes Balise sein (Blank Node oder IRI)."@de ;
+        sh:message "balises doit être un Balise bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -2107,6 +2239,8 @@ infra-sh:Balise-topologicalCoordinate
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TopologicalCoordinateShape ;
     sh:message "topologicalCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:message "topologicalCoordinate muss ein wohlgeformtes TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
+    sh:message "topologicalCoordinate doit être un TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2148,6 +2282,8 @@ infra-sh:PropertiesArea-topoArea
     sh:nodeKind sh:IRI ;
     sh:class era:TopoArea ;
     sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
+    sh:message "topoArea muss über eine IRI auf ein bestehendes era:TopoArea verweisen."@de ;
+    sh:message "topoArea doit référencer un era:TopoArea existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2175,6 +2311,8 @@ infra-sh:PropertiesArea-gauge
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/nominal-track-gauges/10> <http://data.europa.eu/949/concepts/nominal-track-gauges/80> <http://data.europa.eu/949/concepts/nominal-track-gauges/20> <http://data.europa.eu/949/concepts/nominal-track-gauges/30> <http://data.europa.eu/949/concepts/nominal-track-gauges/40> <http://data.europa.eu/949/concepts/nominal-track-gauges/50> <http://data.europa.eu/949/concepts/nominal-track-gauges/60> <http://data.europa.eu/949/concepts/nominal-track-gauges/70> ) ;
     sh:message "Value must be one of the CCSTMS-scoped NominalTrackGauges concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von NominalTrackGauges entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de NominalTrackGauges."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2189,6 +2327,8 @@ infra-sh:PropertiesArea-loadingGaugeTypes
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/loading-gauge-type/loadingGaugeIncompatible> <http://data.europa.eu/949/concepts/loading-gauge-type/g1> <http://data.europa.eu/949/concepts/loading-gauge-type/gA> <http://data.europa.eu/949/concepts/loading-gauge-type/gB> <http://data.europa.eu/949/concepts/loading-gauge-type/gC> ) ;
     sh:message "Value must be one of the CCSTMS-scoped LoadingGaugeType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von LoadingGaugeType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de LoadingGaugeType."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2201,6 +2341,8 @@ infra-sh:PropertiesArea-defaultVoltage
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/energy-supply-systems/notFitted> <http://data.europa.eu/949/concepts/energy-supply-systems/AC10> <http://data.europa.eu/949/concepts/energy-supply-systems/AC20> <http://data.europa.eu/949/concepts/energy-supply-systems/DC30> <http://data.europa.eu/949/concepts/energy-supply-systems/DC40> <http://data.europa.eu/949/concepts/energy-supply-systems/DC80> <http://data.europa.eu/949/concepts/energy-supply-systems/DC70> <http://data.europa.eu/949/concepts/energy-supply-systems/DC60> <http://data.europa.eu/949/concepts/energy-supply-systems/DC90> ) ;
     sh:message "Value must be one of the CCSTMS-scoped EnergySupplySystems concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von EnergySupplySystems entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de EnergySupplySystems."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2229,6 +2371,8 @@ infra-sh:PropertiesArea-linearElementSpeedProfiles
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:LinearElementSpeedProfileShape ;
     sh:message "linearElementSpeedProfiles must be a well-formed LinearElementSpeedProfile (blank node or IRI)."@en ;
+    sh:message "linearElementSpeedProfiles muss ein wohlgeformtes LinearElementSpeedProfile sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElementSpeedProfiles doit être un LinearElementSpeedProfile bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2241,6 +2385,8 @@ infra-sh:PropertiesArea-linearElementGauges
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:LinearElementGaugeShape ;
     sh:message "linearElementGauges must be a well-formed LinearElementGauge (blank node or IRI)."@en ;
+    sh:message "linearElementGauges muss ein wohlgeformtes LinearElementGauge sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElementGauges doit être un LinearElementGauge bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2253,6 +2399,8 @@ infra-sh:PropertiesArea-linearElementLoadingGauges
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:LinearElementLoadingGaugeShape ;
     sh:message "linearElementLoadingGauges must be a well-formed LinearElementLoadingGauge (blank node or IRI)."@en ;
+    sh:message "linearElementLoadingGauges muss ein wohlgeformtes LinearElementLoadingGauge sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElementLoadingGauges doit être un LinearElementLoadingGauge bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2265,6 +2413,8 @@ infra-sh:PropertiesArea-trackConditions
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TrackConditionShape ;
     sh:message "trackConditions must be a well-formed TrackCondition (blank node or IRI)."@en ;
+    sh:message "trackConditions muss ein wohlgeformtes TrackCondition sein (Blank Node oder IRI)."@de ;
+    sh:message "trackConditions doit être un TrackCondition bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2277,6 +2427,8 @@ infra-sh:PropertiesArea-currentLimitations
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:CurrentLimitationShape ;
     sh:message "currentLimitations must be a well-formed CurrentLimitation (blank node or IRI)."@en ;
+    sh:message "currentLimitations muss ein wohlgeformtes CurrentLimitation sein (Blank Node oder IRI)."@de ;
+    sh:message "currentLimitations doit être un CurrentLimitation bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2289,6 +2441,8 @@ infra-sh:PropertiesArea-permittedBrakingDistances
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:PermittedBrakingDistanceShape ;
     sh:message "permittedBrakingDistances must be a well-formed PermittedBrakingDistance (blank node or IRI)."@en ;
+    sh:message "permittedBrakingDistances muss ein wohlgeformtes PermittedBrakingDistance sein (Blank Node oder IRI)."@de ;
+    sh:message "permittedBrakingDistances doit être un PermittedBrakingDistance bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2301,6 +2455,8 @@ infra-sh:PropertiesArea-tractionSystems
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TractionSystemShape ;
     sh:message "tractionSystems must be a well-formed TractionSystem (blank node or IRI)."@en ;
+    sh:message "tractionSystems muss ein wohlgeformtes TractionSystem sein (Blank Node oder IRI)."@de ;
+    sh:message "tractionSystems doit être un TractionSystem bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2313,6 +2469,8 @@ infra-sh:PropertiesArea-dynamicBrakeForceInhibitionAreas
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:LinearElementSectionShape ;
     sh:message "dynamicBrakeForceInhibitionAreas must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:message "dynamicBrakeForceInhibitionAreas muss ein wohlgeformtes LinearElementSection sein (Blank Node oder IRI)."@de ;
+    sh:message "dynamicBrakeForceInhibitionAreas doit être un LinearElementSection bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2325,6 +2483,8 @@ infra-sh:PropertiesArea-limitedDynamicBrakeForces
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:LimitedDynamicBrakeForceShape ;
     sh:message "limitedDynamicBrakeForces must be a well-formed LimitedDynamicBrakeForce (blank node or IRI)."@en ;
+    sh:message "limitedDynamicBrakeForces muss ein wohlgeformtes LimitedDynamicBrakeForce sein (Blank Node oder IRI)."@de ;
+    sh:message "limitedDynamicBrakeForces doit être un LimitedDynamicBrakeForce bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2348,6 +2508,8 @@ infra-sh:LinearElementGauge-linearElementSections
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:LinearElementSectionShape ;
     sh:message "linearElementSections must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:message "linearElementSections muss ein wohlgeformtes LinearElementSection sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElementSections doit être un LinearElementSection bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2361,6 +2523,8 @@ infra-sh:LinearElementGauge-gauge
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/nominal-track-gauges/10> <http://data.europa.eu/949/concepts/nominal-track-gauges/80> <http://data.europa.eu/949/concepts/nominal-track-gauges/20> <http://data.europa.eu/949/concepts/nominal-track-gauges/30> <http://data.europa.eu/949/concepts/nominal-track-gauges/40> <http://data.europa.eu/949/concepts/nominal-track-gauges/50> <http://data.europa.eu/949/concepts/nominal-track-gauges/60> <http://data.europa.eu/949/concepts/nominal-track-gauges/70> ) ;
     sh:message "Value must be one of the CCSTMS-scoped NominalTrackGauges concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von NominalTrackGauges entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de NominalTrackGauges."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2386,6 +2550,8 @@ infra-sh:LinearElementLoadingGauge-linearElementSections
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:LinearElementSectionShape ;
     sh:message "linearElementSections must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:message "linearElementSections muss ein wohlgeformtes LinearElementSection sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElementSections doit être un LinearElementSection bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2400,6 +2566,8 @@ infra-sh:LinearElementLoadingGauge-loadingGaugeType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/loading-gauge-type/loadingGaugeIncompatible> <http://data.europa.eu/949/concepts/loading-gauge-type/g1> <http://data.europa.eu/949/concepts/loading-gauge-type/gA> <http://data.europa.eu/949/concepts/loading-gauge-type/gB> <http://data.europa.eu/949/concepts/loading-gauge-type/gC> ) ;
     sh:message "Value must be one of the CCSTMS-scoped LoadingGaugeType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von LoadingGaugeType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de LoadingGaugeType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2425,6 +2593,8 @@ infra-sh:TrackCondition-linearElementSections
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:LinearElementSectionShape ;
     sh:message "linearElementSections must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:message "linearElementSections muss ein wohlgeformtes LinearElementSection sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElementSections doit être un LinearElementSection bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2438,6 +2608,8 @@ infra-sh:TrackCondition-conditionType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-a> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-b> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-e> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-h> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-c> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-g> <http://data.europa.eu/949/concepts/transmitted-tcs/bigMetalMasses> <http://data.europa.eu/949/concepts/transmitted-tcs/5-8-12-d> <http://data.europa.eu/949/concepts/transmitted-tcs/switchOffRegenerativeBrake> <http://data.europa.eu/949/concepts/transmitted-tcs/switchOffEddyCurrentBrakeForServiceBrake> <http://data.europa.eu/949/concepts/transmitted-tcs/switchOffEddyCurrentBrakeForEmergencyBrake> <http://data.europa.eu/949/concepts/transmitted-tcs/switchOffMagneticShoeBrake> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TransmittedTrackConditions concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TransmittedTrackConditions entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TransmittedTrackConditions."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2463,6 +2635,8 @@ infra-sh:LimitedDynamicBrakeForce-linearElementSection
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:LinearElementSectionShape ;
     sh:message "linearElementSection must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:message "linearElementSection muss ein wohlgeformtes LinearElementSection sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElementSection doit être un LinearElementSection bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2503,6 +2677,8 @@ infra-sh:CurrentLimitation-linearElementSections
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:LinearElementSectionShape ;
     sh:message "linearElementSections must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:message "linearElementSections muss ein wohlgeformtes LinearElementSection sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElementSections doit être un LinearElementSection bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2544,6 +2720,8 @@ infra-sh:PermittedBrakingDistance-linearElementSections
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:LinearElementSectionShape ;
     sh:message "linearElementSections must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:message "linearElementSections muss ein wohlgeformtes LinearElementSection sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElementSections doit être un LinearElementSection bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2623,6 +2801,8 @@ infra-sh:TractionSystem-linearElementSections
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:LinearElementSectionShape ;
     sh:message "linearElementSections must be a well-formed LinearElementSection (blank node or IRI)."@en ;
+    sh:message "linearElementSections muss ein wohlgeformtes LinearElementSection sein (Blank Node oder IRI)."@de ;
+    sh:message "linearElementSections doit être un LinearElementSection bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2636,6 +2816,8 @@ infra-sh:TractionSystem-voltageType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/energy-supply-systems/notFitted> <http://data.europa.eu/949/concepts/energy-supply-systems/AC10> <http://data.europa.eu/949/concepts/energy-supply-systems/AC20> <http://data.europa.eu/949/concepts/energy-supply-systems/DC30> <http://data.europa.eu/949/concepts/energy-supply-systems/DC40> <http://data.europa.eu/949/concepts/energy-supply-systems/DC80> <http://data.europa.eu/949/concepts/energy-supply-systems/DC70> <http://data.europa.eu/949/concepts/energy-supply-systems/DC60> <http://data.europa.eu/949/concepts/energy-supply-systems/DC90> ) ;
     sh:message "Value must be one of the CCSTMS-scoped EnergySupplySystems concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von EnergySupplySystems entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de EnergySupplySystems."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2668,6 +2850,8 @@ infra-sh:TrackUsageArea-topoArea
     sh:nodeKind sh:IRI ;
     sh:class era:TopoArea ;
     sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
+    sh:message "topoArea muss über eine IRI auf ein bestehendes era:TopoArea verweisen."@de ;
+    sh:message "topoArea doit référencer un era:TopoArea existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2695,6 +2879,8 @@ infra-sh:TrackUsageArea-secondaryTracks
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "secondaryTracks must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "secondaryTracks muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "secondaryTracks doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2707,6 +2893,8 @@ infra-sh:TrackUsageArea-shuntingTracks
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "shuntingTracks must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "shuntingTracks muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "shuntingTracks doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2719,6 +2907,8 @@ infra-sh:TrackUsageArea-preferredSameDir
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "preferredSameDir must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "preferredSameDir muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "preferredSameDir doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2731,6 +2921,8 @@ infra-sh:TrackUsageArea-preferredOppositeDir
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "preferredOppositeDir must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "preferredOppositeDir muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "preferredOppositeDir doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2759,6 +2951,8 @@ infra-sh:LinearElementSpeedProfile-linearElement
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "linearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "linearElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "linearElement doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2773,6 +2967,8 @@ infra-sh:LinearElementSpeedProfile-sameDirProfile
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:SpeedProfileShape ;
     sh:message "sameDirProfile must be a well-formed SpeedProfile (blank node or IRI)."@en ;
+    sh:message "sameDirProfile muss ein wohlgeformtes SpeedProfile sein (Blank Node oder IRI)."@de ;
+    sh:message "sameDirProfile doit être un SpeedProfile bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2787,6 +2983,8 @@ infra-sh:LinearElementSpeedProfile-oppositeDirProfile
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:SpeedProfileShape ;
     sh:message "oppositeDirProfile must be a well-formed SpeedProfile (blank node or IRI)."@en ;
+    sh:message "oppositeDirProfile muss ein wohlgeformtes SpeedProfile sein (Blank Node oder IRI)."@de ;
+    sh:message "oppositeDirProfile doit être un SpeedProfile bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2811,6 +3009,8 @@ infra-sh:SpeedProfile-staticSpeedProfile
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:StaticSpeedLimitShape ;
     sh:message "staticSpeedProfile must be a well-formed StaticSpeedLimit (blank node or IRI)."@en ;
+    sh:message "staticSpeedProfile muss ein wohlgeformtes StaticSpeedLimit sein (Blank Node oder IRI)."@de ;
+    sh:message "staticSpeedProfile doit être un StaticSpeedLimit bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2824,6 +3024,8 @@ infra-sh:SpeedProfile-axleLoadSpeedProfiles
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:AxleLoadSpeedProfileShape ;
     sh:message "axleLoadSpeedProfiles must be a well-formed AxleLoadSpeedProfile (blank node or IRI)."@en ;
+    sh:message "axleLoadSpeedProfiles muss ein wohlgeformtes AxleLoadSpeedProfile sein (Blank Node oder IRI)."@de ;
+    sh:message "axleLoadSpeedProfiles doit être un AxleLoadSpeedProfile bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2879,6 +3081,8 @@ infra-sh:StaticSpeedLimit-specificStaticSpeedLimits
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:SpecificStaticSpeedLimitShape ;
     sh:message "specificStaticSpeedLimits must be a well-formed SpecificStaticSpeedLimit (blank node or IRI)."@en ;
+    sh:message "specificStaticSpeedLimits muss ein wohlgeformtes SpecificStaticSpeedLimit sein (Blank Node oder IRI)."@de ;
+    sh:message "specificStaticSpeedLimits doit être un SpecificStaticSpeedLimit bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2892,6 +3096,8 @@ infra-sh:StaticSpeedLimit-trainEndApplicability
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/train-end-applicability/lengthDelay> <http://data.europa.eu/949/concepts/train-end-applicability/noLengthDelay> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TrainEndApplicability concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TrainEndApplicability entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TrainEndApplicability."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2933,6 +3139,8 @@ infra-sh:SpecificStaticSpeedLimit-speedLimitCategory
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:SpeedLimitCategoryShape ;
     sh:message "speedLimitCategory must be a well-formed SpeedLimitCategory (blank node or IRI)."@en ;
+    sh:message "speedLimitCategory muss ein wohlgeformtes SpeedLimitCategory sein (Blank Node oder IRI)."@de ;
+    sh:message "speedLimitCategory doit être un SpeedLimitCategory bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2950,6 +3158,8 @@ infra-sh:SpeedLimitCategoryShape
         infra-sh:SpeedLimitCategory-cantDeficiencyCategory-present
     ) ;
     sh:message "SpeedLimitCategory is a union: exactly one of (otherCategoryReplacesCantDeficiencySSP, otherCategoryDoesNotReplaceCantDeficiencySSP, cantDeficiencyCategory) must be present."@en ;
+    sh:message "SpeedLimitCategory ist eine Union: genau eines von (otherCategoryReplacesCantDeficiencySSP, otherCategoryDoesNotReplaceCantDeficiencySSP, cantDeficiencyCategory) muss vorhanden sein."@de ;
+    sh:message "SpeedLimitCategory est une union : exactement l'un de (otherCategoryReplacesCantDeficiencySSP, otherCategoryDoesNotReplaceCantDeficiencySSP, cantDeficiencyCategory) doit être présent."@fr ;
     sh:property infra-sh:SpeedLimitCategory-otherCategoryReplacesCantDeficiencySSP ;
     sh:property infra-sh:SpeedLimitCategory-otherCategoryDoesNotReplaceCantDeficiencySSP ;
     sh:property infra-sh:SpeedLimitCategory-cantDeficiencyCategory ;
@@ -2965,6 +3175,8 @@ infra-sh:SpeedLimitCategory-otherCategoryReplacesCantDeficiencySSP
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_freightTrainP> <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_freightTrainG> <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_passengerTrain> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OtherSpecificStaticSpeedProfileCategory concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OtherSpecificStaticSpeedProfileCategory entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OtherSpecificStaticSpeedProfileCategory."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2978,6 +3190,8 @@ infra-sh:SpeedLimitCategory-otherCategoryDoesNotReplaceCantDeficiencySSP
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_freightTrainP> <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_freightTrainG> <http://data.europa.eu/949/concepts/other-specific-static-speed-profile-category/SSSP_passengerTrain> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OtherSpecificStaticSpeedProfileCategory concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OtherSpecificStaticSpeedProfileCategory entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OtherSpecificStaticSpeedProfileCategory."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2991,6 +3205,8 @@ infra-sh:SpeedLimitCategory-cantDeficiencyCategory
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/cant-deficiencies/80> <http://data.europa.eu/949/concepts/cant-deficiencies/100> <http://data.europa.eu/949/concepts/cant-deficiencies/130> <http://data.europa.eu/949/concepts/cant-deficiencies/150> <http://data.europa.eu/949/concepts/cant-deficiencies/165> <http://data.europa.eu/949/concepts/cant-deficiencies/180> <http://data.europa.eu/949/concepts/cant-deficiencies/210> <http://data.europa.eu/949/concepts/cant-deficiencies/225> <http://data.europa.eu/949/concepts/cant-deficiencies/245> <http://data.europa.eu/949/concepts/cant-deficiencies/275> <http://data.europa.eu/949/concepts/cant-deficiencies/300> ) ;
     sh:message "Value must be one of the CCSTMS-scoped CantDeficiencies concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von CantDeficiencies entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de CantDeficiencies."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3099,6 +3315,8 @@ infra-sh:AxleLoadSpeedProfile-axleLoadCategory
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/load-capability-line-categories/10> <http://data.europa.eu/949/concepts/load-capability-line-categories/230> <http://data.europa.eu/949/concepts/load-capability-line-categories/20> <http://data.europa.eu/949/concepts/load-capability-line-categories/30> <http://data.europa.eu/949/concepts/load-capability-line-categories/40> <http://data.europa.eu/949/concepts/load-capability-line-categories/50> <http://data.europa.eu/949/concepts/load-capability-line-categories/60> <http://data.europa.eu/949/concepts/load-capability-line-categories/70> <http://data.europa.eu/949/concepts/load-capability-line-categories/80> <http://data.europa.eu/949/concepts/load-capability-line-categories/90> <http://data.europa.eu/949/concepts/load-capability-line-categories/100> <http://data.europa.eu/949/concepts/load-capability-line-categories/110> <http://data.europa.eu/949/concepts/load-capability-line-categories/120> ) ;
     sh:message "Value must be one of the CCSTMS-scoped LoadCapabilityLineCategories concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von LoadCapabilityLineCategories entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de LoadCapabilityLineCategories."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3114,6 +3332,8 @@ infra-sh:AxleLoadSpeedProfile-trainEndApplicability
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/train-end-applicability/lengthDelay> <http://data.europa.eu/949/concepts/train-end-applicability/noLengthDelay> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TrainEndApplicability concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TrainEndApplicability entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TrainEndApplicability."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3144,6 +3364,8 @@ infra-sh:ETCSMarker-netPointReference
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:NetPointReferenceShape ;
     sh:message "netPointReference must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "netPointReference muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "netPointReference doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3212,6 +3434,8 @@ infra-sh:SegmentProfile-onLinearElement
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "onLinearElement must reference an existing era:LinearElement by IRI."@en ;
+    sh:message "onLinearElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "onLinearElement doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3241,6 +3465,8 @@ infra-sh:SegmentProfile-atotsInstance
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:AtoTSInstanceShape ;
     sh:message "atotsInstance must be a well-formed AtoTSInstance (blank node or IRI)."@en ;
+    sh:message "atotsInstance muss ein wohlgeformtes AtoTSInstance sein (Blank Node oder IRI)."@de ;
+    sh:message "atotsInstance doit être un AtoTSInstance bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3255,6 +3481,8 @@ infra-sh:SegmentProfile-adjacentAtotsInstance
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:AtoTSInstanceShape ;
     sh:message "adjacentAtotsInstance must be a well-formed AtoTSInstance (blank node or IRI)."@en ;
+    sh:message "adjacentAtotsInstance muss ein wohlgeformtes AtoTSInstance sein (Blank Node oder IRI)."@de ;
+    sh:message "adjacentAtotsInstance doit être un AtoTSInstance bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3325,6 +3553,8 @@ infra-sh:StopLocation-netPointReference
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:NetPointReferenceShape ;
     sh:message "netPointReference must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "netPointReference muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "netPointReference doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3339,6 +3569,8 @@ infra-sh:StopLocation-stopTrainLimit
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:StopTrainLimitShape ;
     sh:message "stopTrainLimit must be a well-formed StopTrainLimit (blank node or IRI)."@en ;
+    sh:message "stopTrainLimit muss ein wohlgeformtes StopTrainLimit sein (Blank Node oder IRI)."@de ;
+    sh:message "stopTrainLimit doit être un StopTrainLimit bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3352,6 +3584,8 @@ infra-sh:StopLocation-trainLoadType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/train-load-type/passengerTrain> <http://data.europa.eu/949/concepts/train-load-type/freightTrain> <http://data.europa.eu/949/concepts/train-load-type/anyTrain> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TrainLoadType concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TrainLoadType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TrainLoadType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3366,6 +3600,8 @@ infra-sh:StopLocation-doorOpeningSide
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/door-opening-side/noSide> <http://data.europa.eu/949/concepts/door-opening-side/leftSide> <http://data.europa.eu/949/concepts/door-opening-side/rightSide> <http://data.europa.eu/949/concepts/door-opening-side/bothSides> ) ;
     sh:message "Value must be one of the CCSTMS-scoped DoorOpeningSide concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von DoorOpeningSide entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de DoorOpeningSide."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3445,6 +3681,8 @@ infra-sh:StopTrainLimit-trainMaxSize
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/train-size/undefinedTrainSize> <http://data.europa.eu/949/concepts/train-size/shortTrain> <http://data.europa.eu/949/concepts/train-size/halfTrain> <http://data.europa.eu/949/concepts/train-size/fullTrain> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TrainSize concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TrainSize entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TrainSize."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3499,6 +3737,8 @@ infra-sh:PlatformEdge-linearReference
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:NetLinearReferenceShape ;
     sh:message "linearReference must be a well-formed NetLinearReference (blank node or IRI)."@en ;
+    sh:message "linearReference muss ein wohlgeformtes NetLinearReference sein (Blank Node oder IRI)."@de ;
+    sh:message "linearReference doit être un NetLinearReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3513,6 +3753,8 @@ infra-sh:PlatformEdge-stopLocations
     sh:nodeKind sh:IRI ;
     sh:class era:StopLocation ;
     sh:message "stopLocations must reference an existing era:StopLocation by IRI."@en ;
+    sh:message "stopLocations muss über eine IRI auf ein bestehendes era:StopLocation verweisen."@de ;
+    sh:message "stopLocations doit référencer un era:StopLocation existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3526,6 +3768,8 @@ infra-sh:PlatformEdge-platformHeight
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/platform-heights/50> <http://data.europa.eu/949/concepts/platform-heights/60> <http://data.europa.eu/949/concepts/platform-heights/220> <http://data.europa.eu/949/concepts/platform-heights/10> <http://data.europa.eu/949/concepts/platform-heights/20> <http://data.europa.eu/949/concepts/platform-heights/300> <http://data.europa.eu/949/concepts/platform-heights/350> <http://data.europa.eu/949/concepts/platform-heights/380> <http://data.europa.eu/949/concepts/platform-heights/30> <http://data.europa.eu/949/concepts/platform-heights/70> <http://data.europa.eu/949/concepts/platform-heights/80> <http://data.europa.eu/949/concepts/platform-heights/90> <http://data.europa.eu/949/concepts/platform-heights/100> <http://data.europa.eu/949/concepts/platform-heights/40> <http://data.europa.eu/949/concepts/platform-heights/110> <http://data.europa.eu/949/concepts/platform-heights/120> <http://data.europa.eu/949/concepts/platform-heights/130> <http://data.europa.eu/949/concepts/platform-heights/140> <http://data.europa.eu/949/concepts/platform-heights/150> <http://data.europa.eu/949/concepts/platform-heights/160> ) ;
     sh:message "Value must be one of the CCSTMS-scoped PlatformHeights concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von PlatformHeights entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de PlatformHeights."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3567,6 +3811,8 @@ infra-sh:Platform-platformEdges
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:PlatformEdgeShape ;
     sh:message "platformEdges must be a well-formed PlatformEdge (blank node or IRI)."@en ;
+    sh:message "platformEdges muss ein wohlgeformtes PlatformEdge sein (Blank Node oder IRI)."@de ;
+    sh:message "platformEdges doit être un PlatformEdge bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3599,6 +3845,8 @@ infra-sh:OperationalPoint-uopid
     sh:datatype xsd:string ;
     sh:pattern "^[A-Z]{2}[A-Za-z0-9]{1,10}$" ;
     sh:message "uopid must have the form CCAAAAAAAAAA: a two-letter ISO 3166-1 country code followed by 1 to 10 alphanumeric characters identifying the operational point within the Member State."@en ;
+    sh:message "uopid muss die Form CCAAAAAAAAAA haben: ein zweibuchstabiger ISO-3166-1-Ländercode, gefolgt von 1 bis 10 alphanumerischen Zeichen, die den Betriebspunkt innerhalb des Mitgliedstaats identifizieren."@de ;
+    sh:message "uopid doit avoir la forme CCAAAAAAAAAA : un code pays ISO 3166-1 à deux lettres, suivi de 1 à 10 caractères alphanumériques identifiant le point opérationnel au sein de l'État membre."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3626,6 +3874,8 @@ infra-sh:OperationalPoint-travelTimeMeasurementPoints
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TravelTimeMeasurementPointShape ;
     sh:message "travelTimeMeasurementPoints must be a well-formed TravelTimeMeasurementPoint (blank node or IRI)."@en ;
+    sh:message "travelTimeMeasurementPoints muss ein wohlgeformtes TravelTimeMeasurementPoint sein (Blank Node oder IRI)."@de ;
+    sh:message "travelTimeMeasurementPoints doit être un TravelTimeMeasurementPoint bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -3638,6 +3888,8 @@ infra-sh:OperationalPoint-opType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/op-types/10> <http://data.europa.eu/949/concepts/op-types/50> <http://data.europa.eu/949/concepts/op-types/130> <http://data.europa.eu/949/concepts/op-types/60> <http://data.europa.eu/949/concepts/op-types/100> <http://data.europa.eu/949/concepts/op-types/90> <http://data.europa.eu/949/concepts/op-types/110> <http://data.europa.eu/949/concepts/op-types/140> <http://data.europa.eu/949/concepts/op-types/40> <http://data.europa.eu/949/concepts/op-types/80> <http://data.europa.eu/949/concepts/op-types/70> <http://data.europa.eu/949/concepts/op-types/30> <http://data.europa.eu/949/concepts/op-types/120> <http://data.europa.eu/949/concepts/op-types/20> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OperationalPointTypes concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OperationalPointTypes entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OperationalPointTypes."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3653,6 +3905,8 @@ infra-sh:OperationalPoint-platforms
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "platforms is ordered byIndex: it must carry exactly one rdf:List."@en ;
+    sh:message "platforms ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "platforms est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node infra-sh:OperationalPoint-platforms-items ;
     sh:severity sh:Violation ;
     .
@@ -3661,6 +3915,8 @@ infra-sh:OperationalPoint-platforms-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes infra-sh:PrefixDeclarations ;
     sh:message "era:platforms is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
+    sh:message "era:platforms ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:platforms est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -3687,6 +3943,8 @@ infra-sh:OperationalPoint-platforms-items
         sh:nodeKind sh:BlankNodeOrIRI ;
         sh:node infra-sh:PlatformShape ;
         sh:message "platforms must be a well-formed Platform (blank node or IRI)."@en ;
+        sh:message "platforms muss ein wohlgeformtes Platform sein (Blank Node oder IRI)."@de ;
+        sh:message "platforms doit être un Platform bien formé (nœud vide ou IRI)."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -3713,6 +3971,8 @@ infra-sh:TravelTimeMeasurementPoint-topologicalCoordinate
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TopologicalCoordinateShape ;
     sh:message "topologicalCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:message "topologicalCoordinate muss ein wohlgeformtes TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
+    sh:message "topologicalCoordinate doit être un TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3746,6 +4006,8 @@ infra-sh:TimingPoint-topologicalCoordinate
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TopologicalCoordinateShape ;
     sh:message "topologicalCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:message "topologicalCoordinate muss ein wohlgeformtes TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
+    sh:message "topologicalCoordinate doit être un TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3760,6 +4022,8 @@ infra-sh:TimingPoint-activeObject
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TPActiveObjectShape ;
     sh:message "activeObject must be a well-formed TPActiveObject (blank node or IRI)."@en ;
+    sh:message "activeObject muss ein wohlgeformtes TPActiveObject sein (Blank Node oder IRI)."@de ;
+    sh:message "activeObject doit être un TPActiveObject bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3802,6 +4066,8 @@ infra-sh:TimingPoint-stopLocationTolerance
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/stop-location-tolerance/T_10cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_20cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_30cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_40cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_50cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_1m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_150cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_2m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_250cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_3m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_5m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_750cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_10m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_15m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_20m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_25m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_30m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_50m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_75m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_100m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_Undefined> ) ;
     sh:message "Value must be one of the CCSTMS-scoped StopLocationTolerance concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von StopLocationTolerance entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de StopLocationTolerance."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3816,6 +4082,8 @@ infra-sh:TimingPoint-stoppingPointReachDistance
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/stop-location-tolerance/T_10cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_20cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_30cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_40cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_50cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_1m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_150cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_2m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_250cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_3m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_5m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_750cm> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_10m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_15m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_20m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_25m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_30m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_50m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_75m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_100m> <http://data.europa.eu/949/concepts/stop-location-tolerance/T_Undefined> ) ;
     sh:message "Value must be one of the CCSTMS-scoped StopLocationTolerance concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von StopLocationTolerance entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de StopLocationTolerance."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -3833,6 +4101,8 @@ infra-sh:TPActiveObjectShape
         infra-sh:TPActiveObject-timeMeasurePoint-present
     ) ;
     sh:message "TPActiveObject is a union: exactly one of (etcsMarker, stopLocation, timeMeasurePoint) must be present."@en ;
+    sh:message "TPActiveObject ist eine Union: genau eines von (etcsMarker, stopLocation, timeMeasurePoint) muss vorhanden sein."@de ;
+    sh:message "TPActiveObject est une union : exactement l'un de (etcsMarker, stopLocation, timeMeasurePoint) doit être présent."@fr ;
     sh:property infra-sh:TPActiveObject-etcsMarker ;
     sh:property infra-sh:TPActiveObject-stopLocation ;
     sh:property infra-sh:TPActiveObject-timeMeasurePoint ;
@@ -3848,6 +4118,8 @@ infra-sh:TPActiveObject-etcsMarker
     sh:nodeKind sh:IRI ;
     sh:class era:ETCSMarker ;
     sh:message "etcsMarker must reference an existing era:ETCSMarker by IRI."@en ;
+    sh:message "etcsMarker muss über eine IRI auf ein bestehendes era:ETCSMarker verweisen."@de ;
+    sh:message "etcsMarker doit référencer un era:ETCSMarker existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3861,6 +4133,8 @@ infra-sh:TPActiveObject-stopLocation
     sh:nodeKind sh:IRI ;
     sh:class era:StopLocation ;
     sh:message "stopLocation must reference an existing era:StopLocation by IRI."@en ;
+    sh:message "stopLocation muss über eine IRI auf ein bestehendes era:StopLocation verweisen."@de ;
+    sh:message "stopLocation doit référencer un era:StopLocation existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3874,6 +4148,8 @@ infra-sh:TPActiveObject-timeMeasurePoint
     sh:nodeKind sh:IRI ;
     sh:class era:TravelTimeMeasurementPoint ;
     sh:message "timeMeasurePoint must reference an existing era:TravelTimeMeasurementPoint by IRI."@en ;
+    sh:message "timeMeasurePoint muss über eine IRI auf ein bestehendes era:TravelTimeMeasurementPoint verweisen."@de ;
+    sh:message "timeMeasurePoint doit référencer un era:TravelTimeMeasurementPoint existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3963,6 +4239,8 @@ infra-sh:Tunnel-tunnelTubes
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TunnelTubeShape ;
     sh:message "tunnelTubes must be a well-formed TunnelTube (blank node or IRI)."@en ;
+    sh:message "tunnelTubes muss ein wohlgeformtes TunnelTube sein (Blank Node oder IRI)."@de ;
+    sh:message "tunnelTubes doit être un TunnelTube bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -3988,6 +4266,8 @@ infra-sh:TunnelTube-areaReference
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:NetAreaReferenceShape ;
     sh:message "areaReference must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:message "areaReference muss ein wohlgeformtes NetAreaReference sein (Blank Node oder IRI)."@de ;
+    sh:message "areaReference doit être un NetAreaReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4043,6 +4323,8 @@ infra-sh:Bridge-areaReference
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:NetAreaReferenceShape ;
     sh:message "areaReference must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:message "areaReference muss ein wohlgeformtes NetAreaReference sein (Blank Node oder IRI)."@de ;
+    sh:message "areaReference doit être un NetAreaReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4084,6 +4366,8 @@ infra-sh:Underpass-areaReference
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:NetAreaReferenceShape ;
     sh:message "areaReference must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:message "areaReference muss ein wohlgeformtes NetAreaReference sein (Blank Node oder IRI)."@de ;
+    sh:message "areaReference doit être un NetAreaReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4126,6 +4410,8 @@ infra-sh:TvpSection-linkedArea
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:NetAreaReferenceShape ;
     sh:message "linkedArea must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:message "linkedArea muss ein wohlgeformtes NetAreaReference sein (Blank Node oder IRI)."@de ;
+    sh:message "linkedArea doit être un NetAreaReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4140,6 +4426,8 @@ infra-sh:TvpSection-trainDetectors
     sh:nodeKind sh:IRI ;
     sh:class era:TrainDetectionSystem ;
     sh:message "trainDetectors must reference an existing era:TrainDetectionSystem by IRI."@en ;
+    sh:message "trainDetectors muss über eine IRI auf ein bestehendes era:TrainDetectionSystem verweisen."@de ;
+    sh:message "trainDetectors doit référencer un era:TrainDetectionSystem existant par IRI."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4168,6 +4456,8 @@ infra-sh:TrainDetectionSystem-topologicalCoordinate
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TopologicalCoordinateShape ;
     sh:message "topologicalCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:message "topologicalCoordinate muss ein wohlgeformtes TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
+    sh:message "topologicalCoordinate doit être un TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4182,6 +4472,8 @@ infra-sh:TrainDetectionSystem-trainDetectionSystemType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/train-detection/20> <http://data.europa.eu/949/concepts/train-detection/10> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TrainDetectionSystems concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TrainDetectionSystems entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TrainDetectionSystems."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4196,6 +4488,8 @@ infra-sh:TrainDetectionSystem-referenceDir
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/orientations/02> <http://data.europa.eu/949/concepts/orientations/00> <http://data.europa.eu/949/concepts/orientations/01> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OrientationDirections concepts."@en ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OrientationDirections entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OrientationDirections."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4226,6 +4520,8 @@ infra-sh:LevelCrossing-areaReference
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:NetAreaReferenceShape ;
     sh:message "areaReference must be a well-formed NetAreaReference (blank node or IRI)."@en ;
+    sh:message "areaReference muss ein wohlgeformtes NetAreaReference sein (Blank Node oder IRI)."@de ;
+    sh:message "areaReference doit être un NetAreaReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4282,6 +4578,8 @@ infra-sh:NationalBorder-topologicalCoordinate
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TopologicalCoordinateShape ;
     sh:message "topologicalCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
+    sh:message "topologicalCoordinate muss ein wohlgeformtes TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
+    sh:message "topologicalCoordinate doit être un TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4297,6 +4595,8 @@ infra-sh:NationalBorder-fromCountryCode
     sh:datatype xsd:string ;
     sh:pattern "^[A-Z]{2}$" ;
     sh:message "fromCountryCode must be a two-letter ISO 3166-1 alpha-2 country code (upper case)."@en ;
+    sh:message "fromCountryCode muss ein zweibuchstabiger ISO-3166-1-Alpha-2-Ländercode sein (Großbuchstaben)."@de ;
+    sh:message "fromCountryCode doit être un code pays ISO 3166-1 alpha-2 à deux lettres (majuscules)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4312,6 +4612,8 @@ infra-sh:NationalBorder-toCountryCode
     sh:datatype xsd:string ;
     sh:pattern "^[A-Z]{2}$" ;
     sh:message "toCountryCode must be a two-letter ISO 3166-1 alpha-2 country code (upper case)."@en ;
+    sh:message "toCountryCode muss ein zweibuchstabiger ISO-3166-1-Alpha-2-Ländercode sein (Großbuchstaben)."@de ;
+    sh:message "toCountryCode doit être un code pays ISO 3166-1 alpha-2 à deux lettres (majuscules)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4353,6 +4655,8 @@ infra-sh:BufferStop-netPointReference
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:NetPointReferenceShape ;
     sh:message "netPointReference must be a well-formed NetPointReference (blank node or IRI)."@en ;
+    sh:message "netPointReference muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "netPointReference doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4411,6 +4715,8 @@ infra-sh:FunctionalArea-topoArea
     sh:nodeKind sh:IRI ;
     sh:class era:TopoArea ;
     sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
+    sh:message "topoArea muss über eine IRI auf ein bestehendes era:TopoArea verweisen."@de ;
+    sh:message "topoArea doit référencer un era:TopoArea existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -4438,6 +4744,8 @@ infra-sh:FunctionalArea-opPoints
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:OperationalPointShape ;
     sh:message "opPoints must be a well-formed OperationalPoint (blank node or IRI)."@en ;
+    sh:message "opPoints muss ein wohlgeformtes OperationalPoint sein (Blank Node oder IRI)."@de ;
+    sh:message "opPoints doit être un OperationalPoint bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4450,6 +4758,8 @@ infra-sh:FunctionalArea-switches
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:SwitchShape ;
     sh:message "switches must be a well-formed Switch (blank node or IRI)."@en ;
+    sh:message "switches muss ein wohlgeformtes Switch sein (Blank Node oder IRI)."@de ;
+    sh:message "switches doit être un Switch bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4462,6 +4772,8 @@ infra-sh:FunctionalArea-slipCrossings
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:SlipCrossingShape ;
     sh:message "slipCrossings must be a well-formed SlipCrossing (blank node or IRI)."@en ;
+    sh:message "slipCrossings muss ein wohlgeformtes SlipCrossing sein (Blank Node oder IRI)."@de ;
+    sh:message "slipCrossings doit être un SlipCrossing bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4474,6 +4786,8 @@ infra-sh:FunctionalArea-derailers
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:DerailerShape ;
     sh:message "derailers must be a well-formed Derailer (blank node or IRI)."@en ;
+    sh:message "derailers muss ein wohlgeformtes Derailer sein (Blank Node oder IRI)."@de ;
+    sh:message "derailers doit être un Derailer bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4486,6 +4800,8 @@ infra-sh:FunctionalArea-crossings
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:CrossingShape ;
     sh:message "crossings must be a well-formed Crossing (blank node or IRI)."@en ;
+    sh:message "crossings muss ein wohlgeformtes Crossing sein (Blank Node oder IRI)."@de ;
+    sh:message "crossings doit être un Crossing bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4498,6 +4814,8 @@ infra-sh:FunctionalArea-trainDetectors
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TrainDetectionSystemShape ;
     sh:message "trainDetectors must be a well-formed TrainDetectionSystem (blank node or IRI)."@en ;
+    sh:message "trainDetectors muss ein wohlgeformtes TrainDetectionSystem sein (Blank Node oder IRI)."@de ;
+    sh:message "trainDetectors doit être un TrainDetectionSystem bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4510,6 +4828,8 @@ infra-sh:FunctionalArea-baliseGroups
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:BaliseGroupShape ;
     sh:message "baliseGroups must be a well-formed BaliseGroup (blank node or IRI)."@en ;
+    sh:message "baliseGroups muss ein wohlgeformtes BaliseGroup sein (Blank Node oder IRI)."@de ;
+    sh:message "baliseGroups doit être un BaliseGroup bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4522,6 +4842,8 @@ infra-sh:FunctionalArea-etcsMarkers
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:ETCSMarkerShape ;
     sh:message "etcsMarkers must be a well-formed ETCSMarker (blank node or IRI)."@en ;
+    sh:message "etcsMarkers muss ein wohlgeformtes ETCSMarker sein (Blank Node oder IRI)."@de ;
+    sh:message "etcsMarkers doit être un ETCSMarker bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4534,6 +4856,8 @@ infra-sh:FunctionalArea-segmentProfile
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:SegmentProfileShape ;
     sh:message "segmentProfile must be a well-formed SegmentProfile (blank node or IRI)."@en ;
+    sh:message "segmentProfile muss ein wohlgeformtes SegmentProfile sein (Blank Node oder IRI)."@de ;
+    sh:message "segmentProfile doit être un SegmentProfile bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4546,6 +4870,8 @@ infra-sh:FunctionalArea-stopLocations
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:StopLocationShape ;
     sh:message "stopLocations must be a well-formed StopLocation (blank node or IRI)."@en ;
+    sh:message "stopLocations muss ein wohlgeformtes StopLocation sein (Blank Node oder IRI)."@de ;
+    sh:message "stopLocations doit être un StopLocation bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4558,6 +4884,8 @@ infra-sh:FunctionalArea-tunnels
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TunnelShape ;
     sh:message "tunnels must be a well-formed Tunnel (blank node or IRI)."@en ;
+    sh:message "tunnels muss ein wohlgeformtes Tunnel sein (Blank Node oder IRI)."@de ;
+    sh:message "tunnels doit être un Tunnel bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4570,6 +4898,8 @@ infra-sh:FunctionalArea-bridges
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:BridgeShape ;
     sh:message "bridges must be a well-formed Bridge (blank node or IRI)."@en ;
+    sh:message "bridges muss ein wohlgeformtes Bridge sein (Blank Node oder IRI)."@de ;
+    sh:message "bridges doit être un Bridge bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4582,6 +4912,8 @@ infra-sh:FunctionalArea-underpasses
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:UnderpassShape ;
     sh:message "underpasses must be a well-formed Underpass (blank node or IRI)."@en ;
+    sh:message "underpasses muss ein wohlgeformtes Underpass sein (Blank Node oder IRI)."@de ;
+    sh:message "underpasses doit être un Underpass bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4594,6 +4926,8 @@ infra-sh:FunctionalArea-tvps
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TvpSectionShape ;
     sh:message "tvps must be a well-formed TvpSection (blank node or IRI)."@en ;
+    sh:message "tvps muss ein wohlgeformtes TvpSection sein (Blank Node oder IRI)."@de ;
+    sh:message "tvps doit être un TvpSection bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4606,6 +4940,8 @@ infra-sh:FunctionalArea-levelCrossings
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:LevelCrossingShape ;
     sh:message "levelCrossings must be a well-formed LevelCrossing (blank node or IRI)."@en ;
+    sh:message "levelCrossings muss ein wohlgeformtes LevelCrossing sein (Blank Node oder IRI)."@de ;
+    sh:message "levelCrossings doit être un LevelCrossing bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4618,6 +4954,8 @@ infra-sh:FunctionalArea-nationalBorders
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:NationalBorderShape ;
     sh:message "nationalBorders must be a well-formed NationalBorder (blank node or IRI)."@en ;
+    sh:message "nationalBorders muss ein wohlgeformtes NationalBorder sein (Blank Node oder IRI)."@de ;
+    sh:message "nationalBorders doit être un NationalBorder bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4630,6 +4968,8 @@ infra-sh:FunctionalArea-bufferStops
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:BufferStopShape ;
     sh:message "bufferStops must be a well-formed BufferStop (blank node or IRI)."@en ;
+    sh:message "bufferStops muss ein wohlgeformtes BufferStop sein (Blank Node oder IRI)."@de ;
+    sh:message "bufferStops doit être un BufferStop bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4642,6 +4982,8 @@ infra-sh:FunctionalArea-timingPoints
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TimingPointShape ;
     sh:message "timingPoints must be a well-formed TimingPoint (blank node or IRI)."@en ;
+    sh:message "timingPoints muss ein wohlgeformtes TimingPoint sein (Blank Node oder IRI)."@de ;
+    sh:message "timingPoints doit être un TimingPoint bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4669,6 +5011,8 @@ infra-sh:Infrastructure-topoAreas
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TopoAreaShape ;
     sh:message "topoAreas must be a well-formed TopoArea (blank node or IRI)."@en ;
+    sh:message "topoAreas muss ein wohlgeformtes TopoArea sein (Blank Node oder IRI)."@de ;
+    sh:message "topoAreas doit être un TopoArea bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4681,6 +5025,8 @@ infra-sh:Infrastructure-geometryAreas
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:GeometryAreaShape ;
     sh:message "geometryAreas must be a well-formed GeometryArea (blank node or IRI)."@en ;
+    sh:message "geometryAreas muss ein wohlgeformtes GeometryArea sein (Blank Node oder IRI)."@de ;
+    sh:message "geometryAreas doit être un GeometryArea bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4693,6 +5039,8 @@ infra-sh:Infrastructure-sampledGeometryAreas
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:SampledGeometryAreaShape ;
     sh:message "sampledGeometryAreas must be a well-formed SampledGeometryArea (blank node or IRI)."@en ;
+    sh:message "sampledGeometryAreas muss ein wohlgeformtes SampledGeometryArea sein (Blank Node oder IRI)."@de ;
+    sh:message "sampledGeometryAreas doit être un SampledGeometryArea bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4705,6 +5053,8 @@ infra-sh:Infrastructure-functionalAreas
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:FunctionalAreaShape ;
     sh:message "functionalAreas must be a well-formed FunctionalArea (blank node or IRI)."@en ;
+    sh:message "functionalAreas muss ein wohlgeformtes FunctionalArea sein (Blank Node oder IRI)."@de ;
+    sh:message "functionalAreas doit être un FunctionalArea bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4717,6 +5067,8 @@ infra-sh:Infrastructure-propertiesAreas
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:PropertiesAreaShape ;
     sh:message "propertiesAreas must be a well-formed PropertiesArea (blank node or IRI)."@en ;
+    sh:message "propertiesAreas muss ein wohlgeformtes PropertiesArea sein (Blank Node oder IRI)."@de ;
+    sh:message "propertiesAreas doit être un PropertiesArea bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -4729,5 +5081,7 @@ infra-sh:Infrastructure-trackUsageAreas
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node infra-sh:TrackUsageAreaShape ;
     sh:message "trackUsageAreas must be a well-formed TrackUsageArea (blank node or IRI)."@en ;
+    sh:message "trackUsageAreas muss ein wohlgeformtes TrackUsageArea sein (Blank Node oder IRI)."@de ;
+    sh:message "trackUsageAreas doit être un TrackUsageArea bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
