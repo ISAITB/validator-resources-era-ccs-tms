@@ -7243,6 +7243,9 @@ ss026-sh:ETCSTrainToTrackPacket-packetId
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-255 range."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-255."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-255."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket-q_scale
@@ -7257,6 +7260,9 @@ ss026-sh:ETCSTrainToTrackPacket-q_scale
     sh:maxInclusive 2 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "This property has no minCount, so it being absent is not itself a problem. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is outside the 0-2 range."@en ;
+    era:additionalInfo "Diese Eigenschaft hat kein minCount, ihr Fehlen ist also kein Problem für sich. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-2."@de ;
+    era:additionalInfo "Cette propriété n'a pas de minCount, son absence n'est donc pas un problème en soi. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-2."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket-trainToTrackPacket
@@ -7614,6 +7620,9 @@ ss026-sh:ETCSTrainToTrackPacket_0-nid_lrbg
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "nid_lrbg is a 24-bit field - its range of 0 to 16777215 is the largest value representable in 24 bits. Its own description states it combines the country/region identity (10 bits) with the balise group identity (14 bits) of the last relevant balise group into a single value. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-16777215 range."@en ;
+    era:additionalInfo "nid_lrbg ist ein 24-Bit-Feld - sein Bereich von 0 bis 16777215 ist der größte in 24 Bit darstellbare Wert. Die eigene Beschreibung besagt, dass sie die Länder-/Regionskennung (10 Bit) mit der Balisengruppenkennung (14 Bit) der letzten relevanten Balisengruppe zu einem einzigen Wert kombiniert. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-16777215."@de ;
+    era:additionalInfo "nid_lrbg est un champ de 24 bits - sa plage de 0 à 16777215 est la plus grande valeur représentable sur 24 bits. Sa propre description indique qu'elle combine l'identité du pays/de la région (10 bits) et l'identité du groupe de balises (14 bits) du dernier groupe de balises pertinent en une seule valeur. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-16777215."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_0-d_lrbg
@@ -7629,6 +7638,9 @@ ss026-sh:ETCSTrainToTrackPacket_0-d_lrbg
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "d_lrbg's own description states this measures the distance from the last relevant balise group to the train's estimated front end - the side of the active cab, not necessarily the physical head of the train. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0.0-327670.0 range or is not a valid decimal."@en ;
+    era:additionalInfo "Die eigene Beschreibung von d_lrbg besagt, dass hiermit die Distanz von der letzten relevanten Balisengruppe zum geschätzten vorderen Ende des Zuges gemessen wird - der Seite des aktiven Führerstands, nicht notwendigerweise dem physischen Kopf des Zuges. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0.0-327670.0 oder ist keine gültige Dezimalzahl."@de ;
+    era:additionalInfo "La propre description de d_lrbg indique que ceci mesure la distance depuis le dernier groupe de balises pertinent jusqu'à l'extrémité avant estimée du train - le côté de la cabine active, pas nécessairement la tête physique du train. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0.0-327670.0 ou n'est pas un nombre décimal valide."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_0-q_dirlrbg
@@ -7676,6 +7688,9 @@ ss026-sh:ETCSTrainToTrackPacket_0-l_doubtover
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "l_doubtover's own description defines it as the combination of the over-reading amount plus the location accuracy (Q_LOCACC) of the LRBG - not either quantity alone. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0.0-327670.0 range or is not a valid decimal."@en ;
+    era:additionalInfo "Die eigene Beschreibung von l_doubtover definiert sie als Kombination aus dem Übermessungsbetrag zuzüglich der Ortungsgenauigkeit (Q_LOCACC) der LRBG - nicht eine der beiden Größen allein. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0.0-327670.0 oder ist keine gültige Dezimalzahl."@de ;
+    era:additionalInfo "La propre description de l_doubtover la définit comme la combinaison de la valeur de sur-lecture plus la précision de localisation (Q_LOCACC) de la LRBG - non l'une ou l'autre grandeur seule. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0.0-327670.0 ou n'est pas un nombre décimal valide."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_0-l_doubtunder
@@ -7691,6 +7706,9 @@ ss026-sh:ETCSTrainToTrackPacket_0-l_doubtunder
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "l_doubtunder's own description defines it as the combination of the under-reading amount plus the location accuracy (Q_LOCACC) of the LRBG - not either quantity alone. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0.0-327670.0 range or is not a valid decimal."@en ;
+    era:additionalInfo "Die eigene Beschreibung von l_doubtunder definiert sie als Kombination aus dem Untermessungsbetrag zuzüglich der Ortungsgenauigkeit (Q_LOCACC) der LRBG - nicht eine der beiden Größen allein. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0.0-327670.0 oder ist keine gültige Dezimalzahl."@de ;
+    era:additionalInfo "La propre description de l_doubtunder la définit comme la combinaison de la valeur de sous-lecture plus la précision de localisation (Q_LOCACC) de la LRBG - non l'une ou l'autre grandeur seule. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0.0-327670.0 ou n'est pas un nombre décimal valide."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_0-q_integrity
@@ -7722,6 +7740,9 @@ ss026-sh:ETCSTrainToTrackPacket_0-l_trainint
     sh:maxInclusive 327670.0 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "l_trainint's own description states it is only meaningful when q_integrity on this same object indicates the train's integrity was confirmed by an external source or by the driver, and that binary protocols use 0 specifically to mean the value is not available. This property has no minCount, so it being absent entirely is not itself a problem. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is outside the 0.0-327670.0 range or is not a valid decimal."@en ;
+    era:additionalInfo "Die eigene Beschreibung von l_trainint besagt, dass sie nur aussagekräftig ist, wenn q_integrity an demselben Objekt anzeigt, dass die Zugintegrität durch eine externe Quelle oder durch den Triebfahrzeugführer bestätigt wurde, und dass binäre Protokolle 0 speziell verwenden, um auszudrücken, dass der Wert nicht verfügbar ist. Diese Eigenschaft hat kein minCount, ihr vollständiges Fehlen ist also kein Problem für sich. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0.0-327670.0 oder ist keine gültige Dezimalzahl."@de ;
+    era:additionalInfo "La propre description de l_trainint indique qu'elle n'a de sens que lorsque q_integrity sur ce même objet indique que l'intégrité du train a été confirmée par une source externe ou par le conducteur, et que les protocoles binaires utilisent 0 spécifiquement pour signifier que la valeur n'est pas disponible. Cette propriété n'a pas de minCount, son absence totale n'est donc pas un problème en soi. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0.0-327670.0 ou n'est pas un nombre décimal valide."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_0-vTrain
@@ -7804,6 +7825,9 @@ ss026-sh:ETCSTrainToTrackPacket_0-nid_ntc
     sh:maxInclusive 255 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "nid_ntc is an 8-bit field - its range of 0 to 255 is the largest value representable in 8 bits. Its own description states it is only meaningful when m_level on this same object is NTC. This property has no minCount, so it being absent is not itself a problem. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is outside the 0-255 range."@en ;
+    era:additionalInfo "nid_ntc ist ein 8-Bit-Feld - sein Bereich von 0 bis 255 ist der größte in 8 Bit darstellbare Wert. Die eigene Beschreibung besagt, dass sie nur aussagekräftig ist, wenn m_level an demselben Objekt NTC ist. Diese Eigenschaft hat kein minCount, ihr Fehlen ist also kein Problem für sich. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-255."@de ;
+    era:additionalInfo "nid_ntc est un champ de 8 bits - sa plage de 0 à 255 est la plus grande valeur représentable sur 8 bits. Sa propre description indique qu'elle n'a de sens que lorsque m_level sur ce même objet vaut NTC. Cette propriété n'a pas de minCount, son absence n'est donc pas un problème en soi. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-255."@fr ;
     .
 
 ### ETCSTrainToTrackPacket_1 ##########################################
@@ -7842,6 +7866,9 @@ ss026-sh:ETCSTrainToTrackPacket_1-nid_lrbg
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "nid_lrbg is a 24-bit field - its range of 0 to 16777215 is the largest value representable in 24 bits. Its own description states it combines the country/region identity (10 bits) with the balise group identity (14 bits) of the last relevant balise group into a single value. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-16777215 range."@en ;
+    era:additionalInfo "nid_lrbg ist ein 24-Bit-Feld - sein Bereich von 0 bis 16777215 ist der größte in 24 Bit darstellbare Wert. Die eigene Beschreibung besagt, dass sie die Länder-/Regionskennung (10 Bit) mit der Balisengruppenkennung (14 Bit) der letzten relevanten Balisengruppe zu einem einzigen Wert kombiniert. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-16777215."@de ;
+    era:additionalInfo "nid_lrbg est un champ de 24 bits - sa plage de 0 à 16777215 est la plus grande valeur représentable sur 24 bits. Sa propre description indique qu'elle combine l'identité du pays/de la région (10 bits) et l'identité du groupe de balises (14 bits) du dernier groupe de balises pertinent en une seule valeur. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-16777215."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_1-nid_prvlrbg
@@ -7857,6 +7884,9 @@ ss026-sh:ETCSTrainToTrackPacket_1-nid_prvlrbg
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "nid_prvlrbg is a 24-bit field - its range of 0 to 16777215 is the largest value representable in 24 bits. Its own description states this balise group serves as the reference for every directional value in this packet: a move from this previous balise group toward the LRBG is defined as the 'nominal' direction. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-16777215 range."@en ;
+    era:additionalInfo "nid_prvlrbg ist ein 24-Bit-Feld - sein Bereich von 0 bis 16777215 ist der größte in 24 Bit darstellbare Wert. Die eigene Beschreibung besagt, dass diese Balisengruppe als Referenz für jeden Richtungswert in diesem Paket dient: eine Bewegung von dieser vorherigen Balisengruppe zur LRBG hin wird als 'nominale' Richtung definiert. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-16777215."@de ;
+    era:additionalInfo "nid_prvlrbg est un champ de 24 bits - sa plage de 0 à 16777215 est la plus grande valeur représentable sur 24 bits. Sa propre description indique que ce groupe de balises sert de référence pour toute valeur directionnelle de ce paquet : un déplacement depuis ce groupe de balises précédent vers la LRBG est défini comme la direction 'nominale'. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-16777215."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_1-d_lrbg
@@ -7872,6 +7902,9 @@ ss026-sh:ETCSTrainToTrackPacket_1-d_lrbg
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "d_lrbg's own description states this measures the distance from the last relevant balise group to the train's estimated front end - the side of the active cab, not necessarily the physical head of the train. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0.0-327670.0 range or is not a valid decimal."@en ;
+    era:additionalInfo "Die eigene Beschreibung von d_lrbg besagt, dass hiermit die Distanz von der letzten relevanten Balisengruppe zum geschätzten vorderen Ende des Zuges gemessen wird - der Seite des aktiven Führerstands, nicht notwendigerweise dem physischen Kopf des Zuges. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0.0-327670.0 oder ist keine gültige Dezimalzahl."@de ;
+    era:additionalInfo "La propre description de d_lrbg indique que ceci mesure la distance depuis le dernier groupe de balises pertinent jusqu'à l'extrémité avant estimée du train - le côté de la cabine active, pas nécessairement la tête physique du train. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0.0-327670.0 ou n'est pas un nombre décimal valide."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_1-q_dirlrbg
@@ -7919,6 +7952,9 @@ ss026-sh:ETCSTrainToTrackPacket_1-l_doubtover
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "l_doubtover's own description defines it as the combination of the over-reading amount plus the location accuracy (Q_LOCACC) of the LRBG - not either quantity alone. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0.0-327670.0 range or is not a valid decimal."@en ;
+    era:additionalInfo "Die eigene Beschreibung von l_doubtover definiert sie als Kombination aus dem Übermessungsbetrag zuzüglich der Ortungsgenauigkeit (Q_LOCACC) der LRBG - nicht eine der beiden Größen allein. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0.0-327670.0 oder ist keine gültige Dezimalzahl."@de ;
+    era:additionalInfo "La propre description de l_doubtover la définit comme la combinaison de la valeur de sur-lecture plus la précision de localisation (Q_LOCACC) de la LRBG - non l'une ou l'autre grandeur seule. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0.0-327670.0 ou n'est pas un nombre décimal valide."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_1-l_doubtunder
@@ -7934,6 +7970,9 @@ ss026-sh:ETCSTrainToTrackPacket_1-l_doubtunder
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "l_doubtunder's own description defines it as the combination of the under-reading amount plus the location accuracy (Q_LOCACC) of the LRBG - not either quantity alone. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0.0-327670.0 range or is not a valid decimal."@en ;
+    era:additionalInfo "Die eigene Beschreibung von l_doubtunder definiert sie als Kombination aus dem Untermessungsbetrag zuzüglich der Ortungsgenauigkeit (Q_LOCACC) der LRBG - nicht eine der beiden Größen allein. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0.0-327670.0 oder ist keine gültige Dezimalzahl."@de ;
+    era:additionalInfo "La propre description de l_doubtunder la définit comme la combinaison de la valeur de sous-lecture plus la précision de localisation (Q_LOCACC) de la LRBG - non l'une ou l'autre grandeur seule. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0.0-327670.0 ou n'est pas un nombre décimal valide."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_1-q_integrity
@@ -7965,6 +8004,9 @@ ss026-sh:ETCSTrainToTrackPacket_1-l_trainint
     sh:maxInclusive 327670.0 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "l_trainint's own description states it is only meaningful when q_integrity on this same object indicates the train's integrity was confirmed by an external source or by the driver, and that binary protocols use 0 specifically to mean the value is not available. This property has no minCount, so it being absent entirely is not itself a problem. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is outside the 0.0-327670.0 range or is not a valid decimal."@en ;
+    era:additionalInfo "Die eigene Beschreibung von l_trainint besagt, dass sie nur aussagekräftig ist, wenn q_integrity an demselben Objekt anzeigt, dass die Zugintegrität durch eine externe Quelle oder durch den Triebfahrzeugführer bestätigt wurde, und dass binäre Protokolle 0 speziell verwenden, um auszudrücken, dass der Wert nicht verfügbar ist. Diese Eigenschaft hat kein minCount, ihr vollständiges Fehlen ist also kein Problem für sich. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0.0-327670.0 oder ist keine gültige Dezimalzahl."@de ;
+    era:additionalInfo "La propre description de l_trainint indique qu'elle n'a de sens que lorsque q_integrity sur ce même objet indique que l'intégrité du train a été confirmée par une source externe ou par le conducteur, et que les protocoles binaires utilisent 0 spécifiquement pour signifier que la valeur n'est pas disponible. Cette propriété n'a pas de minCount, son absence totale n'est donc pas un problème en soi. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0.0-327670.0 ou n'est pas un nombre décimal valide."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_1-vTrain
@@ -8047,6 +8089,9 @@ ss026-sh:ETCSTrainToTrackPacket_1-nid_ntc
     sh:maxInclusive 255 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "nid_ntc is an 8-bit field - its range of 0 to 255 is the largest value representable in 8 bits. Its own description states it is only meaningful when m_level on this same object is NTC. This property has no minCount, so it being absent is not itself a problem. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is outside the 0-255 range."@en ;
+    era:additionalInfo "nid_ntc ist ein 8-Bit-Feld - sein Bereich von 0 bis 255 ist der größte in 8 Bit darstellbare Wert. Die eigene Beschreibung besagt, dass sie nur aussagekräftig ist, wenn m_level an demselben Objekt NTC ist. Diese Eigenschaft hat kein minCount, ihr Fehlen ist also kein Problem für sich. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-255."@de ;
+    era:additionalInfo "nid_ntc est un champ de 8 bits - sa plage de 0 à 255 est la plus grande valeur représentable sur 8 bits. Sa propre description indique qu'elle n'a de sens que lorsque m_level sur ce même objet vaut NTC. Cette propriété n'a pas de minCount, son absence n'est donc pas un problème en soi. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-255."@fr ;
     .
 
 ### SystemVersion #####################################################
@@ -8124,6 +8169,9 @@ ss026-sh:ETCSTrainToTrackPacket_4-m_error
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "m_error's own description cross-references UNISIG Subset 26-7, Chapter 7.5.1.64 for the meaning of each error code value. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-255 range."@en ;
+    era:additionalInfo "Die eigene Beschreibung von m_error verweist auf UNISIG Subset 26-7, Kapitel 7.5.1.64, für die Bedeutung jedes einzelnen Fehlercode-Werts. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-255."@de ;
+    era:additionalInfo "La propre description de m_error renvoie au UNISIG Subset 26-7, chapitre 7.5.1.64, pour la signification de chaque valeur de code d'erreur. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-255."@fr ;
     .
 
 ### ETCSTrainToTrackPacket_5 ##########################################
@@ -8176,6 +8224,9 @@ ss026-sh:ETCSTrainToTrackPacket_9-nid_ltrbg
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "nid_ltrbg is a 24-bit field - its range of 0 to 16777215 is the largest value representable in 24 bits. Its own description states it combines the country/region identity with the balise group identity of the balise group at the level 2/3 transition location the train is running toward. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-16777215 range."@en ;
+    era:additionalInfo "nid_ltrbg ist ein 24-Bit-Feld - sein Bereich von 0 bis 16777215 ist der größte in 24 Bit darstellbare Wert. Die eigene Beschreibung besagt, dass sie die Länder-/Regionskennung mit der Balisengruppenkennung der Balisengruppe am Übergangsort auf Level 2/3, auf den der Zug zufährt, kombiniert. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-16777215."@de ;
+    era:additionalInfo "nid_ltrbg est un champ de 24 bits - sa plage de 0 à 16777215 est la plus grande valeur représentable sur 24 bits. Sa propre description indique qu'elle combine l'identité du pays/de la région avec l'identité du groupe de balises situé à l'emplacement de transition de niveau 2/3 vers lequel le train circule. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-16777215."@fr ;
     .
 
 ### ETCSTrainToTrackPacket_10 #########################################
@@ -8200,6 +8251,9 @@ ss026-sh:ETCSTrainToTrackPacket_10-q_safeconsistlength
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "q_safeconsistlength's own description states that true means safe consist length information is available, and false means it is not. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Die eigene Beschreibung von q_safeconsistlength besagt, dass true bedeutet, dass sichere Zugverbandslängen-Informationen verfügbar sind, und false, dass dies nicht der Fall ist. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "La propre description de q_safeconsistlength indique que true signifie que l'information sur la longueur sûre de la rame est disponible, et false qu'elle ne l'est pas. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_10-safeConsistInfo
@@ -8246,6 +8300,9 @@ ss026-sh:SafeConsist-l_consistFrontEngineNom
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "l_consistFrontEngineNom's own description states this is the nominal length of the consist in front of the engine, excluding any coupling play or other uncertainties, measured from the engine's front end taking the active cab into account. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-4095 range."@en ;
+    era:additionalInfo "Die eigene Beschreibung von l_consistFrontEngineNom besagt, dass dies die nominale Länge des Zugverbandes vor der Lok ist, ausschließlich jeglichen Kupplungsspiels oder anderer Unsicherheiten, gemessen ab dem vorderen Ende der Lok unter Berücksichtigung des aktiven Führerstands. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-4095."@de ;
+    era:additionalInfo "La propre description de l_consistFrontEngineNom indique qu'il s'agit de la longueur nominale de la rame à l'avant de la locomotive, hors tout jeu d'attelage ou autre incertitude, mesurée depuis l'extrémité avant de la locomotive en tenant compte de la cabine active. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-4095."@fr ;
     .
 
 ss026-sh:SafeConsist-l_consistFrontEngineMin
@@ -8262,6 +8319,9 @@ ss026-sh:SafeConsist-l_consistFrontEngineMin
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "l_consistFrontEngineMin's own description states this is the minimum length of the consist in front of the engine, measured from the engine's front end taking the active cab into account, and accounting for coupling play and other uncertainties. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-4095 range."@en ;
+    era:additionalInfo "Die eigene Beschreibung von l_consistFrontEngineMin besagt, dass dies die Mindestlänge des Zugverbandes vor der Lok ist, gemessen ab dem vorderen Ende der Lok unter Berücksichtigung des aktiven Führerstands, und unter Einbeziehung von Kupplungsspiel und anderen Unsicherheiten. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-4095."@de ;
+    era:additionalInfo "La propre description de l_consistFrontEngineMin indique qu'il s'agit de la longueur minimale de la rame à l'avant de la locomotive, mesurée depuis l'extrémité avant de la locomotive en tenant compte de la cabine active, et en tenant compte du jeu d'attelage et d'autres incertitudes. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-4095."@fr ;
     .
 
 ss026-sh:SafeConsist-l_consistFrontEngineMax
@@ -8278,6 +8338,9 @@ ss026-sh:SafeConsist-l_consistFrontEngineMax
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "l_consistFrontEngineMax's own description states this is the maximum length of the consist in front of the engine, measured from the engine's front end taking the active cab into account, and accounting for coupling play and other uncertainties. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-4095 range."@en ;
+    era:additionalInfo "Die eigene Beschreibung von l_consistFrontEngineMax besagt, dass dies die Höchstlänge des Zugverbandes vor der Lok ist, gemessen ab dem vorderen Ende der Lok unter Berücksichtigung des aktiven Führerstands, und unter Einbeziehung von Kupplungsspiel und anderen Unsicherheiten. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-4095."@de ;
+    era:additionalInfo "La propre description de l_consistFrontEngineMax indique qu'il s'agit de la longueur maximale de la rame à l'avant de la locomotive, mesurée depuis l'extrémité avant de la locomotive en tenant compte de la cabine active, et en tenant compte du jeu d'attelage et d'autres incertitudes. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-4095."@fr ;
     .
 
 ss026-sh:SafeConsist-l_consistRearEngineNom
@@ -8294,6 +8357,9 @@ ss026-sh:SafeConsist-l_consistRearEngineNom
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "l_consistRearEngineNom's own description states this is the nominal length of the consist behind the engine, excluding any coupling play or other uncertainties, measured from the engine's front end taking the active cab into account. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-4095 range."@en ;
+    era:additionalInfo "Die eigene Beschreibung von l_consistRearEngineNom besagt, dass dies die nominale Länge des Zugverbandes hinter der Lok ist, ausschließlich jeglichen Kupplungsspiels oder anderer Unsicherheiten, gemessen ab dem vorderen Ende der Lok unter Berücksichtigung des aktiven Führerstands. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-4095."@de ;
+    era:additionalInfo "La propre description de l_consistRearEngineNom indique qu'il s'agit de la longueur nominale de la rame à l'arrière de la locomotive, hors tout jeu d'attelage ou autre incertitude, mesurée depuis l'extrémité avant de la locomotive en tenant compte de la cabine active. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-4095."@fr ;
     .
 
 ss026-sh:SafeConsist-l_consistRearEngineMin
@@ -8310,6 +8376,9 @@ ss026-sh:SafeConsist-l_consistRearEngineMin
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "l_consistRearEngineMin's own description actually reads 'in front of the engine', matching the wording used for l_consistFrontEngineMin rather than its own sibling properties l_consistRearEngineNom and l_consistRearEngineMax, which both correctly describe the rear. This looks like a copy-paste error in the source description rather than a deliberate difference in meaning - given the property's own name and its place alongside the other Rear-prefixed properties, it almost certainly is intended to measure the minimum length behind the engine, accounting for coupling play and other uncertainties, the same way l_consistFrontEngineMin does for the front. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-4095 range."@en ;
+    era:additionalInfo "Die eigene Beschreibung von l_consistRearEngineMin spricht tatsächlich von 'vor der Lok', passend zum Wortlaut von l_consistFrontEngineMin, statt zu ihren eigenen Schwestereigenschaften l_consistRearEngineNom und l_consistRearEngineMax, die beide korrekt das Heck beschreiben. Dies wirkt wie ein Kopier-Einfüge-Fehler in der Quellbeschreibung, nicht wie ein bewusster Bedeutungsunterschied - angesichts des eigenen Namens der Eigenschaft und ihrer Stellung neben den anderen Rear-Eigenschaften ist fast sicher beabsichtigt, die Mindestlänge hinter der Lok zu messen, unter Berücksichtigung von Kupplungsspiel und anderen Unsicherheiten, ebenso wie l_consistFrontEngineMin dies für die Front tut. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-4095."@de ;
+    era:additionalInfo "La propre description de l_consistRearEngineMin indique en fait 'à l'avant de la locomotive', reprenant le libellé de l_consistFrontEngineMin plutôt que celui de ses propres propriétés sœurs l_consistRearEngineNom et l_consistRearEngineMax, qui décrivent toutes deux correctement l'arrière. Cela ressemble à une erreur de copier-coller dans la description source plutôt qu'à une différence de sens délibérée - au vu du nom même de la propriété et de sa place aux côtés des autres propriétés préfixées Rear, elle est presque certainement destinée à mesurer la longueur minimale à l'arrière de la locomotive, en tenant compte du jeu d'attelage et d'autres incertitudes, de la même manière que l_consistFrontEngineMin le fait pour l'avant. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-4095."@fr ;
     .
 
 ss026-sh:SafeConsist-l_consistRearEngineMax
@@ -8326,6 +8395,9 @@ ss026-sh:SafeConsist-l_consistRearEngineMax
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "l_consistRearEngineMax's own description states this is the maximum length of the consist behind the engine, measured from the engine's front end taking the active cab into account, and accounting for coupling play and other uncertainties. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-4095 range."@en ;
+    era:additionalInfo "Die eigene Beschreibung von l_consistRearEngineMax besagt, dass dies die Höchstlänge des Zugverbandes hinter der Lok ist, gemessen ab dem vorderen Ende der Lok unter Berücksichtigung des aktiven Führerstands, und unter Einbeziehung von Kupplungsspiel und anderen Unsicherheiten. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-4095."@de ;
+    era:additionalInfo "La propre description de l_consistRearEngineMax indique qu'il s'agit de la longueur maximale de la rame à l'arrière de la locomotive, mesurée depuis l'extrémité avant de la locomotive en tenant compte de la cabine active, et en tenant compte du jeu d'attelage et d'autres incertitudes. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-4095."@fr ;
     .
 
 ### ETCSTrainToTrackPacket_11 #########################################
@@ -8397,6 +8469,9 @@ ss026-sh:ETCSTrainToTrackPacket_11-trainLength
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "trainLength's own description gives a specific relationship: when the safe consist length is what was captured as valid train data, this value equals L_CONSISTREARENGINEMAX, since valid train data can only be captured and sent to the RBC when the leading engine or cab is located at the very front of the train. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-4095 range."@en ;
+    era:additionalInfo "Die eigene Beschreibung von trainLength nennt einen konkreten Zusammenhang: wenn die sichere Zugverbandslänge das ist, was als gültige Zugdaten erfasst wurde, entspricht dieser Wert L_CONSISTREARENGINEMAX, da gültige Zugdaten nur erfasst und an die RBC gesendet werden können, wenn sich die führende Lokomotive oder der Führerstand ganz vorne im Zug befindet. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-4095."@de ;
+    era:additionalInfo "La propre description de trainLength donne une relation précise : lorsque la longueur sûre de la rame est ce qui a été capturé comme données de train valides, cette valeur équivaut à L_CONSISTREARENGINEMAX, car des données de train valides ne peuvent être capturées et envoyées au RBC que lorsque la locomotive ou la cabine de tête se trouve tout à l'avant du train. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-4095."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_11-vMaxTrain
@@ -8414,6 +8489,9 @@ ss026-sh:ETCSTrainToTrackPacket_11-vMaxTrain
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "vMaxTrain's own description states the resolution is 5 km/h, and this is genuinely enforced separately by a multiple-of-5 SPARQLConstraint with its own message. There is no custom message defined for this specific check itself, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-600 range."@en ;
+    era:additionalInfo "Die eigene Beschreibung von vMaxTrain besagt, dass die Auflösung 5 km/h beträgt, und dies wird tatsächlich separat durch eine Vielfaches-von-5-SPARQLConstraint mit eigener Meldung durchgesetzt. Für diese konkrete Prüfung selbst ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-600."@de ;
+    era:additionalInfo "La propre description de vMaxTrain indique que la résolution est de 5 km/h, et ceci est réellement appliqué séparément par une SPARQLConstraint de multiple de 5 avec son propre message. Aucun message personnalisé n'est défini pour cette vérification elle-même, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-600."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_11-loadingGaugeType
@@ -8481,6 +8559,9 @@ ss026-sh:ETCSTrainToTrackPacket_11-axleNumber
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "axleNumber is a 10-bit field - its range of 0 to 1023 is the largest value representable in 10 bits. Its own description clarifies this counts the axles of the single unit the on-board equipment is fitted in, not the whole train. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-1023 range."@en ;
+    era:additionalInfo "axleNumber ist ein 10-Bit-Feld - sein Bereich von 0 bis 1023 ist der größte in 10 Bit darstellbare Wert. Die eigene Beschreibung stellt klar, dass hierbei die Achsen der einzelnen Einheit gezählt werden, in der das Fahrzeuggerät verbaut ist, nicht des gesamten Zuges. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-1023."@de ;
+    era:additionalInfo "axleNumber est un champ de 10 bits - sa plage de 0 à 1023 est la plus grande valeur représentable sur 10 bits. Sa propre description précise que ceci compte les essieux de l'unité unique dans laquelle l'équipement embarqué est installé, non l'ensemble du train. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-1023."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_11-tractionVoltage
@@ -8511,6 +8592,9 @@ ss026-sh:ETCSTrainToTrackPacket_11-nidNtc
     sh:maxInclusive 255 ;
     sh:maxCount 31 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "nidNtc is an 8-bit field - its range of 0 to 255 is the largest value representable in 8 bits. Unlike the singular nid_ntc-style properties found elsewhere in this data model, this one may carry up to 31 values rather than exactly one, since a train may support several national systems at once. This property has no minCount, so it being entirely absent is not itself a problem. There is no custom message defined for this specific check, so the validation engine's own generic text is shown if a value present is outside the 0-255 range."@en ;
+    era:additionalInfo "nidNtc ist ein 8-Bit-Feld - sein Bereich von 0 bis 255 ist der größte in 8 Bit darstellbare Wert. Anders als die an anderer Stelle in diesem Datenmodell vorkommenden Eigenschaften im Stil eines einzelnen nid_ntc kann diese bis zu 31 Werte tragen statt genau einem, da ein Zug mehrere nationale Systeme gleichzeitig unterstützen kann. Diese Eigenschaft hat kein minCount, ihr vollständiges Fehlen ist also kein Problem für sich. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine angezeigt, wenn ein vorhandener Wert außerhalb des Bereichs 0-255 liegt."@de ;
+    era:additionalInfo "nidNtc est un champ de 8 bits - sa plage de 0 à 255 est la plus grande valeur représentable sur 8 bits. Contrairement aux propriétés de type nid_ntc singulier présentes ailleurs dans ce modèle de données, celle-ci peut porter jusqu'à 31 valeurs plutôt qu'exactement une, car un train peut prendre en charge plusieurs systèmes nationaux à la fois. Cette propriété n'a pas de minCount, son absence totale n'est donc pas un problème en soi. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché si une valeur présente est hors de la plage 0-255."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_11-vMaxTrain-multipleOf
@@ -8569,6 +8653,9 @@ ss026-sh:TractionVoltage-countryTractionId
     sh:maxInclusive 1023 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "countryTractionId is a 10-bit field - its range of 0 to 1023 is the largest value representable in 10 bits. Its own description states it is only meaningful together with mVoltage on this same object, providing the additional information needed to fully identify the traction system when mVoltage indicates one other than notFitted (M_VOLTAGE not equal to 0). There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is outside the 0-1023 range."@en ;
+    era:additionalInfo "countryTractionId ist ein 10-Bit-Feld - sein Bereich von 0 bis 1023 ist der größte in 10 Bit darstellbare Wert. Die eigene Beschreibung besagt, dass sie nur zusammen mit mVoltage an demselben Objekt aussagekräftig ist und die zusätzliche Information liefert, die zur vollständigen Identifizierung des Traktionssystems benötigt wird, wenn mVoltage etwas anderes als notFitted anzeigt (M_VOLTAGE ungleich 0). Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-1023."@de ;
+    era:additionalInfo "countryTractionId est un champ de 10 bits - sa plage de 0 à 1023 est la plus grande valeur représentable sur 10 bits. Sa propre description indique qu'elle n'a de sens qu'avec mVoltage sur ce même objet, fournissant l'information supplémentaire nécessaire pour identifier pleinement le système de traction lorsque mVoltage indique autre chose que notFitted (M_VOLTAGE différent de 0). Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-1023."@fr ;
     .
 
 ### ETCSTrainToTrackPacket_12 #########################################
@@ -8638,6 +8725,9 @@ ss026-sh:ETCSTrainToTrackPacket_12-vMaxTrain
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "vMaxTrain's own description states the resolution is 5 km/h, and this is genuinely enforced separately by a multiple-of-5 SPARQLConstraint with its own message. There is no custom message defined for this specific check itself, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-600 range."@en ;
+    era:additionalInfo "Die eigene Beschreibung von vMaxTrain besagt, dass die Auflösung 5 km/h beträgt, und dies wird tatsächlich separat durch eine Vielfaches-von-5-SPARQLConstraint mit eigener Meldung durchgesetzt. Für diese konkrete Prüfung selbst ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-600."@de ;
+    era:additionalInfo "La propre description de vMaxTrain indique que la résolution est de 5 km/h, et ceci est réellement appliqué séparément par une SPARQLConstraint de multiple de 5 avec son propre message. Aucun message personnalisé n'est défini pour cette vérification elle-même, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-600."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_12-loadingGaugeType
@@ -8705,6 +8795,9 @@ ss026-sh:ETCSTrainToTrackPacket_12-axleNumber
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "axleNumber is a 10-bit field - its range of 0 to 1023 is the largest value representable in 10 bits. Its own description clarifies this counts the axles of the single unit the on-board equipment is fitted in, not the whole train. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-1023 range."@en ;
+    era:additionalInfo "axleNumber ist ein 10-Bit-Feld - sein Bereich von 0 bis 1023 ist der größte in 10 Bit darstellbare Wert. Die eigene Beschreibung stellt klar, dass hierbei die Achsen der einzelnen Einheit gezählt werden, in der das Fahrzeuggerät verbaut ist, nicht des gesamten Zuges. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-1023."@de ;
+    era:additionalInfo "axleNumber est un champ de 10 bits - sa plage de 0 à 1023 est la plus grande valeur représentable sur 10 bits. Sa propre description précise que ceci compte les essieux de l'unité unique dans laquelle l'équipement embarqué est installé, non l'ensemble du train. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-1023."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_12-tractionVoltage
@@ -8761,6 +8854,9 @@ ss026-sh:ETCSTrainToTrackPacket_44-nid_xuser
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "nid_xuser is a 9-bit field - its range of 0 to 511 is the largest value representable in 9 bits. Its own description states it identifies the user system for which the remainder of the packet, carried in otherData, is intended. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is outside the 0-511 range."@en ;
+    era:additionalInfo "nid_xuser ist ein 9-Bit-Feld - sein Bereich von 0 bis 511 ist der größte in 9 Bit darstellbare Wert. Die eigene Beschreibung besagt, dass sie das Anwendersystem identifiziert, für das der übrige, in otherData getragene Teil des Pakets bestimmt ist. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert liegt außerhalb des Bereichs 0-511."@de ;
+    era:additionalInfo "nid_xuser est un champ de 9 bits - sa plage de 0 à 511 est la plus grande valeur représentable sur 9 bits. Sa propre description indique qu'elle identifie le système utilisateur auquel est destiné le reste du paquet, porté dans otherData. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente est hors de la plage 0-511."@fr ;
     .
 
 ss026-sh:ETCSTrainToTrackPacket_44-otherData
@@ -8774,6 +8870,9 @@ ss026-sh:ETCSTrainToTrackPacket_44-otherData
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "otherData's own description states its actual content depends entirely on the sibling nid_xuser value - the user system identified there determines how this opaque data is meant to be interpreted, which this check itself cannot verify. Its datatype, base64Binary, means the value is treated as encoded binary data rather than plain readable text. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not valid base64-encoded binary data."@en ;
+    era:additionalInfo "Die eigene Beschreibung von otherData besagt, dass ihr tatsächlicher Inhalt vollständig vom Schwesterwert nid_xuser abhängt - das dort identifizierte Anwendersystem bestimmt, wie diese undurchsichtigen Daten zu interpretieren sind, was diese Prüfung selbst nicht überprüfen kann. Ihr Datentyp base64Binary bedeutet, dass der Wert als kodierte Binärdaten behandelt wird, nicht als einfacher lesbarer Text. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert sind keine gültigen base64-kodierten Binärdaten."@de ;
+    era:additionalInfo "La propre description de otherData indique que son contenu réel dépend entièrement de la valeur sœur nid_xuser - le système utilisateur qui y est identifié détermine comment ces données opaques doivent être interprétées, ce que cette vérification elle-même ne peut pas contrôler. Son type de données, base64Binary, signifie que la valeur est traitée comme des données binaires codées plutôt que comme du texte lisible ordinaire. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas une donnée binaire encodée en base64 valide."@fr ;
     .
 
 ### ETCSTrackToTrainRM ################################################

@@ -88,6 +88,9 @@ tp-sh:infra-Switch-reversalTime
     sh:datatype xsd:unsignedInt ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "reversalTime is stored with a scaling exponent of -1: the raw stored integer must be multiplied by 0.1 to get the actual physical value in seconds - a stored value of 50 means an actual reversal time of 5.0 seconds, not 50. This property is optional; its absence is not a violation. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "reversalTime wird mit einem Skalierungsexponenten von -1 gespeichert: der roh gespeicherte Ganzzahlwert muss mit 0,1 multipliziert werden, um den tatsächlichen physikalischen Wert in Sekunden zu erhalten - ein gespeicherter Wert von 50 bedeutet eine tatsächliche Umstellzeit von 5,0 Sekunden, nicht 50. Diese Eigenschaft ist optional; ihr Fehlen ist kein Verstoß. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "reversalTime est stocké avec un exposant d'échelle de -1 : l'entier brut stocké doit être multiplié par 0,1 pour obtenir la valeur physique réelle en secondes - une valeur stockée de 50 signifie un temps de retournement réel de 5,0 secondes, non 50. Cette propriété est optionnelle ; son absence n'est pas une violation. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:infra-Switch-leftBranch
@@ -132,6 +135,9 @@ tp-sh:infra-Switch-name
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "name is an optional, purely descriptive label for this switch, only meant to be populated when a more human-readable name is wanted in addition to its own id. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "name ist eine optionale, rein beschreibende Bezeichnung für diese Weiche, die nur ausgefüllt werden soll, wenn zusätzlich zur eigenen id ein besser lesbarer Name gewünscht wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "name est une étiquette optionnelle, purement descriptive, pour cet aiguillage, destinée à n'être renseignée que lorsqu'un nom plus lisible est souhaité en complément de son propre id. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 ### SlipCrossing ######################################################
@@ -197,6 +203,9 @@ tp-sh:infra-SlipCrossing-name
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "name is an optional, purely descriptive label for this slip crossing, only meant to be populated when a more human-readable name is wanted in addition to its own id. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "name ist eine optionale, rein beschreibende Bezeichnung für diese Kreuzungsweiche, die nur ausgefüllt werden soll, wenn zusätzlich zur eigenen id ein besser lesbarer Name gewünscht wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "name est une étiquette optionnelle, purement descriptive, pour cette traversée-jonction, destinée à n'être renseignée que lorsqu'un nom plus lisible est souhaité en complément de son propre id. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 ### Crossing ##########################################################
@@ -242,6 +251,9 @@ tp-sh:infra-Crossing-isSwitchable
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "isSwitchable's own description states that true means this crossing is switchable, and false means it is not - referring to what is sometimes called a switched diamond crossing, as opposed to a fixed one. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Die eigene Beschreibung von isSwitchable besagt, dass true bedeutet, dass diese Kreuzung schaltbar ist, und false, dass sie es nicht ist - bezogen auf das, was manchmal als bewegliche Doppelkreuzung bezeichnet wird, im Gegensatz zu einer starren. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "La propre description de isSwitchable indique que true signifie que ce croisement est mobile, et false qu'il ne l'est pas - faisant référence à ce que l'on appelle parfois une traversée oblique mobile, par opposition à une fixe. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:infra-Crossing-name
@@ -254,6 +266,9 @@ tp-sh:infra-Crossing-name
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "name is an optional, purely descriptive label for this crossing, only meant to be populated when a more human-readable name is wanted in addition to its own id. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "name ist eine optionale, rein beschreibende Bezeichnung für diese Kreuzung, die nur ausgefüllt werden soll, wenn zusätzlich zur eigenen id ein besser lesbarer Name gewünscht wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "name est une étiquette optionnelle, purement descriptive, pour ce croisement, destinée à n'être renseignée que lorsqu'un nom plus lisible est souhaité en complément de son propre id. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 ### Derailer ##########################################################
@@ -301,6 +316,9 @@ tp-sh:infra-Derailer-reversalTime
     sh:datatype xsd:unsignedInt ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "reversalTime is stored with a scaling exponent of -1: the raw stored integer must be multiplied by 0.1 to get the actual physical value in seconds - a stored value of 50 means an actual reversal time of 5.0 seconds, not 50. This property is optional; its absence is not a violation. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "reversalTime wird mit einem Skalierungsexponenten von -1 gespeichert: der roh gespeicherte Ganzzahlwert muss mit 0,1 multipliziert werden, um den tatsächlichen physikalischen Wert in Sekunden zu erhalten - ein gespeicherter Wert von 50 bedeutet eine tatsächliche Umstellzeit von 5,0 Sekunden, nicht 50. Diese Eigenschaft ist optional; ihr Fehlen ist kein Verstoß. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "reversalTime est stocké avec un exposant d'échelle de -1 : l'entier brut stocké doit être multiplié par 0,1 pour obtenir la valeur physique réelle en secondes - une valeur stockée de 50 signifie un temps de retournement réel de 5,0 secondes, non 50. Cette propriété est optionnelle ; son absence n'est pas une violation. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:infra-Derailer-derailToRight
@@ -314,6 +332,9 @@ tp-sh:infra-Derailer-derailToRight
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:infra-Derailer-name
@@ -326,6 +347,9 @@ tp-sh:infra-Derailer-name
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "name is an optional, purely descriptive label, only meant to be populated when a more human-readable name is wanted in addition to the derailer's own id - most derailers are not expected to need one. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "name ist eine optionale, rein beschreibende Bezeichnung, die nur ausgefüllt werden soll, wenn zusätzlich zur eigenen id der Gleissperre ein besser lesbarer Name gewünscht wird - die meisten Gleissperren benötigen voraussichtlich keinen. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "name est une étiquette optionnelle, purement descriptive, destinée à n'être renseignée que lorsqu'un nom plus lisible est souhaité en complément de l'id propre du dispositif de déraillement - la plupart des dispositifs de déraillement ne devraient pas en avoir besoin. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 ### LevelCrossing #####################################################
@@ -370,6 +394,9 @@ tp-sh:infra-LevelCrossing-name
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "name is an optional, purely descriptive label for this level crossing, only meant to be populated when a more human-readable name is wanted in addition to its own id. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "name ist eine optionale, rein beschreibende Bezeichnung für diesen Bahnübergang, die nur ausgefüllt werden soll, wenn zusätzlich zur eigenen id ein besser lesbarer Name gewünscht wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "name est une étiquette optionnelle, purement descriptive, pour ce passage à niveau, destinée à n'être renseignée que lorsqu'un nom plus lisible est souhaité en complément de son propre id. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:infra-LevelCrossing-isProtected
@@ -383,6 +410,9 @@ tp-sh:infra-LevelCrossing-isProtected
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "isProtected's own description states that true means the level crossing is protected, and false means it is unprotected. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Die eigene Beschreibung von isProtected besagt, dass true bedeutet, dass der Bahnübergang gesichert ist, und false, dass er ungesichert ist. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "La propre description de isProtected indique que true signifie que le passage à niveau est protégé, et false qu'il ne l'est pas. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 ### LinearElementSection ##############################################
@@ -427,6 +457,9 @@ tp-sh:infra-LinearElementSection-startOffsetFromOrigin
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "startOffsetFromOrigin is a distance skip, in metres, measured forward from the origin (start) of the LinearElement named in onElement, marking where this section begins. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid number. This check does not compare it against endOffsetFromOrigin, nor does it require it to be non-negative."@en ;
+    era:additionalInfo "startOffsetFromOrigin ist ein Distanzversatz in Metern, gemessen vorwärts vom Ursprung (Anfang) des in onElement genannten LinearElement, der markiert, wo dieser Abschnitt beginnt. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der Wert ist vorhanden, aber keine gültige Zahl. Diese Prüfung vergleicht ihn nicht mit endOffsetFromOrigin, noch verlangt sie, dass er nicht negativ ist."@de ;
+    era:additionalInfo "startOffsetFromOrigin est un décalage de distance, en mètres, mesuré vers l'avant depuis l'origine (le début) du LinearElement nommé dans onElement, marquant où cette section commence. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur est présente mais n'est pas un nombre valide. Cette vérification ne la compare pas à endOffsetFromOrigin, et n'exige pas non plus qu'elle soit non négative."@fr ;
     .
 
 tp-sh:infra-LinearElementSection-endOffsetFromOrigin
@@ -441,6 +474,9 @@ tp-sh:infra-LinearElementSection-endOffsetFromOrigin
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "endOffsetFromOrigin is a distance skip, in metres, measured forward from the origin (start) of the LinearElement named in onElement, marking where this section ends. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid number. This check does not compare it against startOffsetFromOrigin, nor does it require it to stay within the element's own length."@en ;
+    era:additionalInfo "endOffsetFromOrigin ist ein Distanzversatz in Metern, gemessen vorwärts vom Ursprung (Anfang) des in onElement genannten LinearElement, der markiert, wo dieser Abschnitt endet. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der Wert ist vorhanden, aber keine gültige Zahl. Diese Prüfung vergleicht ihn nicht mit startOffsetFromOrigin, noch verlangt sie, dass er innerhalb der eigenen Länge des Elements bleibt."@de ;
+    era:additionalInfo "endOffsetFromOrigin est un décalage de distance, en mètres, mesuré vers l'avant depuis l'origine (le début) du LinearElement nommé dans onElement, marquant où cette section se termine. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur est présente mais n'est pas un nombre valide. Cette vérification ne la compare pas à startOffsetFromOrigin, et n'exige pas non plus qu'elle reste dans la longueur propre de l'élément."@fr ;
     .
 
 tp-sh:infra-LinearElementSection-appliesInBothDirections
@@ -454,6 +490,9 @@ tp-sh:infra-LinearElementSection-appliesInBothDirections
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "appliesInBothDirections indicates whether this section's content is valid only when traversing its LinearElement in the element's own defined direction, or valid regardless of the direction of travel across it - consistent with how 'direction' is used elsewhere in this data model, relative to the element's own orientation rather than any absolute or geographic sense. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean (true/false)."@en ;
+    era:additionalInfo "appliesInBothDirections gibt an, ob der Inhalt dieses Abschnitts nur gilt, wenn sein LinearElement in der eigenen definierten Richtung des Elements durchfahren wird, oder unabhängig von der Fahrtrichtung über es hinweg gilt - konsistent damit, wie 'Richtung' an anderer Stelle in diesem Datenmodell verwendet wird, bezogen auf die eigene Ausrichtung des Elements und nicht in einem absoluten oder geografischen Sinn. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert (true/false)."@de ;
+    era:additionalInfo "appliesInBothDirections indique si le contenu de cette section n'est valide que lorsque son LinearElement est parcouru dans la direction propre définie de l'élément, ou valide quel que soit le sens de circulation le long de celui-ci - cohérent avec la façon dont « direction » est utilisée ailleurs dans ce modèle de données, par rapport à l'orientation propre de l'élément plutôt que dans un sens absolu ou géographique. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur est présente mais n'est pas un booléen authentique (true/false)."@fr ;
     .
 
 ### TrainDetectionSystem ##############################################
@@ -546,6 +585,9 @@ tp-sh:infra-TvpSection-name
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "name is an optional, purely descriptive label for this section, only meant to be populated when a more human-readable name is wanted in addition to its own id. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "name ist eine optionale, rein beschreibende Bezeichnung für diesen Abschnitt, die nur ausgefüllt werden soll, wenn zusätzlich zur eigenen id ein besser lesbarer Name gewünscht wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "name est une étiquette optionnelle, purement descriptive, pour cette section, destinée à n'être renseignée que lorsqu'un nom plus lisible est souhaité en complément de son propre id. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:infra-TvpSection-linkedArea
@@ -631,6 +673,9 @@ tp-sh:infra-TopoArea-taVersionTimestamp
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "taVersionTimestamp records the point in time from which this specific version of the topo-area's data is considered valid - it versions the whole topology container, not any single element within it. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid date-time. A common way the first cause occurs is a property name mismatch in the source data - for example, a similarly-named property such as versionTimestamp (without the ta prefix) being used instead of taVersionTimestamp; the check will report the value as entirely absent even though a value clearly intended to be it is present under the wrong name."@en ;
+    era:additionalInfo "taVersionTimestamp erfasst den Zeitpunkt, ab dem diese konkrete Version der Daten des Topo-Bereichs als gültig gilt - sie versioniert den gesamten Topologie-Container, nicht ein einzelnes Element darin. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein gültiges Datum/Zeit. Eine häufige Ursache für den ersten Fall ist eine falsche Eigenschaftsbezeichnung in den Quelldaten - etwa die Verwendung einer ähnlich benannten Eigenschaft wie versionTimestamp (ohne das Präfix ta) anstelle von taVersionTimestamp; die Prüfung meldet den Wert dann als vollständig fehlend, obwohl ein offensichtlich dafür vorgesehener Wert unter dem falschen Namen vorhanden ist."@de ;
+    era:additionalInfo "taVersionTimestamp enregistre le moment à partir duquel cette version précise des données de la zone topologique est considérée comme valide - elle versionne l'ensemble du conteneur de topologie, non un élément individuel qu'il contient. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas une date-heure valide. Une cause fréquente du premier cas est une incohérence de nom de propriété dans les données source - par exemple l'utilisation d'une propriété au nom similaire comme versionTimestamp (sans le préfixe ta) au lieu de taVersionTimestamp ; la vérification signale alors la valeur comme totalement absente, alors qu'une valeur manifestement destinée à ce champ est présente sous le mauvais nom."@fr ;
     .
 
 tp-sh:infra-TopoArea-linearElements
@@ -671,6 +716,9 @@ tp-sh:infra-TopoArea-name
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "name is an optional, purely descriptive label for this topo-area, only meant to be populated when a more human-readable name is wanted in addition to its own id. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "name ist eine optionale, rein beschreibende Bezeichnung für diesen Topo-Bereich, die nur ausgefüllt werden soll, wenn zusätzlich zur eigenen id ein besser lesbarer Name gewünscht wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "name est une étiquette optionnelle, purement descriptive, pour cette zone topologique, destinée à n'être renseignée que lorsqu'un nom plus lisible est souhaité en complément de son propre id. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 ### NetRelation #######################################################
@@ -733,6 +781,9 @@ tp-sh:infra-NetRelation-isOnOriginOfElementA
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean. This specifies which end of elementA the relation connects to: true means anchored at elementA's origin end, false means its other end. This property has no meaning on its own - it only makes sense read together with elementA."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert. Dies legt fest, an welchem Ende von elementA die Relation ansetzt: true bedeutet Verankerung am Ursprungsende von elementA, false am anderen Ende. Diese Eigenschaft hat für sich genommen keine Bedeutung - sie ergibt nur zusammen mit elementA Sinn."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique. Ceci précise à quelle extrémité de elementA la relation se rattache : true signifie un ancrage à l'extrémité d'origine de elementA, false à son autre extrémité. Cette propriété n'a pas de sens en elle-même - elle n'en prend qu'associée à elementA."@fr ;
     .
 
 tp-sh:infra-NetRelation-isOnOriginOfElementB
@@ -746,6 +797,9 @@ tp-sh:infra-NetRelation-isOnOriginOfElementB
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean. This specifies which end of elementB the relation connects to: true means anchored at elementB's origin end, false means its other end. This property has no meaning on its own - it only makes sense read together with elementB."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert. Dies legt fest, an welchem Ende von elementB die Relation ansetzt: true bedeutet Verankerung am Ursprungsende von elementB, false am anderen Ende. Diese Eigenschaft hat für sich genommen keine Bedeutung - sie ergibt nur zusammen mit elementB Sinn."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique. Ceci précise à quelle extrémité de elementB la relation se rattache : true signifie un ancrage à l'extrémité d'origine de elementB, false à son autre extrémité. Cette propriété n'a pas de sens en elle-même - elle n'en prend qu'associée à elementB."@fr ;
     .
 
 ### TopologicalCoordinate #############################################
@@ -788,6 +842,9 @@ tp-sh:infra-TopologicalCoordinate-offsetFromOrigin
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "offsetFromOrigin is the distance, in metres, from the origin of the LinearElement named in the sibling onLinearElement property, to this specific point. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid number. This check does not require the value to stay within the bounds of the element's own length."@en ;
+    era:additionalInfo "offsetFromOrigin ist die Distanz in Metern vom Ursprung des in der Schwestereigenschaft onLinearElement genannten LinearElement bis zu diesem konkreten Punkt. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der Wert ist vorhanden, aber keine gültige Zahl. Diese Prüfung verlangt nicht, dass der Wert innerhalb der Grenzen der eigenen Länge des Elements bleibt."@de ;
+    era:additionalInfo "offsetFromOrigin est la distance, en mètres, depuis l'origine du LinearElement nommé dans la propriété sœur onLinearElement, jusqu'à ce point précis. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur est présente mais n'est pas un nombre valide. Cette vérification n'exige pas que la valeur reste dans les limites de la longueur propre de l'élément."@fr ;
     .
 
 ### NetPointReference #################################################
@@ -861,6 +918,9 @@ tp-sh:infra-LinearElement-lengthOfNetLinearElement
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "lengthOfNetLinearElement is the total length of this element's own track centre line, measured in metres from its origin to its far end. This value is what every position-and-offset check elsewhere in this data model is ultimately bounded against - a KilometricPost's pos, a StaticSpeedLimit's position, a TopologicalCoordinate's offsetFromOrigin, and many others all rely on this being present and correct to know where the far end of their own element actually is. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid number. This check does not require the value to be positive; a zero or negative length is a separate, unrelated check."@en ;
+    era:additionalInfo "lengthOfNetLinearElement ist die Gesamtlänge der eigenen Gleisachse dieses Elements, gemessen in Metern von seinem Ursprung bis zu seinem fernen Ende. Dieser Wert ist das, wogegen jede Positions- und Offset-Prüfung an anderer Stelle in diesem Datenmodell letztlich begrenzt wird - pos eines KilometricPost, die Position eines StaticSpeedLimit, offsetFromOrigin einer TopologicalCoordinate und viele andere verlassen sich darauf, dass dieser Wert vorhanden und korrekt ist, um zu wissen, wo das ferne Ende ihres eigenen Elements tatsächlich liegt. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zahl. Diese Prüfung verlangt nicht, dass der Wert positiv ist; eine Länge von null oder negativ ist eine separate, unabhängige Prüfung."@de ;
+    era:additionalInfo "lengthOfNetLinearElement est la longueur totale de l'axe de voie propre à cet élément, mesurée en mètres depuis son origine jusqu'à son extrémité éloignée. Cette valeur est celle par rapport à laquelle toute vérification de position et de décalage ailleurs dans ce modèle de données est en définitive bornée - le pos d'un KilometricPost, la position d'un StaticSpeedLimit, l'offsetFromOrigin d'une TopologicalCoordinate, et bien d'autres, dépendent tous de sa présence et de son exactitude pour savoir où se situe réellement l'extrémité éloignée de leur propre élément. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un nombre valide. Cette vérification n'exige pas que la valeur soit positive ; une longueur nulle ou négative est une vérification distincte et sans rapport."@fr ;
     .
 
 tp-sh:infra-LinearElement-name
@@ -873,6 +933,9 @@ tp-sh:infra-LinearElement-name
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "name is an optional, purely descriptive label for this linear element, only meant to be populated when a more human-readable name is wanted in addition to its own id. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "name ist eine optionale, rein beschreibende Bezeichnung für dieses lineare Element, die nur ausgefüllt werden soll, wenn zusätzlich zur eigenen id ein besser lesbarer Name gewünscht wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "name est une étiquette optionnelle, purement descriptive, pour cet élément linéaire, destinée à n'être renseignée que lorsqu'un nom plus lisible est souhaité en complément de son propre id. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 ### NetLinearReference ################################################
@@ -1164,6 +1227,9 @@ tp-sh:SwitchableTracksideAsset-name
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "name is an optional, purely descriptive label for this asset, only meant to be populated when a more human-readable name is wanted in addition to its own id. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "name ist eine optionale, rein beschreibende Bezeichnung für dieses Asset, die nur ausgefüllt werden soll, wenn zusätzlich zur eigenen id ein besser lesbarer Name gewünscht wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "name est une étiquette optionnelle, purement descriptive, pour cet actif, destinée à n'être renseignée que lorsqu'un nom plus lisible est souhaité en complément de son propre id. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:SwitchableTracksideAsset-switchableTracksideAssetSections
@@ -1222,6 +1288,9 @@ tp-sh:SwitchableTracksideAsset-switchableTracksideAssetsDependencies
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:unsignedInt ;
     sh:severity sh:Violation ;
+    era:additionalInfo "This property's own description states it is only meant to be used when dependenciesType on this same object is specific - it encodes a row-wise bit matrix, where each column corresponds to the index of an element in the DriveProtectionSectionGroup, 0 means that element may not be used and 1 means it may, and each row of the matrix describes one valid overall state of the group. This property has neither minCount nor maxCount, so its own absence is not itself a problem, and it may carry several values (rows). There is no custom message defined for this specific check, so the validation engine's own generic text is shown if a value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung dieser Eigenschaft besagt, dass sie nur verwendet werden soll, wenn dependenciesType an demselben Objekt specific ist - sie kodiert eine zeilenweise Bit-Matrix, bei der jede Spalte dem Index eines Elements in der DriveProtectionSectionGroup entspricht, 0 bedeutet, dass dieses Element nicht verwendet werden darf, und 1, dass es verwendet werden darf, und jede Zeile der Matrix beschreibt einen gültigen Gesamtzustand der Gruppe. Diese Eigenschaft hat weder minCount noch maxCount, ihr eigenes Fehlen ist also kein Problem für sich, und sie kann mehrere Werte (Zeilen) tragen. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine angezeigt, wenn ein vorhandener Wert keine gültige vorzeichenlose Ganzzahl ist."@de ;
+    era:additionalInfo "La propre description de cette propriété indique qu'elle n'est censée être utilisée que lorsque dependenciesType sur ce même objet est specific - elle code une matrice de bits ligne par ligne, où chaque colonne correspond à l'index d'un élément dans le DriveProtectionSectionGroup, 0 signifiant que cet élément ne peut pas être utilisé et 1 qu'il le peut, et chaque ligne de la matrice décrit un état global valide du groupe. Cette propriété n'a ni minCount ni maxCount, son absence n'est donc pas un problème en soi, et elle peut porter plusieurs valeurs (lignes). Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché si une valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:SwitchableTracksideAsset-runTime
@@ -1237,6 +1306,9 @@ tp-sh:SwitchableTracksideAsset-runTime
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "runTime is stored with a scaling exponent of -1: the raw stored integer must be multiplied by 0.1 to get the actual physical value in seconds - a stored value of 50 means an actual run time of 5.0 seconds, not 50. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "runTime wird mit einem Skalierungsexponenten von -1 gespeichert: der roh gespeicherte Ganzzahlwert muss mit 0,1 multipliziert werden, um den tatsächlichen physikalischen Wert in Sekunden zu erhalten - ein gespeicherter Wert von 50 bedeutet eine tatsächliche Laufzeit von 5,0 Sekunden, nicht 50. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "runTime est stocké avec un exposant d'échelle de -1 : l'entier brut stocké doit être multiplié par 0,1 pour obtenir la valeur physique réelle en secondes - une valeur stockée de 50 signifie un temps de fonctionnement réel de 5,0 secondes, non 50. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 ### SwitchableTracksideAssetSection ###################################
@@ -1264,6 +1336,9 @@ tp-sh:SwitchableTracksideAssetSection-name
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "name is an optional, purely descriptive label for this section, only meant to be populated when a more human-readable name is wanted in addition to its own id. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "name ist eine optionale, rein beschreibende Bezeichnung für diesen Abschnitt, die nur ausgefüllt werden soll, wenn zusätzlich zur eigenen id ein besser lesbarer Name gewünscht wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "name est une étiquette optionnelle, purement descriptive, pour cette section, destinée à n'être renseignée que lorsqu'un nom plus lisible est souhaité en complément de son propre id. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:SwitchableTracksideAssetSection-linearElementSection
@@ -1294,6 +1369,9 @@ tp-sh:SwitchableTracksideAssetSection-maxFlankProtectionSpeed
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "maxFlankProtectionSpeed's own description ties this specifically to the case where the asset is set to provide flank protection - guarding against a train straying into an adjacent, potentially conflicting route - rather than to its normal running speed. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von maxFlankProtectionSpeed verknüpft dies speziell mit dem Fall, dass das Asset zum Flankenschutz eingestellt ist - dem Schutz davor, dass ein Zug in eine benachbarte, möglicherweise konfliktäre Fahrstraße gerät -, nicht mit seiner normalen Fahrgeschwindigkeit. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "La propre description de maxFlankProtectionSpeed relie ceci spécifiquement au cas où l'actif est configuré pour assurer une protection de flanc - protéger contre le fait qu'un train dévie vers un itinéraire adjacent potentiellement conflictuel - plutôt qu'à sa vitesse de marche normale. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 ### FoulingSection ####################################################
@@ -1322,6 +1400,9 @@ tp-sh:FoulingSection-name
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "name is an optional, purely descriptive label for this fouling section, only meant to be populated when a more human-readable name is wanted in addition to its own id. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "name ist eine optionale, rein beschreibende Bezeichnung für diesen Grenzbereich, die nur ausgefüllt werden soll, wenn zusätzlich zur eigenen id ein besser lesbarer Name gewünscht wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "name est une étiquette optionnelle, purement descriptive, pour cette section d'encombrement, destinée à n'être renseignée que lorsqu'un nom plus lisible est souhaité en complément de son propre id. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:FoulingSection-linearReferences
@@ -1601,6 +1682,9 @@ tp-sh:SwitchConfigurationData-conTmaxPointOperation
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "conTmaxPointOperation's own description explains this is a configurable timer that starts when the move command is sent to the point machines, and it defines the maximum time span allowed for the point to reach an end position before that is considered an error. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von conTmaxPointOperation erklärt, dass dies ein konfigurierbarer Timer ist, der beim Senden des Stellbefehls an die Weichenantriebe startet und die maximale Zeitspanne festlegt, innerhalb derer die Weiche eine Endlage erreichen muss, bevor dies als Fehler gilt. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "La propre description de conTmaxPointOperation explique qu'il s'agit d'un minuteur configurable qui démarre à l'envoi de la commande de mouvement aux moteurs d'aiguille, et qui définit la durée maximale autorisée pour que l'aiguille atteigne une position finale avant que cela ne soit considéré comme une erreur. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:SwitchConfigurationData-numberPointMachine
@@ -1614,6 +1698,9 @@ tp-sh:SwitchConfigurationData-numberPointMachine
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:SwitchConfigurationData-unintended
@@ -1627,6 +1714,9 @@ tp-sh:SwitchConfigurationData-unintended
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "unintended's own description states this defines whether the switch can detect and report an unintended position change - not whether it has ever actually experienced one. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Die eigene Beschreibung von unintended besagt, dass dies festlegt, ob die Weiche eine unbeabsichtigte Lageänderung erkennen und melden kann - nicht, ob sie jemals tatsächlich eine solche erfahren hat. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "La propre description de unintended indique que ceci définit si l'aiguillage peut détecter et signaler un changement de position non intentionnel - non s'il en a effectivement déjà connu un. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:SwitchConfigurationData-redrive
@@ -1640,6 +1730,9 @@ tp-sh:SwitchConfigurationData-redrive
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "redrive's own description states this defines whether the switch is configured to perform a redrive - an automatic repeat of the move command - rather than whether a redrive has actually occurred. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Die eigene Beschreibung von redrive besagt, dass dies festlegt, ob die Weiche zur Durchführung einer Nachstellung konfiguriert ist - einer automatischen Wiederholung des Stellbefehls - statt ob tatsächlich bereits eine Nachstellung stattgefunden hat. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "La propre description de redrive indique que ceci définit si l'aiguillage est configuré pour effectuer une reprise de commande - une répétition automatique de la commande de mouvement - plutôt que si une reprise a effectivement eu lieu. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:SwitchConfigurationData-switchMachineConfiguration
@@ -1680,6 +1773,9 @@ tp-sh:SwitchMachineConfiguration-switchMachineType
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:SwitchMachineConfiguration-interfaceType
@@ -1693,6 +1789,9 @@ tp-sh:SwitchMachineConfiguration-interfaceType
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:SwitchMachineConfiguration-crucial
@@ -1706,6 +1805,9 @@ tp-sh:SwitchMachineConfiguration-crucial
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "crucial's own description states this defines whether the switch machine is crucial or non-crucial to safe operation. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Die eigene Beschreibung von crucial besagt, dass dies festlegt, ob der Weichenantrieb sicherheitsrelevant oder nicht sicherheitsrelevant ist. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "La propre description de crucial indique que ceci définit si le moteur d'aiguille est critique ou non critique pour la sécurité de l'exploitation. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 ### LxConfigurationData ###############################################
@@ -1761,6 +1863,9 @@ tp-sh:LxConfigurationData-conTmaxClosureTimer
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "conTmaxClosureTimer's own description states this permissible activation duration is configurable and specific to the particular location, not a fixed system-wide constant. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von conTmaxClosureTimer besagt, dass diese zulässige Aktivierungsdauer konfigurierbar und spezifisch für den jeweiligen Standort ist, keine feste systemweite Konstante. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "La propre description de conTmaxClosureTimer indique que cette durée d'activation admissible est configurable et propre à l'emplacement concerné, non une constante fixe à l'échelle du système. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:LxConfigurationData-conTPdiLossDeactivationTimer
@@ -1774,6 +1879,9 @@ tp-sh:LxConfigurationData-conTPdiLossDeactivationTimer
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "conTPdiLossDeactivationTimer's own description explains this specifically covers the delay before deactivating level crossing protection after an activation was triggered by a loss of the safe communication protocol connection, and that this value is configurable per location. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von conTPdiLossDeactivationTimer erklärt, dass dies speziell die Verzögerung vor der Deaktivierung der Bahnübergangssicherung nach einer durch Verlust der sicheren Kommunikationsverbindung ausgelösten Aktivierung betrifft, und dass dieser Wert je Standort konfigurierbar ist. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "La propre description de conTPdiLossDeactivationTimer explique que ceci couvre spécifiquement le délai avant de désactiver la protection du passage à niveau après une activation déclenchée par une perte de la connexion de protocole de communication sûre, et que cette valeur est configurable par emplacement. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:LxConfigurationData-closureTimeUsed
@@ -1787,6 +1895,9 @@ tp-sh:LxConfigurationData-closureTimeUsed
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:LxConfigurationData-preActivation
@@ -1800,6 +1911,9 @@ tp-sh:LxConfigurationData-preActivation
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "preActivation's own description states this defines whether the pre-activation activation type is used at this level crossing. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Die eigene Beschreibung von preActivation besagt, dass dies festlegt, ob der Aktivierungstyp Vorauslösung an diesem Bahnübergang verwendet wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "La propre description de preActivation indique que ceci définit si le type d'activation par préactivation est utilisé à ce passage à niveau. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:LxConfigurationData-detectionElementUsed
@@ -1813,6 +1927,9 @@ tp-sh:LxConfigurationData-detectionElementUsed
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:LxConfigurationData-detectionElementsNumber
@@ -1827,6 +1944,9 @@ tp-sh:LxConfigurationData-detectionElementsNumber
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:LxConfigurationData-indexDetectionElemtents
@@ -1838,6 +1958,9 @@ tp-sh:LxConfigurationData-indexDetectionElemtents
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:unsignedInt ;
     sh:severity sh:Violation ;
+    era:additionalInfo "This property has neither minCount nor maxCount, so being absent entirely or carrying several values are both valid. There is no custom message defined for this specific check, so the validation engine's own generic text is shown if a value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Diese Eigenschaft hat weder minCount noch maxCount, ein vollständiges Fehlen oder mehrere Werte sind also beide gültig. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine angezeigt, wenn ein vorhandener Wert keine gültige vorzeichenlose Ganzzahl ist."@de ;
+    era:additionalInfo "Cette propriété n'a ni minCount ni maxCount, une absence totale ou plusieurs valeurs sont donc toutes deux valides. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché si une valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:LxConfigurationData-obstacleDetectionUsed
@@ -1851,6 +1974,9 @@ tp-sh:LxConfigurationData-obstacleDetectionUsed
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:LxConfigurationData-lcIsolationFunctionUsed
@@ -1864,6 +1990,9 @@ tp-sh:LxConfigurationData-lcIsolationFunctionUsed
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:LxConfigurationData-localOperationHandover
@@ -1877,6 +2006,9 @@ tp-sh:LxConfigurationData-localOperationHandover
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:LxConfigurationData-indexLocalOperationsHandovers
@@ -1888,6 +2020,9 @@ tp-sh:LxConfigurationData-indexLocalOperationsHandovers
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:unsignedInt ;
     sh:severity sh:Violation ;
+    era:additionalInfo "This property has neither minCount nor maxCount, so being absent entirely or carrying several values are both valid. There is no custom message defined for this specific check, so the validation engine's own generic text is shown if a value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Diese Eigenschaft hat weder minCount noch maxCount, ein vollständiges Fehlen oder mehrere Werte sind also beide gültig. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine angezeigt, wenn ein vorhandener Wert keine gültige vorzeichenlose Ganzzahl ist."@de ;
+    era:additionalInfo "Cette propriété n'a ni minCount ni maxCount, une absence totale ou plusieurs valeurs sont donc toutes deux valides. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché si une valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:LxConfigurationData-triggersCriticalFailure
@@ -1899,6 +2034,9 @@ tp-sh:LxConfigurationData-triggersCriticalFailure
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:severity sh:Violation ;
+    era:additionalInfo "triggersCriticalFailure's own description states this holds the list of triggers that would result in a critical failure. This property has neither minCount nor maxCount, so being absent entirely or carrying several values are both valid. There is no custom message defined for this specific check, so the validation engine's own generic text is shown if a value present is not a valid string."@en ;
+    era:additionalInfo "Die eigene Beschreibung von triggersCriticalFailure besagt, dass diese die Liste der Auslöser enthält, die zu einem kritischen Fehler führen würden. Diese Eigenschaft hat weder minCount noch maxCount, ein vollständiges Fehlen oder mehrere Werte sind also beide gültig. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine angezeigt, wenn ein vorhandener Wert keine gültige Zeichenkette ist."@de ;
+    era:additionalInfo "La propre description de triggersCriticalFailure indique que ceci contient la liste des déclencheurs qui entraîneraient une défaillance critique. Cette propriété n'a ni minCount ni maxCount, une absence totale ou plusieurs valeurs sont donc toutes deux valides. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché si une valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:LxConfigurationData-triggersNonCriticalFailure
@@ -1910,6 +2048,9 @@ tp-sh:LxConfigurationData-triggersNonCriticalFailure
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:severity sh:Violation ;
+    era:additionalInfo "triggersNonCriticalFailure's own description states this holds the list of triggers that would result in a non-critical failure, as distinct from the sibling property triggersCriticalFailure. This property has neither minCount nor maxCount, so being absent entirely or carrying several values are both valid. There is no custom message defined for this specific check, so the validation engine's own generic text is shown if a value present is not a valid string."@en ;
+    era:additionalInfo "Die eigene Beschreibung von triggersNonCriticalFailure besagt, dass diese die Liste der Auslöser enthält, die zu einem nicht kritischen Fehler führen würden, im Unterschied zur Schwestereigenschaft triggersCriticalFailure. Diese Eigenschaft hat weder minCount noch maxCount, ein vollständiges Fehlen oder mehrere Werte sind also beide gültig. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine angezeigt, wenn ein vorhandener Wert keine gültige Zeichenkette ist."@de ;
+    era:additionalInfo "La propre description de triggersNonCriticalFailure indique que ceci contient la liste des déclencheurs qui entraîneraient une défaillance non critique, à distinguer de la propriété sœur triggersCriticalFailure. Cette propriété n'a ni minCount ni maxCount, une absence totale ou plusieurs valeurs sont donc toutes deux valides. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché si une valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:LxConfigurationData-localDeactivationRequests
@@ -1923,6 +2064,9 @@ tp-sh:LxConfigurationData-localDeactivationRequests
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:LxConfigurationData-indexLocalDeactivationRequests
@@ -1935,6 +2079,9 @@ tp-sh:LxConfigurationData-indexLocalDeactivationRequests
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:unsignedInt ;
     sh:severity sh:Violation ;
+    era:additionalInfo "This property has neither minCount nor maxCount, so being absent entirely or carrying several values are both valid. There is no custom message defined for this specific check, so the validation engine's own generic text is shown if a value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Diese Eigenschaft hat weder minCount noch maxCount, ein vollständiges Fehlen oder mehrere Werte sind also beide gültig. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine angezeigt, wenn ein vorhandener Wert keine gültige vorzeichenlose Ganzzahl ist."@de ;
+    era:additionalInfo "Cette propriété n'a ni minCount ni maxCount, une absence totale ou plusieurs valeurs sont donc toutes deux valides. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché si une valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 ### TrainDetectionSystemConfigurationData #############################
@@ -1960,6 +2107,9 @@ tp-sh:TrainDetectionSystemConfigurationData-abilityToForceTvpsClear
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "abilityToForceTvpsClear's own description states this covers forcing a TVPS to clear while it is in the disturbed state for operational reasons, according to Variant A or B - the actual functional difference between those two variants is explained separately, in section Eu.TDS.6525, not here. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Die eigene Beschreibung von abilityToForceTvpsClear besagt, dass dies das Freischalten einer TVPS im gestörten Zustand aus betrieblichen Gründen betrifft, gemäß Variante A oder B - der tatsächliche funktionale Unterschied zwischen diesen beiden Varianten wird separat in Abschnitt Eu.TDS.6525 erklärt, nicht hier. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "La propre description de abilityToForceTvpsClear indique que ceci couvre le forçage d'une TVPS à l'état libre alors qu'elle est perturbée, pour des raisons opérationnelles, selon la variante A ou B - la différence fonctionnelle réelle entre ces deux variantes est expliquée séparément, dans la section Eu.TDS.6525, non ici. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:TrainDetectionSystemConfigurationData-tvpSectionConfigurationData
@@ -2028,6 +2178,9 @@ tp-sh:TrainDetectorConfigurationData-directionOfPassing
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "directionOfPassing's own description states this defines the direction a train passes relative to the train detector itself, not an absolute or geographic direction. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "Die eigene Beschreibung von directionOfPassing besagt, dass dies die Richtung definiert, in der ein Zug relativ zum Zugdetektor selbst vorbeifährt, keine absolute oder geografische Richtung. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "La propre description de directionOfPassing indique que ceci définit la direction dans laquelle un train passe par rapport au détecteur de train lui-même, non une direction absolue ou géographique. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 ### TvpSectionConfigurationData #######################################
@@ -2076,6 +2229,9 @@ tp-sh:TvpSectionConfigurationData-drfcCommandUsed
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "drfcCommandUsed's own description states this is configured per each TVPS and per source of the command - either the electronic interlocking or a maintainer - so the same command can genuinely be enabled from one source and disabled from another. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Die eigene Beschreibung von drfcCommandUsed besagt, dass dies je TVPS und je Quelle des Befehls konfiguriert wird - entweder das elektronische Stellwerk oder eine Instandhaltungskraft - sodass derselbe Befehl von einer Quelle aus tatsächlich freigegeben und von einer anderen aus gesperrt sein kann. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "La propre description de drfcCommandUsed indique que ceci est configuré par TVPS et par source de la commande - soit l'enclenchement électronique, soit un agent de maintenance - de sorte que la même commande peut réellement être activée depuis une source et désactivée depuis une autre. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:TvpSectionConfigurationData-uflCommandUsed
@@ -2089,6 +2245,9 @@ tp-sh:TvpSectionConfigurationData-uflCommandUsed
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "uflCommandUsed's own description states this is configured per each TVPS individually. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Die eigene Beschreibung von uflCommandUsed besagt, dass dies für jede TVPS einzeln konfiguriert wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "La propre description de uflCommandUsed indique que ceci est configuré individuellement pour chaque TVPS. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:TvpSectionConfigurationData-permissibleFcModes
@@ -2102,6 +2261,9 @@ tp-sh:TvpSectionConfigurationData-permissibleFcModes
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "permissibleFcModes's own description states this is configured per each TVPS and per source of the command - the electronic interlocking, a maintainer, or internally - so different sources can genuinely have different permissible force-clear modes for the same section. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "Die eigene Beschreibung von permissibleFcModes besagt, dass dies je TVPS und je Quelle des Befehls konfiguriert wird - das elektronische Stellwerk, eine Instandhaltungskraft oder intern -, sodass unterschiedliche Quellen für denselben Abschnitt tatsächlich unterschiedliche zulässige Freischaltmodi haben können. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "La propre description de permissibleFcModes indique que ceci est configuré par TVPS et par source de la commande - l'enclenchement électronique, un agent de maintenance, ou en interne - de sorte que différentes sources peuvent réellement avoir des modes de forçage permis différents pour la même section. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:TvpSectionConfigurationData-conTInhibitionTimer
@@ -2116,6 +2278,9 @@ tp-sh:TvpSectionConfigurationData-conTInhibitionTimer
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "conTInhibitionTimer's own description explains the mechanism in detail: it is the configurable delay between detecting a passing event on a TVPS (an incoming wheel, an outgoing wheel, or an unidentified pattern) and the moment that TVPS's state is considered stable. During this delay, all FC, DRFC and UFL commands sent to the TVPS are rejected - the one exception being Cd_Cancel, which is not rejected during the inhibition time. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von conTInhibitionTimer erklärt den Mechanismus im Detail: es ist die konfigurierbare Verzögerung zwischen der Erkennung eines Durchfahrtsereignisses an einer TVPS (einkommendes Rad, ausgehendes Rad oder ein nicht identifiziertes Muster) und dem Zeitpunkt, ab dem der Zustand dieser TVPS als stabil gilt. Während dieser Verzögerung werden alle an die TVPS gesendeten FC-, DRFC- und UFL-Befehle abgelehnt - mit der einen Ausnahme Cd_Cancel, das während der Sperrzeit nicht abgelehnt wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "La propre description de conTInhibitionTimer explique le mécanisme en détail : c'est le délai configurable entre la détection d'un événement de passage sur une TVPS (roue entrante, roue sortante, ou motif non identifié) et le moment où l'état de cette TVPS est considéré comme stable. Pendant ce délai, toutes les commandes FC, DRFC et UFL envoyées à la TVPS sont rejetées - la seule exception étant Cd_Cancel, qui n'est pas rejetée pendant le temps d'inhibition. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:TvpSectionConfigurationData-conTDealyOfNotificationOfAvailability
@@ -2130,6 +2295,9 @@ tp-sh:TvpSectionConfigurationData-conTDealyOfNotificationOfAvailability
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "conTDealyOfNotificationOfAvailability's own description states this is a configurable delay applied specifically to reporting a section as vacant to the interlocking, following the moment the TVPS itself changes state from occupied to vacant - the report can lag genuinely behind the underlying state change. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von conTDealyOfNotificationOfAvailability besagt, dass dies eine konfigurierbare Verzögerung ist, die speziell auf die Meldung eines Abschnitts als frei an das Stellwerk angewendet wird, nach dem Zeitpunkt, an dem die TVPS selbst ihren Zustand von belegt zu frei ändert - die Meldung kann tatsächlich hinter der zugrunde liegenden Zustandsänderung zurückbleiben. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "La propre description de conTDealyOfNotificationOfAvailability indique qu'il s'agit d'un délai configurable appliqué spécifiquement au signalement d'une section comme libre à l'enclenchement, après le moment où la TVPS elle-même passe de l'état occupé à libre - le signalement peut réellement accuser un retard par rapport au changement d'état sous-jacent. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:TvpSectionConfigurationData-conTMaxfcPOrFcPA
@@ -2144,6 +2312,9 @@ tp-sh:TvpSectionConfigurationData-conTMaxfcPOrFcPA
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "conTMaxfcPOrFcPA's own description states this configurable time defines the maximum time allowed between detecting a sweeping train and confirming that the sweeping was successful. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von conTMaxfcPOrFcPA besagt, dass diese konfigurierbare Zeit die maximal zulässige Zeit zwischen der Erkennung eines befahrenden Räumzuges und der Bestätigung der erfolgreichen Räumung festlegt. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "La propre description de conTMaxfcPOrFcPA indique que ce temps configurable définit le temps maximal autorisé entre la détection d'un train de balayage et la confirmation que le balayage a réussi. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:TvpSectionConfigurationData-conTMinfcPOrFcPA
@@ -2158,6 +2329,9 @@ tp-sh:TvpSectionConfigurationData-conTMinfcPOrFcPA
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "conTMinfcPOrFcPA's own description states this configurable time starts counting from the moment the first incoming wheel is detected. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von conTMinfcPOrFcPA besagt, dass diese konfigurierbare Zeit ab dem Zeitpunkt zu zählen beginnt, an dem das erste einkommende Rad erkannt wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "La propre description de conTMinfcPOrFcPA indique que ce temps configurable commence à compter à partir du moment où la première roue entrante est détectée. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:TvpSectionConfigurationData-conTTdpDelay
@@ -2172,6 +2346,9 @@ tp-sh:TvpSectionConfigurationData-conTTdpDelay
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "conTTdpDelay's own description states this configurable delay defines the duration of a passed TDP event before the report changes to indicate the TDP is in the 'not passed' state - the report does not switch immediately. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von conTTdpDelay besagt, dass diese konfigurierbare Verzögerung die Dauer eines Ereignisses eines passierten TDP festlegt, bevor die Meldung wechselt, um anzuzeigen, dass der TDP im Zustand 'nicht passiert' ist - die Meldung wechselt nicht sofort. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "La propre description de conTTdpDelay indique que ce délai configurable définit la durée d'un événement de TDP franchi avant que le signalement ne change pour indiquer que le TDP est dans l'état « non franchi » - le signalement ne bascule pas immédiatement. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:TvpSectionConfigurationData-conTTdpUnidentifiedPatternDelay
@@ -2186,6 +2363,9 @@ tp-sh:TvpSectionConfigurationData-conTTdpUnidentifiedPatternDelay
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "conTTdpUnidentifiedPatternDelay's own description states this configurable delay runs from the moment an unidentified pattern is detected until the TDP is actually reported as disturbed - the disturbed report is not instantaneous. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von conTTdpUnidentifiedPatternDelay besagt, dass diese konfigurierbare Verzögerung ab dem Zeitpunkt läuft, an dem ein nicht identifiziertes Muster erkannt wird, bis der TDP tatsächlich als gestört gemeldet wird - die Störungsmeldung erfolgt nicht sofort. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "La propre description de conTTdpUnidentifiedPatternDelay indique que ce délai configurable court à partir du moment où un motif non identifié est détecté jusqu'à ce que le TDP soit effectivement signalé comme perturbé - le signalement de perturbation n'est pas instantané. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 ### GenericIOConfigurationData ########################################
@@ -2212,6 +2392,9 @@ tp-sh:GenericIOConfigurationData-conTFlashPeriod
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:GenericIOConfigurationData-outputChannelConfigurationData
@@ -2271,6 +2454,9 @@ tp-sh:OutputChannelConfigurationData-type
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:OutputChannelConfigurationData-physicalOutputMonitored
@@ -2284,6 +2470,9 @@ tp-sh:OutputChannelConfigurationData-physicalOutputMonitored
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:OutputChannelConfigurationData-flashing
@@ -2297,6 +2486,9 @@ tp-sh:OutputChannelConfigurationData-flashing
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:OutputChannelConfigurationData-conTActivationDelayOn
@@ -2311,6 +2503,9 @@ tp-sh:OutputChannelConfigurationData-conTActivationDelayOn
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "conTActivationDelayOn's own description states this activation delay is configurable separately for each output channel, and separately again for switching on versus switching off, to support special applications. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von conTActivationDelayOn besagt, dass diese Einschaltverzögerung für jeden Ausgangskanal separat konfigurierbar ist, und zusätzlich separat für Ein- gegenüber Ausschalten, um besondere Anwendungen zu unterstützen. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "La propre description de conTActivationDelayOn indique que ce délai d'activation est configurable séparément pour chaque canal de sortie, et à nouveau séparément pour l'activation par rapport à la désactivation, afin de prendre en charge des applications spéciales. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:OutputChannelConfigurationData-conTActivationDelayOff
@@ -2325,6 +2520,9 @@ tp-sh:OutputChannelConfigurationData-conTActivationDelayOff
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "conTActivationDelayOff's own description ties it to the same underlying activation delay setting as conTActivationDelayOn, but specifically representing the delay applied when switching the output channel off. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von conTActivationDelayOff verknüpft sie mit derselben zugrunde liegenden Aktivierungsverzögerungseinstellung wie conTActivationDelayOn, stellt jedoch speziell die beim Ausschalten des Ausgangskanals angewandte Verzögerung dar. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "La propre description de conTActivationDelayOff la relie au même paramètre de délai d'activation sous-jacent que conTActivationDelayOn, mais représentant spécifiquement le délai appliqué lors de la désactivation du canal de sortie. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:OutputChannelConfigurationData-conTFlashDutyCycle
@@ -2339,6 +2537,9 @@ tp-sh:OutputChannelConfigurationData-conTFlashDutyCycle
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 ### InputChannelConfigurationData #####################################
@@ -2369,6 +2570,9 @@ tp-sh:InputChannelConfigurationData-type
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:InputChannelConfigurationData-physicalOutputMonitored
@@ -2382,6 +2586,9 @@ tp-sh:InputChannelConfigurationData-physicalOutputMonitored
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:InputChannelConfigurationData-conTMessageDelayTime
@@ -2395,6 +2602,9 @@ tp-sh:InputChannelConfigurationData-conTMessageDelayTime
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "conTMessageDelayTime's own description states this delay is configurable separately for each input channel, and separately again for reporting switching on versus switching off, to support special applications. Its declared datatype is boolean, even though its own description and unit-free numeric framing suggest a timing value was intended - this looks like a modelling inconsistency worth being aware of. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a genuine boolean."@en ;
+    era:additionalInfo "Die eigene Beschreibung von conTMessageDelayTime besagt, dass diese Verzögerung für jeden Eingangskanal separat konfigurierbar ist, und zusätzlich separat für die Meldung von Ein- gegenüber Ausschalten, um besondere Anwendungen zu unterstützen. Ihr deklarierter Datentyp ist boolean, obwohl die eigene Beschreibung und die einheitenfreie numerische Formulierung auf einen beabsichtigten Zeitwert hindeuten - dies wirkt wie eine beachtenswerte Modellierungsinkonsistenz. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist kein echter boolescher Wert."@de ;
+    era:additionalInfo "La propre description de conTMessageDelayTime indique que ce délai est configurable séparément pour chaque canal d'entrée, et à nouveau séparément pour le signalement de l'activation par rapport à la désactivation, afin de prendre en charge des applications spéciales. Son type de données déclaré est boolean, bien que sa propre description et sa formulation numérique sans unité suggèrent qu'une valeur temporelle était prévue - cela ressemble à une incohérence de modélisation à noter. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un booléen authentique."@fr ;
     .
 
 tp-sh:InputChannelConfigurationData-conTMaxSwitchingPeriod
@@ -2409,6 +2619,9 @@ tp-sh:InputChannelConfigurationData-conTMaxSwitchingPeriod
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "conTMaxSwitchingPeriod's own description states this period must be configured individually for each input channel, and that it applies to channels monitored as either antivalent or equivalent - two different monitoring schemes, both covered by this same configurable value. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von conTMaxSwitchingPeriod besagt, dass diese Zeitspanne für jeden Eingangskanal individuell konfiguriert werden muss, und dass sie für Kanäle gilt, die entweder antivalent oder äquivalent überwacht werden - zwei unterschiedliche Überwachungsschemata, die beide von diesem gleichen konfigurierbaren Wert abgedeckt werden. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "La propre description de conTMaxSwitchingPeriod indique que cette période doit être configurée individuellement pour chaque canal d'entrée, et qu'elle s'applique aux canaux surveillés soit en antivalence soit en équivalence - deux schémas de surveillance différents, tous deux couverts par cette même valeur configurable. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:InputChannelConfigurationData-debouncingTime
@@ -2423,6 +2636,9 @@ tp-sh:InputChannelConfigurationData-debouncingTime
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "debouncingTime's own description states this must be configured and applied separately for each of the two actions on an input channel - switching on and switching off - rather than as one single value covering both. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for any of three different causes: the value is missing entirely, more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von debouncingTime besagt, dass diese für jede der beiden Aktionen an einem Eingangskanal separat konfiguriert und angewandt werden muss - Einschalten und Ausschalten -, statt als ein einzelner Wert, der beide abdeckt. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für drei unterschiedliche Ursachen angezeigt: der Wert fehlt vollständig, es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "La propre description de debouncingTime indique que ceci doit être configuré et appliqué séparément pour chacune des deux actions sur un canal d'entrée - l'activation et la désactivation - plutôt que comme une seule valeur couvrant les deux. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour trois causes différentes : la valeur est totalement absente, plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 ### AreaOfControl #####################################################
@@ -2450,6 +2666,9 @@ tp-sh:AreaOfControl-name
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "name is an optional, purely descriptive label for this area of control, only meant to be populated when a more human-readable name is wanted in addition to its own id. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "name ist eine optionale, rein beschreibende Bezeichnung für diesen Kontrollbereich, die nur ausgefüllt werden soll, wenn zusätzlich zur eigenen id ein besser lesbarer Name gewünscht wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "name est une étiquette optionnelle, purement descriptive, pour cette zone de contrôle, destinée à n'être renseignée que lorsqu'un nom plus lisible est souhaité en complément de son propre id. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:AreaOfControl-area
@@ -2510,6 +2729,9 @@ tp-sh:Controller-iPAddress
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "iPAddress's own description states this is used specifically for communication purposes. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "Die eigene Beschreibung von iPAddress besagt, dass sie speziell für Kommunikationszwecke verwendet wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "La propre description de iPAddress indique qu'elle est utilisée spécifiquement à des fins de communication. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:Controller-rastaId
@@ -2522,6 +2744,9 @@ tp-sh:Controller-rastaId
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "rastaId's own description states this is specifically the EULYNX RaSTA identifier for the field object controller - RaSTA being the EULYNX safe communication protocol, not a generic identifier scheme. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "Die eigene Beschreibung von rastaId besagt, dass dies speziell der EULYNX-RaSTA-Bezeichner für den Field Object Controller ist - RaSTA ist das sichere EULYNX-Kommunikationsprotokoll, kein generisches Bezeichnerschema. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "La propre description de rastaId indique qu'il s'agit spécifiquement de l'identifiant EULYNX RaSTA pour le contrôleur d'objet de terrain - RaSTA étant le protocole de communication sûr EULYNX, non un schéma d'identifiant générique. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:Controller-portNumber
@@ -2534,6 +2759,9 @@ tp-sh:Controller-portNumber
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "portNumber's own description states this is used specifically for communication purposes. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "Die eigene Beschreibung von portNumber besagt, dass sie speziell für Kommunikationszwecke verwendet wird. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "La propre description de portNumber indique qu'elle est utilisée spécifiquement à des fins de communication. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:Controller-eulynxBaseline
@@ -2546,6 +2774,9 @@ tp-sh:Controller-eulynxBaseline
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "eulynxBaseline's own description states this is specifically the EULYNX baseline for the field object controller - the version of the EULYNX interface specification it implements, not a general software version. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid string."@en ;
+    era:additionalInfo "Die eigene Beschreibung von eulynxBaseline besagt, dass dies speziell die EULYNX-Baseline für den Field Object Controller ist - die Version der EULYNX-Schnittstellenspezifikation, die er implementiert, keine allgemeine Softwareversion. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige Zeichenkette."@de ;
+    era:additionalInfo "La propre description de eulynxBaseline indique qu'il s'agit spécifiquement de la ligne de base EULYNX pour le contrôleur d'objet de terrain - la version de la spécification d'interface EULYNX qu'il implémente, non une version logicielle générale. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas une chaîne de caractères valide."@fr ;
     .
 
 tp-sh:Controller-ocVersion
@@ -2558,6 +2789,9 @@ tp-sh:Controller-ocVersion
     sh:datatype xsd:unsignedInt ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
+    era:additionalInfo "ocVersion's own description states this is specifically the EULYNX field object controller version. There is no custom message defined for this specific check, so the validation engine's own generic text is shown for either of two causes: more than one value is recorded, or the value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von ocVersion besagt, dass dies speziell die EULYNX-Field-Object-Controller-Version ist. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine für eine von zwei Ursachen angezeigt: es ist mehr als ein Wert erfasst, oder der vorhandene Wert ist keine gültige vorzeichenlose Ganzzahl."@de ;
+    era:additionalInfo "La propre description de ocVersion indique qu'il s'agit spécifiquement de la version du contrôleur d'objet de terrain EULYNX. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché pour l'une de deux causes : plus d'une valeur est enregistrée, ou la valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 ### ETCSMarker ########################################################
@@ -2602,6 +2836,9 @@ tp-sh:ETCSMarker-acknowledgementDistance
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:unsignedInt ;
     sh:severity sh:Violation ;
+    era:additionalInfo "acknowledgementDistance's own description states this defines the distance at which the driver is expected to acknowledge a visual or audio indication shown on the DMI. This property has neither minCount nor maxCount, so being absent entirely or carrying several values are both valid. There is no custom message defined for this specific check, so the validation engine's own generic text is shown if a value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von acknowledgementDistance besagt, dass dies die Distanz festlegt, bei der der Triebfahrzeugführer eine visuelle oder akustische Anzeige auf dem DMI bestätigen soll. Diese Eigenschaft hat weder minCount noch maxCount, ein vollständiges Fehlen oder mehrere Werte sind also beide gültig. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine angezeigt, wenn ein vorhandener Wert keine gültige vorzeichenlose Ganzzahl ist."@de ;
+    era:additionalInfo "La propre description de acknowledgementDistance indique que ceci définit la distance à laquelle le conducteur est censé accuser réception d'une indication visuelle ou sonore affichée sur le DMI. Cette propriété n'a ni minCount ni maxCount, une absence totale ou plusieurs valeurs sont donc toutes deux valides. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché si une valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:ETCSMarker-maxTransitionSpeed
@@ -2613,6 +2850,9 @@ tp-sh:ETCSMarker-maxTransitionSpeed
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:unsignedInt ;
     sh:severity sh:Violation ;
+    era:additionalInfo "This property has neither minCount nor maxCount, so being absent entirely or carrying several values are both valid. There is no custom message defined for this specific check, so the validation engine's own generic text is shown if a value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Diese Eigenschaft hat weder minCount noch maxCount, ein vollständiges Fehlen oder mehrere Werte sind also beide gültig. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine angezeigt, wenn ein vorhandener Wert keine gültige vorzeichenlose Ganzzahl ist."@de ;
+    era:additionalInfo "Cette propriété n'a ni minCount ni maxCount, une absence totale ou plusieurs valeurs sont donc toutes deux valides. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché si une valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 tp-sh:ETCSMarker-offsetTransitionUnreachable
@@ -2624,6 +2864,9 @@ tp-sh:ETCSMarker-offsetTransitionUnreachable
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:unsignedInt ;
     sh:severity sh:Violation ;
+    era:additionalInfo "offsetTransitionUnreachable's own description states this measures a distance from the LRBG marking the point beyond which a transition becomes unreachable. This property has neither minCount nor maxCount, so being absent entirely or carrying several values are both valid. There is no custom message defined for this specific check, so the validation engine's own generic text is shown if a value present is not a valid unsigned integer."@en ;
+    era:additionalInfo "Die eigene Beschreibung von offsetTransitionUnreachable besagt, dass hiermit eine Distanz von der LRBG gemessen wird, die den Punkt markiert, jenseits dessen ein Übergang unerreichbar wird. Diese Eigenschaft hat weder minCount noch maxCount, ein vollständiges Fehlen oder mehrere Werte sind also beide gültig. Für diese konkrete Prüfung ist keine eigene Meldung definiert, daher wird der allgemeine Text der Validierungs-Engine angezeigt, wenn ein vorhandener Wert keine gültige vorzeichenlose Ganzzahl ist."@de ;
+    era:additionalInfo "La propre description de offsetTransitionUnreachable indique que ceci mesure une distance depuis la LRBG marquant le point au-delà duquel une transition devient inaccessible. Cette propriété n'a ni minCount ni maxCount, une absence totale ou plusieurs valeurs sont donc toutes deux valides. Aucun message personnalisé n'est défini pour cette vérification spécifique, le texte générique du moteur de validation est donc affiché si une valeur présente n'est pas un entier non signé valide."@fr ;
     .
 
 ### TrainProtectionArea ###############################################
