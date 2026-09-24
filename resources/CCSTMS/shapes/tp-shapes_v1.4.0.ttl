@@ -99,8 +99,8 @@ tp-sh:infra-Switch-leftBranch
     sh:nodeKind sh:IRI ;
     sh:class era:NetRelation ;
     sh:message "leftBranch must reference an existing era:NetRelation by IRI."@en ;
-    sh:message "leftBranch muss über eine IRI auf ein bestehendes era:NetRelation verweisen."@de ;
-    sh:message "leftBranch doit référencer un era:NetRelation existant par IRI."@fr ;
+    sh:message "era:leftBranch muss über eine IRI auf ein bestehendes era:NetRelation verweisen."@de ;
+    sh:message "era:leftBranch doit référencer un era:NetRelation existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -115,8 +115,8 @@ tp-sh:infra-Switch-rightBranch
     sh:nodeKind sh:IRI ;
     sh:class era:NetRelation ;
     sh:message "rightBranch must reference an existing era:NetRelation by IRI."@en ;
-    sh:message "rightBranch muss über eine IRI auf ein bestehendes era:NetRelation verweisen."@de ;
-    sh:message "rightBranch doit référencer un era:NetRelation existant par IRI."@fr ;
+    sh:message "era:rightBranch muss über eine IRI auf ein bestehendes era:NetRelation verweisen."@de ;
+    sh:message "era:rightBranch doit référencer un era:NetRelation existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -149,8 +149,8 @@ tp-sh:infra-SlipCrossingShape
         [ sh:property [ sh:path era:switches ; sh:minCount 4 ; sh:maxCount 4 ] ]
     ) ;
     sh:message "A SlipCrossing must reference exactly two switches (single slip crossing) or exactly four switches (double slip crossing) - never three (see formatNote on SlipCrossing.switches)."@en ;
-    sh:message "Ein SlipCrossing muss entweder genau zwei switches referenzieren (einfache Kreuzungsweiche) oder genau vier switches (doppelte Kreuzungsweiche) - niemals drei (siehe formatNote zu SlipCrossing.switches)."@de ;
-    sh:message "Un SlipCrossing doit référencer soit exactement deux switches (traversée-jonction simple), soit exactement quatre switches (traversée-jonction double) - jamais trois (voir formatNote sur SlipCrossing.switches)."@fr ;
+    sh:message "Ein era:SlipCrossing muss entweder genau zwei switches referenzieren (einfache Kreuzungsweiche) oder genau vier switches (doppelte Kreuzungsweiche) - niemals drei (siehe era:formatNote zu era:SlipCrossing.switches)."@de ;
+    sh:message "Un era:SlipCrossing doit référencer soit exactement deux switches (traversée-jonction simple), soit exactement quatre switches (traversée-jonction double) - jamais trois (voir era:formatNote sur era:SlipCrossing.switches)."@fr ;
     sh:property tp-sh:infra-SlipCrossing-switches ;
     sh:property tp-sh:infra-SlipCrossing-crossing ;
     sh:property tp-sh:infra-SlipCrossing-name ;
@@ -224,8 +224,8 @@ tp-sh:infra-Crossing-topologicalCoordinates
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-TopologicalCoordinateShape ;
     sh:message "topologicalCoordinates must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
-    sh:message "topologicalCoordinates muss ein wohlgeformtes TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
-    sh:message "topologicalCoordinates doit être un TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:topologicalCoordinates muss ein wohlgeformtes era:TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
+    sh:message "era:topologicalCoordinates doit être un era:TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 2 ;
     sh:maxCount 2 ;
     sh:severity sh:Violation ;
@@ -282,8 +282,8 @@ tp-sh:infra-Derailer-netPointReference
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-NetPointReferenceShape ;
     sh:message "netPointReference must be a well-formed NetPointReference (blank node or IRI)."@en ;
-    sh:message "netPointReference muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
-    sh:message "netPointReference doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:netPointReference muss ein wohlgeformtes era:NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "era:netPointReference doit être un era:NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -353,8 +353,8 @@ tp-sh:infra-LevelCrossing-areaReference
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-NetAreaReferenceShape ;
     sh:message "areaReference must be a well-formed NetAreaReference (blank node or IRI)."@en ;
-    sh:message "areaReference muss ein wohlgeformtes NetAreaReference sein (Blank Node oder IRI)."@de ;
-    sh:message "areaReference doit être un NetAreaReference bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:areaReference muss ein wohlgeformtes era:NetAreaReference sein (Blank Node oder IRI)."@de ;
+    sh:message "era:areaReference doit être un era:NetAreaReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -408,8 +408,8 @@ tp-sh:infra-LinearElementSection-onElement
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "onElement must reference an existing era:LinearElement by IRI."@en ;
-    sh:message "onElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
-    sh:message "onElement doit référencer un era:LinearElement existant par IRI."@fr ;
+    sh:message "era:onElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "era:onElement doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -481,8 +481,8 @@ tp-sh:infra-TrainDetectionSystem-topologicalCoordinate
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-TopologicalCoordinateShape ;
     sh:message "topologicalCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
-    sh:message "topologicalCoordinate muss ein wohlgeformtes TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
-    sh:message "topologicalCoordinate doit être un TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:topologicalCoordinate muss ein wohlgeformtes era:TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
+    sh:message "era:topologicalCoordinate doit être un era:TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -497,8 +497,8 @@ tp-sh:infra-TrainDetectionSystem-trainDetectionSystemType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/train-detection/20> <http://data.europa.eu/949/concepts/train-detection/10> ) ;
     sh:message "Value must be one of the CCSTMS-scoped TrainDetectionSystems concepts."@en ;
-    sh:message "Der Wert muss einem der CCSTMS-Konzepte von TrainDetectionSystems entsprechen."@de ;
-    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de TrainDetectionSystems."@fr ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von era:TrainDetectionSystems entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de era:TrainDetectionSystems."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -513,8 +513,8 @@ tp-sh:infra-TrainDetectionSystem-referenceDir
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/orientations/02> <http://data.europa.eu/949/concepts/orientations/00> <http://data.europa.eu/949/concepts/orientations/01> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OrientationDirections concepts."@en ;
-    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OrientationDirections entsprechen."@de ;
-    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OrientationDirections."@fr ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von era:OrientationDirections entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de era:OrientationDirections."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -557,8 +557,8 @@ tp-sh:infra-TvpSection-linkedArea
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-NetAreaReferenceShape ;
     sh:message "linkedArea must be a well-formed NetAreaReference (blank node or IRI)."@en ;
-    sh:message "linkedArea muss ein wohlgeformtes NetAreaReference sein (Blank Node oder IRI)."@de ;
-    sh:message "linkedArea doit être un NetAreaReference bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:linkedArea muss ein wohlgeformtes era:NetAreaReference sein (Blank Node oder IRI)."@de ;
+    sh:message "era:linkedArea doit être un era:NetAreaReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -573,8 +573,8 @@ tp-sh:infra-TvpSection-trainDetectors
     sh:nodeKind sh:IRI ;
     sh:class era:TrainDetectionSystem ;
     sh:message "trainDetectors must reference an existing era:TrainDetectionSystem by IRI."@en ;
-    sh:message "trainDetectors muss über eine IRI auf ein bestehendes era:TrainDetectionSystem verweisen."@de ;
-    sh:message "trainDetectors doit référencer un era:TrainDetectionSystem existant par IRI."@fr ;
+    sh:message "era:trainDetectors muss über eine IRI auf ein bestehendes era:TrainDetectionSystem verweisen."@de ;
+    sh:message "era:trainDetectors doit référencer un era:TrainDetectionSystem existant par IRI."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -597,8 +597,8 @@ tp-sh:infra-NetAreaReference-includes
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-NetLinearReferenceShape ;
     sh:message "includes must be a well-formed NetLinearReference (blank node or IRI)."@en ;
-    sh:message "includes muss ein wohlgeformtes NetLinearReference sein (Blank Node oder IRI)."@de ;
-    sh:message "includes doit être un NetLinearReference bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "includes muss ein wohlgeformtes era:NetLinearReference sein (Blank Node oder IRI)."@de ;
+    sh:message "includes doit être un era:NetLinearReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -642,8 +642,8 @@ tp-sh:infra-TopoArea-linearElements
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-LinearElementShape ;
     sh:message "linearElements must be a well-formed LinearElement (blank node or IRI)."@en ;
-    sh:message "linearElements muss ein wohlgeformtes LinearElement sein (Blank Node oder IRI)."@de ;
-    sh:message "linearElements doit être un LinearElement bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:linearElements muss ein wohlgeformtes era:LinearElement sein (Blank Node oder IRI)."@de ;
+    sh:message "era:linearElements doit être un era:LinearElement bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -656,8 +656,8 @@ tp-sh:infra-TopoArea-netRelations
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-NetRelationShape ;
     sh:message "netRelations must be a well-formed NetRelation (blank node or IRI)."@en ;
-    sh:message "netRelations muss ein wohlgeformtes NetRelation sein (Blank Node oder IRI)."@de ;
-    sh:message "netRelations doit être un NetRelation bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:netRelations muss ein wohlgeformtes era:NetRelation sein (Blank Node oder IRI)."@de ;
+    sh:message "era:netRelations doit être un era:NetRelation bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -699,8 +699,8 @@ tp-sh:infra-NetRelation-elementA
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "elementA must reference an existing era:LinearElement by IRI."@en ;
-    sh:message "elementA muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
-    sh:message "elementA doit référencer un era:LinearElement existant par IRI."@fr ;
+    sh:message "era:elementA muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "era:elementA doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -715,8 +715,8 @@ tp-sh:infra-NetRelation-elementB
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "elementB must reference an existing era:LinearElement by IRI."@en ;
-    sh:message "elementB muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
-    sh:message "elementB doit référencer un era:LinearElement existant par IRI."@fr ;
+    sh:message "era:elementB muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "era:elementB doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -769,8 +769,8 @@ tp-sh:infra-TopologicalCoordinate-onLinearElement
     sh:nodeKind sh:IRI ;
     sh:class era:LinearElement ;
     sh:message "onLinearElement must reference an existing era:LinearElement by IRI."@en ;
-    sh:message "onLinearElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
-    sh:message "onLinearElement doit référencer un era:LinearElement existant par IRI."@fr ;
+    sh:message "era:onLinearElement muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+    sh:message "era:onLinearElement doit référencer un era:LinearElement existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -811,8 +811,8 @@ tp-sh:infra-NetPointReference-hasTopoCoordinate
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-TopologicalCoordinateShape ;
     sh:message "hasTopoCoordinate must be a well-formed TopologicalCoordinate (blank node or IRI)."@en ;
-    sh:message "hasTopoCoordinate muss ein wohlgeformtes TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
-    sh:message "hasTopoCoordinate doit être un TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:hasTopoCoordinate muss ein wohlgeformtes era:TopologicalCoordinate sein (Blank Node oder IRI)."@de ;
+    sh:message "era:hasTopoCoordinate doit être un era:TopologicalCoordinate bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -827,8 +827,8 @@ tp-sh:infra-NetPointReference-appliesToDirection
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/orientations/02> <http://data.europa.eu/949/concepts/orientations/00> <http://data.europa.eu/949/concepts/orientations/01> ) ;
     sh:message "Value must be one of the CCSTMS-scoped OrientationDirections concepts."@en ;
-    sh:message "Der Wert muss einem der CCSTMS-Konzepte von OrientationDirections entsprechen."@de ;
-    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de OrientationDirections."@fr ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von era:OrientationDirections entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de era:OrientationDirections."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -897,8 +897,8 @@ tp-sh:infra-NetLinearReference-startsAt
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-NetPointReferenceShape ;
     sh:message "startsAt must be a well-formed NetPointReference (blank node or IRI)."@en ;
-    sh:message "startsAt muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
-    sh:message "startsAt doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:startsAt muss ein wohlgeformtes era:NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "era:startsAt doit être un era:NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -913,8 +913,8 @@ tp-sh:infra-NetLinearReference-endsAt
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-NetPointReferenceShape ;
     sh:message "endsAt must be a well-formed NetPointReference (blank node or IRI)."@en ;
-    sh:message "endsAt muss ein wohlgeformtes NetPointReference sein (Blank Node oder IRI)."@de ;
-    sh:message "endsAt doit être un NetPointReference bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:endsAt muss ein wohlgeformtes era:NetPointReference sein (Blank Node oder IRI)."@de ;
+    sh:message "era:endsAt doit être un era:NetPointReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -930,8 +930,8 @@ tp-sh:infra-NetLinearReference-hasSequence
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:message "hasSequence is ordered byIndex: it must carry exactly one rdf:List."@en ;
-    sh:message "hasSequence ist mit byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
-    sh:message "hasSequence est ordonné par byIndex : il doit porter exactement une rdf:List."@fr ;
+    sh:message "era:hasSequence ist mit era:byIndex geordnet: es muss genau eine rdf:List tragen."@de ;
+    sh:message "era:hasSequence est ordonné par era:byIndex : il doit porter exactement une rdf:List."@fr ;
     sh:node tp-sh:infra-NetLinearReference-hasSequence-items ;
     sh:severity sh:Violation ;
     .
@@ -940,8 +940,8 @@ tp-sh:infra-NetLinearReference-hasSequence-listWellFormed
     a sh:SPARQLConstraint ;
     sh:prefixes tp-sh:PrefixDeclarations ;
     sh:message "era:hasSequence is ordered byIndex and must therefore be a well-formed, terminated rdf:List: every list cell needs exactly one rdf:first and exactly one rdf:rest."@en ;
-    sh:message "era:hasSequence ist mit byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
-    sh:message "era:hasSequence est ordonné par byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
+    sh:message "era:hasSequence ist mit era:byIndex geordnet und muss daher eine wohlgeformte, terminierte rdf:List sein: jede Listenzelle benötigt genau ein rdf:first und genau ein rdf:rest."@de ;
+    sh:message "era:hasSequence est ordonné par era:byIndex et doit donc être une rdf:List bien formée et terminée : chaque cellule de la liste nécessite exactement un rdf:first et exactement un rdf:rest."@fr ;
     sh:select """
             SELECT DISTINCT $this
             WHERE {
@@ -968,8 +968,8 @@ tp-sh:infra-NetLinearReference-hasSequence-items
         sh:nodeKind sh:IRI ;
         sh:class era:LinearElement ;
         sh:message "hasSequence must reference an existing era:LinearElement by IRI."@en ;
-        sh:message "hasSequence muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
-        sh:message "hasSequence doit référencer un era:LinearElement existant par IRI."@fr ;
+        sh:message "era:hasSequence muss über eine IRI auf ein bestehendes era:LinearElement verweisen."@de ;
+        sh:message "era:hasSequence doit référencer un era:LinearElement existant par IRI."@fr ;
         sh:severity sh:Violation ;
     ] ;
     .
@@ -991,8 +991,8 @@ tp-sh:ProtectedInfraElementShape
         tp-sh:ProtectedInfraElement-levelCrossing-present
     ) ;
     sh:message "ProtectedInfraElement is a union: exactly one of (switch, slipCrossing, crossing, derailer, levelCrossing) must be present."@en ;
-    sh:message "ProtectedInfraElement ist eine Union: genau eines von (switch, slipCrossing, crossing, derailer, levelCrossing) muss vorhanden sein."@de ;
-    sh:message "ProtectedInfraElement est une union : exactement l'un de (switch, slipCrossing, crossing, derailer, levelCrossing) doit être présent."@fr ;
+    sh:message "era:ProtectedInfraElement ist eine Union: genau eines von (switch, era:slipCrossing, crossing, derailer, era:levelCrossing) muss vorhanden sein."@de ;
+    sh:message "era:ProtectedInfraElement est une union : exactement l'un de (switch, era:slipCrossing, crossing, derailer, era:levelCrossing) doit être présent."@fr ;
     sh:property tp-sh:ProtectedInfraElement-switch ;
     sh:property tp-sh:ProtectedInfraElement-slipCrossing ;
     sh:property tp-sh:ProtectedInfraElement-crossing ;
@@ -1025,8 +1025,8 @@ tp-sh:ProtectedInfraElement-slipCrossing
     sh:nodeKind sh:IRI ;
     sh:class era:SlipCrossing ;
     sh:message "slipCrossing must reference an existing era:SlipCrossing by IRI."@en ;
-    sh:message "slipCrossing muss über eine IRI auf ein bestehendes era:SlipCrossing verweisen."@de ;
-    sh:message "slipCrossing doit référencer un era:SlipCrossing existant par IRI."@fr ;
+    sh:message "era:slipCrossing muss über eine IRI auf ein bestehendes era:SlipCrossing verweisen."@de ;
+    sh:message "era:slipCrossing doit référencer un era:SlipCrossing existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1070,8 +1070,8 @@ tp-sh:ProtectedInfraElement-levelCrossing
     sh:nodeKind sh:IRI ;
     sh:class era:LevelCrossing ;
     sh:message "levelCrossing must reference an existing era:LevelCrossing by IRI."@en ;
-    sh:message "levelCrossing muss über eine IRI auf ein bestehendes era:LevelCrossing verweisen."@de ;
-    sh:message "levelCrossing doit référencer un era:LevelCrossing existant par IRI."@fr ;
+    sh:message "era:levelCrossing muss über eine IRI auf ein bestehendes era:LevelCrossing verweisen."@de ;
+    sh:message "era:levelCrossing doit référencer un era:LevelCrossing existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1175,8 +1175,8 @@ tp-sh:SwitchableTracksideAsset-switchableTracksideAssetSections
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:SwitchableTracksideAssetSectionShape ;
     sh:message "switchableTracksideAssetSections must be a well-formed SwitchableTracksideAssetSection (blank node or IRI)."@en ;
-    sh:message "switchableTracksideAssetSections muss ein wohlgeformtes SwitchableTracksideAssetSection sein (Blank Node oder IRI)."@de ;
-    sh:message "switchableTracksideAssetSections doit être un SwitchableTracksideAssetSection bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:switchableTracksideAssetSections muss ein wohlgeformtes era:SwitchableTracksideAssetSection sein (Blank Node oder IRI)."@de ;
+    sh:message "era:switchableTracksideAssetSections doit être un era:SwitchableTracksideAssetSection bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1190,8 +1190,8 @@ tp-sh:SwitchableTracksideAsset-protectedInfraElements
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:ProtectedInfraElementShape ;
     sh:message "protectedInfraElements must be a well-formed ProtectedInfraElement (blank node or IRI)."@en ;
-    sh:message "protectedInfraElements muss ein wohlgeformtes ProtectedInfraElement sein (Blank Node oder IRI)."@de ;
-    sh:message "protectedInfraElements doit être un ProtectedInfraElement bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:protectedInfraElements muss ein wohlgeformtes era:ProtectedInfraElement sein (Blank Node oder IRI)."@de ;
+    sh:message "era:protectedInfraElements doit être un era:ProtectedInfraElement bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1206,8 +1206,8 @@ tp-sh:SwitchableTracksideAsset-dependenciesType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/dependency-type/exclusive> <http://data.europa.eu/949/concepts/dependency-type/equivalent> <http://data.europa.eu/949/concepts/dependency-type/specific> ) ;
     sh:message "Value must be one of the CCSTMS-scoped DependencyType concepts."@en ;
-    sh:message "Der Wert muss einem der CCSTMS-Konzepte von DependencyType entsprechen."@de ;
-    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de DependencyType."@fr ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von era:DependencyType entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de era:DependencyType."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1275,8 +1275,8 @@ tp-sh:SwitchableTracksideAssetSection-linearElementSection
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-LinearElementSectionShape ;
     sh:message "linearElementSection must be a well-formed LinearElementSection (blank node or IRI)."@en ;
-    sh:message "linearElementSection muss ein wohlgeformtes LinearElementSection sein (Blank Node oder IRI)."@de ;
-    sh:message "linearElementSection doit être un LinearElementSection bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:linearElementSection muss ein wohlgeformtes era:LinearElementSection sein (Blank Node oder IRI)."@de ;
+    sh:message "era:linearElementSection doit être un era:LinearElementSection bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1333,8 +1333,8 @@ tp-sh:FoulingSection-linearReferences
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-LinearElementSectionShape ;
     sh:message "linearReferences must be a well-formed LinearElementSection (blank node or IRI)."@en ;
-    sh:message "linearReferences muss ein wohlgeformtes LinearElementSection sein (Blank Node oder IRI)."@de ;
-    sh:message "linearReferences doit être un LinearElementSection bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:linearReferences muss ein wohlgeformtes era:LinearElementSection sein (Blank Node oder IRI)."@de ;
+    sh:message "era:linearReferences doit être un era:LinearElementSection bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1358,8 +1358,8 @@ tp-sh:FoulingSection-dependencies-irreflexive
     a sh:SPARQLConstraint ;
     sh:prefixes tp-sh:PrefixDeclarations ;
     sh:message "era:dependencies is an owl:IrreflexiveProperty: a FoulingSection must not point at itself."@en ;
-    sh:message "era:dependencies ist eine owl:IrreflexiveProperty: ein FoulingSection darf nicht auf sich selbst verweisen."@de ;
-    sh:message "era:dependencies est une owl:IrreflexiveProperty : un FoulingSection ne doit pas pointer vers lui-même."@fr ;
+    sh:message "era:dependencies ist eine owl:IrreflexiveProperty: ein era:FoulingSection darf nicht auf sich selbst verweisen."@de ;
+    sh:message "era:dependencies est une owl:IrreflexiveProperty : un era:FoulingSection ne doit pas pointer vers lui-même."@fr ;
     sh:select """
             SELECT $this
             WHERE { $this era:dependencies $this }
@@ -1379,8 +1379,8 @@ tp-sh:ControlledInfraElementShape
         tp-sh:ControlledInfraElement-levelCrossing-present
     ) ;
     sh:message "ControlledInfraElement is a union: exactly one of (switchConfigurationData, tvpSection, trainDetector, levelCrossing) must be present."@en ;
-    sh:message "ControlledInfraElement ist eine Union: genau eines von (switchConfigurationData, tvpSection, trainDetector, levelCrossing) muss vorhanden sein."@de ;
-    sh:message "ControlledInfraElement est une union : exactement l'un de (switchConfigurationData, tvpSection, trainDetector, levelCrossing) doit être présent."@fr ;
+    sh:message "era:ControlledInfraElement ist eine Union: genau eines von (era:switchConfigurationData, era:tvpSection, era:trainDetector, era:levelCrossing) muss vorhanden sein."@de ;
+    sh:message "era:ControlledInfraElement est une union : exactement l'un de (era:switchConfigurationData, era:tvpSection, era:trainDetector, era:levelCrossing) doit être présent."@fr ;
     sh:property tp-sh:ControlledInfraElement-switchConfigurationData ;
     sh:property tp-sh:ControlledInfraElement-tvpSection ;
     sh:property tp-sh:ControlledInfraElement-trainDetector ;
@@ -1397,8 +1397,8 @@ tp-sh:ControlledInfraElement-switchConfigurationData
     sh:nodeKind sh:IRI ;
     sh:class era:SwitchConfigurationData ;
     sh:message "switchConfigurationData must reference an existing era:SwitchConfigurationData by IRI."@en ;
-    sh:message "switchConfigurationData muss über eine IRI auf ein bestehendes era:SwitchConfigurationData verweisen."@de ;
-    sh:message "switchConfigurationData doit référencer un era:SwitchConfigurationData existant par IRI."@fr ;
+    sh:message "era:switchConfigurationData muss über eine IRI auf ein bestehendes era:SwitchConfigurationData verweisen."@de ;
+    sh:message "era:switchConfigurationData doit référencer un era:SwitchConfigurationData existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1412,8 +1412,8 @@ tp-sh:ControlledInfraElement-tvpSection
     sh:nodeKind sh:IRI ;
     sh:class era:TvpSectionConfigurationData ;
     sh:message "tvpSection must reference an existing era:TvpSectionConfigurationData by IRI."@en ;
-    sh:message "tvpSection muss über eine IRI auf ein bestehendes era:TvpSectionConfigurationData verweisen."@de ;
-    sh:message "tvpSection doit référencer un era:TvpSectionConfigurationData existant par IRI."@fr ;
+    sh:message "era:tvpSection muss über eine IRI auf ein bestehendes era:TvpSectionConfigurationData verweisen."@de ;
+    sh:message "era:tvpSection doit référencer un era:TvpSectionConfigurationData existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1427,8 +1427,8 @@ tp-sh:ControlledInfraElement-trainDetector
     sh:nodeKind sh:IRI ;
     sh:class era:TrainDetectionSystemConfigurationData ;
     sh:message "trainDetector must reference an existing era:TrainDetectionSystemConfigurationData by IRI."@en ;
-    sh:message "trainDetector muss über eine IRI auf ein bestehendes era:TrainDetectionSystemConfigurationData verweisen."@de ;
-    sh:message "trainDetector doit référencer un era:TrainDetectionSystemConfigurationData existant par IRI."@fr ;
+    sh:message "era:trainDetector muss über eine IRI auf ein bestehendes era:TrainDetectionSystemConfigurationData verweisen."@de ;
+    sh:message "era:trainDetector doit référencer un era:TrainDetectionSystemConfigurationData existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1442,8 +1442,8 @@ tp-sh:ControlledInfraElement-levelCrossing
     sh:nodeKind sh:IRI ;
     sh:class era:LxConfigurationData ;
     sh:message "levelCrossing must reference an existing era:LxConfigurationData by IRI."@en ;
-    sh:message "levelCrossing muss über eine IRI auf ein bestehendes era:LxConfigurationData verweisen."@de ;
-    sh:message "levelCrossing doit référencer un era:LxConfigurationData existant par IRI."@fr ;
+    sh:message "era:levelCrossing muss über eine IRI auf ein bestehendes era:LxConfigurationData verweisen."@de ;
+    sh:message "era:levelCrossing doit référencer un era:LxConfigurationData existant par IRI."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1520,8 +1520,8 @@ tp-sh:FieldObjectController-controlledInfraElements
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:ControlledInfraElementShape ;
     sh:message "controlledInfraElements must be a well-formed ControlledInfraElement (blank node or IRI)."@en ;
-    sh:message "controlledInfraElements muss ein wohlgeformtes ControlledInfraElement sein (Blank Node oder IRI)."@de ;
-    sh:message "controlledInfraElements doit être un ControlledInfraElement bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:controlledInfraElements muss ein wohlgeformtes era:ControlledInfraElement sein (Blank Node oder IRI)."@de ;
+    sh:message "era:controlledInfraElements doit être un era:ControlledInfraElement bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1535,8 +1535,8 @@ tp-sh:FieldObjectController-belongsToAoc
     sh:nodeKind sh:IRI ;
     sh:class era:AreaOfControl ;
     sh:message "belongsToAoc must reference an existing era:AreaOfControl by IRI."@en ;
-    sh:message "belongsToAoc muss über eine IRI auf ein bestehendes era:AreaOfControl verweisen."@de ;
-    sh:message "belongsToAoc doit référencer un era:AreaOfControl existant par IRI."@fr ;
+    sh:message "era:belongsToAoc muss über eine IRI auf ein bestehendes era:AreaOfControl verweisen."@de ;
+    sh:message "era:belongsToAoc doit référencer un era:AreaOfControl existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1551,8 +1551,8 @@ tp-sh:FieldObjectController-controlledBy
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:ControllerShape ;
     sh:message "controlledBy must be a well-formed Controller (blank node or IRI)."@en ;
-    sh:message "controlledBy muss ein wohlgeformtes Controller sein (Blank Node oder IRI)."@de ;
-    sh:message "controlledBy doit être un Controller bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:controlledBy muss ein wohlgeformtes Controller sein (Blank Node oder IRI)."@de ;
+    sh:message "era:controlledBy doit être un Controller bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1651,8 +1651,8 @@ tp-sh:SwitchConfigurationData-switchMachineConfiguration
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:SwitchMachineConfigurationShape ;
     sh:message "switchMachineConfiguration must be a well-formed SwitchMachineConfiguration (blank node or IRI)."@en ;
-    sh:message "switchMachineConfiguration muss ein wohlgeformtes SwitchMachineConfiguration sein (Blank Node oder IRI)."@de ;
-    sh:message "switchMachineConfiguration doit être un SwitchMachineConfiguration bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:switchMachineConfiguration muss ein wohlgeformtes era:SwitchMachineConfiguration sein (Blank Node oder IRI)."@de ;
+    sh:message "era:switchMachineConfiguration doit être un era:SwitchMachineConfiguration bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -1742,8 +1742,8 @@ tp-sh:LxConfigurationData-levelCrossing
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-LevelCrossingShape ;
     sh:message "levelCrossing must be a well-formed LevelCrossing (blank node or IRI)."@en ;
-    sh:message "levelCrossing muss ein wohlgeformtes LevelCrossing sein (Blank Node oder IRI)."@de ;
-    sh:message "levelCrossing doit être un LevelCrossing bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:levelCrossing muss ein wohlgeformtes era:LevelCrossing sein (Blank Node oder IRI)."@de ;
+    sh:message "era:levelCrossing doit être un era:LevelCrossing bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -1971,8 +1971,8 @@ tp-sh:TrainDetectionSystemConfigurationData-tvpSectionConfigurationData
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:TvpSectionConfigurationDataShape ;
     sh:message "tvpSectionConfigurationData must be a well-formed TvpSectionConfigurationData (blank node or IRI)."@en ;
-    sh:message "tvpSectionConfigurationData muss ein wohlgeformtes TvpSectionConfigurationData sein (Blank Node oder IRI)."@de ;
-    sh:message "tvpSectionConfigurationData doit être un TvpSectionConfigurationData bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:tvpSectionConfigurationData muss ein wohlgeformtes era:TvpSectionConfigurationData sein (Blank Node oder IRI)."@de ;
+    sh:message "era:tvpSectionConfigurationData doit être un era:TvpSectionConfigurationData bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -1985,8 +1985,8 @@ tp-sh:TrainDetectionSystemConfigurationData-trainDetectorConfigurationData
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:TrainDetectorConfigurationDataShape ;
     sh:message "trainDetectorConfigurationData must be a well-formed TrainDetectorConfigurationData (blank node or IRI)."@en ;
-    sh:message "trainDetectorConfigurationData muss ein wohlgeformtes TrainDetectorConfigurationData sein (Blank Node oder IRI)."@de ;
-    sh:message "trainDetectorConfigurationData doit être un TrainDetectorConfigurationData bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:trainDetectorConfigurationData muss ein wohlgeformtes era:TrainDetectorConfigurationData sein (Blank Node oder IRI)."@de ;
+    sh:message "era:trainDetectorConfigurationData doit être un era:TrainDetectorConfigurationData bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2010,8 +2010,8 @@ tp-sh:TrainDetectorConfigurationData-trainDetector
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-TrainDetectionSystemShape ;
     sh:message "trainDetector must be a well-formed TrainDetectionSystem (blank node or IRI)."@en ;
-    sh:message "trainDetector muss ein wohlgeformtes TrainDetectionSystem sein (Blank Node oder IRI)."@de ;
-    sh:message "trainDetector doit être un TrainDetectionSystem bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:trainDetector muss ein wohlgeformtes era:TrainDetectionSystem sein (Blank Node oder IRI)."@de ;
+    sh:message "era:trainDetector doit être un era:TrainDetectionSystem bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2058,8 +2058,8 @@ tp-sh:TvpSectionConfigurationData-tvpSection
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-TvpSectionShape ;
     sh:message "tvpSection must be a well-formed TvpSection (blank node or IRI)."@en ;
-    sh:message "tvpSection muss ein wohlgeformtes TvpSection sein (Blank Node oder IRI)."@de ;
-    sh:message "tvpSection doit être un TvpSection bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:tvpSection muss ein wohlgeformtes era:TvpSection sein (Blank Node oder IRI)."@de ;
+    sh:message "era:tvpSection doit être un era:TvpSection bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2223,8 +2223,8 @@ tp-sh:GenericIOConfigurationData-outputChannelConfigurationData
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:OutputChannelConfigurationDataShape ;
     sh:message "outputChannelConfigurationData must be a well-formed OutputChannelConfigurationData (blank node or IRI)."@en ;
-    sh:message "outputChannelConfigurationData muss ein wohlgeformtes OutputChannelConfigurationData sein (Blank Node oder IRI)."@de ;
-    sh:message "outputChannelConfigurationData doit être un OutputChannelConfigurationData bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:outputChannelConfigurationData muss ein wohlgeformtes era:OutputChannelConfigurationData sein (Blank Node oder IRI)."@de ;
+    sh:message "era:outputChannelConfigurationData doit être un era:OutputChannelConfigurationData bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2237,8 +2237,8 @@ tp-sh:GenericIOConfigurationData-inputChannelConfigurationData
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:InputChannelConfigurationDataShape ;
     sh:message "inputChannelConfigurationData must be a well-formed InputChannelConfigurationData (blank node or IRI)."@en ;
-    sh:message "inputChannelConfigurationData muss ein wohlgeformtes InputChannelConfigurationData sein (Blank Node oder IRI)."@de ;
-    sh:message "inputChannelConfigurationData doit être un InputChannelConfigurationData bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:inputChannelConfigurationData muss ein wohlgeformtes era:InputChannelConfigurationData sein (Blank Node oder IRI)."@de ;
+    sh:message "era:inputChannelConfigurationData doit être un era:InputChannelConfigurationData bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2461,8 +2461,8 @@ tp-sh:AreaOfControl-area
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:infra-NetAreaReferenceShape ;
     sh:message "area must be a well-formed NetAreaReference (blank node or IRI)."@en ;
-    sh:message "area muss ein wohlgeformtes NetAreaReference sein (Blank Node oder IRI)."@de ;
-    sh:message "area doit être un NetAreaReference bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "area muss ein wohlgeformtes era:NetAreaReference sein (Blank Node oder IRI)."@de ;
+    sh:message "area doit être un era:NetAreaReference bien formé (nœud vide ou IRI)."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2477,8 +2477,8 @@ tp-sh:AreaOfControl-controlledBy
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:ControllerShape ;
     sh:message "controlledBy must be a well-formed Controller (blank node or IRI)."@en ;
-    sh:message "controlledBy muss ein wohlgeformtes Controller sein (Blank Node oder IRI)."@de ;
-    sh:message "controlledBy doit être un Controller bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:controlledBy muss ein wohlgeformtes Controller sein (Blank Node oder IRI)."@de ;
+    sh:message "era:controlledBy doit être un Controller bien formé (nœud vide ou IRI)."@fr ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
     .
@@ -2586,8 +2586,8 @@ tp-sh:ETCSMarker-markerType
     sh:nodeKind sh:IRI ;
     sh:in ( <http://data.europa.eu/949/concepts/marker-function/exit> <http://data.europa.eu/949/concepts/marker-function/entry> <http://data.europa.eu/949/concepts/marker-function/intermediate> ) ;
     sh:message "Value must be one of the CCSTMS-scoped MarkerFunction concepts."@en ;
-    sh:message "Der Wert muss einem der CCSTMS-Konzepte von MarkerFunction entsprechen."@de ;
-    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de MarkerFunction."@fr ;
+    sh:message "Der Wert muss einem der CCSTMS-Konzepte von era:MarkerFunction entsprechen."@de ;
+    sh:message "La valeur doit correspondre à l'un des concepts CCSTMS de era:MarkerFunction."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2654,8 +2654,8 @@ tp-sh:TrainProtectionArea-topoArea
     sh:nodeKind sh:IRI ;
     sh:class era:TopoArea ;
     sh:message "topoArea must reference an existing era:TopoArea by IRI."@en ;
-    sh:message "topoArea muss über eine IRI auf ein bestehendes era:TopoArea verweisen."@de ;
-    sh:message "topoArea doit référencer un era:TopoArea existant par IRI."@fr ;
+    sh:message "era:topoArea muss über eine IRI auf ein bestehendes era:TopoArea verweisen."@de ;
+    sh:message "era:topoArea doit référencer un era:TopoArea existant par IRI."@fr ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:severity sh:Violation ;
@@ -2670,8 +2670,8 @@ tp-sh:TrainProtectionArea-switchableTracksideAssets
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:SwitchableTracksideAssetShape ;
     sh:message "switchableTracksideAssets must be a well-formed SwitchableTracksideAsset (blank node or IRI)."@en ;
-    sh:message "switchableTracksideAssets muss ein wohlgeformtes SwitchableTracksideAsset sein (Blank Node oder IRI)."@de ;
-    sh:message "switchableTracksideAssets doit être un SwitchableTracksideAsset bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:switchableTracksideAssets muss ein wohlgeformtes era:SwitchableTracksideAsset sein (Blank Node oder IRI)."@de ;
+    sh:message "era:switchableTracksideAssets doit être un era:SwitchableTracksideAsset bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2684,8 +2684,8 @@ tp-sh:TrainProtectionArea-allocationSections
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:FoulingSectionShape ;
     sh:message "allocationSections must be a well-formed FoulingSection (blank node or IRI)."@en ;
-    sh:message "allocationSections muss ein wohlgeformtes FoulingSection sein (Blank Node oder IRI)."@de ;
-    sh:message "allocationSections doit être un FoulingSection bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:allocationSections muss ein wohlgeformtes era:FoulingSection sein (Blank Node oder IRI)."@de ;
+    sh:message "era:allocationSections doit être un era:FoulingSection bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2698,8 +2698,8 @@ tp-sh:TrainProtectionArea-fieldObjectControllers
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:FieldObjectControllerShape ;
     sh:message "fieldObjectControllers must be a well-formed FieldObjectController (blank node or IRI)."@en ;
-    sh:message "fieldObjectControllers muss ein wohlgeformtes FieldObjectController sein (Blank Node oder IRI)."@de ;
-    sh:message "fieldObjectControllers doit être un FieldObjectController bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:fieldObjectControllers muss ein wohlgeformtes era:FieldObjectController sein (Blank Node oder IRI)."@de ;
+    sh:message "era:fieldObjectControllers doit être un era:FieldObjectController bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2712,8 +2712,8 @@ tp-sh:TrainProtectionArea-areaOfControl
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:AreaOfControlShape ;
     sh:message "areaOfControl must be a well-formed AreaOfControl (blank node or IRI)."@en ;
-    sh:message "areaOfControl muss ein wohlgeformtes AreaOfControl sein (Blank Node oder IRI)."@de ;
-    sh:message "areaOfControl doit être un AreaOfControl bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:areaOfControl muss ein wohlgeformtes era:AreaOfControl sein (Blank Node oder IRI)."@de ;
+    sh:message "era:areaOfControl doit être un era:AreaOfControl bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2726,8 +2726,8 @@ tp-sh:TrainProtectionArea-etcsMarkers
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:ETCSMarkerShape ;
     sh:message "etcsMarkers must be a well-formed ETCSMarker (blank node or IRI)."@en ;
-    sh:message "etcsMarkers muss ein wohlgeformtes ETCSMarker sein (Blank Node oder IRI)."@de ;
-    sh:message "etcsMarkers doit être un ETCSMarker bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:etcsMarkers muss ein wohlgeformtes era:ETCSMarker sein (Blank Node oder IRI)."@de ;
+    sh:message "era:etcsMarkers doit être un era:ETCSMarker bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
 
@@ -2764,7 +2764,7 @@ tp-sh:TrainProtection-tpArea
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:node tp-sh:TrainProtectionAreaShape ;
     sh:message "tpArea must be a well-formed TrainProtectionArea (blank node or IRI)."@en ;
-    sh:message "tpArea muss ein wohlgeformtes TrainProtectionArea sein (Blank Node oder IRI)."@de ;
-    sh:message "tpArea doit être un TrainProtectionArea bien formé (nœud vide ou IRI)."@fr ;
+    sh:message "era:tpArea muss ein wohlgeformtes era:TrainProtectionArea sein (Blank Node oder IRI)."@de ;
+    sh:message "era:tpArea doit être un era:TrainProtectionArea bien formé (nœud vide ou IRI)."@fr ;
     sh:severity sh:Violation ;
     .
